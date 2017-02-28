@@ -112,7 +112,7 @@ Deletes the specified task from the μTask. Irreversible.<br>
 Format: `delete INDEX`
 
 > Deletes the task at the specified `INDEX`. <br>
-> The index refers to the index number shown retrieved listing.<br>
+> The index refers to the index number shown on the retrieved listing.<br>
 > The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
