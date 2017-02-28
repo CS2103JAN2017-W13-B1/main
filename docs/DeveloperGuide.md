@@ -348,13 +348,13 @@ Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new task |
-`* * *` | user | get existing task list | decide what to be done soon
-`* * *` | user | rescheduling an existing task | change task start date or end date accordingly
+`* * *` | user | retrieve an existing task list | decide what to be done soon
+`* * *` | user | rescheduling an existing task | change task's deadline or start date or end date accordingly
 `* * *` | user | rename an existing task’s name |
-`* * *` | user | delete an existing task | get rid of the task that I no longer need to track
+`* * *` | user | delete an existing task | remove an entry of the list of stored tasks
 `* * *` | user | undo previous operations | revert mistake made recently
 `* * *` | advanced user | enter partial commands | still use the program without viewing the help tutorial
-`* * *` | user | search tasks via description knowledge | search tasks details without needing to know full description
+`* * *` | user | search tasks using contents from tasks' description | search tasks details without needing to know full description
 `* * *` | user who have multiple devices/Cloud | specify file path for file saving | synchronize saved file across multiple computers with cloud storage
 `* *` | user with many different tasks | group them by tag | find them easily by tag
 `* *` | user | create Tag | 
@@ -417,9 +417,11 @@ Use case ends
 1. User requests to rescheduling a task
 2. µTask shows a list of tasks
 3. User selects a task to reschedule
-4. µTask prompt to allow user to enter a new datetime (‘[date]’’[start]’’[end]’)
-5. User enters a datetime(‘[date]’’[start]’’[end]’)
-6. µTask rescheduling the selected task<br>
+4. µTask shows list of available datetime to edit (`[DEADLINE] [START_TIME] [END_TIME]`)
+5. User selects a datetime to edit
+6. µTask prompt to allow user to enter a new datetime (`HHMM DDMMYY format`) 
+7. User enters a datetime
+8. µTask rescheduling the selected task<br>
 Use case ends.
 
 **Extensions**
@@ -432,6 +434,11 @@ Use case ends.
 
 > 3a1. µTask shows an error message <br>
   Use case resumes at step 2
+
+5a. The given index is invalid
+
+> 5a1. µTask shows an error message <br>
+  Use case resumes at step 4
 
 
 #### Use case: Delete Task
@@ -463,7 +470,7 @@ Use case ends.
 1. User requests to mark a specific task as done
 2. µTask shows a list of undone tasks
 3. User selects a task to mark
-4. µTask mark the task as ‘done’<br>
+4. µTask mark the task as `done`<br>
 Use case ends.
 
 **Extensions**
