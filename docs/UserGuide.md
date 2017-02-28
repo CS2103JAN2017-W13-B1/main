@@ -17,8 +17,8 @@ By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbs
    > This app will not work with earlier versions of Java 8.
 
 1. Download the latest `utask.jar` from the [releases](../../../releases) tab.
-2. Copy the file to the folder you want to use as the home folder for your Address Book.
-3. Double-click the file to start the app. The GUI should appear in a few seconds.
+2. Copy the file to the folder you want to use as the home folder for your μTask manager.
+3. Double-click the file to start the app. The Graphic User Interface should appear in a few seconds.
    > <img src="images/Ui.png" width="600">
 
 4. Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
@@ -89,20 +89,20 @@ Examples:
 
 ### 2.5. Finding all tasks containing any keyword in their description: `find`
 
-Finds persons whose names contain any of the given keywords.<br>
+Finds tasks whose description contains any of the given keywords.<br>
 Format: `Find | find KEYWORD...`
 
-> * The search is case sensitive. e.g `hans` will not match `Hans`
-> * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-> * Only the name is searched.
-> * Only full words will be matched e.g. `Han` will not match `Hans`
+> * The search is case sensitive. e.g `grocery` will not match `Grocery`
+> * The order of the keywords does not matter. e.g. `Grocery Store` will match `Store Grocery`
+> * Only the description of the task is searched.
+> * Only full words will be matched e.g. `Gro` will not match `Grocery`
 > * Tasks matching at least one keyword will be returned (i.e. `OR` search).
-    e.g. `Hans` will match `Hans Bo`
+    e.g. `Grocery` will match `Store Grocery`
 
 Examples:
 
-* `find John`<br>
-  Returns `John Doe` but not `john`
+* `find Buy`<br>
+  Returns `Buy Grocery` but not `buy`
 * `find Impt Clear John`<br>
   Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
 
@@ -112,7 +112,7 @@ Deletes the specified task from the μTask. Irreversible.<br>
 Format: `delete INDEX`
 
 > Deletes the task at the specified `INDEX`. <br>
-> The index refers to the index number shown in the most recent listing.<br>
+> The index refers to the index number shown retrieved listing.<br>
 > The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
@@ -123,9 +123,10 @@ Examples:
 * `find terra`<br>
   `delete 1`<br>
   Deletes the 1st task in the results of the `find` command.
+  
 ### 2.7. Clearing all entries : `clear`
 
-Clears all entries from the address book.<br>
+Clears all stored tasks from the μTask.<br>
 Format: `clear`
 
 ### 2.8. Exiting the program : `exit`
