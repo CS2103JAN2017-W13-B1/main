@@ -16,7 +16,7 @@ By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbs
    > Having any Java 8 version is not enough. <br>
    > This app will not work with earlier versions of Java 8.
 
-1. Download the latest `addressbook.jar` from the [releases](../../../releases) tab.
+1. Download the latest `utask.jar` from the [releases](../../../releases) tab.
 2. Copy the file to the folder you want to use as the home folder for your Address Book.
 3. Double-click the file to start the app. The GUI should appear in a few seconds.
    > <img src="images/Ui.png" width="600">
@@ -24,10 +24,10 @@ By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbs
 4. Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
    e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window.
 5. Some example commands you can try:
-   * **`list`** : lists all contacts
-   * **`add`**` John Doe p/98765432 e/johnd@gmail.com a/John street, block 123, #01-01` :
-     adds a contact named `John Doe` to the Address Book.
-   * **`delete`**` 3` : deletes the 3rd contact shown in the current list
+   * **`list`** : lists all task
+   * **`add`**` name my first task` :
+     adds a task named `my first task` to μTask.
+   * **`delete`**` 3` : deletes the 3rd task shown in the current list
    * **`exit`** : exits the app
 6. Refer to the [Features](#features) section below for details of each command.<br>
 
@@ -142,7 +142,7 @@ There is no need to save manually.
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with
-       the file that contains the data of your previous Address Book folder.
+       the file that contains the data of your previous μTask folder.
 
 ## 4. Commands Format List
 
