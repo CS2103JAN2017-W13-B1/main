@@ -161,26 +161,26 @@ There is no need to save manually.
 **A**: Install the app in the other computer and overwrite the empty data file it creates with
        the file that contains the data of your previous Address Book folder.
 
-## 4. Command Summary
+## 4. Commands Format List
 
-* **Add**  `add NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` <br>
-  e.g. `add James Ho p/22224444 e/jamesho@gmail.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-
-* **Clear** : `clear`
-
-* **Delete** : `delete INDEX` <br>
-   e.g. `delete 3`
-
-* **Find** : `find KEYWORD [MORE_KEYWORDS]` <br>
-  e.g. `find James Jake`
-
-* **List** : `list` <br>
-  e.g.
-
-* **Help** : `help` <br>
-  e.g.
-
-* **Select** : `select INDEX` <br>
-  e.g.`select 2`
+Command | Format  
+-------- | :--------
+CreateTask | `create NAME [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...]`
+ListTask | `list [TYPE] [by DEADLINE] [from START_TIME] [to END_TIME] [tag TAG...] [done YES|NO]`
+UpdateTask | `update INDEX [name NAME] [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...][done YES|NO]`
+DeleteTask | `delete INDEX`
+CreateTag | `createtag NAME [color COLOR]` 
+ListTag | `listtag` 
+UpdateTag | `updatetag INDEX [name NAME] [color COLOR]`
+DeleteTag | `deletetag INDEX`
+Update | `update`
+Select | `select INDEX` *or* `select last`
+Find | `find KEYWORD...`
+Done | `done INDEX`
+Undo | `undo [last STEPS]`
+Redo | `redo [last STEPS]`
+Clear | `clear`
+Set Path| `setpath PATH`
+Help | `help`
 
 
