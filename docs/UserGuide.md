@@ -69,7 +69,7 @@ Format: `list`
 
 Updates an existing task in μTask.<br>
 Format: `update INDEX [name NAME] [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...][done YES|NO]`
-`
+
 
 > * Updates the task at the specified `INDEX`.
     The index refers to the index number shown in the task listing.<br>
@@ -90,7 +90,7 @@ Examples:
 ### 2.5. Finding all tasks containing any keyword in their description: `find`
 
 Finds persons whose names contain any of the given keywords.<br>
-Format: `Find | `find KEYWORD...`
+Format: `Find | find KEYWORD...`
 
 > * The search is case sensitive. e.g `hans` will not match `Hans`
 > * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
