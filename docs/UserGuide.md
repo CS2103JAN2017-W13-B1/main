@@ -1,4 +1,4 @@
-# AddressBook Level 4 - User Guide
+# μTask - User Guide
 
 By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbsp;&nbsp; Licence: `MIT`
 
@@ -47,69 +47,71 @@ Format: `help`
 
 > Help is also shown if you enter an incorrect command e.g. `abcd`
 
-### 2.2. Adding a person: `add`
+### 2.2. Creating task: `create`
 
-Adds a person to the address book<br>
-Format: `add NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Creates a task to μTask<br>
+Format: `create NAME [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...]`
 
-> Persons can have any number of tags (including 0)
+> * DEADLINE, START_TIME and END_TIME use HHMM DDMMYY format to represent date and time
+> Tasks can have any number of tags (including 0)
 
 Examples:
 
-* `add John Doe p/98765432 e/johnd@gmail.com a/John street, block 123, #01-01`
-* `add Betsy Crowe t/friend e/betsycrowe@gmail.com a/Newgate Prison p/1234567 t/criminal`
+* `create terra on leave from 0830 10317 to 0830 150317`
+* `create send update on project status from 1600 200217 to 1730 200217 tag urgent`
 
-### 2.3. Listing all persons : `list`
+### 2.3. Listing all tasks: `list`
 
-Shows a list of all persons in the address book.<br>
+Shows a list of all tasks in μTask.<br>
 Format: `list`
 
-### 2.4. Editing a person : `edit`
+### 2.4. Updating a task: `edit`
 
-Edits an existing person in the address book.<br>
-Format: `edit INDEX [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Updates an existing task in μTask.<br>
+Format: `update INDEX [name NAME] [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...][done YES|NO]`
+`
 
-> * Edits the person at the specified `INDEX`.
-    The index refers to the index number shown in the last person listing.<br>
+> * Updates the task at the specified `INDEX`.
+    The index refers to the index number shown in the task listing.<br>
     The index **must be a positive integer** 1, 2, 3, ...
 > * At least one of the optional fields must be provided.
 > * Existing values will be updated to the input values.
-> * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-> * You can remove all the person's tags by typing `t/` without specifying any tags after it. 
+> * When updating tags, the existing tags of the task will be removed i.e adding of tags is not cumulative.
+> * You can remove all the task tags by typing `tag` without specifying any tags after it. 
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@yahoo.com`<br>
-  Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@yahoo.com` respectively.
+* `update 1 done yes`<br>
+  Updates the 1st task to done.
 
-* `edit 2 Betsy Crower t/`<br>
-  Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `update 2 tag urgent`<br>
+  Updates the tag of the 2nd task to urgent and clears all existing tags, if applicable.
 
-### 2.5. Finding all persons containing any keyword in their name: `find`
+### 2.5. Finding all tasks containing any keyword in their description: `find`
 
 Finds persons whose names contain any of the given keywords.<br>
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `Find | `find KEYWORD...`
 
 > * The search is case sensitive. e.g `hans` will not match `Hans`
 > * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 > * Only the name is searched.
 > * Only full words will be matched e.g. `Han` will not match `Hans`
-> * Persons matching at least one keyword will be returned (i.e. `OR` search).
+> * Tasks matching at least one keyword will be returned (i.e. `OR` search).
     e.g. `Hans` will match `Hans Bo`
 
 Examples:
 
 * `find John`<br>
   Returns `John Doe` but not `john`
-* `find Betsy Tim John`<br>
-  Returns Any person having names `Betsy`, `Tim`, or `John`
+* `find Impt Clear John`<br>
+  Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
 
-### 2.6. Deleting a person : `delete`
+### 2.6. Deleting a task: `delete`
 
-Deletes the specified person from the address book. Irreversible.<br>
+Deletes the specified task from the μTask. Irreversible.<br>
 Format: `delete INDEX`
 
-> Deletes the person at the specified `INDEX`. <br>
+> Deletes the task at the specified `INDEX`. <br>
 > The index refers to the index number shown in the most recent listing.<br>
 > The index **must be a positive integer** 1, 2, 3, ...
 
@@ -117,42 +119,23 @@ Examples:
 
 * `list`<br>
   `delete 2`<br>
-  Deletes the 2nd person in the address book.
-* `find Betsy`<br>
+  Deletes the 2nd task in μTask.
+* `find terra`<br>
   `delete 1`<br>
-  Deletes the 1st person in the results of the `find` command.
-
-### 2.7. Select a person : `select`
-
-Selects the person identified by the index number used in the last person listing.<br>
-Format: `select INDEX`
-
-> Selects the person and loads the Google search page the person at the specified `INDEX`.<br>
-> The index refers to the index number shown in the most recent listing.<br>
-> The index **must be a positive integer** 1, 2, 3, ...
-
-Examples:
-
-* `list`<br>
-  `select 2`<br>
-  Selects the 2nd person in the address book.
-* `find Betsy` <br>
-  `select 1`<br>
-  Selects the 1st person in the results of the `find` command.
-
-### 2.8. Clearing all entries : `clear`
+  Deletes the 1st task in the results of the `find` command.
+### 2.7. Clearing all entries : `clear`
 
 Clears all entries from the address book.<br>
 Format: `clear`
 
-### 2.9. Exiting the program : `exit`
+### 2.8. Exiting the program : `exit`
 
 Exits the program.<br>
 Format: `exit`
 
-### 2.10. Saving the data
+### 2.9. Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data.<br>
+μTask data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
 
 ## 3. FAQ
