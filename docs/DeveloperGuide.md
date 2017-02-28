@@ -347,26 +347,79 @@ Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (un
 Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
-`* * *` | user | add a new person |
-`* * *` | user | delete a person | remove entries that I no longer need
-`* * *` | user | find a person by name | locate details of persons without having to go through the entire list
-`* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
-`*` | user with many persons in the address book | sort persons by name | locate a person easily
+`* * *` | user | add a new task |
+`* * *` | user | get existing task list | decide what to be done soon
+`* * *` | user | rescheduling an existing task | change task start date or end date accordingly
+`* * *` | user | rename an existing task’s name |
+`* * *` | user | delete an existing task | get rid of the task that I no longer need to track
+`* * *` | user | undo previous operations | revert mistake made recently
+`* * *` | advanced user | enter partial commands | still use the program without viewing the help tutorial
+`* * *` | user | search tasks via description knowledge | search tasks details without needing to know full description
+`* * *` | user who have multiple devices/Cloud | specify file path for file saving | synchronize saved file across multiple computers with cloud storage
+`* *` | user with many different tasks | group them by tag | find them easily by tag
+`* *` | user | create Tag | 
+`* *` | user | rename Tag | 
+`* *` | user | delete Tag | 
+`* *` | user | search entry by Tag / Tag Color | search efficiently by tag
+`* *` | user with many important tasks | set alarms as a reminder to remind me of tasks | get reminders before task happens
+`* *` | user who has to do task on a regular basis | set recurring tasks | avoid creating similar events every now and then
+`* *` | user | redo undone operations | revert accidental undos
+`* *` | Google Calendar user | import existing schedules to uTask | get to work without adding duplicate tasks
+`*` | advanced User | change the theme of the program | work with light or dark themes depends on the time of the day
+`*` | user who has limited screen room space | use the application on different screen sizes; in a way it is responsive to different screen size | optimally view important information regardless of screen size
+`*` | advanced User | set a personalized alarm | 
+`*` | user | use voice command | create task with a different input (voice)
 
 {More to be added}
 
 ## Appendix B : Use Cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `µTask` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Use case: Delete person
+#### Use case: Create Task
 
 **MSS**
 
-1. User requests to list persons
-2. AddressBook shows a list of persons
-3. User requests to delete a specific person in the list
-4. AddressBook deletes the person <br>
+1. User creates new task with necessary inputs
+2. µTask creates the task with given inputs <br>
+Use case ends.
+
+**Extensions**
+
+2a. The start time or end time given is invalid
+
+> 2a1. µTask shows an error message and prompt for re-enters of required information
+> 2a2. User re-enters the required information
+Use case resumes at step 2
+
+
+#### Use case: List undone tasks
+
+**MSS**:
+
+1. User requests to list uncompleted tasks
+2. µTask lists uncompleted tasks in chronological order.
+Use case ends
+
+
+**Extensions**:
+
+1a. The list is empty due to no undone task
+
+1a1. µTask notifies the user that no task is undone.
+Use case ends
+
+
+#### Use case: Rescheduling a task
+
+**MSS**
+
+1. User requests to rescheduling a task
+2. µTask shows a list of tasks
+3. User selects a task to reschedule
+4. µTask prompt to allow user to enter a new datetime (‘[date]’’[start]’’[end]’)
+5. User enters a datetime(‘[date]’’[start]’’[end]’)
+6. µTask rescheduling the selected task<br>
 Use case ends.
 
 **Extensions**
@@ -377,18 +430,63 @@ Use case ends.
 
 3a. The given index is invalid
 
-> 3a1. AddressBook shows an error message <br>
+> 3a1. µTask shows an error message <br>
   Use case resumes at step 2
+
+
+#### Use case: Delete Task
+
+**MSS**
+
+1. User requests to delete a task
+2. µTask shows a list of tasks
+3. User selects a task to delete
+4. µTask deletes the task <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. µTask shows an error message <br>
+  Use case resumes at step 2
+
+
+#### Use case: Mark a task as done
+
+**MSS**
+
+1. User requests to mark a specific task as done
+2. µTask shows a list of undone tasks
+3. User selects a task to mark
+4. µTask mark the task as ‘done’<br>
+Use case ends.
+
+**Extensions**
+
+3a. The given index is invalid
+
+> 3a1. Program shows an error message
+Use case ends
 
 {More to be added}
 
 ## Appendix C : Non Functional Requirements
 
-1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
-2. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands)
-   should be able to accomplish most of the tasks faster using commands than using the mouse.
-
+1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_121` or higher installed.
+2. Should be able to handle at least 500 tasks without a noticeable sluggishness in performance for typical usage.
+3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4. Should come with automated unit tests and open source code.
+5. Should favor DOS style commands over Unix-style commands.
+6. Should still work regardless of internet connection.
+7. Should be able to integrate with Google calendar.
+8. Should support unicode encoding.
+9. Should be lightweight, at most 10 megabyte on system resources.
+10. Should be compact, at most 5 megabyte in save file size.
 {More to be added}
 
 ## Appendix D : Glossary
@@ -397,23 +495,74 @@ Use case ends.
 
 > Windows, Linux, Unix, OS-X
 
-##### Private contact detail
-
-> A contact detail that is not meant to be shared with others
-
 ## Appendix E : Product Survey
 
-**Product Name**
-
-Author: ...
+#### Google Calendar
 
 Pros:
 
-* ...
-* ...
+* Keyboard shortcuts that support product functions
+* Seamless integration with gmail through “Create event”
+* Offline support available on Desktop Chrome browsers
+* Mini-calendar at sidebar gives a great overview
+* Selectable calendar views (based monthly/weekly/daily/agenda)
+* Selectable calendar types (able to show/hide all)
+* Mobile push notifications enabled
+* Ability to cross sync to cloud server 
+* Supports repetitive events occurring on a regular basis
+* Support “drag and drop” interactions for events
+* Online collaboration made easy with invitation
 
 Cons:
 
-* ...
-* ...
+* Tagging only available through colors
+* Keyboard shortcuts not commonly known
+* Editing event requires UI interactions
+* No support for task with just deadlines
+* No support for floating tasks
+* No support for event priority 
+* No support for reservation of multiple timeslots
+* No support for event status
+<br><br>
+
+#### Microsoft Outlook
+
+Pros:
+
+* Able to create task from email
+* Tasks has a reminder function
+* Tasks can be created as a recurring event
+* Able to indicate a percentage of completion in tasks
+* Able to indicate different priorities in tasks
+* Keyboard shortcuts shows as tooltips when alternate key is pressed
+* Able to work in regardless of internet connection; synchronization takes place when there is internet connectivity
+
+Cons:
+
+* Task name follows from email subject, which cannot be renamed
+* Task cannot be allocated to a specific time slot in the calendar
+* Keyboard mnemonic shortcuts are not always intuitive
+* Required the use of mouse together with keyboard shortcuts
+* Only one reminder can be created for each task
+<br><br>
+
+#### HiTask
+
+Pros:
+
+* HiTask allows users to resolve issues through multiple workflows.
+* HiTask has full function task management features from setting task priorities to grouping tasks.
+* HiTask allows users to create custom reports
+* HiTask allows users to  view your tasks, calendar, and team on a single screen. 
+* HiTask allows  users to drag-n-drop to attach files to projects and tasks, share within the team.
+* HiTask allows users to send an email to your HiTask account to create tasks
+* HiTask allows full two-way synchronization with Google Tasks and Google Calendar
+
+Cons:
+
+* HiTask does not allow users to set user permissions
+* HiTask lacks of customization
+* HiTask has problem with latency of remote systems if you are accustomed with the immediate satisfaction of local instantaneous systems
+* HiTask no support of event priority
+<br><br>
 
