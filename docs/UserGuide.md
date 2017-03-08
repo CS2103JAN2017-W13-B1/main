@@ -61,9 +61,6 @@ Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQ
 	 * `HHMM` is optional because if it is not provided, default value of `0000` will be used
 > * Tasks can have any number of tags (including 0)
 
-
-
-
 | Symbol | Meaning            | Presentation | Example        |
 |--------|--------------------|--------------|----------------|
 | HH     | hour of day (0~23) | number       | 08             |
@@ -80,8 +77,16 @@ Examples:
 
 ### 2.3. Listing all tasks: `list`
 
-Shows a list of all tasks in μTask.<br>
-Format: `list`
+Shows a list of all tasks in μTask based on inputs taken.<br>
+Format: `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
+> * If no parameters are provided, μTask will list all unexpired task from current date time in which the command is executed
+> * `TYPE` refers to the type of task
+	* Either `float`, `deadline` or `event` can be used
+
+Examples:
+* `list`
+* `list float /tag urgent`
+* `list event /from 201017 to 221017 /done NO`
 
 ### 2.4. Updating a task: `edit`
 
