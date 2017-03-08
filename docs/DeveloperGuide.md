@@ -413,41 +413,42 @@ Use case ends
 #### Use case: Rescheduling a task
 
 **MSS**
-1. User enters a new datetime for a selected index by update command(can be retrieved by list command)
+1. User enters a new datetime for a selected index (can be retrieved by list command) by update command
 2. µTask rescheduling the selected task<br>
 Use case ends.
 
 **Extensions**
+1a. The list is empty
 
-1a. The given index is invalid
+> Use case ends
+
+1b. The given index is invalid
 
 > µTask shows an error message <br>
 > Use case ends
 
-1b. The given datetime is invalid
+1c. The given datetime is invalid
 > µTask shows an error message <br>
-> Use case ends
+  Use case ends
 
 #### Use case: Delete Task
 
 **MSS**
 
-1. User requests to delete a task
-2. µTask shows a list of tasks
-3. User selects a task to delete
-4. µTask deletes the task <br>
+1. User select a task with an index (can be retrieved by list command) to delete
+2. µTask deletes the task <br>
 Use case ends.
 
 **Extensions**
 
-2a. The list is empty
+1a. The list is empty
 
 > Use case ends
 
-3a. The given index is invalid
+1b. The given index is invalid
 
-> 3a1. µTask shows an error message <br>
-  Use case resumes at step 2
+> µTask shows an error message <br>
+  Use case ends
 
 
 #### Use case: Mark a task as done
