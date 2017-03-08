@@ -348,7 +348,7 @@ Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new task |
-`* * *` | user | retrieve an existing task list | decide what to be done soon
+`* * *` | user | retrieve unfinished tasks for the day | decide what to be done soon
 `* * *` | user | rescheduling an existing task | change task's deadline or start date or end date accordingly
 `* * *` | user | rename an existing task’s name |
 `* * *` | user | delete an existing task | remove an entry of the list of stored tasks
