@@ -32,6 +32,9 @@ By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbs
 6. Refer to the [Features](#features) section below for details of each command.<br>
 
 
+----------
+
+
 ## 2. Features
 
 > **Command Format**
@@ -50,10 +53,25 @@ Format: `help`
 ### 2.2. Creating task: `create`
 
 Creates a task to μTask<br>
-Format: `create NAME [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...]`
+Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
 
-> * DEADLINE, START_TIME and END_TIME use HHMM DDMMYY format to represent date and time
-> Tasks can have any number of tags (including 0)
+> * `DEADLINE`, `START_TIME` and `END_TIME` uses a combination of  `HHMM DDMMYY` format to represent date and time
+	 * The order of `HHMM` and `DDMMYY` is flexible
+	 * `DDMMYY` is mandatory
+	 * `HHMM` is optional because if it is not provided, default value of `0000` will be used
+> * Tasks can have any number of tags (including 0)
+
+
+
+
+| Symbol | Meaning            | Presentation | Example        |
+|--------|--------------------|--------------|----------------|
+| HH     | hour of day (0~23) | number       | 08             |
+| MM     | minute of hour     | number       | 50             |
+| DD     | day of year        | number       | 28             |
+| MM     | month of year      | month        | April; Apr; 04 |
+| YY     | year               | year         | 2017           |
+
 
 Examples:
 
@@ -139,11 +157,19 @@ Format: `exit`
 μTask data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
 
+
+----------
+
+
 ## 3. FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with
        the file that contains the data of your previous μTask folder.
+
+
+----------
+
 
 ## 4. Commands Format List
 
@@ -166,5 +192,13 @@ Redo | `redo [last STEPS]`
 Clear | `clear`
 Set Path| `setpath PATH`
 Help | `help`
+
+
+
+
+
+
+
+
 
 
