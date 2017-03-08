@@ -4,49 +4,26 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ## Project Team
 
-#### [Damith C. Rajapakse](http://www.comp.nus.edu.sg/~damithch) <br>
-<img src="images/DamithRajapakse.jpg" width="150"><br>
-**Role**: Project Advisor
+#### [Liu Jiahao](http://github.com/liujiahaocs)
+<img src="images/liujiahaocs.png" width="150"><br>
+Role: Team Lead<br>
+Responsibilities: Deliverables and deadlines, Integration, Git expert
+In charge of: Model
 
 -----
 
-#### [Joshua Lee](http://github.com/lejolly)
-<img src="images/JoshuaLee.jpg" width="150"><br>
+#### [Tan Jian Hong, Denver](http://github.com/deltango)
+<img src="images/deltango.png" width="150"><br>
 Role: Developer <br>
-Responsibilities: UI
+Responsibilities: Scheduling and tracking, Eclipse expert
+In charge of: Storage, GUI
 
 -----
 
-#### [Leow Yijin](http://github.com/yijinl)
-<img src="images/LeowYijin.jpg" width="150"><br>
+#### [Teng Yong Hao](http://github.com/yong24s)
+<img src="images/yong24s.png" width="150"><br>
 Role: Developer <br>
-Responsibilities: Data
-
------
-
-#### [Martin Choo](http://github.com/m133225)
-<img src="images/MartinChoo.jpg" width="150"><br>
-Role: Developer <br>
-Responsibilities: Dev Ops
-
------
-
-#### [Thien Nguyen](https://github.com/ndt93)
- Role: Developer <br>
- Responsibilities: Threading
+Responsibilities: Code quality, Testing, SourceTree expert
+In charge of: Architecture, GUI
 
  -----
-
-#### [You Liang](http://github.com/yl-coder)
-<img src="images/YouLiang.jpg" width="150"><br>
- Role: Developer <br>
- Responsibilities: UI
-
- -----
-
-# Contributors
-
-We welcome contributions. See [Contact Us](ContactUs.md) page for more info.
-
-* [Akshay Narayan](https://github.com/se-edu/addressbook-level4/pulls?q=is%3Apr+author%3Aokkhoy)
-* [Sam Yong](https://github.com/se-edu/addressbook-level4/pulls?q=is%3Apr+author%3Amauris)
