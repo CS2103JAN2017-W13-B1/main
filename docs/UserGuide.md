@@ -52,22 +52,30 @@ Format: `help`
 
 ### 2.2. Creating task: `create`
 
-Creates a task to μTask<br>
+Creates a task in μTask<br>
 Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
 
 > * `DEADLINE`, `START_TIME` and `END_TIME` uses a combination of  `HHMM DDMMYY` format to represent date and time
 	 * The order of `HHMM` and `DDMMYY` is flexible
 	 * `DDMMYY` is mandatory
 	 * `HHMM` is optional because if it is not provided, default value of `0000` will be used
-> * Tasks can have any number of tags (including 0)
 
-| Symbol | Meaning            | Presentation | Example        |
-|--------|--------------------|--------------|----------------|
-| HH     | hour of day (0~23) | number       | 08             |
-| MM     | minute of hour     | number       | 50             |
-| DD     | day of year        | number       | 28             |
-| MM     | month of year      | number       | 04 |
-| YY     | year               | year         | 2017           |
+| Symbol | Meaning            | Example        |
+|--------|--------------------|----------------|
+| HH     | hour of day (0~23) | 08             |
+| MM     | minute of hour     | 50             |
+| DD     | day of year        | 28             |
+| MM     | month of year      | 04             |
+| YY     | year               | 2017           |
+
+> * Tasks can have any number of tags (including 0)
+> * Based on attributes provided during task creation, the type of resulting Task will be determined based on the following table:
+| Attribute provided during task creation                       | Type of task created |
+|---------------------------------------------------------------|----------------------|
+| `[/from START_TIME to END_TIME]`                              | Event                |
+| `[/by DEADLINE]`                                              | Deadline             |
+| Neither `[/from START_TIME to END_TIME]` nor `[/by DEADLINE]` | Floating             |
+
 
 
 Examples:
@@ -80,8 +88,7 @@ Examples:
 Shows a list of tasks in μTask based on inputs taken.<br>
 Format: `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
 > * If no parameters are provided, μTask will list all unexpired tasks from current date time in which the command is executed
-> * `TYPE` refers to the type of task
-	* Either `float`, `deadline` or `event` can be used
+> * `TYPE` refers to the type of task determined during task creation
 
 Examples:
 * `list`
