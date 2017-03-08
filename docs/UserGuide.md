@@ -69,14 +69,14 @@ Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQ
 | HH     | hour of day (0~23) | number       | 08             |
 | MM     | minute of hour     | number       | 50             |
 | DD     | day of year        | number       | 28             |
-| MM     | month of year      | month        | April; Apr; 04 |
+| MM     | month of year      | number       | 04 |
 | YY     | year               | year         | 2017           |
 
 
 Examples:
 
-* `create terra on leave from 0830 10317 to 0830 150317`
-* `create send update on project status from 1600 200217 to 1730 200217 tag urgent`
+* `create watch movie from me to you /from 1830 010317 to 010317 2030 `
+* `create read essay by tutor /by 200217 /tag urgent /tag assignment`
 
 ### 2.3. Listing all tasks: `list`
 
