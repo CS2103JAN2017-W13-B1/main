@@ -75,18 +75,19 @@ Examples:
 * `create watch movie from me to you /from 1830 010317 to 010317 2030 `
 * `create read essay by tutor /by 200217 /tag urgent /tag assignment`
 
-### 2.3. Listing all tasks: `list`
+### 2.3. Listing / Searching tasks: `list`
 
-Shows a list of all tasks in μTask based on inputs taken.<br>
+Shows a list of tasks in μTask based on inputs taken.<br>
 Format: `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
-> * If no parameters are provided, μTask will list all unexpired task from current date time in which the command is executed
+> * If no parameters are provided, μTask will list all unexpired tasks from current date time in which the command is executed
 > * `TYPE` refers to the type of task
 	* Either `float`, `deadline` or `event` can be used
 
 Examples:
 * `list`
 * `list float /tag urgent`
-* `list event /from 201017 to 221017 /done NO`
+* `list deadline /by 2359 310817 /tag math /done NO`
+* `list event /from 201017 to 221017 /done YES`
 
 ### 2.4. Updating a task: `edit`
 
