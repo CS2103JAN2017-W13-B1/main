@@ -488,6 +488,7 @@ Use case ends
 
 ##### Mainstream OS
 
+> tasks has 3 types: deadline (have a deadline) or event (have start time and end time), float (have no deadline or start time or end time)
 > Windows, Linux, Unix, OS-X
 
 ## Appendix E : Product Survey
