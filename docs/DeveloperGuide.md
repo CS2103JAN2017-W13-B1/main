@@ -413,33 +413,20 @@ Use case ends
 #### Use case: Rescheduling a task
 
 **MSS**
-
-1. User requests to rescheduling a task
-2. µTask shows a list of tasks
-3. User selects a task to reschedule
-4. µTask shows list of available datetime to edit (`[DEADLINE] [START_TIME] [END_TIME]`)
-5. User selects a datetime to edit
-6. µTask prompt to allow user to enter a new datetime (`HHMM DDMMYY format`) 
-7. User enters a datetime
-8. µTask rescheduling the selected task<br>
+1. User enters a new datetime for a selected index by update command(can be retrieved by list command)
+2. µTask rescheduling the selected task<br>
 Use case ends.
 
 **Extensions**
 
-2a. The list is empty
+1a. The given index is invalid
 
+> µTask shows an error message <br>
 > Use case ends
 
-3a. The given index is invalid
-
-> 3a1. µTask shows an error message <br>
-  Use case resumes at step 2
-
-5a. The given index is invalid
-
-> 5a1. µTask shows an error message <br>
-  Use case resumes at step 4
-
+1b. The given datetime is invalid
+> µTask shows an error message <br>
+> Use case ends
 
 #### Use case: Delete Task
 
