@@ -149,13 +149,13 @@ There is no need to save manually.
 
 Command | Format  
 -------- | :--------
-CreateTask | `create NAME [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...]`
-ListTask | `list [TYPE] [by DEADLINE] [from START_TIME] [to END_TIME] [tag TAG...] [done YES|NO]`
-UpdateTask | `update INDEX [name NAME] [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...][done YES|NO]`
+CreateTask | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
+ListTask | `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
+UpdateTask | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
 DeleteTask | `delete INDEX`
-CreateTag | `createtag NAME [color COLOR]` 
+CreateTag | `createtag NAME [/color COLOR]` 
 ListTag | `listtag` 
-UpdateTag | `updatetag INDEX [name NAME] [color COLOR]`
+UpdateTag | `updatetag INDEX [/name NAME] [/color COLOR]`
 DeleteTag | `deletetag INDEX`
 Update | `update`
 Select | `select INDEX` *or* `select last`
