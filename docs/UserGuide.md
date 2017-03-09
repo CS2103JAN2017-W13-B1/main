@@ -122,6 +122,23 @@ Examples:
 * `updatetag 2 /color 888888`<br>
   Updates the tag at `index` 2 to have `888888` as color.
 
+### 2.6. Deleting a tag: `deletetag`
+
+Description: Deletes the specified tag from μTask.<br>
+
+Format: `deletetag INDEX`
+
+> * Deletes the tag at the specified `INDEX`. <br>
+> * The index refers to the index number shown on the retrieved listing after `listtag` command is used. <br>
+> * The index **must be a positive integer** 1, 2, 3, ...
+
+Examples:
+
+* `listtag`<br>
+  `deletetag 2`<br>
+  Deletes the 2nd tag in μTask.
+* All existing tasks affected will have the specific tag removed.
+
 ### 2.7. Creating task: `create`
 
 Description: Creates a new task in μTask. <br>
@@ -218,7 +235,7 @@ Examples:
 
 ### 2.13. Deleting a task: `delete`
 
-Description: Deletes the specified task from the μTask. This action is not reversible. <br>
+Description: Deletes the specified task from μTask. <br>
 
 Format: `delete INDEX`
 
