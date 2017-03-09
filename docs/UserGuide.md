@@ -200,20 +200,20 @@ There is no need to save manually.
 
 Command | Format  
 -------- | :--------
-CreateTask | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
-ListTask | `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
-Find | `find KEYWORD...`
-UpdateTask | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
-DeleteTask | `delete INDEX`
+Help | `help`
+Set Path| `setpath PATH`
 CreateTag | `createtag NAME [/color COLOR]` 
 ListTag | `listtag` 
 UpdateTag | `updatetag INDEX [/name NAME] [/color COLOR]`
 DeleteTag | `deletetag INDEX`
+CreateTask | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
+ListTask | `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
+Find | `find KEYWORD...`
 Select | `select INDEX` *or* `select last`
+UpdateTask | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
 Done | `done INDEX`
+DeleteTask | `delete INDEX`
+Clear | `clear`
 Undo | `undo [last STEPS]`
 Redo | `redo [last STEPS]`
-Clear | `clear`
-Set Path| `setpath PATH`
-Help | `help`
 Exit | `exit`
