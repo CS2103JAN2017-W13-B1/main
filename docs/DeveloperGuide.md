@@ -398,7 +398,7 @@ Use case resumes at step 2
 **MSS**:
 
 1. User requests to list uncompleted tasks
-2. µTask lists uncompleted tasks in chronological order.
+2. µTask lists uncompleted tasks in chronological order. <br>
 Use case ends
 
 
@@ -412,9 +412,10 @@ Use case ends
 
 #### Use case: Rescheduling a task
 
-**MSS**
-1. User enters a new datetime for a selected index (can be retrieved by list command) by update command
-2. µTask rescheduling the selected task<br>
+**MSS**:
+
+1. User supplies a selected index and new date time in the update command
+2. µTask reschedules the selected task<br>
 Use case ends.
 
 **Extensions**
@@ -433,9 +434,9 @@ Use case ends.
 
 #### Use case: Delete Task
 
-**MSS**
+**MSS**:
 
-1. User select a task with an index (can be retrieved by list command) to delete
+1. User supplies a selected index in the delete command
 2. µTask deletes the task <br>
 Use case ends.
 
