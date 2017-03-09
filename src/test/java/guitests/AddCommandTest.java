@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
 import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.CreateCommand;
 import seedu.address.testutil.TestPerson;
 import seedu.address.testutil.TestUtil;
 
@@ -27,7 +27,7 @@ public class AddCommandTest extends AddressBookGuiTest {
 
         //add duplicate person
         commandBox.runCommand(td.hoon.getAddCommand());
-        assertResultMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertResultMessage(CreateCommand.MESSAGE_DUPLICATE_PERSON);
         assertTrue(personListPanel.isListMatching(currentList));
 
         //add to empty list

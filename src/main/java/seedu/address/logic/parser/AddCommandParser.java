@@ -9,8 +9,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.NoSuchElementException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CreateCommand;
 import seedu.address.logic.commands.IncorrectCommand;
 
 /**
@@ -27,7 +27,7 @@ public class AddCommandParser {
                 new ArgumentTokenizer(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
         argsTokenizer.tokenize(args);
         try {
-            return new AddCommand(
+            return new CreateCommand(
                     argsTokenizer.getPreamble().get(),
                     argsTokenizer.getValue(PREFIX_PHONE).get(),
                     argsTokenizer.getValue(PREFIX_EMAIL).get(),
@@ -35,7 +35,7 @@ public class AddCommandParser {
                     ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
             );
         } catch (NoSuchElementException nsee) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateCommand.MESSAGE_USAGE));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
