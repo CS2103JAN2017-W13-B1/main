@@ -73,6 +73,7 @@ Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQ
 
 > * Tasks can have any number of tags (including 0)
 > * Based on attributes provided during task creation, the type of resulting Task will be determined based on the following table:
+
 | Attribute provided during task creation                       | Type of task created |
 |---------------------------------------------------------------|----------------------|
 | `[/from START_TIME to END_TIME]`                              | Event                |
