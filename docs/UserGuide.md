@@ -46,13 +46,16 @@ By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbs
 
 ### 2.1. Viewing help : `help`
 
+Description: Displays a help menu to aid users in using μTask.
+
 Format: `help`
 
 > Help is also shown if you enter an incorrect command e.g. `abcd`
 
 ### 2.2. Creating task: `create`
 
-Creates a task in μTask<br>
+Description: Creates a new task in μTask. <br>
+
 Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
 
 > * `DEADLINE`, `START_TIME` and `END_TIME` uses a combination of  `HHMM DDMMYY` format to represent date and time
@@ -76,8 +79,6 @@ Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQ
 | `[/by DEADLINE]`                                              | Deadline             |
 | Neither `[/from START_TIME to END_TIME]` nor `[/by DEADLINE]` | Floating             |
 
-
-
 Examples:
 
 * `create watch movie from me to you /from 1830 010317 to 010317 2030 `
@@ -85,10 +86,13 @@ Examples:
 
 ### 2.3. Listing / Searching tasks: `list`
 
-Shows a list of tasks in μTask based on inputs taken.<br>
+Description: Searches μTask's current database for specific tasks based on inputs provided.<br>
+
 Format: `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
 > * If no parameters are provided, μTask will list all unexpired tasks from current date time in which the command is executed
 > * `TYPE` refers to the type of task determined during task creation
+> * μTask will list and number the tasks chronologically which fulfill the search requirements
+
 
 Examples:
 * `list`
@@ -98,25 +102,26 @@ Examples:
 
 ### 2.4. Updating a task: `edit`
 
-Updates an existing task in μTask.<br>
-Format: `update INDEX [name NAME] [by DEADLINE] [from START_TIME to END_TIME] [repeat FREQUENCY] [tag TAG...][done YES|NO]`
+Description: Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
+
+Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
 
 
 > * Updates the task at the specified `INDEX`.
-    The index refers to the index number shown in the task listing.<br>
+    The index refers to the index number shown after `list` command has been executed.<br>
     The index **must be a positive integer** 1, 2, 3, ...
 > * At least one of the optional fields must be provided.
 > * Existing values will be updated to the input values.
 > * When updating tags, the existing tags of the task will be removed i.e adding of tags is not cumulative.
-> * You can remove all the task tags by typing `tag` without specifying any tags after it. 
+> * You can remove all the task tags by typing `/tag` without specifying any tags after it. 
 
 Examples:
 
-* `update 1 done yes`<br>
-  Updates the 1st task to done.
+* `update 1 /done yes`<br>
+  Updates the task at `index` 1 to done.
 
-* `update 2 tag urgent`<br>
-  Updates the tag of the 2nd task to urgent and clears all existing tags, if applicable.
+* `update 2 /tag urgent`<br>
+  Updates the tag of the task at `index` 2 to urgent and removes all existing tags, if applicable.
 
 ### 2.5. Finding all tasks containing any keyword in their description: `find`
 
