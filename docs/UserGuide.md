@@ -85,6 +85,16 @@ Examples:
 * `createtag urgent /color dark red`
 * `createtag low priority /color 00ffff`
 
+### 2.4. Listing tags: `listtag`
+
+Description: Lists μTask's current database for all stored tags.<br>
+
+Format: `listtag`
+> * If no tags exists within the database, μTask will prompt and inform you.
+
+Examples:
+* `listtag`
+
 ### 2.7. Creating task: `create`
 
 Description: Creates a new task in μTask. <br>
