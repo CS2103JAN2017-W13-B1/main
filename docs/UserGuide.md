@@ -46,7 +46,7 @@ By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbs
 
 ### 2.1. Viewing help : `help`
 
-Description: Displays a help menu to aid users in using μTask.
+Description: Displays a help menu to aid users in using μTask. <br>
 
 Format: `help`
 
@@ -100,33 +100,11 @@ Examples:
 * `list deadline /by 2359 310817 /tag math /done NO`
 * `list event /from 201017 to 221017 /done YES`
 
-### 2.4. Updating a task: `edit`
+### 2.4. Finding all tasks containing any keyword in their description: `find`
 
-Description: Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
+Description: Finds tasks whose description contains any of the given keywords.<br>
 
-Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
-
-
-> * Updates the task at the specified `INDEX`.
-    The index refers to the index number shown after `list` command has been executed.<br>
-    The index **must be a positive integer** 1, 2, 3, ...
-> * At least one of the optional fields must be provided.
-> * Existing values will be updated to the input values.
-> * When updating tags, the existing tags of the task will be removed i.e adding of tags is not cumulative.
-> * You can remove all the task tags by typing `/tag` without specifying any tags after it. 
-
-Examples:
-
-* `update 1 /done yes`<br>
-  Updates the task at `index` 1 to done.
-
-* `update 2 /tag urgent`<br>
-  Updates the tag of the task at `index` 2 to urgent and removes all existing tags, if applicable.
-
-### 2.5. Finding all tasks containing any keyword in their description: `find`
-
-Finds tasks whose description contains any of the given keywords.<br>
-Format: `Find | find KEYWORD...`
+Format: `Find KEYWORD...`
 
 > * The search is case sensitive. e.g `grocery` will not match `Grocery`
 > * The order of the keywords does not matter. e.g. `Grocery Store` will match `Store Grocery`
@@ -142,14 +120,38 @@ Examples:
 * `find Impt Clear John`<br>
   Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
 
+### 2.5. Updating a task: `edit`
+
+Description: Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
+
+Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
+
+
+> * Updates the task at the specified `INDEX`.
+    The index refers to the index number shown after `list` or `find` command has been executed.<br>
+    The index **must be a positive integer** 1, 2, 3, ...
+> * At least one of the optional fields must be provided.
+> * Existing values will be updated to the input values.
+> * When updating tags, the existing tags of the task will be removed i.e adding of tags is not cumulative.
+> * You can remove all the task tags by typing `/tag` without specifying any tags after it. 
+
+Examples:
+
+* `update 1 /done yes`<br>
+  Updates the task at `index` 1 to done.
+
+* `update 2 /tag urgent`<br>
+  Updates the tag of the task at `index` 2 to urgent and removes all existing tags, if applicable.
+
 ### 2.6. Deleting a task: `delete`
 
-Deletes the specified task from the μTask. Irreversible.<br>
+Description: Deletes the specified task from the μTask. This action is not reversible. <br>
+
 Format: `delete INDEX`
 
-> Deletes the task at the specified `INDEX`. <br>
-> The index refers to the index number shown on the retrieved listing.<br>
-> The index **must be a positive integer** 1, 2, 3, ...
+> * Deletes the task at the specified `INDEX`. <br>
+> * The index refers to the index number shown on the retrieved listing after `list` or `find` command is used. <br>
+> * The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 
@@ -162,17 +164,19 @@ Examples:
   
 ### 2.7. Clearing all entries : `clear`
 
-Clears all stored tasks from the μTask.<br>
+Description: Clears all stored tasks from the μTask.<br>
+
 Format: `clear`
 
 ### 2.8. Exiting the program : `exit`
 
-Exits the program.<br>
+Description: Exits the program.<br>
+
 Format: `exit`
 
 ### 2.9. Saving the data
 
-μTask data are saved in the hard disk automatically after any command that changes the data.<br>
+Description:  μTask data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
 
 
