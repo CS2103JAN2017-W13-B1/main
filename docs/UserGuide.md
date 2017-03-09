@@ -210,6 +210,25 @@ Examples:
 * `find Impt Clear John`<br>
   Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
 
+### 2.10. Viewing a task: `select`
+
+Description: Views specific task's details based on the given index provided. <br>
+
+Format: `select INDEX or select last`
+
+> * Views the task at the specified `INDEX`.
+    The index refers to the index number shown after `list` or `find` command has been executed.<br>
+    The index **must be a positive integer** 1, 2, 3, ...
+> * `last` refers to the very last entry displayed by μTask
+
+Examples:
+
+* `select 1`<br>
+  Displays in depth details of the task at `index` 1.
+  
+* `select last`<br>
+  Displays in depth details of the task with the maximal `index`.
+
 ### 2.11. Updating a task: `edit`
 
 Description: Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
