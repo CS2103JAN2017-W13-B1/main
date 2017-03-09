@@ -117,10 +117,10 @@ Format: `updatetag INDEX [/name NAME] [/color COLOR]`
 Examples:
 
 * `updatetag 1 /name urgent /color ffffff`<br>
-  Updates the tag at `index` 1 to done.
+  Updates the tag at `index` 1 to have `urgent` as name and `ffffff` as color.
 
 * `updatetag 2 /color 888888`<br>
-  Updates the tag of the task at `index` 2 to urgent and removes all existing tags, if applicable.
+  Updates the tag at `index` 2 to have `888888` as color.
 
 ### 2.7. Creating task: `create`
 
