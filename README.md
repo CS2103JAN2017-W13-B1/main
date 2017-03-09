@@ -5,12 +5,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/CS2103JAN2017-W13-B1/main/badge.svg?branch=master)](https://coveralls.io/github/CS2103JAN2017-W13-B1/main?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/08b5a22b843848ff9b64c5b8d296b950)](https://www.codacy.com/app/deltango/main?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103JAN2017-W13-B1/main&amp;utm_campaign=Badge_Grade)
 
-<img src="docs/images/Ui.png" width="600"><br>
+<img src="docs/images/mockup-v0.0.png" width="600"><br>
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using
+* This is a desktop Task manager application. It has a GUI but most of the user interactions happen using
   a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as
-  the main programming language.
+* It is a Java sample application intended for people interested in using a Command line based task scheduler program.
 * It is **written in OOP fashion**. It provides a **reasonably well-written** code example that is
   **significantly bigger** (around 6 KLoC)than what students usually write in beginner-level SE modules.
 * What's different from [level 3](https://github.com/se-edu/addressbook-level3):
