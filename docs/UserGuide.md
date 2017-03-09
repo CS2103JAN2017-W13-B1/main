@@ -246,11 +246,27 @@ Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME]
 
 Examples:
 
-* `update 1 /done yes`<br>
-  Updates the task at `index` 1 to done.
+* `update 1 /name do homework`<br>
+  Updates the name of task at `index` 1 to "do homework".
 
 * `update 2 /tag urgent`<br>
-  Updates the tag of the task at `index` 2 to urgent and removes all existing tags, if applicable.
+  Updates the tag of the task at `index` 2 to "urgent" and removes all existing tags, if applicable.
+
+### 2.12. Updating status of task: `done`
+
+Description: Updates the `status` of an existing task to `yes`. <br>
+
+Format: `done INDEX`
+
+
+> * Updates the task at the specified `INDEX`.
+    The index refers to the index number shown after `list` or `find` command has been executed.<br>
+    The index **must be a positive integer** 1, 2, 3, ...
+
+Examples:
+
+* `done 1`<br>
+  Updates the status of task at `index` 1 to done.
 
 ### 2.13. Deleting a task: `delete`
 
