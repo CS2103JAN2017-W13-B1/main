@@ -209,7 +209,6 @@ CreateTag | `createtag NAME [/color COLOR]`
 ListTag | `listtag` 
 UpdateTag | `updatetag INDEX [/name NAME] [/color COLOR]`
 DeleteTag | `deletetag INDEX`
-Update | `update`
 Select | `select INDEX` *or* `select last`
 Done | `done INDEX`
 Undo | `undo [last STEPS]`
