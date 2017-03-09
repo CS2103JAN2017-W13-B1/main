@@ -13,8 +13,8 @@ import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.tag.Tag;
-import seedu.utask.model.task.Person;
-import seedu.utask.model.task.ReadOnlyPerson;
+import seedu.utask.model.task.ReadOnlyTask;
+import seedu.utask.model.task.Task;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -46,8 +46,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        final ObservableList<Person> persons = this.persons.stream().map(p -> {
+    public ObservableList<ReadOnlyTask> getPersonList() {
+        final ObservableList<Task> persons = this.persons.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {

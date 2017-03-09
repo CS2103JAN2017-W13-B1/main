@@ -10,8 +10,8 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Address;
 import seedu.utask.model.task.Email;
 import seedu.utask.model.task.Name;
-import seedu.utask.model.task.Person;
 import seedu.utask.model.task.Phone;
+import seedu.utask.model.task.Task;
 import seedu.utask.model.task.UniquePersonList;
 
 /**
@@ -29,7 +29,7 @@ public class CreateCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New task created: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in uTask";
 
-    private final Person toAdd;
+    private final Task toAdd;
 
     /**
      * Creates an CreateCommand using raw values.
@@ -42,7 +42,7 @@ public class CreateCommand extends Command {
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
         }
-        this.toAdd = new Person(
+        this.toAdd = new Task(
                 new Name(name),
                 new Phone(deadline),
                 new Email(timestamp),

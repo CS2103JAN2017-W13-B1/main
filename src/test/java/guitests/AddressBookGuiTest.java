@@ -27,7 +27,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.AddressBook;
 import seedu.address.testutil.TestUtil;
 import seedu.address.testutil.TypicalTestPersons;
-import seedu.utask.model.task.ReadOnlyPerson;
+import seedu.utask.model.task.ReadOnlyTask;
 
 /**
  * A GUI Test class for AddressBook.
@@ -107,7 +107,7 @@ public abstract class AddressBookGuiTest {
     /**
      * Asserts the person shown in the card is same as the given person
      */
-    public void assertMatching(ReadOnlyPerson person, PersonCardHandle card) {
+    public void assertMatching(ReadOnlyTask person, PersonCardHandle card) {
         assertTrue(TestUtil.compareCardAndPerson(card, person));
     }
 

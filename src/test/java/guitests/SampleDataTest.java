@@ -7,7 +7,7 @@ import org.junit.Test;
 import seedu.address.model.AddressBook;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
-import seedu.utask.model.task.Person;
+import seedu.utask.model.task.Task;
 
 public class SampleDataTest extends AddressBookGuiTest {
     @Override
@@ -24,7 +24,7 @@ public class SampleDataTest extends AddressBookGuiTest {
 
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() throws Exception {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
+        Task[] expectedList = SampleDataUtil.getSamplePersons();
         assertTrue(personListPanel.isListMatching(expectedList));
     }
 }

@@ -5,12 +5,12 @@ import seedu.utask.model.task.Address;
 import seedu.utask.model.task.Email;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Phone;
-import seedu.utask.model.task.ReadOnlyPerson;
+import seedu.utask.model.task.ReadOnlyTask;
 
 /**
  * A mutable person object. For testing only.
  */
-public class TestPerson implements ReadOnlyPerson {
+public class TestPerson implements ReadOnlyTask {
 
     private Name name;
     private Address address;
