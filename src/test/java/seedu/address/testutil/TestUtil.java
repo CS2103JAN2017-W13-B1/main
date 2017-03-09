@@ -33,7 +33,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.storage.XmlSerializableAddressBook;
-import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
@@ -75,15 +75,15 @@ public class TestUtil {
         try {
             //CHECKSTYLE.OFF: LineLength
             return new Task[]{
-                new Task(new Name("Ali Muster"), new Deadline("9482424"), new Timestamp("hans@google.com"), new Address("4th street"), new UniqueTagList()),
-                new Task(new Name("Boris Mueller"), new Deadline("87249245"), new Timestamp("ruth@google.com"), new Address("81th street"), new UniqueTagList()),
-                new Task(new Name("Carl Kurz"), new Deadline("95352563"), new Timestamp("heinz@yahoo.com"), new Address("wall street"), new UniqueTagList()),
-                new Task(new Name("Daniel Meier"), new Deadline("87652533"), new Timestamp("cornelia@google.com"), new Address("10th street"), new UniqueTagList()),
-                new Task(new Name("Elle Meyer"), new Deadline("9482224"), new Timestamp("werner@gmail.com"), new Address("michegan ave"), new UniqueTagList()),
-                new Task(new Name("Fiona Kunz"), new Deadline("9482427"), new Timestamp("lydia@gmail.com"), new Address("little tokyo"), new UniqueTagList()),
-                new Task(new Name("George Best"), new Deadline("9482442"), new Timestamp("anna@google.com"), new Address("4th street"), new UniqueTagList()),
-                new Task(new Name("Hoon Meier"), new Deadline("8482424"), new Timestamp("stefan@mail.com"), new Address("little india"), new UniqueTagList()),
-                new Task(new Name("Ida Mueller"), new Deadline("8482131"), new Timestamp("hans@google.com"), new Address("chicago ave"), new UniqueTagList())
+                new Task(new Name("Ali Muster"), new Deadline("9482424"), new Timestamp("hans@google.com"), new Frequency("4th street"), new UniqueTagList()),
+                new Task(new Name("Boris Mueller"), new Deadline("87249245"), new Timestamp("ruth@google.com"), new Frequency("81th street"), new UniqueTagList()),
+                new Task(new Name("Carl Kurz"), new Deadline("95352563"), new Timestamp("heinz@yahoo.com"), new Frequency("wall street"), new UniqueTagList()),
+                new Task(new Name("Daniel Meier"), new Deadline("87652533"), new Timestamp("cornelia@google.com"), new Frequency("10th street"), new UniqueTagList()),
+                new Task(new Name("Elle Meyer"), new Deadline("9482224"), new Timestamp("werner@gmail.com"), new Frequency("michegan ave"), new UniqueTagList()),
+                new Task(new Name("Fiona Kunz"), new Deadline("9482427"), new Timestamp("lydia@gmail.com"), new Frequency("little tokyo"), new UniqueTagList()),
+                new Task(new Name("George Best"), new Deadline("9482442"), new Timestamp("anna@google.com"), new Frequency("4th street"), new UniqueTagList()),
+                new Task(new Name("Hoon Meier"), new Deadline("8482424"), new Timestamp("stefan@mail.com"), new Frequency("little india"), new UniqueTagList()),
+                new Task(new Name("Ida Mueller"), new Deadline("8482131"), new Timestamp("hans@google.com"), new Frequency("chicago ave"), new UniqueTagList())
             };
             //CHECKSTYLE.ON: LineLength
         } catch (IllegalValueException e) {

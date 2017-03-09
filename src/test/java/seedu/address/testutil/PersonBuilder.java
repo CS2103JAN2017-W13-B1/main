@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
@@ -40,7 +40,7 @@ public class PersonBuilder {
     }
 
     public PersonBuilder withAddress(String address) throws IllegalValueException {
-        this.person.setAddress(new Address(address));
+        this.person.setAddress(new Frequency(address));
         return this;
     }
 

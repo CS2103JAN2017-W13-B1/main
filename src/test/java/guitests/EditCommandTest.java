@@ -11,7 +11,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TestPerson;
-import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
@@ -100,7 +100,7 @@ public class EditCommandTest extends AddressBookGuiTest {
         assertResultMessage(Timestamp.MESSAGE_EMAIL_CONSTRAINTS);
 
         commandBox.runCommand("edit 1 a/");
-        assertResultMessage(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        assertResultMessage(Frequency.MESSAGE_ADDRESS_CONSTRAINTS);
 
         commandBox.runCommand("edit 1 t/*&");
         assertResultMessage(Tag.MESSAGE_TAG_CONSTRAINTS);

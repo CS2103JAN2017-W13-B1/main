@@ -42,7 +42,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.storage.StorageManager;
-import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
@@ -417,7 +417,7 @@ public class LogicManagerTest {
             Name name = new Name("Adam Brown");
             Deadline privatePhone = new Deadline("111111");
             Timestamp email = new Timestamp("adam@gmail.com");
-            Address privateAddress = new Address("111, alpha street");
+            Frequency privateAddress = new Frequency("111, alpha street");
             Tag tag1 = new Tag("tag1");
             Tag tag2 = new Tag("longertag2");
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
@@ -436,7 +436,7 @@ public class LogicManagerTest {
                     new Name("Person " + seed),
                     new Deadline("" + Math.abs(seed)),
                     new Timestamp(seed + "@email"),
-                    new Address("House of " + seed),
+                    new Frequency("House of " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1)))
             );
         }
@@ -535,7 +535,7 @@ public class LogicManagerTest {
                     new Name(name),
                     new Deadline("1"),
                     new Timestamp("1@email"),
-                    new Address("House of 1"),
+                    new Frequency("House of 1"),
                     new UniqueTagList(new Tag("tag"))
             );
         }

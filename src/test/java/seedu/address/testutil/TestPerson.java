@@ -1,7 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
@@ -13,7 +13,7 @@ import seedu.utask.model.task.ReadOnlyTask;
 public class TestPerson implements ReadOnlyTask {
 
     private Name name;
-    private Address address;
+    private Frequency address;
     private Timestamp email;
     private Deadline phone;
     private UniqueTagList tags;
@@ -37,7 +37,7 @@ public class TestPerson implements ReadOnlyTask {
         this.name = name;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(Frequency address) {
         this.address = address;
     }
 
@@ -69,7 +69,7 @@ public class TestPerson implements ReadOnlyTask {
     }
 
     @Override
-    public Address getAddress() {
+    public Frequency getAddress() {
         return address;
     }
 

@@ -11,7 +11,7 @@ public interface ReadOnlyTask {
     Name getName();
     Deadline getPhone();
     Timestamp getEmail();
-    Address getAddress();
+    Frequency getAddress();
 
     /**
      * The returned TagList is a deep copy of the internal TagList,

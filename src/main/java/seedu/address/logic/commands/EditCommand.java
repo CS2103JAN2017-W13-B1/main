@@ -7,7 +7,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
@@ -80,7 +80,7 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElseGet(personToEdit::getName);
         Deadline updatedPhone = editPersonDescriptor.getPhone().orElseGet(personToEdit::getPhone);
         Timestamp updatedEmail = editPersonDescriptor.getEmail().orElseGet(personToEdit::getEmail);
-        Address updatedAddress = editPersonDescriptor.getAddress().orElseGet(personToEdit::getAddress);
+        Frequency updatedAddress = editPersonDescriptor.getAddress().orElseGet(personToEdit::getAddress);
         UniqueTagList updatedTags = editPersonDescriptor.getTags().orElseGet(personToEdit::getTags);
 
         return new Task(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
@@ -94,7 +94,7 @@ public class EditCommand extends Command {
         private Optional<Name> name = Optional.empty();
         private Optional<Deadline> phone = Optional.empty();
         private Optional<Timestamp> email = Optional.empty();
-        private Optional<Address> address = Optional.empty();
+        private Optional<Frequency> address = Optional.empty();
         private Optional<UniqueTagList> tags = Optional.empty();
 
         public EditPersonDescriptor() {}
@@ -141,12 +141,12 @@ public class EditCommand extends Command {
             return email;
         }
 
-        public void setAddress(Optional<Address> address) {
+        public void setAddress(Optional<Frequency> address) {
             assert address != null;
             this.address = address;
         }
 
-        public Optional<Address> getAddress() {
+        public Optional<Frequency> getAddress() {
             return address;
         }
 

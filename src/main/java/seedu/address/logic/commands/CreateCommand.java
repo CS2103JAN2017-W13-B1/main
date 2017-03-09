@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
@@ -46,7 +46,7 @@ public class CreateCommand extends Command {
                 new Name(name),
                 new Deadline(deadline),
                 new Timestamp(timestamp),
-                new Address(frequency),
+                new Frequency(frequency),
                 new UniqueTagList(tagSet)
         );
     }
