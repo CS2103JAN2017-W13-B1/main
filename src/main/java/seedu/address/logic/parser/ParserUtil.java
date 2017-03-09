@@ -18,7 +18,7 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Address;
 import seedu.utask.model.task.Email;
 import seedu.utask.model.task.Name;
-import seedu.utask.model.task.Phone;
+import seedu.utask.model.task.Deadline;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes
@@ -77,9 +77,9 @@ public class ParserUtil {
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
+    public static Optional<Deadline> parsePhone(Optional<String> phone) throws IllegalValueException {
         assert phone != null;
-        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+        return phone.isPresent() ? Optional.of(new Deadline(phone.get())) : Optional.empty();
     }
 
     /**

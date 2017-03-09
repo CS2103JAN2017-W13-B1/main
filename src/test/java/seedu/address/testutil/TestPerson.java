@@ -4,7 +4,7 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Address;
 import seedu.utask.model.task.Email;
 import seedu.utask.model.task.Name;
-import seedu.utask.model.task.Phone;
+import seedu.utask.model.task.Deadline;
 import seedu.utask.model.task.ReadOnlyTask;
 
 /**
@@ -15,7 +15,7 @@ public class TestPerson implements ReadOnlyTask {
     private Name name;
     private Address address;
     private Email email;
-    private Phone phone;
+    private Deadline phone;
     private UniqueTagList tags;
 
     public TestPerson() {
@@ -45,7 +45,7 @@ public class TestPerson implements ReadOnlyTask {
         this.email = email;
     }
 
-    public void setPhone(Phone phone) {
+    public void setPhone(Deadline phone) {
         this.phone = phone;
     }
 
@@ -59,7 +59,7 @@ public class TestPerson implements ReadOnlyTask {
     }
 
     @Override
-    public Phone getPhone() {
+    public Deadline getPhone() {
         return phone;
     }
 

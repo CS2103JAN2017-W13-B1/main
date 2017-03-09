@@ -11,7 +11,7 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Address;
 import seedu.utask.model.task.Email;
 import seedu.utask.model.task.Name;
-import seedu.utask.model.task.Phone;
+import seedu.utask.model.task.Deadline;
 import seedu.utask.model.task.ReadOnlyTask;
 import seedu.utask.model.task.Task;
 
@@ -66,7 +66,7 @@ public class XmlAdaptedPerson {
             personTags.add(tag.toModelType());
         }
         final Name name = new Name(this.name);
-        final Phone phone = new Phone(this.phone);
+        final Deadline phone = new Deadline(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final UniqueTagList tags = new UniqueTagList(personTags);

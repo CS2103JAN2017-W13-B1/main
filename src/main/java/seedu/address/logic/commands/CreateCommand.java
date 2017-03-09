@@ -10,7 +10,7 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Address;
 import seedu.utask.model.task.Email;
 import seedu.utask.model.task.Name;
-import seedu.utask.model.task.Phone;
+import seedu.utask.model.task.Deadline;
 import seedu.utask.model.task.Task;
 import seedu.utask.model.task.UniquePersonList;
 
@@ -44,7 +44,7 @@ public class CreateCommand extends Command {
         }
         this.toAdd = new Task(
                 new Name(name),
-                new Phone(deadline),
+                new Deadline(deadline),
                 new Email(timestamp),
                 new Address(frequency),
                 new UniqueTagList(tagSet)
