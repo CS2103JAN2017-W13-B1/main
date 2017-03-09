@@ -33,12 +33,12 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.storage.XmlSerializableAddressBook;
-import seedu.utask.model.task.Frequency;
-import seedu.utask.model.task.Timestamp;
-import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.Frequency;
+import seedu.utask.model.task.Name;
 import seedu.utask.model.task.ReadOnlyTask;
 import seedu.utask.model.task.Task;
+import seedu.utask.model.task.Timestamp;
 
 /**
  * A utility class for test cases.

@@ -1,11 +1,11 @@
 package seedu.address.testutil;
 
 import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.Frequency;
-import seedu.utask.model.task.Timestamp;
-import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.Frequency;
+import seedu.utask.model.task.Name;
 import seedu.utask.model.task.ReadOnlyTask;
+import seedu.utask.model.task.Timestamp;
 
 /**
  * A mutable person object. For testing only.

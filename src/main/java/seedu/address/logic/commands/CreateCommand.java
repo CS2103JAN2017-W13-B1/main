@@ -7,11 +7,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.Frequency;
-import seedu.utask.model.task.Timestamp;
-import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.Frequency;
+import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Task;
+import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.UniquePersonList;
 
 /**
