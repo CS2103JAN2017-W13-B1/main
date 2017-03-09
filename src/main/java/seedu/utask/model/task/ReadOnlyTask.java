@@ -10,7 +10,7 @@ public interface ReadOnlyTask {
 
     Name getName();
     Deadline getPhone();
-    Email getEmail();
+    Timestamp getEmail();
     Address getAddress();
 
     /**

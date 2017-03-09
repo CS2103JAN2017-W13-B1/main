@@ -8,7 +8,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Address;
-import seedu.utask.model.task.Email;
+import seedu.utask.model.task.Timestamp;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Deadline;
 import seedu.utask.model.task.ReadOnlyTask;
@@ -79,7 +79,7 @@ public class EditCommand extends Command {
 
         Name updatedName = editPersonDescriptor.getName().orElseGet(personToEdit::getName);
         Deadline updatedPhone = editPersonDescriptor.getPhone().orElseGet(personToEdit::getPhone);
-        Email updatedEmail = editPersonDescriptor.getEmail().orElseGet(personToEdit::getEmail);
+        Timestamp updatedEmail = editPersonDescriptor.getEmail().orElseGet(personToEdit::getEmail);
         Address updatedAddress = editPersonDescriptor.getAddress().orElseGet(personToEdit::getAddress);
         UniqueTagList updatedTags = editPersonDescriptor.getTags().orElseGet(personToEdit::getTags);
 
@@ -93,7 +93,7 @@ public class EditCommand extends Command {
     public static class EditPersonDescriptor {
         private Optional<Name> name = Optional.empty();
         private Optional<Deadline> phone = Optional.empty();
-        private Optional<Email> email = Optional.empty();
+        private Optional<Timestamp> email = Optional.empty();
         private Optional<Address> address = Optional.empty();
         private Optional<UniqueTagList> tags = Optional.empty();
 
@@ -132,12 +132,12 @@ public class EditCommand extends Command {
             return phone;
         }
 
-        public void setEmail(Optional<Email> email) {
+        public void setEmail(Optional<Timestamp> email) {
             assert email != null;
             this.email = email;
         }
 
-        public Optional<Email> getEmail() {
+        public Optional<Timestamp> getEmail() {
             return email;
         }
 
