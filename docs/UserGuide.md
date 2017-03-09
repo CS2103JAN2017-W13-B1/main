@@ -65,7 +65,27 @@ Examples:
 
 * `setpath "C:\TEMP"`
 
-### 2.2. Creating task: `create`
+### 2.3. Creating tag: `createtag`
+
+Description: Creates a new tag in μTask. <br>
+
+Format: `createtag NAME [/color COLOR]`
+
+> * `NAME` provided must be unique and currently not existing in the μTask
+> * `COLOR` provided can come in a form of 6 digit hexadecimal `RRGGBB` or plain English
+
+| Symbol | Meaning            | Example        |
+|--------|--------------------|----------------|
+| RR     | Value of Red hue   | 08             |
+| GG     | Value of Green hue | ff             |
+| BB     | Value of Blue hue  | 8e             |
+
+Examples:
+
+* `createtag urgent /color dark red`
+* `createtag low priority /color 00ffff`
+
+### 2.7. Creating task: `create`
 
 Description: Creates a new task in μTask. <br>
 
@@ -100,7 +120,7 @@ Examples:
 * `create watch movie from me to you /from 1830 010317 to 010317 2030 `
 * `create read essay by tutor /by 200217 /tag urgent /tag assignment`
 
-### 2.3. Listing / Searching tasks: `list`
+### 2.8. Listing / Searching tasks: `list`
 
 Description: Searches μTask's current database for specific tasks based on inputs provided.<br>
 
@@ -116,7 +136,7 @@ Examples:
 * `list deadline /by 2359 310817 /tag math /done NO`
 * `list event /from 201017 to 221017 /done YES`
 
-### 2.4. Finding all tasks containing any keyword in their description: `find`
+### 2.9. Finding all tasks containing any keyword in their description: `find`
 
 Description: Finds tasks whose description contains any of the given keywords.<br>
 
@@ -136,7 +156,7 @@ Examples:
 * `find Impt Clear John`<br>
   Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
 
-### 2.5. Updating a task: `edit`
+### 2.11. Updating a task: `edit`
 
 Description: Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
 
@@ -159,7 +179,7 @@ Examples:
 * `update 2 /tag urgent`<br>
   Updates the tag of the task at `index` 2 to urgent and removes all existing tags, if applicable.
 
-### 2.6. Deleting a task: `delete`
+### 2.13. Deleting a task: `delete`
 
 Description: Deletes the specified task from the μTask. This action is not reversible. <br>
 
@@ -178,19 +198,19 @@ Examples:
   `delete 1`<br>
   Deletes the 1st task in the results of the `find` command.
   
-### 2.7. Clearing all entries : `clear`
+### 2.14. Clearing all entries : `clear`
 
 Description: Clears all stored tasks from the μTask.<br>
 
 Format: `clear`
 
-### 2.8. Exiting the program : `exit`
+### 2.17. Exiting the program : `exit`
 
 Description: Exits the program.<br>
 
 Format: `exit`
 
-### 2.9. Saving the data
+### 2.18. Saving the data
 
 Description:  μTask data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
