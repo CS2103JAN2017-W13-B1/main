@@ -63,6 +63,7 @@ Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQ
 	 * `DDMMYY` is mandatory
 	 * `HHMM` is optional because if it is not provided, default value of `0000` will be used
 
+
 | Symbol | Meaning            | Example        |
 |--------|--------------------|----------------|
 | HH     | hour of day (0~23) | 08             |
@@ -73,6 +74,7 @@ Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQ
 
 > * Tasks can have any number of tags (including 0)
 > * Based on attributes provided during task creation, the type of resulting Task will be determined based on the following table:
+
 
 | Attribute provided during task creation                       | Type of task created |
 |---------------------------------------------------------------|----------------------|
@@ -200,6 +202,7 @@ Command | Format
 -------- | :--------
 CreateTask | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
 ListTask | `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
+Find | `find KEYWORD...`
 UpdateTask | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
 DeleteTask | `delete INDEX`
 CreateTag | `createtag NAME [/color COLOR]` 
@@ -208,10 +211,10 @@ UpdateTag | `updatetag INDEX [/name NAME] [/color COLOR]`
 DeleteTag | `deletetag INDEX`
 Update | `update`
 Select | `select INDEX` *or* `select last`
-Find | `find KEYWORD...`
 Done | `done INDEX`
 Undo | `undo [last STEPS]`
 Redo | `redo [last STEPS]`
 Clear | `clear`
 Set Path| `setpath PATH`
 Help | `help`
+Exit | `exit`
