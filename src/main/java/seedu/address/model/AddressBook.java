@@ -10,12 +10,12 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.UnmodifiableObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.UniquePersonList.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.utask.model.task.Person;
+import seedu.utask.model.task.ReadOnlyPerson;
+import seedu.utask.model.task.UniquePersonList;
+import seedu.utask.model.task.UniquePersonList.DuplicatePersonException;
 
 /**
  * Wraps all data at the address-book level

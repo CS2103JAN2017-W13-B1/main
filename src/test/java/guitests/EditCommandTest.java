@@ -8,13 +8,13 @@ import org.junit.Test;
 import guitests.guihandles.PersonCardHandle;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TestPerson;
+import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Email;
+import seedu.utask.model.task.Name;
+import seedu.utask.model.task.Phone;
 
 // TODO: reduce GUI tests by transferring some tests to be covered by lower level tests.
 public class EditCommandTest extends AddressBookGuiTest {

@@ -3,10 +3,10 @@ package seedu.address.model;
 import java.util.Set;
 
 import seedu.address.commons.core.UnmodifiableObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.UniquePersonList.DuplicatePersonException;
+import seedu.utask.model.task.Person;
+import seedu.utask.model.task.ReadOnlyPerson;
+import seedu.utask.model.task.UniquePersonList;
+import seedu.utask.model.task.UniquePersonList.DuplicatePersonException;
 
 /**
  * The API of the Model component.

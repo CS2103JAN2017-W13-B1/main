@@ -39,15 +39,15 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.storage.StorageManager;
+import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Email;
+import seedu.utask.model.task.Name;
+import seedu.utask.model.task.Person;
+import seedu.utask.model.task.Phone;
+import seedu.utask.model.task.ReadOnlyPerson;
 
 
 public class LogicManagerTest {

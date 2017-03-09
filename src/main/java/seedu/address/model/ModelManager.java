@@ -10,10 +10,10 @@ import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.UniquePersonList.PersonNotFoundException;
+import seedu.utask.model.task.Person;
+import seedu.utask.model.task.ReadOnlyPerson;
+import seedu.utask.model.task.UniquePersonList;
+import seedu.utask.model.task.UniquePersonList.PersonNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.

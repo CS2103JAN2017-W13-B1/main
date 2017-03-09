@@ -1,11 +1,11 @@
 package seedu.address.testutil;
 
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Email;
+import seedu.utask.model.task.Name;
+import seedu.utask.model.task.Phone;
+import seedu.utask.model.task.ReadOnlyPerson;
 
 /**
  * A mutable person object. For testing only.

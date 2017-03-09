@@ -5,14 +5,14 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.utask.model.task.Address;
+import seedu.utask.model.task.Email;
+import seedu.utask.model.task.Name;
+import seedu.utask.model.task.Person;
+import seedu.utask.model.task.Phone;
+import seedu.utask.model.task.UniquePersonList;
 
 /**
  * Adds a person to the address book.
@@ -26,8 +26,8 @@ public class CreateCommand extends Command {
             + "Example: " + COMMAND_WORD
             + " read essay /by 200217 /from /tag urgent /tag assignment";
 
-    public static final String MESSAGE_SUCCESS = "New tsk created: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New task created: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in uTask";
 
     private final Person toAdd;
 
