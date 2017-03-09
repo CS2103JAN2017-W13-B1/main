@@ -91,9 +91,36 @@ Description: Lists μTask's current database for all stored tags.<br>
 
 Format: `listtag`
 > * If no tags exists within the database, μTask will prompt and inform you.
+> * μTask will list and number the tags according to the  chronological order of creation
 
 Examples:
 * `listtag`
+
+### 2.5. Updating a tag: `updatetag`
+
+Description: Updates an existing tag in μTask. You can perform update on a specific task after `listtag` command has been executed. <br>
+
+Format: `updatetag INDEX [/name NAME] [/color COLOR]`
+
+> * Updates the tag at the specified `INDEX`.
+    The index refers to the index number shown after `listtag` has been executed.<br>
+    The index **must be a positive integer** 1, 2, 3, ...
+> * `NAME` provided must be unique and currently not existing in the μTask
+> * `COLOR` provided can come in a form of 6 digit hexadecimal `RRGGBB` or plain English
+
+| Symbol | Meaning            | Example        |
+|--------|--------------------|----------------|
+| RR     | Value of Red hue   | 08             |
+| GG     | Value of Green hue | ff             |
+| BB     | Value of Blue hue  | 8e             |
+
+Examples:
+
+* `updatetag 1 /name urgent /color ffffff`<br>
+  Updates the tag at `index` 1 to done.
+
+* `updatetag 2 /color 888888`<br>
+  Updates the tag of the task at `index` 2 to urgent and removes all existing tags, if applicable.
 
 ### 2.7. Creating task: `create`
 
