@@ -1,6 +1,6 @@
-# AddressBook Level 4 - Developer Guide
+# µTask - Developer Guide
 
-By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbsp;&nbsp; Licence: `MIT`
+By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbsp;&nbsp; Licence: `MIT`
 
 ---
 
@@ -348,7 +348,7 @@ Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new task |
-`* * *` | user | retrieve unfinished tasks for the day | decide what to be done soon
+`* * *` | user | retrieve unfinished tasks for the day | decide what is to be done soon
 `* * *` | user | rescheduling an existing task | change task's deadline or start date or end date accordingly
 `* * *` | user | rename an existing task’s name |
 `* * *` | user | delete an existing task | remove an entry of the list of stored tasks
@@ -398,7 +398,7 @@ Use case resumes at step 2
 **MSS**:
 
 1. User requests to list uncompleted tasks
-2. µTask lists uncompleted tasks in chronological order.
+2. µTask lists uncompleted tasks in chronological order. <br>
 Use case ends
 
 
@@ -412,9 +412,10 @@ Use case ends
 
 #### Use case: Rescheduling a task
 
-**MSS**
-1. User enters a new datetime for a selected index (can be retrieved by list command) by update command
-2. µTask rescheduling the selected task<br>
+**MSS**:
+
+1. User supplies a selected index and new date time in the update command
+2. µTask reschedules the selected task<br>
 Use case ends.
 
 **Extensions**
@@ -433,9 +434,9 @@ Use case ends.
 
 #### Use case: Delete Task
 
-**MSS**
+**MSS**:
 
-1. User select a task with an index (can be retrieved by list command) to delete
+1. User supplies a selected index in the delete command
 2. µTask deletes the task <br>
 Use case ends.
 
@@ -486,10 +487,27 @@ Use case ends
 
 ## Appendix D : Glossary
 
+
+##### Tasks
+> There are **three** types of tasks in µTask. They are Deadline, Event and Float.
+
+> * **Deadlines** are tasks with only end date
+> * **Events** are tasks with both a start date and end date 
+> * **Floats** are tasks with no start date and end date 
+
+##### Deadline
+> Task with only end date is defined as Deadline
+
+##### Event
+> Task with both a start date and end date is defined as Event.
+
+##### Float
+> Task with no start date and end date is defined as Float
+
 ##### Mainstream OS
 
-> tasks has 3 types: deadline (have a deadline) or event (have start time and end time), float (have no deadline or start time or end time)
 > Windows, Linux, Unix, OS-X
+
 
 ## Appendix E : Product Survey
 
