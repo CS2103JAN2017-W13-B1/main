@@ -58,7 +58,7 @@ Description: Designates the save directory for μTask. <br>
 
 Format: `setpath PATH`
 
-> `PATH` provided by the user has to be a valid folder for the command to successfully execute. 
+> `PATH` provided by the user has to be a valid folder for the command to successfully execute.
 > `PATH` has to be enclosed within quotes `"`
 
 Examples:
@@ -225,7 +225,7 @@ Examples:
 
 * `select 1`<br>
   Displays in depth details of the task at `index` 1.
-  
+
 * `select last`<br>
   Displays in depth details of the task with the maximal `index`.
 
@@ -242,7 +242,7 @@ Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME]
 > * At least one of the optional fields must be provided.
 > * Existing values will be updated to the input values.
 > * When updating tags, the existing tags of the task will be removed i.e adding of tags is not cumulative.
-> * You can remove all the task tags by typing `/tag` without specifying any tags after it. 
+> * You can remove all the task tags by typing `/tag` without specifying any tags after it.
 
 Examples:
 
@@ -283,11 +283,11 @@ Examples:
 * `list`<br>
   `delete 2`<br>
   Deletes the 2nd task in μTask.
-  
+
 * `find terra`<br>
   `delete 1`<br>
   Deletes the 1st task in the results of the `find` command.
-  
+
 ### 2.14. Clearing all entries : `clear`
 
 Description: Clears all stored tasks from the μTask.<br>
@@ -351,12 +351,12 @@ There is no need to save manually.
 
 ## 4. Commands Format List
 
-Command | Format  
+Command | Format
 -------- | :--------
 Help | `help`
 Set Path| `setpath PATH`
-CreateTag | `createtag NAME [/color COLOR]` 
-ListTag | `listtag` 
+CreateTag | `createtag NAME [/color COLOR]`
+ListTag | `listtag`
 UpdateTag | `updatetag INDEX [/name NAME] [/color COLOR]`
 DeleteTag | `deletetag INDEX`
 CreateTask | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
