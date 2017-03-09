@@ -15,7 +15,7 @@ import seedu.utask.model.task.Phone;
 import seedu.utask.model.task.UniquePersonList;
 
 /**
- * Adds a person to the address book.
+ * Creates a new task to uTask.
  */
 public class CreateCommand extends Command {
 
@@ -32,11 +32,11 @@ public class CreateCommand extends Command {
     private final Person toAdd;
 
     /**
-     * Creates an AddCommand using raw values.
+     * Creates an CreateCommand using raw values.
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public CreateCommand(String name, String phone, String email, String address, Set<String> tags)
+    public CreateCommand(String name, String deadline, String timestamp, String frequency, Set<String> tags)
             throws IllegalValueException {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
@@ -44,9 +44,9 @@ public class CreateCommand extends Command {
         }
         this.toAdd = new Person(
                 new Name(name),
-                new Phone(phone),
-                new Email(email),
-                new Address(address),
+                new Phone(deadline),
+                new Email(timestamp),
+                new Address(frequency),
                 new UniqueTagList(tagSet)
         );
     }
