@@ -1,4 +1,4 @@
-# Address Book (Level 4)
+# μTask
 
 [![Build Status](https://travis-ci.org/CS2103JAN2017-W13-B1/main.svg?branch=master)](https://travis-ci.org/CS2103JAN2017-W13-B1/main)
 [![Build status](https://ci.appveyor.com/api/projects/status/3id5lcfeay8dgucw?svg=true)](https://ci.appveyor.com/project/deltango/main)
