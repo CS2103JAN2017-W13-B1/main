@@ -16,7 +16,7 @@ import seedu.address.logic.commands.IncorrectCommand;
 /**
  * Parses input arguments and creates a new AddCommand object
  */
-public class AddCommandParser {
+public class CreateCommandParser {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand

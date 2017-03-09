@@ -45,7 +45,7 @@ public class Parser {
         switch (commandWord) {
 
         case CreateCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            return new CreateCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
