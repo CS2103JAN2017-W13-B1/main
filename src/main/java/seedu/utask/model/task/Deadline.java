@@ -4,34 +4,34 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
  */
 public class Deadline {
 
-    public static final String MESSAGE_PHONE_CONSTRAINTS = "Person phone numbers should only contain numbers";
-    public static final String PHONE_VALIDATION_REGEX = "\\d+";
+    public static final String MESSAGE_DEADLINE_CONSTRAINTS = "Deadline for tasks should in format DDMMYY";
+    public static final String DEADLINE_VALIDATION_REGEX = "\\d+";
 
     public final String value;
 
     /**
-     * Validates given phone number.
+     * Validates given deadline.
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-    public Deadline(String phone) throws IllegalValueException {
-        assert phone != null;
-        String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+    public Deadline(String deadline) throws IllegalValueException {
+        assert deadline != null;
+        String trimmedDeadline = deadline.trim();
+        if (!isValidDeadline(trimmedDeadline)) {
+            throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
         }
-        this.value = trimmedPhone;
+        this.value = trimmedDeadline;
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid task deadline.
      */
-    public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+    public static boolean isValidDeadline(String test) {
+        return test.matches(DEADLINE_VALIDATION_REGEX);
     }
 
     @Override

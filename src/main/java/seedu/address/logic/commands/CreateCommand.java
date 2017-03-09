@@ -24,7 +24,7 @@ public class CreateCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a task to uTask. "
             + "Parameters: NAME  [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG]...\n"
             + "Example: " + COMMAND_WORD
-            + " read essay /by 200217 /from /tag urgent /tag assignment";
+            + " read essay /by 200217 /from 1830 to 2030 /repeat Every Monday /tag urgent /tag assignment";
 
     public static final String MESSAGE_SUCCESS = "New task created: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in uTask";
