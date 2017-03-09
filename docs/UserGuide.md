@@ -52,6 +52,19 @@ Format: `help`
 
 > Help is also shown if you enter an incorrect command e.g. `abcd`
 
+### 2.2. Setting save location: `setpath`
+
+Description: Designates the save directory for μTask. <br>
+
+Format: `setpath PATH`
+
+> `PATH` provided by the user has to be a valid folder for the command to successfully execute. 
+> `PATH` has to be enclosed within quotes `"`
+
+Examples:
+
+* `setpath "C:\TEMP"`
+
 ### 2.2. Creating task: `create`
 
 Description: Creates a new task in μTask. <br>
