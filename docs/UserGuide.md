@@ -250,7 +250,7 @@ Examples:
   Updates the name of task at `index` 1 to "do homework".
 
 * `update 2 /tag urgent`<br>
-  Updates the tag of the task at `index` 2 to "urgent" and removes all existing tags, if applicable.
+  Updates the tag of the task at `index` 2 to "urgent and removes all existing tags, if applicable.
 
 ### 2.12. Updating status of task: `done`
 
@@ -283,6 +283,7 @@ Examples:
 * `list`<br>
   `delete 2`<br>
   Deletes the 2nd task in μTask.
+  
 * `find terra`<br>
   `delete 1`<br>
   Deletes the 1st task in the results of the `find` command.
@@ -292,6 +293,36 @@ Examples:
 Description: Clears all stored tasks from the μTask.<br>
 
 Format: `clear`
+
+### 2.15. Undoing previous actions: `undo`
+
+Description: Reverts changes made within μTask based on the provided amount of `STEPS`. <br>
+
+Format: `undo [/last STEPS]`
+
+> * Based on the value of `STEPS` provided, μTask will undo the specified amount of times. <br>
+> * If the provided `STEPS` is higher than the number of commands executed within the session, μTask will prompt for confirmation before losing all changes made. <br>
+> * The `STEPS` **must be a positive integer** 1, 2, 3, ...
+
+Examples:
+
+* `undo /last 4`<br>
+  Reverts last 4 commands executed within μTask.
+
+### 2.16. Redoing previous actions: `redo`
+
+Description: Re-applies the changes reverted by undo within μTask based on the provided amount of `STEPS`. <br>
+
+Format: `redo [/last STEPS]`
+
+> * Based on the value of `STEPS` provided, μTask will redo the specified amount of times. <br>
+> * If the provided `STEPS` is higher than the number of undo executed within the session, μTask will prompt for confirmation before re-applying all changes made. <br>
+> * The `STEPS` **must be a positive integer** 1, 2, 3, ...
+
+Examples:
+
+* `redo /last 4`<br>
+  Re-applies last 4 changes reverted by undo within μTask.
 
 ### 2.17. Exiting the program : `exit`
 
@@ -336,6 +367,6 @@ UpdateTask | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_
 Done | `done INDEX`
 DeleteTask | `delete INDEX`
 Clear | `clear`
-Undo | `undo [last STEPS]`
-Redo | `redo [last STEPS]`
+Undo | `undo [/last STEPS]`
+Redo | `redo [/last STEPS]`
 Exit | `exit`
