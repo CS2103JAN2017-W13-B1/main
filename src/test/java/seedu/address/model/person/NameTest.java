@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.utask.model.task.Name;
+
 public class NameTest {
 
     @Test

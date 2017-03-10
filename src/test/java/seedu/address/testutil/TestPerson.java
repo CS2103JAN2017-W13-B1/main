@@ -1,21 +1,21 @@
 package seedu.address.testutil;
 
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.Frequency;
+import seedu.utask.model.task.Name;
+import seedu.utask.model.task.ReadOnlyTask;
+import seedu.utask.model.task.Timestamp;
 
 /**
  * A mutable person object. For testing only.
  */
-public class TestPerson implements ReadOnlyPerson {
+public class TestPerson implements ReadOnlyTask {
 
     private Name name;
-    private Address address;
-    private Email email;
-    private Phone phone;
+    private Frequency address;
+    private Timestamp email;
+    private Deadline phone;
     private UniqueTagList tags;
 
     public TestPerson() {
@@ -27,9 +27,9 @@ public class TestPerson implements ReadOnlyPerson {
      */
     public TestPerson(TestPerson personToCopy) {
         this.name = personToCopy.getName();
-        this.phone = personToCopy.getPhone();
-        this.email = personToCopy.getEmail();
-        this.address = personToCopy.getAddress();
+        this.phone = personToCopy.getDeadline();
+        this.email = personToCopy.getTimestamp();
+        this.address = personToCopy.getFrequency();
         this.tags = personToCopy.getTags();
     }
 
@@ -37,15 +37,15 @@ public class TestPerson implements ReadOnlyPerson {
         this.name = name;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(Frequency address) {
         this.address = address;
     }
 
-    public void setEmail(Email email) {
+    public void setEmail(Timestamp email) {
         this.email = email;
     }
 
-    public void setPhone(Phone phone) {
+    public void setPhone(Deadline phone) {
         this.phone = phone;
     }
 
@@ -59,17 +59,17 @@ public class TestPerson implements ReadOnlyPerson {
     }
 
     @Override
-    public Phone getPhone() {
+    public Deadline getDeadline() {
         return phone;
     }
 
     @Override
-    public Email getEmail() {
+    public Timestamp getTimestamp() {
         return email;
     }
 
     @Override
-    public Address getAddress() {
+    public Frequency getFrequency() {
         return address;
     }
 
@@ -86,9 +86,9 @@ public class TestPerson implements ReadOnlyPerson {
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getName().fullName + " ");
-        sb.append("a/" + this.getAddress().value + " ");
-        sb.append("p/" + this.getPhone().value + " ");
-        sb.append("e/" + this.getEmail().value + " ");
+        sb.append("a/" + this.getFrequency().value + " ");
+        sb.append("p/" + this.getDeadline().value + " ");
+        sb.append("e/" + this.getTimestamp().value + " ");
         this.getTags().asObservableList().stream().forEach(s -> sb.append("t/" + s.tagName + " "));
         return sb.toString();
     }

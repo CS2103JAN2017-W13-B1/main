@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.utask.model.task;
 
 import java.util.Objects;
 
@@ -9,32 +9,32 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Task implements ReadOnlyTask {
 
     private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
+    private Deadline deadline;
+    private Timestamp timestamp;
+    private Frequency frequency;
 
     private UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, UniqueTagList tags) {
-        assert !CollectionUtil.isAnyNull(name, phone, email, address, tags);
+    public Task(Name name, Deadline deadline, Timestamp timestamp, Frequency frequency, UniqueTagList tags) {
+        assert !CollectionUtil.isAnyNull(name, deadline, timestamp, frequency, tags);
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+        this.deadline = deadline;
+        this.timestamp = timestamp;
+        this.frequency = frequency;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
-    public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+    public Task(ReadOnlyTask source) {
+        this(source.getName(), source.getDeadline(), source.getTimestamp(), source.getFrequency(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -47,34 +47,34 @@ public class Person implements ReadOnlyPerson {
         return name;
     }
 
-    public void setPhone(Phone phone) {
-        assert phone != null;
-        this.phone = phone;
+    public void setDeadline(Deadline deadline) {
+        assert deadline != null;
+        this.deadline = deadline;
     }
 
     @Override
-    public Phone getPhone() {
-        return phone;
+    public Deadline getDeadline() {
+        return deadline;
     }
 
-    public void setEmail(Email email) {
-        assert email != null;
-        this.email = email;
-    }
-
-    @Override
-    public Email getEmail() {
-        return email;
-    }
-
-    public void setAddress(Address address) {
-        assert address != null;
-        this.address = address;
+    public void setTimestamp(Timestamp timestamp) {
+        assert timestamp != null;
+        this.timestamp = timestamp;
     }
 
     @Override
-    public Address getAddress() {
-        return address;
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setFrequency(Frequency frequency) {
+        assert frequency != null;
+        this.frequency = frequency;
+    }
+
+    @Override
+    public Frequency getFrequency() {
+        return frequency;
     }
 
     @Override
@@ -92,27 +92,27 @@ public class Person implements ReadOnlyPerson {
     /**
      * Updates this person with the details of {@code replacement}.
      */
-    public void resetData(ReadOnlyPerson replacement) {
+    public void resetData(ReadOnlyTask replacement) {
         assert replacement != null;
 
         this.setName(replacement.getName());
-        this.setPhone(replacement.getPhone());
-        this.setEmail(replacement.getEmail());
-        this.setAddress(replacement.getAddress());
+        this.setDeadline(replacement.getDeadline());
+        this.setTimestamp(replacement.getTimestamp());
+        this.setFrequency(replacement.getFrequency());
         this.setTags(replacement.getTags());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
+                || (other instanceof ReadOnlyTask // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyTask) other));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, deadline, timestamp, frequency, tags);
     }
 
     @Override
