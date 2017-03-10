@@ -10,7 +10,7 @@ import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Task;
 import seedu.utask.model.task.Timestamp;
 
-import seedu.utask.model.task.UniquePersonList.DuplicatePersonException;
+import seedu.utask.model.task.UniqueTaskList.DuplicateTaskException;
 
 public class SampleDataUtil {
     public static Task[] getSamplePersons() {
@@ -47,7 +47,7 @@ public class SampleDataUtil {
                 sampleAB.addPerson(samplePerson);
             }
             return sampleAB;
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicateTaskException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
     }

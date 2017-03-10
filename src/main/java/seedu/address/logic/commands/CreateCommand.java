@@ -12,7 +12,7 @@ import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Task;
 import seedu.utask.model.task.Timestamp;
-import seedu.utask.model.task.UniquePersonList;
+import seedu.utask.model.task.UniqueTaskList;
 
 /**
  * Creates a new task to uTask.
@@ -57,7 +57,7 @@ public class CreateCommand extends Command {
         try {
             model.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (UniquePersonList.DuplicatePersonException e) {
+        } catch (UniqueTaskList.DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

@@ -13,7 +13,7 @@ import seedu.utask.model.task.Name;
 import seedu.utask.model.task.ReadOnlyTask;
 import seedu.utask.model.task.Task;
 import seedu.utask.model.task.Timestamp;
-import seedu.utask.model.task.UniquePersonList;
+import seedu.utask.model.task.UniqueTaskList;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -62,7 +62,7 @@ public class EditCommand extends Command {
 
         try {
             model.updatePerson(filteredPersonListIndex, editedPerson);
-        } catch (UniquePersonList.DuplicatePersonException dpe) {
+        } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
         model.updateFilteredListToShowAll();
