@@ -20,9 +20,9 @@ public class Timestamp {
      *
      * @throws IllegalValueException if given timestamps string is invalid.
      */
-    public Timestamp(String email) throws IllegalValueException {
-        assert email != null;
-        String trimmedTimestamp = email.trim();
+    public Timestamp(String timestamp) throws IllegalValueException {
+        assert timestamp != null;
+        String trimmedTimestamp = timestamp.trim();
         if (!isValidTimestamp(trimmedTimestamp)) {
             throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
         }

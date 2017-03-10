@@ -5,39 +5,39 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidFrequency(String)}
  */
 public class Frequency {
 
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, and it should not be blank";
+    public static final String MESSAGE_FREQUENCY_CONSTRAINTS =
+            "Frequency for tasks can take any values (for now), and it can be blank";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String FREQUENCY_VALIDATION_REGEX = "[^\\s].*";
 
     public final String value;
 
     /**
-     * Validates given address.
+     * Validates given frequency.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given frequency string is invalid.
      */
-    public Frequency(String address) throws IllegalValueException {
-        assert address != null;
-        if (!isValidAddress(address)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+    public Frequency(String frequency) throws IllegalValueException {
+        assert frequency != null;
+        if (!isValidFrequency(frequency)) {
+            throw new IllegalValueException(MESSAGE_FREQUENCY_CONSTRAINTS);
         }
-        this.value = address;
+        this.value = frequency;
     }
 
     /**
      * Returns true if a given string is a valid person email.
      */
-    public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+    public static boolean isValidFrequency(String test) {
+        return test.matches(FREQUENCY_VALIDATION_REGEX);
     }
 
     @Override
