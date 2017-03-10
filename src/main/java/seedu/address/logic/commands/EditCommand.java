@@ -78,9 +78,9 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElseGet(personToEdit::getName);
-        Deadline updatedPhone = editPersonDescriptor.getPhone().orElseGet(personToEdit::getPhone);
-        Timestamp updatedEmail = editPersonDescriptor.getEmail().orElseGet(personToEdit::getEmail);
-        Frequency updatedAddress = editPersonDescriptor.getAddress().orElseGet(personToEdit::getAddress);
+        Deadline updatedPhone = editPersonDescriptor.getPhone().orElseGet(personToEdit::getDeadline);
+        Timestamp updatedEmail = editPersonDescriptor.getEmail().orElseGet(personToEdit::getTimestamp);
+        Frequency updatedAddress = editPersonDescriptor.getAddress().orElseGet(personToEdit::getFrequency);
         UniqueTagList updatedTags = editPersonDescriptor.getTags().orElseGet(personToEdit::getTags);
 
         return new Task(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);

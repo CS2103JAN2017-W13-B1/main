@@ -448,9 +448,9 @@ public class LogicManagerTest {
             cmd.append("add ");
 
             cmd.append(p.getName().toString());
-            cmd.append(" e/").append(p.getEmail());
-            cmd.append(" p/").append(p.getPhone());
-            cmd.append(" a/").append(p.getAddress());
+            cmd.append(" e/").append(p.getTimestamp());
+            cmd.append(" p/").append(p.getDeadline());
+            cmd.append(" a/").append(p.getFrequency());
 
             UniqueTagList tags = p.getTags();
             for (Tag t: tags) {

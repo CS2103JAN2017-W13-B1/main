@@ -12,21 +12,21 @@ import seedu.address.model.tag.UniqueTagList;
 public class Task implements ReadOnlyTask {
 
     private Name name;
-    private Deadline phone;
-    private Timestamp email;
-    private Frequency address;
+    private Deadline deadline;
+    private Timestamp timestamp;
+    private Frequency frequency;
 
     private UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Deadline phone, Timestamp email, Frequency address, UniqueTagList tags) {
-        assert !CollectionUtil.isAnyNull(name, phone, email, address, tags);
+    public Task(Name name, Deadline deadline, Timestamp timestamp, Frequency frequency, UniqueTagList tags) {
+        assert !CollectionUtil.isAnyNull(name, deadline, timestamp, frequency, tags);
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+        this.deadline = deadline;
+        this.timestamp = timestamp;
+        this.frequency = frequency;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -34,7 +34,7 @@ public class Task implements ReadOnlyTask {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+        this(source.getName(), source.getDeadline(), source.getTimestamp(), source.getFrequency(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -47,34 +47,34 @@ public class Task implements ReadOnlyTask {
         return name;
     }
 
-    public void setPhone(Deadline phone) {
-        assert phone != null;
-        this.phone = phone;
+    public void setDeadline(Deadline deadline) {
+        assert deadline != null;
+        this.deadline = deadline;
     }
 
     @Override
-    public Deadline getPhone() {
-        return phone;
+    public Deadline getDeadline() {
+        return deadline;
     }
 
-    public void setEmail(Timestamp email) {
-        assert email != null;
-        this.email = email;
-    }
-
-    @Override
-    public Timestamp getEmail() {
-        return email;
-    }
-
-    public void setAddress(Frequency address) {
-        assert address != null;
-        this.address = address;
+    public void setTimestamp(Timestamp timestamp) {
+        assert timestamp != null;
+        this.timestamp = timestamp;
     }
 
     @Override
-    public Frequency getAddress() {
-        return address;
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setFrequency(Frequency frequency) {
+        assert frequency != null;
+        this.frequency = frequency;
+    }
+
+    @Override
+    public Frequency getFrequency() {
+        return frequency;
     }
 
     @Override
@@ -96,9 +96,9 @@ public class Task implements ReadOnlyTask {
         assert replacement != null;
 
         this.setName(replacement.getName());
-        this.setPhone(replacement.getPhone());
-        this.setEmail(replacement.getEmail());
-        this.setAddress(replacement.getAddress());
+        this.setDeadline(replacement.getDeadline());
+        this.setTimestamp(replacement.getTimestamp());
+        this.setFrequency(replacement.getFrequency());
         this.setTags(replacement.getTags());
     }
 
@@ -112,7 +112,7 @@ public class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, deadline, timestamp, frequency, tags);
     }
 
     @Override
