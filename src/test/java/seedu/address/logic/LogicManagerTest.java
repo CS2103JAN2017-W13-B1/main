@@ -210,7 +210,7 @@ public class LogicManagerTest {
     public void execute_add_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
-        Task toBeAdded = helper.adam();
+        Task toBeAdded = helper.simpleTask();
         AddressBook expectedAB = new AddressBook();
         expectedAB.addPerson(toBeAdded);
 
@@ -226,7 +226,7 @@ public class LogicManagerTest {
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
-        Task toBeAdded = helper.adam();
+        Task toBeAdded = helper.simpleTask();
 
         // setup starting state
         model.addPerson(toBeAdded); // person already in internal address book
@@ -413,15 +413,15 @@ public class LogicManagerTest {
      */
     class TestDataHelper {
 
-        Task adam() throws Exception {
+        Task simpleTask() throws Exception {
             Name name = new Name("Adam Brown");
-            Deadline privatePhone = new Deadline("111111");
-            Timestamp email = new Timestamp("adam@gmail.com");
-            Frequency privateAddress = new Frequency("111, alpha street");
+            Deadline deadline = new Deadline("111111");
+            Timestamp timestamp = new Timestamp("adam@gmail.com");
+            Frequency frequency = new Frequency("111, alpha street");
             Tag tag1 = new Tag("tag1");
             Tag tag2 = new Tag("longertag2");
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
-            return new Task(name, privatePhone, email, privateAddress, tags);
+            return new Task(name, deadline, timestamp, frequency, tags);
         }
 
         /**
