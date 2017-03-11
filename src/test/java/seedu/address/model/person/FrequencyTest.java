@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import seedu.utask.model.task.Frequency;
 
-public class AddressTest {
+public class FrequencyTest {
 
     @Test
     public void isValidAddress() {
@@ -16,8 +16,6 @@ public class AddressTest {
         assertFalse(Frequency.isValidFrequency(" ")); // spaces only
 
         // valid addresses
-        assertTrue(Frequency.isValidFrequency("Blk 456, Den Road, #01-355"));
-        assertTrue(Frequency.isValidFrequency("-")); // one character
-        assertTrue(Frequency.isValidFrequency("Leng Inc; 1234 Market St; San Francisco 2349879; USA")); // long address
+        assertTrue(Frequency.isValidFrequency("Every Monday"));
     }
 }
