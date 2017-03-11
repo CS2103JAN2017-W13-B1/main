@@ -11,7 +11,8 @@ public class Timestamp {
 
     public static final String MESSAGE_TIMESTAMP_CONSTRAINTS =
             "Timestamps for tasks should be in format from datetime to datetime";
-    public static final String TIMESTAMP_VALIDATION_REGEX = "[^\\s].*";
+    public static final String TIMESTAMP_VALIDATION_REGEX = "^(?:from\\s(0[0-9]|1[0-9]|2[0-3])([0-5][0-9])"
+                                                            + "\\sto\\s(0[0-9]|1[0-9]|2[0-3])([0-5][0-9]))";
 
     public final String value;
 

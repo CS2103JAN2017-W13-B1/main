@@ -10,7 +10,7 @@ import seedu.utask.model.task.Frequency;
 public class FrequencyTest {
 
     @Test
-    public void isValidAddress() {
+    public void isValidFrequency() {
         // invalid addresses
         assertFalse(Frequency.isValidFrequency("")); // empty string
         assertFalse(Frequency.isValidFrequency(" ")); // spaces only

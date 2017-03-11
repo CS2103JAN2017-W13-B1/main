@@ -75,15 +75,15 @@ public class TestUtil {
         try {
             //CHECKSTYLE.OFF: LineLength
             return new Task[]{
-                new Task(new Name("Ali Muster"), new Deadline("010117"), new Timestamp("hans@google.com"), new Frequency("4th street"), new UniqueTagList()),
-                new Task(new Name("Boris Mueller"), new Deadline("010217"), new Timestamp("ruth@google.com"), new Frequency("81th street"), new UniqueTagList()),
-                new Task(new Name("Carl Kurz"), new Deadline("010317"), new Timestamp("heinz@yahoo.com"), new Frequency("wall street"), new UniqueTagList()),
-                new Task(new Name("Daniel Meier"), new Deadline("010417"), new Timestamp("cornelia@google.com"), new Frequency("10th street"), new UniqueTagList()),
-                new Task(new Name("Elle Meyer"), new Deadline("010517"), new Timestamp("werner@gmail.com"), new Frequency("michegan ave"), new UniqueTagList()),
-                new Task(new Name("Fiona Kunz"), new Deadline("010617"), new Timestamp("lydia@gmail.com"), new Frequency("little tokyo"), new UniqueTagList()),
-                new Task(new Name("George Best"), new Deadline("010717"), new Timestamp("anna@google.com"), new Frequency("4th street"), new UniqueTagList()),
-                new Task(new Name("Hoon Meier"), new Deadline("010817"), new Timestamp("stefan@mail.com"), new Frequency("little india"), new UniqueTagList()),
-                new Task(new Name("Ida Mueller"), new Deadline("010917"), new Timestamp("hans@google.com"), new Frequency("chicago ave"), new UniqueTagList())
+                new Task(new Name("Ali Muster"), new Deadline("010117"), new Timestamp("from 0000 to 2359"), new Frequency("4th street"), new UniqueTagList()),
+                new Task(new Name("Boris Mueller"), new Deadline("010217"), new Timestamp("from 0800 to 1200"), new Frequency("81th street"), new UniqueTagList()),
+                new Task(new Name("Carl Kurz"), new Deadline("010317"), new Timestamp("from 1200 to 1300"), new Frequency("wall street"), new UniqueTagList()),
+                new Task(new Name("Daniel Meier"), new Deadline("010417"), new Timestamp("from 1600 to 1800"), new Frequency("10th street"), new UniqueTagList()),
+                new Task(new Name("Elle Meyer"), new Deadline("010517"), new Timestamp("from 1800 to 1830"), new Frequency("michegan ave"), new UniqueTagList()),
+                new Task(new Name("Fiona Kunz"), new Deadline("010617"), new Timestamp("from 1800 to 1815"), new Frequency("little tokyo"), new UniqueTagList()),
+                new Task(new Name("George Best"), new Deadline("010717"), new Timestamp("from 2000 to 2300"), new Frequency("4th street"), new UniqueTagList()),
+                new Task(new Name("Hoon Meier"), new Deadline("010817"), new Timestamp("from 1500 to 1530"), new Frequency("little india"), new UniqueTagList()),
+                new Task(new Name("Ida Mueller"), new Deadline("010917"), new Timestamp("from 0600 to 0800"), new Frequency("chicago ave"), new UniqueTagList())
             };
             //CHECKSTYLE.ON: LineLength
         } catch (IllegalValueException e) {

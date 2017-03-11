@@ -15,11 +15,11 @@ public class TypicalTestPersons {
     public TypicalTestPersons() {
         try {
             a = new TaskBuilder().withName("Ascertain work has been complete")
-                    .withFrequency("Every Friday").withTimestamp("from 010117 to 311217")
+                    .withFrequency("Every Friday").withTimestamp("from 0800 to 2000")
                     .withDeadline("011217")
                     .withTags("important").build();
             b = new TaskBuilder().withName("Busy with project").withFrequency("-")
-                    .withTimestamp("from 010217 to 010217").withDeadline("010217")
+                    .withTimestamp("from 0800 to 1230").withDeadline("010217")
                     .withTags("busy", "important").build();
             c = new TaskBuilder().withName("Cook Dinner Tonight").withDeadline("010317")
                     .withTimestamp("from 1500 to 1830").withFrequency("-").build();

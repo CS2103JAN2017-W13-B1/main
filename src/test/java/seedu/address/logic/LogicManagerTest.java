@@ -412,7 +412,7 @@ public class LogicManagerTest {
         Task simpleTask() throws Exception {
             Name name = new Name("My debug task");
             Deadline deadline = new Deadline("010117");
-            Timestamp timestamp = new Timestamp("1830 to 2030");
+            Timestamp timestamp = new Timestamp("from 1830 to 2030");
             Frequency frequency = new Frequency("Every Monday");
             Tag tag1 = new Tag("urgent");
             Tag tag2 = new Tag("assignment");
@@ -527,8 +527,8 @@ public class LogicManagerTest {
          * some dummy values.
          */
         Task generatePersonWithName(String name) throws Exception {
-            return new Task(new Name(name), new Deadline("010117"), new Timestamp("from 0000 to "), new Frequency("-"),
-                    new UniqueTagList(new Tag("tag")));
+            return new Task(new Name(name), new Deadline("010117"), new Timestamp("from 0000 to 1300"),
+                    new Frequency("-"), new UniqueTagList(new Tag("tag")));
         }
     }
 }

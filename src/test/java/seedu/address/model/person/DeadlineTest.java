@@ -10,7 +10,7 @@ import seedu.utask.model.task.Deadline;
 public class DeadlineTest {
 
     @Test
-    public void isValidPhone() {
+    public void isValidDeadline() {
         // invalid phone numbers
         assertFalse(Deadline.isValidDeadline("")); // empty string
         assertFalse(Deadline.isValidDeadline(" ")); // spaces only
