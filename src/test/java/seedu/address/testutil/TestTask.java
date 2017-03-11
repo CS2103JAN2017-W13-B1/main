@@ -10,7 +10,7 @@ import seedu.utask.model.task.Timestamp;
 /**
  * A mutable person object. For testing only.
  */
-public class TestPerson implements ReadOnlyTask {
+public class TestTask implements ReadOnlyTask {
 
     private Name name;
     private Frequency address;
@@ -18,14 +18,14 @@ public class TestPerson implements ReadOnlyTask {
     private Deadline phone;
     private UniqueTagList tags;
 
-    public TestPerson() {
+    public TestTask() {
         tags = new UniqueTagList();
     }
 
     /**
      * Creates a copy of {@code personToCopy}.
      */
-    public TestPerson(TestPerson personToCopy) {
+    public TestTask(TestTask personToCopy) {
         this.name = personToCopy.getName();
         this.phone = personToCopy.getDeadline();
         this.email = personToCopy.getTimestamp();
@@ -37,15 +37,15 @@ public class TestPerson implements ReadOnlyTask {
         this.name = name;
     }
 
-    public void setAddress(Frequency address) {
+    public void setFrequency(Frequency address) {
         this.address = address;
     }
 
-    public void setEmail(Timestamp email) {
+    public void setTimestamp(Timestamp email) {
         this.email = email;
     }
 
-    public void setPhone(Deadline phone) {
+    public void setDeadline(Deadline phone) {
         this.phone = phone;
     }
 
