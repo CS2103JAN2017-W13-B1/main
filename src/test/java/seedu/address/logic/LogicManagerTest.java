@@ -426,12 +426,11 @@ public class LogicManagerTest {
          * have the same state. Each unique seed will generate a unique Person
          * object.
          *
-         * @param seed
-         *            used to generate the person data field values
+         * @param seed used to generate the person data field values
          */
         Task generatePerson(int seed) throws Exception {
-            return new Task(new Name("Person " + seed), new Deadline("" + Math.abs(seed)),
-                    new Timestamp(seed + "@email"), new Frequency("House of " + seed),
+            return new Task(new Name("Task " + seed), new Deadline("010117"),
+                    new Timestamp("from 0000 to 2359"), new Frequency("Every " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1))));
         }
 
@@ -528,7 +527,7 @@ public class LogicManagerTest {
          * some dummy values.
          */
         Task generatePersonWithName(String name) throws Exception {
-            return new Task(new Name(name), new Deadline("1"), new Timestamp("1@email"), new Frequency("House of 1"),
+            return new Task(new Name(name), new Deadline("010117"), new Timestamp("from 0000 to "), new Frequency("-"),
                     new UniqueTagList(new Tag("tag")));
         }
     }

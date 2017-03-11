@@ -13,9 +13,9 @@ import seedu.utask.model.task.Timestamp;
 public class TestTask implements ReadOnlyTask {
 
     private Name name;
-    private Frequency address;
-    private Timestamp email;
-    private Deadline phone;
+    private Frequency frequency;
+    private Timestamp timestamp;
+    private Deadline deadline;
     private UniqueTagList tags;
 
     public TestTask() {
@@ -27,9 +27,9 @@ public class TestTask implements ReadOnlyTask {
      */
     public TestTask(TestTask personToCopy) {
         this.name = personToCopy.getName();
-        this.phone = personToCopy.getDeadline();
-        this.email = personToCopy.getTimestamp();
-        this.address = personToCopy.getFrequency();
+        this.deadline = personToCopy.getDeadline();
+        this.timestamp = personToCopy.getTimestamp();
+        this.frequency = personToCopy.getFrequency();
         this.tags = personToCopy.getTags();
     }
 
@@ -38,15 +38,15 @@ public class TestTask implements ReadOnlyTask {
     }
 
     public void setFrequency(Frequency address) {
-        this.address = address;
+        this.frequency = address;
     }
 
     public void setTimestamp(Timestamp email) {
-        this.email = email;
+        this.timestamp = email;
     }
 
     public void setDeadline(Deadline phone) {
-        this.phone = phone;
+        this.deadline = phone;
     }
 
     public void setTags(UniqueTagList tags) {
@@ -60,17 +60,17 @@ public class TestTask implements ReadOnlyTask {
 
     @Override
     public Deadline getDeadline() {
-        return phone;
+        return deadline;
     }
 
     @Override
     public Timestamp getTimestamp() {
-        return email;
+        return timestamp;
     }
 
     @Override
     public Frequency getFrequency() {
-        return address;
+        return frequency;
     }
 
     @Override

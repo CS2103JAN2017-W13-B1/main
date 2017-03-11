@@ -56,14 +56,14 @@ public class EditCommandTest extends AddressBookGuiTest {
 
     @Test
     public void edit_findThenEdit_success() throws Exception {
-        commandBox.runCommand("find Elle");
+        commandBox.runCommand("find Free");
 
-        String detailsToEdit = "Belle";
+        String detailsToEdit = "Not Free";
         int filteredPersonListIndex = 1;
-        int addressBookIndex = 5;
+        int addressBookIndex = 6;
 
         TestTask personToEdit = expectedPersonsList[addressBookIndex - 1];
-        TestTask editedPerson = new TaskBuilder(personToEdit).withName("Belle").build();
+        TestTask editedPerson = new TaskBuilder(personToEdit).withName("Not Free").build();
 
         assertEditSuccess(filteredPersonListIndex, addressBookIndex, detailsToEdit, editedPerson);
     }
