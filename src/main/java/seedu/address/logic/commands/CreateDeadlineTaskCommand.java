@@ -13,12 +13,12 @@ public class CreateDeadlineTaskCommand extends CreateCommand {
 
     public CreateDeadlineTaskCommand(String name, String deadline, String frequency, Set<String> tags)
             throws IllegalValueException {
-        super(tags);
+        super(frequency, tags);
 
         this.toAdd = new DeadlineTask(
                 new Name(name),
                 new Deadline(deadline),
-                new Frequency(frequency),
+                super.frequency,
                 new UniqueTagList(tagSet));
     }
 

@@ -12,11 +12,12 @@ public class CreateFloatingTaskCommand extends CreateCommand {
 
     public CreateFloatingTaskCommand(String name, String frequency, Set<String> tags)
             throws IllegalValueException {
-        super(tags);
+        super(frequency, tags);
 
+        //TODO: Code smells
         this.toAdd = new FloatingTask(
                 new Name(name),
-                new Frequency(frequency),
+                super.frequency,
                 new UniqueTagList(tagSet));
     }
 

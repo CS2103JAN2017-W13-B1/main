@@ -6,6 +6,7 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
+import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Task;
 import seedu.utask.model.task.UniqueTaskList;
 
@@ -25,6 +26,7 @@ public abstract class CreateCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in uTask";
 
     protected Task toAdd;
+    protected final Frequency frequency;
     protected final Set<Tag> tagSet;
 
     /**
@@ -32,11 +34,18 @@ public abstract class CreateCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public CreateCommand(Set<String> tags)
+    public CreateCommand(String frequency, Set<String> tags)
             throws IllegalValueException {
         tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
+        }
+
+        //TODO: Cleanup
+        if (frequency.equals("")) {
+            this.frequency = new Frequency("-");
+        } else {
+            this.frequency = new Frequency(frequency);
         }
     }
 

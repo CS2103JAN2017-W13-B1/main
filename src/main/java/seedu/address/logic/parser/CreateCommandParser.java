@@ -37,20 +37,20 @@ public class CreateCommandParser {
                         argsTokenizer.getPreamble().get(),
                         argsTokenizer.getValue(PREFIX_DEADLINE).get(),
                         argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
-                        argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
+                        argsTokenizer.tryGet(PREFIX_FREQUENCY),
                         ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
                 );
             } else if (argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {
                 return new CreateDeadlineTaskCommand(
                         argsTokenizer.getPreamble().get(),
                         argsTokenizer.getValue(PREFIX_DEADLINE).get(),
-                        argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
+                        argsTokenizer.tryGet(PREFIX_FREQUENCY),
                         ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
                 );
             } else {
                 return new CreateFloatingTaskCommand(
                         argsTokenizer.getPreamble().get(),
-                        argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
+                        argsTokenizer.tryGet(PREFIX_FREQUENCY),
                         ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
                 );
             }

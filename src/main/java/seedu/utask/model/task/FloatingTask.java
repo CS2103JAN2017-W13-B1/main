@@ -5,8 +5,8 @@ import seedu.address.model.tag.UniqueTagList;
 public class FloatingTask extends Task {
 
     public FloatingTask(Name name, Frequency frequency, UniqueTagList tags) {
-        super(name, frequency, tags);
 
+        super(name, frequency, tags);
         fakeDeadline();
         fakeTimestamp();
     }
