@@ -14,7 +14,7 @@ public class CreateEventTaskCommand extends CreateCommand {
 
     public CreateEventTaskCommand(String name, String deadline, String timestamp, String frequency, Set<String> tags)
             throws IllegalValueException {
-        super(name, deadline, timestamp, frequency, tags);
+        super(tags);
 
         this.toAdd = new EventTask(
                 new Name(name),

@@ -11,23 +11,20 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public abstract class Task implements ReadOnlyTask {
 
-    private Name name;
-    private Deadline deadline;
-    private Timestamp timestamp;
+    protected Name name;
 
-    private Frequency frequency;
-    private boolean isCompleted;
-    private UniqueTagList tags;
+    protected Frequency frequency;
+    protected boolean isCompleted;
+    protected UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Deadline deadline, Timestamp timestamp, Frequency frequency, UniqueTagList tags) {
-        assert !CollectionUtil.isAnyNull(name, deadline, timestamp, frequency, tags);
+    public Task(Name name, Frequency frequency, UniqueTagList tags) {
+        assert !CollectionUtil.isAnyNull(name, frequency, tags);
         this.name = name;
-        this.deadline = deadline;
-        this.timestamp = timestamp;
         this.frequency = frequency;
+        this.isCompleted = false;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -35,7 +32,7 @@ public abstract class Task implements ReadOnlyTask {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getName(), source.getDeadline(), source.getTimestamp(), source.getFrequency(), source.getTags());
+        this(source.getName(), source.getFrequency(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -46,26 +43,6 @@ public abstract class Task implements ReadOnlyTask {
     @Override
     public Name getName() {
         return name;
-    }
-
-    public void setDeadline(Deadline deadline) {
-        assert deadline != null;
-        this.deadline = deadline;
-    }
-
-    @Override
-    public Deadline getDeadline() {
-        return deadline;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        assert timestamp != null;
-        this.timestamp = timestamp;
-    }
-
-    @Override
-    public Timestamp getTimestamp() {
-        return timestamp;
     }
 
     public void setFrequency(Frequency frequency) {
@@ -97,8 +74,6 @@ public abstract class Task implements ReadOnlyTask {
         assert replacement != null;
 
         this.setName(replacement.getName());
-        this.setDeadline(replacement.getDeadline());
-        this.setTimestamp(replacement.getTimestamp());
         this.setFrequency(replacement.getFrequency());
         this.setTags(replacement.getTags());
     }
@@ -113,7 +88,7 @@ public abstract class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, deadline, timestamp, frequency, tags);
+        return Objects.hash(name, frequency, tags);
     }
 
     @Override

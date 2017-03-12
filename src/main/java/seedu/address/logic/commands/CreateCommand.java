@@ -32,19 +32,12 @@ public abstract class CreateCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public CreateCommand(String name, String deadline, String timestamp, String frequency, Set<String> tags)
+    public CreateCommand(Set<String> tags)
             throws IllegalValueException {
         tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
         }
-//        this.toAdd = new Task(
-//                new Name(name),
-//                new Deadline(deadline),
-//                new Timestamp(timestamp),
-//                new Frequency(frequency),
-//                new UniqueTagList(tagSet)
-//        );
     }
 
     @Override
