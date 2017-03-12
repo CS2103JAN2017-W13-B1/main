@@ -5,7 +5,6 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.FloatingTask;
-import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Name;
 
 public class CreateFloatingTaskCommand extends CreateCommand {

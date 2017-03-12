@@ -6,7 +6,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Deadline;
 import seedu.utask.model.task.DeadlineTask;
-import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Name;
 
 public class CreateDeadlineTaskCommand extends CreateCommand {
