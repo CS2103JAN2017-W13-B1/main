@@ -9,13 +9,14 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Task implements ReadOnlyTask {
+public abstract class Task implements ReadOnlyTask {
 
     private Name name;
     private Deadline deadline;
     private Timestamp timestamp;
-    private Frequency frequency;
 
+    private Frequency frequency;
+    private boolean isCompleted;
     private UniqueTagList tags;
 
     /**

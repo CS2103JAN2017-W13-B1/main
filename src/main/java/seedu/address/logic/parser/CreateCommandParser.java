@@ -11,6 +11,9 @@ import java.util.NoSuchElementException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CreateCommand;
+import seedu.address.logic.commands.CreateDeadlineTaskCommand;
+import seedu.address.logic.commands.CreateEventTaskCommand;
+import seedu.address.logic.commands.CreateFloatingTaskCommand;
 import seedu.address.logic.commands.IncorrectCommand;
 
 /**
@@ -26,14 +29,34 @@ public class CreateCommandParser {
         ArgumentTokenizer argsTokenizer =
                 new ArgumentTokenizer(PREFIX_DEADLINE, PREFIX_TIMESTAMP, PREFIX_FREQUENCY, PREFIX_TAG);
         argsTokenizer.tokenize(args);
+
         try {
-            return new CreateCommand(
-                    argsTokenizer.getPreamble().get(),
-                    argsTokenizer.getValue(PREFIX_DEADLINE).get(),
-                    argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
-                    argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
-                    ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
-            );
+            if (argsTokenizer.getValue(PREFIX_TIMESTAMP).isPresent() &&
+                    argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {
+                return new CreateEventTaskCommand(
+                        argsTokenizer.getPreamble().get(),
+                        argsTokenizer.getValue(PREFIX_DEADLINE).get(),
+                        argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
+                        argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
+                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
+                );
+            } else if (argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {
+                return new CreateDeadlineTaskCommand(
+                        argsTokenizer.getPreamble().get(),
+                        argsTokenizer.getValue(PREFIX_DEADLINE).get(),
+                        argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
+                        argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
+                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
+                );
+            } else {
+                return new CreateFloatingTaskCommand(
+                        argsTokenizer.getPreamble().get(),
+                        argsTokenizer.getValue(PREFIX_DEADLINE).get(),
+                        argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
+                        argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
+                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
+                );
+            }
         } catch (NoSuchElementException nsee) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateCommand.MESSAGE_USAGE));
         } catch (IllegalValueException ive) {
