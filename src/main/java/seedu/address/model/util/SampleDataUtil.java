@@ -5,18 +5,18 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.EventTask;
 import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.Task;
 import seedu.utask.model.task.Timestamp;
-
 import seedu.utask.model.task.UniqueTaskList.DuplicateTaskException;
 
 public class SampleDataUtil {
     public static Task[] getSamplePersons() {
         try {
             return new Task[] {
-                new Task(new Name("My first task"), new Deadline("010117"), new Timestamp("from 0900 to 1000"),
+                new EventTask(new Name("My first task"), new Deadline("010117"), new Timestamp("from 0900 to 1000"),
                     new Frequency("-"),
                     new UniqueTagList("important"))
             };

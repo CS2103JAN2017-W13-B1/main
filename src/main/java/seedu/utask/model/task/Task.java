@@ -28,13 +28,6 @@ public abstract class Task implements ReadOnlyTask {
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
-    /**
-     * Creates a copy of the given ReadOnlyPerson.
-     */
-    public Task(ReadOnlyTask source) {
-        this(source.getName(), source.getFrequency(), source.getTags());
-    }
-
     public void setName(Name name) {
         assert name != null;
         this.name = name;
@@ -95,5 +88,4 @@ public abstract class Task implements ReadOnlyTask {
     public String toString() {
         return getAsText();
     }
-
 }

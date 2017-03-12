@@ -14,8 +14,8 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.testutil.TestUtil;
+import seedu.utask.model.task.EventTask;
 import seedu.utask.model.task.ReadOnlyTask;
-import seedu.utask.model.task.Task;
 
 /**
  * Provides a handle for the panel containing the person list.
@@ -148,7 +148,7 @@ public class PersonListPanelHandle extends GuiHandle {
     }
 
     public PersonCardHandle getPersonCardHandle(int index) {
-        return getPersonCardHandle(new Task(getListView().getItems().get(index)));
+        return getPersonCardHandle(new EventTask(getListView().getItems().get(index)));
     }
 
     public PersonCardHandle getPersonCardHandle(ReadOnlyTask person) {

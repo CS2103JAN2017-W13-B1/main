@@ -15,6 +15,13 @@ public class EventTask extends Task {
         this.timestamp = timestamp;
     }
 
+    /**
+     * Creates a copy of the given ReadOnlyPerson.
+     */
+    public EventTask(ReadOnlyTask source) {
+        this(source.getName(), source.getDeadline(), source.getTimestamp(), source.getFrequency(), source.getTags());
+    }
+
     public void setDeadline(Deadline deadline) {
         assert deadline != null;
         this.deadline = deadline;

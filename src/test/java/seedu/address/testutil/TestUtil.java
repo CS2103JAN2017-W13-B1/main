@@ -34,6 +34,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.EventTask;
 import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.ReadOnlyTask;
@@ -75,15 +76,15 @@ public class TestUtil {
         try {
             //CHECKSTYLE.OFF: LineLength
             return new Task[]{
-                new Task(new Name("Sample Task A"), new Deadline("010117"), new Timestamp("from 0000 to 2359"), new Frequency("-"), new UniqueTagList()),
-                new Task(new Name("Sample Task B"), new Deadline("010217"), new Timestamp("from 0800 to 1200"), new Frequency("-"), new UniqueTagList()),
-                new Task(new Name("Sample Task C"), new Deadline("010317"), new Timestamp("from 1200 to 1300"), new Frequency("-"), new UniqueTagList()),
-                new Task(new Name("Sample Task D"), new Deadline("010417"), new Timestamp("from 1600 to 1800"), new Frequency("-"), new UniqueTagList()),
-                new Task(new Name("Sample Task E"), new Deadline("010517"), new Timestamp("from 1800 to 1830"), new Frequency("-"), new UniqueTagList()),
-                new Task(new Name("Sample Task F"), new Deadline("010617"), new Timestamp("from 1800 to 1815"), new Frequency("-"), new UniqueTagList()),
-                new Task(new Name("Sample Task G"), new Deadline("010717"), new Timestamp("from 2000 to 2300"), new Frequency("-"), new UniqueTagList()),
-                new Task(new Name("Sample Task H"), new Deadline("010817"), new Timestamp("from 1500 to 1530"), new Frequency("-"), new UniqueTagList()),
-                new Task(new Name("Sample Task I"), new Deadline("010917"), new Timestamp("from 0600 to 0800"), new Frequency("-"), new UniqueTagList())
+                new EventTask(new Name("Sample Task A"), new Deadline("010117"), new Timestamp("from 0000 to 2359"), new Frequency("-"), new UniqueTagList()),
+                new EventTask(new Name("Sample Task B"), new Deadline("010217"), new Timestamp("from 0800 to 1200"), new Frequency("-"), new UniqueTagList()),
+                new EventTask(new Name("Sample Task C"), new Deadline("010317"), new Timestamp("from 1200 to 1300"), new Frequency("-"), new UniqueTagList()),
+                new EventTask(new Name("Sample Task D"), new Deadline("010417"), new Timestamp("from 1600 to 1800"), new Frequency("-"), new UniqueTagList()),
+                new EventTask(new Name("Sample Task E"), new Deadline("010517"), new Timestamp("from 1800 to 1830"), new Frequency("-"), new UniqueTagList()),
+                new EventTask(new Name("Sample Task F"), new Deadline("010617"), new Timestamp("from 1800 to 1815"), new Frequency("-"), new UniqueTagList()),
+                new EventTask(new Name("Sample Task G"), new Deadline("010717"), new Timestamp("from 2000 to 2300"), new Frequency("-"), new UniqueTagList()),
+                new EventTask(new Name("Sample Task H"), new Deadline("010817"), new Timestamp("from 1500 to 1530"), new Frequency("-"), new UniqueTagList()),
+                new EventTask(new Name("Sample Task I"), new Deadline("010917"), new Timestamp("from 0600 to 0800"), new Frequency("-"), new UniqueTagList())
             };
             //CHECKSTYLE.ON: LineLength
         } catch (IllegalValueException e) {

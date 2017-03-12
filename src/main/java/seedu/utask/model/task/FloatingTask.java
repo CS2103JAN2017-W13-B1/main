@@ -8,6 +8,13 @@ public class FloatingTask extends Task {
         super(name, frequency, tags);
     }
 
+    /**
+     * Creates a copy of the given ReadOnlyPerson.
+     */
+    public FloatingTask(ReadOnlyTask source) {
+        this(source.getName(), source.getFrequency(), source.getTags());
+    }
+
     @Override
     public Deadline getDeadline() {
         // TODO Auto-generated method stub

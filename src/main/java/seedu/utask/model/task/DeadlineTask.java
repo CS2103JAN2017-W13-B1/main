@@ -14,6 +14,13 @@ public class DeadlineTask extends Task {
         this.deadline = deadline;
     }
 
+    /**
+     * Creates a copy of the given ReadOnlyPerson.
+     */
+    public DeadlineTask(ReadOnlyTask source) {
+        this(source.getName(), source.getDeadline(), source.getFrequency(), source.getTags());
+    }
+
     public void setDeadline(Deadline deadline) {
         assert deadline != null;
         this.deadline = deadline;

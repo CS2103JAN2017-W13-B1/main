@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.EventTask;
 import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.ReadOnlyTask;
@@ -70,6 +71,6 @@ public class XmlAdaptedPerson {
         final Timestamp email = new Timestamp(this.email);
         final Frequency address = new Frequency(this.address);
         final UniqueTagList tags = new UniqueTagList(personTags);
-        return new Task(name, phone, email, address, tags);
+        return new EventTask(name, phone, email, address, tags);
     }
 }
