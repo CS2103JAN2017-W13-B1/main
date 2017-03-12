@@ -11,7 +11,7 @@ import seedu.utask.model.task.Name;
 
 public class CreateDeadlineTaskCommand extends CreateCommand {
 
-    public CreateDeadlineTaskCommand(String name, String deadline, String timestamp, String frequency, Set<String> tags)
+    public CreateDeadlineTaskCommand(String name, String deadline, String frequency, Set<String> tags)
             throws IllegalValueException {
         super(tags);
 

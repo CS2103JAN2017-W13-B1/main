@@ -44,15 +44,12 @@ public class CreateCommandParser {
                 return new CreateDeadlineTaskCommand(
                         argsTokenizer.getPreamble().get(),
                         argsTokenizer.getValue(PREFIX_DEADLINE).get(),
-                        argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
                         argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
                         ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
                 );
             } else {
                 return new CreateFloatingTaskCommand(
                         argsTokenizer.getPreamble().get(),
-                        argsTokenizer.getValue(PREFIX_DEADLINE).get(),
-                        argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
                         argsTokenizer.getValue(PREFIX_FREQUENCY).get(),
                         ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
                 );

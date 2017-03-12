@@ -6,6 +6,9 @@ public class FloatingTask extends Task {
 
     public FloatingTask(Name name, Frequency frequency, UniqueTagList tags) {
         super(name, frequency, tags);
+
+        fakeDeadline();
+        fakeTimestamp();
     }
 
     /**
@@ -17,13 +20,33 @@ public class FloatingTask extends Task {
 
     @Override
     public Deadline getDeadline() {
-        // TODO Auto-generated method stub
-        return null;
+        return _fakeDeadline;
     }
 
     @Override
     public Timestamp getTimestamp() {
-        // TODO Auto-generated method stub
-        return null;
+        return _fakeTimestamp;
+    }
+
+    private Deadline _fakeDeadline;
+
+    private void fakeDeadline() {
+        try {
+            Deadline d = new Deadline("101017");
+            _fakeDeadline = d;
+        } catch (Exception e) {
+
+        }
+    }
+
+    private Timestamp _fakeTimestamp;
+
+    private void fakeTimestamp() {
+        try {
+            Timestamp t = new Timestamp("from 0000 to 2359");
+            _fakeTimestamp = t;
+        } catch (Exception e) {
+
+        }
     }
 }

@@ -12,6 +12,8 @@ public class DeadlineTask extends Task {
         super(name, frequency, tags);
 
         this.deadline = deadline;
+
+        fakeTimestamp();
     }
 
     /**
@@ -44,7 +46,17 @@ public class DeadlineTask extends Task {
 
     @Override
     public Timestamp getTimestamp() {
-        // TODO Auto-generated method stub
-        return null;
+        return _fakeTimestamp;
+    }
+
+    private Timestamp _fakeTimestamp;
+
+    private void fakeTimestamp() {
+        try {
+            Timestamp t = new Timestamp("from 0000 to 2359");
+            _fakeTimestamp = t;
+        } catch (Exception e) {
+
+        }
     }
 }

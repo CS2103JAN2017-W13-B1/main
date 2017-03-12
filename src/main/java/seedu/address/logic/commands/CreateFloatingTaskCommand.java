@@ -10,7 +10,7 @@ import seedu.utask.model.task.Name;
 
 public class CreateFloatingTaskCommand extends CreateCommand {
 
-    public CreateFloatingTaskCommand(String name, String deadline, String timestamp, String frequency, Set<String> tags)
+    public CreateFloatingTaskCommand(String name, String frequency, Set<String> tags)
             throws IllegalValueException {
         super(tags);
 
