@@ -9,7 +9,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Deadline {
 
     public static final String MESSAGE_DEADLINE_CONSTRAINTS = "Deadline for tasks should in format DDMMYY";
-    public static final String DEADLINE_VALIDATION_REGEX = "\\d+";
+    public static final String DEADLINE_VALIDATION_REGEX = "^(0[1-9]|[1-2][0-9]|"
+            + "31(?!(?:0[2469]|11))|30(?!02))(0[1-9]|1[0-2])([1-2]\\d{1})";
 
     public final String value;
 

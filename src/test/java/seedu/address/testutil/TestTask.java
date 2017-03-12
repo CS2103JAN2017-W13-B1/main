@@ -10,26 +10,26 @@ import seedu.utask.model.task.Timestamp;
 /**
  * A mutable person object. For testing only.
  */
-public class TestPerson implements ReadOnlyTask {
+public class TestTask implements ReadOnlyTask {
 
     private Name name;
-    private Frequency address;
-    private Timestamp email;
-    private Deadline phone;
+    private Frequency frequency;
+    private Timestamp timestamp;
+    private Deadline deadline;
     private UniqueTagList tags;
 
-    public TestPerson() {
+    public TestTask() {
         tags = new UniqueTagList();
     }
 
     /**
      * Creates a copy of {@code personToCopy}.
      */
-    public TestPerson(TestPerson personToCopy) {
+    public TestTask(TestTask personToCopy) {
         this.name = personToCopy.getName();
-        this.phone = personToCopy.getDeadline();
-        this.email = personToCopy.getTimestamp();
-        this.address = personToCopy.getFrequency();
+        this.deadline = personToCopy.getDeadline();
+        this.timestamp = personToCopy.getTimestamp();
+        this.frequency = personToCopy.getFrequency();
         this.tags = personToCopy.getTags();
     }
 
@@ -37,16 +37,16 @@ public class TestPerson implements ReadOnlyTask {
         this.name = name;
     }
 
-    public void setAddress(Frequency address) {
-        this.address = address;
+    public void setFrequency(Frequency address) {
+        this.frequency = address;
     }
 
-    public void setEmail(Timestamp email) {
-        this.email = email;
+    public void setTimestamp(Timestamp email) {
+        this.timestamp = email;
     }
 
-    public void setPhone(Deadline phone) {
-        this.phone = phone;
+    public void setDeadline(Deadline phone) {
+        this.deadline = phone;
     }
 
     public void setTags(UniqueTagList tags) {
@@ -60,17 +60,17 @@ public class TestPerson implements ReadOnlyTask {
 
     @Override
     public Deadline getDeadline() {
-        return phone;
+        return deadline;
     }
 
     @Override
     public Timestamp getTimestamp() {
-        return email;
+        return timestamp;
     }
 
     @Override
     public Frequency getFrequency() {
-        return address;
+        return frequency;
     }
 
     @Override

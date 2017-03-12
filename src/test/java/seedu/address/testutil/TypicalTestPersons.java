@@ -10,33 +10,33 @@ import seedu.utask.model.task.UniqueTaskList;
  */
 public class TypicalTestPersons {
 
-    public TestPerson alice, benson, carl, daniel, elle, fiona, george, hoon, ida;
+    public TestTask a, b, c, d, e, f, g, h, i;
 
     public TypicalTestPersons() {
         try {
-            alice = new PersonBuilder().withName("Alice Pauline")
-                    .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@gmail.com")
-                    .withPhone("85355255")
-                    .withTags("friends").build();
-            benson = new PersonBuilder().withName("Benson Meier").withAddress("311, Clementi Ave 2, #02-25")
-                    .withEmail("johnd@gmail.com").withPhone("98765432")
-                    .withTags("owesMoney", "friends").build();
-            carl = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-                    .withEmail("heinz@yahoo.com").withAddress("wall street").build();
-            daniel = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-                    .withEmail("cornelia@google.com").withAddress("10th street").build();
-            elle = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-                    .withEmail("werner@gmail.com").withAddress("michegan ave").build();
-            fiona = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-                    .withEmail("lydia@gmail.com").withAddress("little tokyo").build();
-            george = new PersonBuilder().withName("George Best").withPhone("9482442")
-                    .withEmail("anna@google.com").withAddress("4th street").build();
+            a = new TaskBuilder().withName("Ascertain work has been complete")
+                    .withFrequency("Every Friday").withTimestamp("from 0800 to 2000")
+                    .withDeadline("011217")
+                    .withTags("important").build();
+            b = new TaskBuilder().withName("Busy with project").withFrequency("-")
+                    .withTimestamp("from 0800 to 1230").withDeadline("010217")
+                    .withTags("busy", "important").build();
+            c = new TaskBuilder().withName("Cook Dinner Tonight").withDeadline("010317")
+                    .withTimestamp("from 1500 to 1830").withFrequency("-").build();
+            d = new TaskBuilder().withName("Dinner with Alice").withDeadline("010317")
+                    .withTimestamp("from 1600 to 1800").withFrequency("-").build();
+            e = new TaskBuilder().withName("Eat at Mcdonalds").withDeadline("010117")
+                    .withTimestamp("from 1700 to 1800").withFrequency("-").build();
+            f = new TaskBuilder().withName("Free").withDeadline("131217")
+                    .withTimestamp("from 1800 to 2359").withFrequency("Every Year").build();
+            g = new TaskBuilder().withName("Go out with Alice").withDeadline("120317")
+                    .withTimestamp("from 1900 to 2000").withFrequency("-").build();
 
             // Manually added
-            hoon = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-                    .withEmail("stefan@mail.com").withAddress("little india").build();
-            ida = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-                    .withEmail("hans@google.com").withAddress("chicago ave").build();
+            h = new TaskBuilder().withName("Help Alice with project").withDeadline("020417")
+                    .withTimestamp("from 0900 to 1300").withFrequency("-").build();
+            i = new TaskBuilder().withName("Inspect Goods").withDeadline("010417")
+                    .withTimestamp("from 0900 to 1300").withFrequency("-").build();
         } catch (IllegalValueException e) {
             e.printStackTrace();
             assert false : "not possible";
@@ -44,7 +44,7 @@ public class TypicalTestPersons {
     }
 
     public static void loadAddressBookWithSampleData(AddressBook ab) {
-        for (TestPerson person : new TypicalTestPersons().getTypicalPersons()) {
+        for (TestTask person : new TypicalTestPersons().getTypicalPersons()) {
             try {
                 ab.addPerson(new Task(person));
             } catch (UniqueTaskList.DuplicateTaskException e) {
@@ -53,8 +53,8 @@ public class TypicalTestPersons {
         }
     }
 
-    public TestPerson[] getTypicalPersons() {
-        return new TestPerson[]{alice, benson, carl, daniel, elle, fiona, george};
+    public TestTask[] getTypicalPersons() {
+        return new TestTask[]{a, b, c, d, e, f, g};
     }
 
     public AddressBook getTypicalAddressBook() {

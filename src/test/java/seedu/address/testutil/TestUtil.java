@@ -75,15 +75,15 @@ public class TestUtil {
         try {
             //CHECKSTYLE.OFF: LineLength
             return new Task[]{
-                new Task(new Name("Ali Muster"), new Deadline("9482424"), new Timestamp("hans@google.com"), new Frequency("4th street"), new UniqueTagList()),
-                new Task(new Name("Boris Mueller"), new Deadline("87249245"), new Timestamp("ruth@google.com"), new Frequency("81th street"), new UniqueTagList()),
-                new Task(new Name("Carl Kurz"), new Deadline("95352563"), new Timestamp("heinz@yahoo.com"), new Frequency("wall street"), new UniqueTagList()),
-                new Task(new Name("Daniel Meier"), new Deadline("87652533"), new Timestamp("cornelia@google.com"), new Frequency("10th street"), new UniqueTagList()),
-                new Task(new Name("Elle Meyer"), new Deadline("9482224"), new Timestamp("werner@gmail.com"), new Frequency("michegan ave"), new UniqueTagList()),
-                new Task(new Name("Fiona Kunz"), new Deadline("9482427"), new Timestamp("lydia@gmail.com"), new Frequency("little tokyo"), new UniqueTagList()),
-                new Task(new Name("George Best"), new Deadline("9482442"), new Timestamp("anna@google.com"), new Frequency("4th street"), new UniqueTagList()),
-                new Task(new Name("Hoon Meier"), new Deadline("8482424"), new Timestamp("stefan@mail.com"), new Frequency("little india"), new UniqueTagList()),
-                new Task(new Name("Ida Mueller"), new Deadline("8482131"), new Timestamp("hans@google.com"), new Frequency("chicago ave"), new UniqueTagList())
+                new Task(new Name("Sample Task A"), new Deadline("010117"), new Timestamp("from 0000 to 2359"), new Frequency("-"), new UniqueTagList()),
+                new Task(new Name("Sample Task B"), new Deadline("010217"), new Timestamp("from 0800 to 1200"), new Frequency("-"), new UniqueTagList()),
+                new Task(new Name("Sample Task C"), new Deadline("010317"), new Timestamp("from 1200 to 1300"), new Frequency("-"), new UniqueTagList()),
+                new Task(new Name("Sample Task D"), new Deadline("010417"), new Timestamp("from 1600 to 1800"), new Frequency("-"), new UniqueTagList()),
+                new Task(new Name("Sample Task E"), new Deadline("010517"), new Timestamp("from 1800 to 1830"), new Frequency("-"), new UniqueTagList()),
+                new Task(new Name("Sample Task F"), new Deadline("010617"), new Timestamp("from 1800 to 1815"), new Frequency("-"), new UniqueTagList()),
+                new Task(new Name("Sample Task G"), new Deadline("010717"), new Timestamp("from 2000 to 2300"), new Frequency("-"), new UniqueTagList()),
+                new Task(new Name("Sample Task H"), new Deadline("010817"), new Timestamp("from 1500 to 1530"), new Frequency("-"), new UniqueTagList()),
+                new Task(new Name("Sample Task I"), new Deadline("010917"), new Timestamp("from 0600 to 0800"), new Frequency("-"), new UniqueTagList())
             };
             //CHECKSTYLE.ON: LineLength
         } catch (IllegalValueException e) {
@@ -285,10 +285,10 @@ public class TestUtil {
      * @param personsToRemove The subset of persons.
      * @return The modified persons after removal of the subset from persons.
      */
-    public static TestPerson[] removePersonsFromList(final TestPerson[] persons, TestPerson... personsToRemove) {
-        List<TestPerson> listOfPersons = asList(persons);
+    public static TestTask[] removePersonsFromList(final TestTask[] persons, TestTask... personsToRemove) {
+        List<TestTask> listOfPersons = asList(persons);
         listOfPersons.removeAll(asList(personsToRemove));
-        return listOfPersons.toArray(new TestPerson[listOfPersons.size()]);
+        return listOfPersons.toArray(new TestTask[listOfPersons.size()]);
     }
 
 
@@ -297,7 +297,7 @@ public class TestUtil {
      * @param list original list to copy from
      * @param targetIndexInOneIndexedFormat e.g. index 1 if the first element is to be removed
      */
-    public static TestPerson[] removePersonFromList(final TestPerson[] list, int targetIndexInOneIndexedFormat) {
+    public static TestTask[] removePersonFromList(final TestTask[] list, int targetIndexInOneIndexedFormat) {
         return removePersonsFromList(list, list[targetIndexInOneIndexedFormat - 1]);
     }
 
@@ -308,7 +308,7 @@ public class TestUtil {
      * @param index The index of the person to be replaced.
      * @return
      */
-    public static TestPerson[] replacePersonFromList(TestPerson[] persons, TestPerson person, int index) {
+    public static TestTask[] replacePersonFromList(TestTask[] persons, TestTask person, int index) {
         persons[index] = person;
         return persons;
     }
@@ -319,10 +319,10 @@ public class TestUtil {
      * @param personsToAdd The persons that are to be appended behind the original array.
      * @return The modified array of persons.
      */
-    public static TestPerson[] addPersonsToList(final TestPerson[] persons, TestPerson... personsToAdd) {
-        List<TestPerson> listOfPersons = asList(persons);
+    public static TestTask[] addPersonsToList(final TestTask[] persons, TestTask... personsToAdd) {
+        List<TestTask> listOfPersons = asList(persons);
         listOfPersons.addAll(asList(personsToAdd));
-        return listOfPersons.toArray(new TestPerson[listOfPersons.size()]);
+        return listOfPersons.toArray(new TestTask[listOfPersons.size()]);
     }
 
     private static <T> List<T> asList(T[] objs) {
@@ -334,7 +334,7 @@ public class TestUtil {
     }
 
     public static boolean compareCardAndPerson(PersonCardHandle card, ReadOnlyTask person) {
-        return card.isSamePerson(person);
+        return card.isSameCard(person);
     }
 
     public static Tag[] getTagList(String tags) {
