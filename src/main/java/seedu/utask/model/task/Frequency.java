@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Frequency {
 
     public static final String MESSAGE_FREQUENCY_CONSTRAINTS =
-            "Frequency for tasks can take any values (for now), and it can be blank";
+            "Task frequency should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
