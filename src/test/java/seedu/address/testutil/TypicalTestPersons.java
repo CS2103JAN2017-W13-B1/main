@@ -15,28 +15,28 @@ public class TypicalTestPersons {
     public TypicalTestPersons() {
         try {
             a = new TaskBuilder().withName("Ascertain work has been complete")
-                    .withFrequency("Every Friday").withTimestamp("from 0800 to 2000")
+                    .withFrequency("Every Friday").withTimestamp("0800 to 2000")
                     .withDeadline("011217")
                     .withTags("important").build();
             b = new TaskBuilder().withName("Busy with project").withFrequency("-")
-                    .withTimestamp("from 0800 to 1230").withDeadline("010217")
+                    .withTimestamp("0800 to 1230").withDeadline("010217")
                     .withTags("busy", "important").build();
             c = new TaskBuilder().withName("Cook Dinner Tonight").withDeadline("010317")
-                    .withTimestamp("from 1500 to 1830").withFrequency("-").build();
+                    .withTimestamp("1500 to 1830").withFrequency("-").build();
             d = new TaskBuilder().withName("Dinner with Alice").withDeadline("010317")
-                    .withTimestamp("from 1600 to 1800").withFrequency("-").build();
+                    .withTimestamp("1600 to 1800").withFrequency("-").build();
             e = new TaskBuilder().withName("Eat at Mcdonalds").withDeadline("010117")
-                    .withTimestamp("from 1700 to 1800").withFrequency("-").build();
+                    .withTimestamp("1700 to 1800").withFrequency("-").build();
             f = new TaskBuilder().withName("Free").withDeadline("131217")
-                    .withTimestamp("from 1800 to 2359").withFrequency("Every Year").build();
+                    .withTimestamp("1800 to 2359").withFrequency("Every Year").build();
             g = new TaskBuilder().withName("Go out with Alice").withDeadline("120317")
-                    .withTimestamp("from 1900 to 2000").withFrequency("-").build();
+                    .withTimestamp("1900 to 2000").withFrequency("-").build();
 
             // Manually added
             h = new TaskBuilder().withName("Help Alice with project").withDeadline("020417")
-                    .withTimestamp("from 0900 to 1300").withFrequency("-").build();
+                    .withTimestamp("0900 to 1300").withFrequency("-").build();
             i = new TaskBuilder().withName("Inspect Goods").withDeadline("010417")
-                    .withTimestamp("from 0900 to 1300").withFrequency("-").build();
+                    .withTimestamp("0900 to 1300").withFrequency("-").build();
         } catch (IllegalValueException e) {
             e.printStackTrace();
             assert false : "not possible";
