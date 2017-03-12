@@ -48,6 +48,18 @@ public class ArgumentTokenizer {
     }
 
     /**
+     * Wrapper method to safely get value of prefix
+     * Returns empty string if prefix value does not exists
+     */
+    public String tryGet(Prefix prefix) {
+        if (getValue(prefix).isPresent()) {
+            return getValue(prefix).get();
+        }
+
+        return "";
+    }
+
+    /**
      * Returns all values of given prefix.
      */
     public Optional<List<String>> getAllValues(Prefix prefix) {
