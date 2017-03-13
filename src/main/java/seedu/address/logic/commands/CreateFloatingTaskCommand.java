@@ -16,7 +16,7 @@ public class CreateFloatingTaskCommand extends CreateCommand {
         //TODO: Code smells
         this.toAdd = new FloatingTask(
                 new Name(name),
-                super.frequency,
+                this.frequency,
                 new UniqueTagList(tagSet));
     }
 

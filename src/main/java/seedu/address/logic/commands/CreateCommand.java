@@ -43,7 +43,7 @@ public abstract class CreateCommand extends Command {
 
         //TODO: Cleanup
         if ("".equals(frequency)) {
-            this.frequency = new Frequency("-");
+            this.frequency = Frequency.getEmptyFrequency();
         } else {
             this.frequency = new Frequency(frequency);
         }
