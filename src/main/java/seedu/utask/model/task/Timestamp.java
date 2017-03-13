@@ -30,6 +30,18 @@ public class Timestamp {
         this.value = trimmedTimestamp;
     }
 
+    private Timestamp() {
+        this.value = "";
+    }
+
+    public static Timestamp getEmptyTimestamp() {
+        return new Timestamp();
+    }
+
+    public boolean isEmpty() {
+        return "".equals(value);
+    }
+
     /**
      * Returns if a given string is a valid timestamps.
      */

@@ -28,6 +28,18 @@ public class Deadline {
         this.value = trimmedDeadline;
     }
 
+    private Deadline() {
+        this.value = "";
+    }
+
+    public static Deadline getEmptyDeadline() {
+        return new Deadline();
+    }
+
+    public boolean isEmpty() {
+        return "".equals(value);
+    }
+
     /**
      * Returns true if a given string is a valid task deadline.
      */
