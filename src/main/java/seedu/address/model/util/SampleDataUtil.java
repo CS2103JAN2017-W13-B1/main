@@ -16,7 +16,7 @@ public class SampleDataUtil {
     public static Task[] getSamplePersons() {
         try {
             return new Task[] {
-                new EventTask(new Name("My first task"), new Deadline("010117"), new Timestamp("from 0900 to 1000"),
+                    new EventTask(new Name("My first task"), new Deadline("010117"), new Timestamp("0900 to 1000"),
                     new Frequency("-"),
                     new UniqueTagList("important"))
             };

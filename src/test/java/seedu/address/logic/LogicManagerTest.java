@@ -344,7 +344,7 @@ public class LogicManagerTest {
         helper.addToModel(model, threePersons);
 
         assertCommandSuccess("delete 2",
-                String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, threePersons.get(1)), expectedAB,
+                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, threePersons.get(1)), expectedAB,
                 expectedAB.getPersonList());
     }
 
@@ -413,7 +413,7 @@ public class LogicManagerTest {
         Task simpleTask() throws Exception {
             Name name = new Name("My debug task");
             Deadline deadline = new Deadline("010117");
-            Timestamp timestamp = new Timestamp("from 1830 to 2030");
+            Timestamp timestamp = new Timestamp("1830 to 2030");
             Frequency frequency = new Frequency("Every Monday");
             Tag tag1 = new Tag("urgent");
             Tag tag2 = new Tag("assignment");
@@ -431,7 +431,7 @@ public class LogicManagerTest {
          */
         Task generatePerson(int seed) throws Exception {
             return new EventTask(new Name("Task " + seed), new Deadline("010117"),
-                    new Timestamp("from 0000 to 2359"), new Frequency("Every " + seed),
+                    new Timestamp("0000 to 2359"), new Frequency("Every " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1))));
         }
 
@@ -528,7 +528,7 @@ public class LogicManagerTest {
          * some dummy values.
          */
         Task generatePersonWithName(String name) throws Exception {
-            return new EventTask(new Name(name), new Deadline("010117"), new Timestamp("from 0000 to 1300"),
+            return new EventTask(new Name(name), new Deadline("010117"), new Timestamp("0000 to 1300"),
                     new Frequency("-"), new UniqueTagList(new Tag("tag")));
         }
     }
