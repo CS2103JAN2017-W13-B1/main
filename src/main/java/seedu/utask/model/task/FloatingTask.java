@@ -4,6 +4,8 @@ import seedu.address.model.tag.UniqueTagList;
 
 public class FloatingTask extends Task {
 
+    private Timestamp fakeTimestamp;
+
     public FloatingTask(Name name, Frequency frequency, UniqueTagList tags) {
 
         super(name, frequency, tags);
@@ -25,7 +27,7 @@ public class FloatingTask extends Task {
 
     @Override
     public Timestamp getTimestamp() {
-        return _fakeTimestamp;
+        return fakeTimestamp;
     }
 
     private Deadline _fakeDeadline;
@@ -39,12 +41,10 @@ public class FloatingTask extends Task {
         }
     }
 
-    private Timestamp _fakeTimestamp;
-
     private void fakeTimestamp() {
         try {
             Timestamp t = new Timestamp("from 0000 to 2359");
-            _fakeTimestamp = t;
+            fakeTimestamp = t;
         } catch (Exception e) {
 
         }
