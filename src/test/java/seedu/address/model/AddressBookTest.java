@@ -16,6 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.TypicalTestPersons;
+import seedu.utask.model.task.EventTask;
 import seedu.utask.model.task.ReadOnlyTask;
 import seedu.utask.model.task.Task;
 
@@ -49,7 +50,7 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         TypicalTestPersons td = new TypicalTestPersons();
         // Repeat td.alice twice
-        List<Task> newPersons = Arrays.asList(new Task(td.a), new Task(td.a));
+        List<Task> newPersons = Arrays.asList(new EventTask(td.a), new EventTask(td.a));
         List<Tag> newTags = td.a.getTags().asObservableList();
         AddressBookStub newData = new AddressBookStub(newPersons, newTags);
 

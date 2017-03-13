@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.utask.model.task.EventTask;
 import seedu.utask.model.task.ReadOnlyTask;
 import seedu.utask.model.task.Task;
 import seedu.utask.model.task.UniqueTaskList;
@@ -101,7 +102,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throws UniqueTaskList.DuplicateTaskException {
         assert editedReadOnlyPerson != null;
 
-        Task editedPerson = new Task(editedReadOnlyPerson);
+        Task editedPerson = new EventTask(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person

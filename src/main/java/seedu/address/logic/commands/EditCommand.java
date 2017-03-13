@@ -8,6 +8,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.EventTask;
 import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.ReadOnlyTask;
@@ -83,7 +84,8 @@ public class EditCommand extends Command {
         Frequency updatedAddress = editPersonDescriptor.getAddress().orElseGet(personToEdit::getFrequency);
         UniqueTagList updatedTags = editPersonDescriptor.getTags().orElseGet(personToEdit::getTags);
 
-        return new Task(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        //TODO
+        return new EventTask(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
 
     /**
