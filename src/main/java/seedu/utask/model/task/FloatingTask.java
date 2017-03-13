@@ -33,7 +33,7 @@ public class FloatingTask extends Task {
 
     private void fakeDeadline() {
         try {
-            Deadline d = new Deadline("101017");
+            Deadline d = new Deadline("311220");
             fakeDeadline = d;
         } catch (Exception e) {
 
@@ -42,7 +42,7 @@ public class FloatingTask extends Task {
 
     private void fakeTimestamp() {
         try {
-            Timestamp t = new Timestamp("from 0000 to 2359");
+            Timestamp t = new Timestamp("0000 to 0000");
             fakeTimestamp = t;
         } catch (Exception e) {
 

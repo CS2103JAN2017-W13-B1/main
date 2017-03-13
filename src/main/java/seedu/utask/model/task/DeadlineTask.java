@@ -52,7 +52,7 @@ public class DeadlineTask extends Task {
 
     private void fakeTimestamp() {
         try {
-            Timestamp t = new Timestamp("from 0000 to 2359");
+            Timestamp t = new Timestamp("0000 to 0000");
             fakeTimestamp = t;
         } catch (Exception e) {
 
