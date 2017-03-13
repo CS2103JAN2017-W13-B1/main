@@ -16,9 +16,9 @@ public class SampleDataUtil {
     public static Task[] getSamplePersons() {
         try {
             return new Task[] {
-                    new EventTask(new Name("My first task"), new Deadline("010117"), new Timestamp("0900 to 1000"),
-                    new Frequency("-"),
-                    new UniqueTagList("important"))
+                new EventTask(new Name("My first task"), new Deadline("010117"), new Timestamp("0900 to 1000"),
+                new Frequency("-"),
+                new UniqueTagList("important"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
