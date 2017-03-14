@@ -80,9 +80,9 @@ public class SearchResultsAnchorPane extends StagingUiPart<Region> {
     private void populate() {
         try {
             ObservableList<ReadonlySearchTask> users = FXCollections.observableArrayList();
-            users.add(new ReadonlySearchTask("Walk my dog", "131217", "impt"));
-            users.add(new ReadonlySearchTask("Sales Department", "131217", "now"));
-            users.add(new ReadonlySearchTask("Sales Department", "131217", "later"));
+            users.add(new ReadonlySearchTask("Walk my dog", "13 Feb 2017", "impt"));
+            users.add(new ReadonlySearchTask("Swimming", "01 Mar 2017", "now"));
+            users.add(new ReadonlySearchTask("Dinner with Alice", "05 Apr 2017", "later"));
 
             // build tree
             TreeItem<ReadonlySearchTask> root =
@@ -97,7 +97,7 @@ public class SearchResultsAnchorPane extends StagingUiPart<Region> {
         }
     }
 
-    boolean isSearchActive = false;
+    private boolean isSearchActive = false;
 
     public boolean handleEscape() {
         if (isSearchActive) {
@@ -114,14 +114,26 @@ public class SearchResultsAnchorPane extends StagingUiPart<Region> {
             parent.getChildren().add(searchResults);
             isSearchActive = true;
         }
-        resetFilter();
+//        resetFilter();
+    }
+
+    public boolean isSearchActive() {
+        return isSearchActive;
+    }
+
+    public ReadonlySearchTask selectIndex(int i) {
+        searchResults.getSelectionModel().select(i);
+        searchResults.getFocusModel().focus(i);
+
+        TreeItem<ReadonlySearchTask> item = searchResults.getTreeItem(i);
+        return item.getValue();
     }
 
     public void fliter(String keywords) {
         searchResults.setPredicate(task ->
-            task.getValue().name.get().contains(keywords) ||
-            task.getValue().date.get().contains(keywords) ||
-            task.getValue().tags.get().contains(keywords));
+            task.getValue().name.get().toLowerCase().contains(keywords) ||
+            task.getValue().date.get().toLowerCase().contains(keywords) ||
+            task.getValue().tags.get().toLowerCase().contains(keywords));
     }
 
     private void resetFilter() {

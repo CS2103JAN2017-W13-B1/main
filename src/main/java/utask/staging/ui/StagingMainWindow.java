@@ -1,5 +1,8 @@
 package utask.staging.ui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSnackbar;
@@ -14,7 +17,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -22,6 +24,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import utask.staging.ui.SearchResultsAnchorPane.ReadonlySearchTask;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -83,6 +86,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
     }
 
     private String previousCommand = "";
+    private static final Pattern searchRegex = Pattern.compile("search\\s(?<txt>\\S+)");
 
     @FXML
     void txtEventOnKeyPressed(KeyEvent event) {
@@ -95,9 +99,16 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         } else if (event.getCode() == KeyCode.ENTER) {
             String text = txtCommand.getText();
 
-            if (text.matches("search\\s\\S+")) {
+            final Matcher matcher = searchRegex.matcher(text);
+
+            if (matcher.matches()) {
+                search.fliter(matcher.group("txt").toLowerCase());
                 search.overlay();
-                search.fliter(text);
+            } else if (search.isSearchActive() && text.matches("^select\\s\\d+$")) {
+                String params = (text.toLowerCase().split(" "))[1];
+                int index = Integer.parseInt(params);
+                ReadonlySearchTask task = search.selectIndex(index);
+                txtAreaResults.appendText("GOTTEN >> " + task.name + " " + task.date + " " + task.tags);
             }
 
             txtAreaResults.appendText(txtCommand.getText() + "\n");

@@ -1,44 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="600.0"
-	xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<AnchorPane fx:id="topPlaceholder" prefHeight="400"
-			prefWidth="600.0" />
-		<JFXTextField fx:id="txtCommand" labelFloat="true"
-			onKeyPressed="#txtEventOnKeyPressed" onKeyReleased="#txtEventOnKeyReleased"
-			prefHeight="35.0" promptText="Enter your commands here...">
-			<font>
-				<Font size="14.0" />
-			</font>
-			<VBox.margin>
-				<Insets bottom="5.0" left="15.0" right="15.0" top="10.0" />
-			</VBox.margin>
-		</JFXTextField>
-		<Label fx:id="lblSuggestion" prefHeight="27.0" prefWidth="569.0"
-			textFill="#3c1aff">
-			<VBox.margin>
-				<Insets left="15.0" right="15.0" top="-5.0" />
-			</VBox.margin>
-			<padding>
-				<Insets left="3.0" />
-			</padding>
-		</Label>
-		<HBox fx:id="hBoxSuggestion" prefHeight="35.0" prefWidth="600.0" />
-		<JFXTextArea fx:id="txtAreaResults">
-			<VBox.margin>
-				<Insets left="15.0" right="15.0" />
-			</VBox.margin>
-		</JFXTextArea>
+      <AnchorPane fx:id="topPlaceholder" prefHeight="400.0" prefWidth="600.0" />
+      <VBox alignment="BOTTOM_CENTER">
+         <children>
+      		<JFXTextField fx:id="txtCommand" labelFloat="true" onKeyPressed="#txtEventOnKeyPressed" onKeyReleased="#txtEventOnKeyReleased" prefHeight="35.0" promptText="Enter your commands here...">
+      			<font>
+      				<Font size="14.0" />
+      			</font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+      		</JFXTextField>
+      		<Label fx:id="lblSuggestion" minWidth="600.0" prefHeight="27.0" textFill="#3c1aff">
+               <padding>
+                  <Insets left="3.0" />
+               </padding>
+      		</Label>
+      		<JFXTextArea fx:id="txtAreaResults" editable="false" focusTraversable="false" promptText="History" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+         </VBox.margin>
+      </VBox>
 	</children>
 </VBox>

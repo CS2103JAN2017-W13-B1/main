@@ -5,8 +5,8 @@ import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.commons.util.FxViewUtil;
 
 public class TaskAnchorPane extends StagingUiPart<Region> {
 
@@ -14,6 +14,9 @@ public class TaskAnchorPane extends StagingUiPart<Region> {
 
     @FXML
     private JFXListView<Label> lstTasks;
+
+    @FXML
+    private HBox rootPane;
 
     private AnchorPane parent;
 
@@ -25,21 +28,21 @@ public class TaskAnchorPane extends StagingUiPart<Region> {
 
         parent = placeholder;
 
-        FxViewUtil.applyAnchorBoundaryParameters(lstTasks, 0.0, 0.0, 0.0, 0.0);
-        placeholder.getChildren().add(lstTasks);
+//        FxViewUtil.applyAnchorBoundaryParameters(rootFlowPane, 0.0, 0.0, 0.0, 0.0);
+        placeholder.getChildren().add(rootPane);
         populate();
     }
 
     public void setOverlay() {
         //TODO: Detect if search is active then overlay
-        parent.getChildren().add(lstTasks);
+        parent.getChildren().clear();
+        parent.getChildren().add(rootPane);
     }
 
     private void populate() {
-        for (int i = 0; i < 4; i++) {
-            lstTasks.getItems().add(new Label("Item " + i));
-        }
-
+        lstTasks.getItems().add(new Label("Walk my dog\n13 Feb 2017\nimpt"));
+        lstTasks.getItems().add(new Label("Swimming\n01 Mar 2017\nnow"));
+        lstTasks.getItems().add(new Label("Dinner with Alice\n05 Apr 2017\nlater"));
         lstTasks.getSelectionModel().select(1);
         lstTasks.getFocusModel().focus(1);
     }

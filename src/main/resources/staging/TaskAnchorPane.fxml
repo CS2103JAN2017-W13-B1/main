@@ -1,12 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+<HBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Task" />
-      <JFXListView fx:id="lstTasks" />
+      <VBox fillWidth="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="185.0" text="to-dos" textAlignment="CENTER" textFill="#3300ff">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <JFXListView fx:id="lstTasks" prefWidth="185.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </JFXListView>
+         </children>
+      </VBox>
+      <VBox fillWidth="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="185.0" text="deadlines" textAlignment="CENTER" textFill="#3300ff">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <JFXListView fx:id="lstTasks1" prefWidth="185.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </JFXListView>
+         </children>
+      </VBox>
+      <VBox fillWidth="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="185.0" text="events" textAlignment="CENTER" textFill="#3300ff">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <JFXListView fx:id="lstTasks2" prefWidth="185.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </JFXListView>
+         </children>
+      </VBox>
    </children>
-</VBox>
+</HBox>
