@@ -29,7 +29,7 @@ import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.ui.Ui;
-import seedu.address.ui.UiManager;
+import utask.staging.ui.StagingUiManager;
 
 /**
  * The main entry point to the application.
@@ -63,7 +63,8 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model, storage);
 
-        ui = new UiManager(logic, config, userPrefs);
+//        ui = new UiManager(logic, config, userPrefs);
+        ui = new StagingUiManager(logic, config, userPrefs);
 
         initEventsCenter();
     }
