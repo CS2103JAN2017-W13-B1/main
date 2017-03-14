@@ -91,14 +91,14 @@ public class UniqueTagList implements Iterable<Tag> {
         return new HashSet<>(internalList);
     }
 
-    public String getAllTagNames(){
+    public String getAllTagNames() {
         String allTagNames = "";
-        for(Tag tag:internalList){
+        for (Tag tag:internalList) {
             allTagNames += tag.tagName + " ";
         }
         return allTagNames;
     }
-    
+
     /**
      * Replaces the Tags in this list with those in the argument tag list.
      */
