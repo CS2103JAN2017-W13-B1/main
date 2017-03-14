@@ -36,12 +36,14 @@ public class SearchResultsAnchorPane extends StagingUiPart<Region> {
     private JFXTreeTableColumn<ReadonlySearchTask, String> tagColumn;
 
 
+    private AnchorPane parent;
 
     /**
      * @param placeholder The AnchorPane where the BrowserPanel must be inserted
      */
     public SearchResultsAnchorPane(AnchorPane placeholder) {
         super(FXML);
+        this.parent = placeholder;
         //placeholder.setOnKeyPressed(Event::consume); // To prevent triggering events for typing inside the
 //        AnchorPane.setTopAnchor(jfxTreeTableViewSearchResults, 10.0);             // loaded Web page.
 
@@ -71,9 +73,8 @@ public class SearchResultsAnchorPane extends StagingUiPart<Region> {
 
         populate();
         FxViewUtil.applyAnchorBoundaryParameters(searchResults, 0.0, 0.0, 0.0, 0.0);
-        placeholder.getChildren().add(searchResults);
+        //placeholder.getChildren().add(searchResults);
 
-        fliter("dog");
     }
 
     private void populate() {
@@ -96,11 +97,35 @@ public class SearchResultsAnchorPane extends StagingUiPart<Region> {
         }
     }
 
+    boolean isSearchActive = false;
+
+    public boolean handleEscape() {
+        if (isSearchActive) {
+            isSearchActive = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void overlay() {
+        if (!isSearchActive) {
+            parent.getChildren().clear();
+            parent.getChildren().add(searchResults);
+            isSearchActive = true;
+        }
+        resetFilter();
+    }
+
     public void fliter(String keywords) {
         searchResults.setPredicate(task ->
             task.getValue().name.get().contains(keywords) ||
             task.getValue().date.get().contains(keywords) ||
             task.getValue().tags.get().contains(keywords));
+    }
+
+    private void resetFilter() {
+        searchResults.setPredicate(task -> true);
     }
 
     public void freeResources() {

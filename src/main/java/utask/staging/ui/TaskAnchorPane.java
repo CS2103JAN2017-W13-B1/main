@@ -15,14 +15,24 @@ public class TaskAnchorPane extends StagingUiPart<Region> {
     @FXML
     private JFXListView<Label> lstTasks;
 
+    private AnchorPane parent;
+
     /**
      * @param placeholder The AnchorPane where the BrowserPanel must be inserted
      */
     public TaskAnchorPane(AnchorPane placeholder) {
         super(FXML);
+
+        parent = placeholder;
+
         FxViewUtil.applyAnchorBoundaryParameters(lstTasks, 0.0, 0.0, 0.0, 0.0);
         placeholder.getChildren().add(lstTasks);
         populate();
+    }
+
+    public void setOverlay() {
+        //TODO: Detect if search is active then overlay
+        parent.getChildren().add(lstTasks);
     }
 
     private void populate() {

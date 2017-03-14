@@ -65,13 +65,6 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         String text = txtCommand.getText();
 
         if (!"".equals(text)) {
-
-            if (text.equals("search")) {
-                topPlaceholder.getChildren().clear();
-                topPlaceholder.getChildren().add(new StackPane());
-                return;
-            }
-
             String command = (text.toLowerCase().split(" "))[0];
             switch (command) {
             case "add" :
@@ -100,10 +93,21 @@ public class StagingMainWindow extends StagingUiPart<Region> {
             txtCommand.setText(lblSuggestion.getText());
             lblSuggestion.setText("");
         } else if (event.getCode() == KeyCode.ENTER) {
+            String text = txtCommand.getText();
+
+            if (text.matches("search\\s\\S+")) {
+                search.overlay();
+                search.fliter(text);
+            }
+
             txtAreaResults.appendText(txtCommand.getText() + "\n");
             previousCommand = txtCommand.getText();
             txtCommand.setText("");
             lblSuggestion.setText("");
+        } else if (event.getCode() == KeyCode.ESCAPE) {
+            if (search.handleEscape()) {
+                task.setOverlay();
+            }
         }
     }
 
@@ -133,6 +137,9 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         decorator.setPrefSize(800, 600);
         decorator.setCustomMaximize(true);
         Scene scene = new Scene(decorator);
+
+
+        search = new SearchResultsAnchorPane(topPlaceholder);
 
 
         this.primaryStage.setScene(scene);
@@ -184,8 +191,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 //    }
 
     void fillInnerParts() {
-//        task = new TaskAnchorPane(topPlaceholder);
-        search = new SearchResultsAnchorPane(topPlaceholder);
+        task = new TaskAnchorPane(topPlaceholder);
 //        browserPanel = new BrowserPanel(browserPlaceholder);
 //        personListPanel = new PersonListPanel(getPersonListPlaceholder(), logic.getFilteredPersonList());
 //        new ResultDisplay(getResultDisplayPlaceholder());
