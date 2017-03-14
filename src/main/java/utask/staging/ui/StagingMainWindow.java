@@ -1,5 +1,7 @@
 package utask.staging.ui;
 
+import com.jfoenix.controls.JFXDecorator;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -9,6 +11,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -67,8 +70,16 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        Scene scene = new Scene(getRoot());
-        primaryStage.setScene(scene);
+//        Scene scene = new Scene(getRoot());
+//        primaryStage.setScene(scene);
+
+        JFXDecorator decorator = new JFXDecorator(this.primaryStage, new StackPane());
+        decorator.setCustomMaximize(true);
+        Scene scene1 = new Scene(decorator, 800, 850);
+        this.primaryStage.setMinWidth(700);
+        this.primaryStage.setMinHeight(800);
+        this.primaryStage.setScene(scene1);
+        this.primaryStage.show();
 
 //        setAccelerators();
     }
