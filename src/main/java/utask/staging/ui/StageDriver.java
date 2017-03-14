@@ -1,4 +1,4 @@
-package seedu.address;
+package utask.staging.ui;
 
 import java.io.IOException;
 import java.util.Map;
@@ -29,13 +29,12 @@ import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.ui.Ui;
-import seedu.address.ui.UiManager;
 
 /**
  * The main entry point to the application.
  */
-public class MainApp extends Application {
-    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+public class StageDriver extends Application {
+    private static final Logger logger = LogsCenter.getLogger(StageDriver.class);
 
     public static final Version VERSION = new Version(1, 0, 0, true);
 
@@ -63,7 +62,7 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model, storage);
 
-        ui = new UiManager(logic, config, userPrefs);
+        ui = new StagingUiManager(logic, config, userPrefs);
 
         initEventsCenter();
     }
@@ -163,7 +162,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting AddressBook " + StageDriver.VERSION);
         ui.start(primaryStage);
     }
 
