@@ -3,32 +3,43 @@ package seedu.utask.model.task;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
- * A read-only immutable interface for a Task in the uTask.
- * Implementations should guarantee: details are present and not null, field values are validated.
+ * A read-only immutable interface for a Task in the uTask. Implementations
+ * should guarantee: details are present and not null, field values are
+ * validated.
  */
 public interface ReadOnlyTask {
 
     Name getName();
-    Deadline getDeadline();
-    Timestamp getTimestamp();
+
     Frequency getFrequency();
 
+    /*
+     * Deadline and Timestamp are optional based on type of task Event has both
+     * deadline and timestamp Deadline has only deadline
+     */
+    Deadline getDeadline();
+
+    Timestamp getTimestamp();
+
     /**
-     * The returned TagList is a deep copy of the internal TagList,
-     * changes on the returned list will not affect the task's internal tags.
+     * The returned TagList is a deep copy of the internal TagList, changes on
+     * the returned list will not affect the task's internal tags.
      */
     UniqueTagList getTags();
 
     /**
-     * Returns true if both have the same state. (interfaces cannot override .equals)
+     * Returns true if both have the same state. (interfaces cannot override
+     * .equals)
      */
     default boolean isSameStateAs(ReadOnlyTask other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getName().equals(this.getName()) // state checks here onwards
-                && other.getDeadline().equals(this.getDeadline())
-                && other.getTimestamp().equals(this.getTimestamp())
-                && other.getFrequency().equals(this.getFrequency()));
+                        && other.getName().equals(this.getName()) // state
+                                                                  // checks here
+                                                                  // onwards
+                        && other.getDeadline().equals(this.getDeadline())
+                        && other.getTimestamp().equals(this.getTimestamp())
+                        && other.getFrequency().equals(this.getFrequency()));
     }
 
     /**
@@ -36,13 +47,9 @@ public interface ReadOnlyTask {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Deadline: ")
-                .append(getDeadline())
-                .append(" Timestamp: ")
-                .append(getTimestamp())
-                .append(" Frequency: ")
-                .append(getFrequency())
+        builder.append(getName()).append(" Deadline: ").append(getDeadline())
+                .append(" Timestamp: ").append(getTimestamp())
+                .append(" Frequency: ").append(getFrequency())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
