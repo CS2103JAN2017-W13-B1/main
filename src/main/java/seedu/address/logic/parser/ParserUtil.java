@@ -75,27 +75,27 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code Optional<String> deadline} into an {@code Optional<Deadline>} if {@code phone} is present.
      */
-    public static Optional<Deadline> parsePhone(Optional<String> phone) throws IllegalValueException {
-        assert phone != null;
-        return phone.isPresent() ? Optional.of(new Deadline(phone.get())) : Optional.empty();
+    public static Optional<Deadline> parseDeadline(Optional<String> deadline) throws IllegalValueException {
+        assert deadline != null;
+        return deadline.isPresent() ? Optional.of(new Deadline(deadline.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Parses a {@code Optional<String> frequency} into an {@code Optional<Frequency>} if {@code address} is present.
      */
-    public static Optional<Frequency> parseAddress(Optional<String> address) throws IllegalValueException {
-        assert address != null;
-        return address.isPresent() ? Optional.of(new Frequency(address.get())) : Optional.empty();
+    public static Optional<Frequency> parseFrequency(Optional<String> frequency) throws IllegalValueException {
+        assert frequency != null;
+        return frequency.isPresent() ? Optional.of(new Frequency(frequency.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> timestamp} into an {@code Optional<Timestamp>} if {@code email} is present.
      */
-    public static Optional<Timestamp> parseEmail(Optional<String> email) throws IllegalValueException {
-        assert email != null;
-        return email.isPresent() ? Optional.of(new Timestamp(email.get())) : Optional.empty();
+    public static Optional<Timestamp> parseTimestamp(Optional<String> timestamp) throws IllegalValueException {
+        assert timestamp != null;
+        return timestamp.isPresent() ? Optional.of(new Timestamp(timestamp.get())) : Optional.empty();
     }
 
     /**

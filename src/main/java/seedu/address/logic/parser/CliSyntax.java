@@ -10,6 +10,7 @@ import seedu.address.logic.parser.ArgumentTokenizer.Prefix;
 public class CliSyntax {
 
     /* Prefix definitions */
+    public static final Prefix PREFIX_NAME = new Prefix("/name");
     public static final Prefix PREFIX_DEADLINE = new Prefix("/by");
     public static final Prefix PREFIX_TIMESTAMP = new Prefix("/from");
     public static final Prefix PREFIX_FREQUENCY = new Prefix("/repeat");
