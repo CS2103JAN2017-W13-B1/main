@@ -12,7 +12,9 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.UnmodifiableObservableList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.utask.model.task.DeadlineTask;
 import seedu.utask.model.task.EventTask;
+import seedu.utask.model.task.FloatingTask;
 import seedu.utask.model.task.ReadOnlyTask;
 import seedu.utask.model.task.Task;
 import seedu.utask.model.task.UniqueTaskList;
@@ -24,7 +26,7 @@ import seedu.utask.model.task.UniqueTaskList.DuplicateTaskException;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueTaskList persons;
+    private final UniqueTaskList tasks;
     private final UniqueTagList tags;
 
     /*
@@ -35,7 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniqueTaskList();
+        tasks = new UniqueTaskList();
         tags = new UniqueTagList();
     }
 
@@ -53,7 +55,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setPersons(List<? extends ReadOnlyTask> persons)
             throws UniqueTaskList.DuplicateTaskException {
-        this.persons.setTasks(persons);
+        this.tasks.setTasks(persons);
     }
 
     public void setTags(Collection<Tag> tags) throws UniqueTagList.DuplicateTagException {
@@ -63,7 +65,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         assert newData != null;
         try {
-            setPersons(newData.getPersonList());
+            setPersons(newData.getTaskList());
         } catch (UniqueTaskList.DuplicateTaskException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
@@ -72,7 +74,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (UniqueTagList.DuplicateTagException e) {
             assert false : "AddressBooks should not have duplicate tags";
         }
-        syncMasterTagListWith(persons);
+        syncMasterTagListWith(tasks);
     }
 
 //// person-level operations
@@ -86,7 +88,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addPerson(Task p) throws UniqueTaskList.DuplicateTaskException {
         syncMasterTagListWith(p);
-        persons.add(p);
+        tasks.add(p);
     }
 
     /**
@@ -98,16 +100,25 @@ public class AddressBook implements ReadOnlyAddressBook {
      *      another existing person in the list.
      * @throws IndexOutOfBoundsException if {@code index} < 0 or >= the size of the list.
      */
-    public void updatePerson(int index, ReadOnlyTask editedReadOnlyPerson)
+    public void updateTask(int index, ReadOnlyTask editedReadOnlyTask)
             throws UniqueTaskList.DuplicateTaskException {
-        assert editedReadOnlyPerson != null;
+        assert editedReadOnlyTask != null;
 
-        Task editedPerson = new EventTask(editedReadOnlyPerson);
-        syncMasterTagListWith(editedPerson);
+        //check to see what type of task contains before casting new instance
+        Task editedTask = null;
+        if (editedReadOnlyTask instanceof EventTask) {
+            editedTask = new EventTask(editedReadOnlyTask);
+        } else if (editedReadOnlyTask instanceof DeadlineTask) {
+            editedTask = new DeadlineTask(editedReadOnlyTask);
+        } else if (editedReadOnlyTask instanceof FloatingTask) {
+            editedTask = new FloatingTask(editedReadOnlyTask);
+        }
+
+        syncMasterTagListWith(editedTask);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
-        persons.updateTask(index, editedPerson);
+        tasks.updateTask(index, editedTask);
     }
 
     /**
@@ -115,8 +126,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
      */
-    private void syncMasterTagListWith(Task person) {
-        final UniqueTagList personTags = person.getTags();
+    private void syncMasterTagListWith(Task tempTask) {
+        final UniqueTagList personTags = tempTask.getTags();
         tags.mergeFrom(personTags);
 
         // Create map with values = tag object references in the master list
@@ -127,7 +138,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        person.setTags(new UniqueTagList(correctTagReferences));
+        tempTask.setTags(new UniqueTagList(correctTagReferences));
     }
 
     /**
@@ -141,7 +152,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public boolean removePerson(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
-        if (persons.remove(key)) {
+        if (tasks.remove(key)) {
             return true;
         } else {
             throw new UniqueTaskList.TaskNotFoundException();
@@ -158,13 +169,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return tasks.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
 
     @Override
-    public ObservableList<ReadOnlyTask> getPersonList() {
-        return new UnmodifiableObservableList<>(persons.asObservableList());
+    public ObservableList<ReadOnlyTask> getTaskList() {
+        return new UnmodifiableObservableList<>(tasks.asObservableList());
     }
 
     @Override
@@ -176,13 +187,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
+                && this.tasks.equals(((AddressBook) other).tasks)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(tasks, tags);
     }
 }
