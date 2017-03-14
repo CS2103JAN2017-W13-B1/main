@@ -7,14 +7,10 @@ import seedu.address.model.tag.UniqueTagList;
 public class DeadlineTask extends Task {
 
     private Deadline deadline;
-    private Timestamp fakeTimestamp;
 
     public DeadlineTask(Name name, Deadline deadline, Frequency frequency, UniqueTagList tags) {
         super(name, frequency, tags);
-
         this.deadline = deadline;
-
-        fakeTimestamp();
     }
 
     /**
@@ -47,15 +43,6 @@ public class DeadlineTask extends Task {
 
     @Override
     public Timestamp getTimestamp() {
-        return fakeTimestamp;
-    }
-
-    private void fakeTimestamp() {
-        try {
-            Timestamp t = new Timestamp("0000 to 0000");
-            fakeTimestamp = t;
-        } catch (Exception e) {
-
-        }
+        return Timestamp.getEmptyTimestamp();
     }
 }

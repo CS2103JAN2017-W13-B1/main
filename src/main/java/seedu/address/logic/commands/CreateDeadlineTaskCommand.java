@@ -17,7 +17,7 @@ public class CreateDeadlineTaskCommand extends CreateCommand {
         this.toAdd = new DeadlineTask(
                 new Name(name),
                 new Deadline(deadline),
-                super.frequency,
+                this.frequency,
                 new UniqueTagList(tagSet));
     }
 

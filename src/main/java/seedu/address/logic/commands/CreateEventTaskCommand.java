@@ -19,7 +19,7 @@ public class CreateEventTaskCommand extends CreateCommand {
                 new Name(name),
                 new Deadline(deadline),
                 new Timestamp(timestamp),
-                super.frequency,
+                this.frequency,
                 new UniqueTagList(tagSet));
     }
 

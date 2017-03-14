@@ -33,6 +33,18 @@ public class Frequency {
         this.value = frequency;
     }
 
+    private Frequency() {
+        this.value = "";
+    }
+
+    public static Frequency getEmptyFrequency() {
+        return new Frequency();
+    }
+
+    public boolean isEmpty() {
+        return "".equals(value);
+    }
+
     /**
      * Returns true if a given string is a valid person email.
      */
