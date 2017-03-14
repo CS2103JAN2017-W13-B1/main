@@ -11,8 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -56,10 +58,20 @@ public class StagingMainWindow extends StagingUiPart<Region> {
     private JFXTextArea txtAreaResults;
 
     @FXML
+    private AnchorPane topPlaceholder;
+
+    @FXML
     void txtEventOnKeyReleased(KeyEvent event) {
         String text = txtCommand.getText();
 
         if (!"".equals(text)) {
+
+            if (text.equals("search")) {
+                topPlaceholder.getChildren().clear();
+                topPlaceholder.getChildren().add(new StackPane());
+                return;
+            }
+
             String command = (text.toLowerCase().split(" "))[0];
             switch (command) {
             case "add" :
@@ -97,6 +109,9 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 
     JFXSnackbar bar;
 
+    private TaskAnchorPane task;
+    private SearchResultsAnchorPane search;
+
     public StagingMainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -119,12 +134,6 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         decorator.setCustomMaximize(true);
         Scene scene = new Scene(decorator);
 
-        for (int i = 0; i < 4; i++) {
-            lstViewTask.getItems().add(new Label("Item " + i));
-        }
-
-        lstViewTask.getSelectionModel().select(3);
-        lstViewTask.getFocusModel().focus(3);
 
         this.primaryStage.setScene(scene);
         this.primaryStage.show();
@@ -137,6 +146,8 @@ public class StagingMainWindow extends StagingUiPart<Region> {
     public Stage getPrimaryStage() {
         return primaryStage;
     }
+
+
 
 //    private void setAccelerators() {
 //        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
@@ -173,6 +184,8 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 //    }
 
     void fillInnerParts() {
+//        task = new TaskAnchorPane(topPlaceholder);
+        search = new SearchResultsAnchorPane(topPlaceholder);
 //        browserPanel = new BrowserPanel(browserPlaceholder);
 //        personListPanel = new PersonListPanel(getPersonListPlaceholder(), logic.getFilteredPersonList());
 //        new ResultDisplay(getResultDisplayPlaceholder());

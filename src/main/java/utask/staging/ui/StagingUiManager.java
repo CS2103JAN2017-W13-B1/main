@@ -53,7 +53,7 @@ public class StagingUiManager extends ComponentManager implements Ui {
         try {
             mainWindow = new StagingMainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
-//            mainWindow.fillInnerParts();
+            mainWindow.fillInnerParts();
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
