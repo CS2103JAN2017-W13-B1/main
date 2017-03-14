@@ -58,7 +58,7 @@ public class EditCommandTest extends AddressBookGuiTest {
     public void edit_findThenEdit_success() throws Exception {
         commandBox.runCommand("find Free");
 
-        String detailsToEdit = "Not Free";
+        String detailsToEdit = "/name Not Free";
         int filteredPersonListIndex = 1;
         int addressBookIndex = 6;
 
@@ -70,28 +70,28 @@ public class EditCommandTest extends AddressBookGuiTest {
 
     @Test
     public void edit_missingPersonIndex_failure() {
-        commandBox.runCommand("edit Bobby");
+        commandBox.runCommand("update Bobby");
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void edit_invalidPersonIndex_failure() {
-        commandBox.runCommand("edit 8 Bobby");
-        assertResultMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        commandBox.runCommand("update 8 /name Bobby");
+        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
     public void edit_noFieldsSpecified_failure() {
-        commandBox.runCommand("edit 1");
+        commandBox.runCommand("update 1");
         assertResultMessage(EditCommand.MESSAGE_NOT_EDITED);
     }
 
     @Test
     public void edit_invalidValues_failure() {
-        commandBox.runCommand("edit 1 *&");
+        commandBox.runCommand("update 1 /name *&");
         assertResultMessage(Name.MESSAGE_NAME_CONSTRAINTS);
 
-        commandBox.runCommand("edit 1 /by abcd");
+        commandBox.runCommand("update 1 /by abcd");
         assertResultMessage(Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
 
 //        commandBox.runCommand("edit 1 /from !!!!");
@@ -100,7 +100,7 @@ public class EditCommandTest extends AddressBookGuiTest {
 //        commandBox.runCommand("edit 1 /repeat !!!");
 //        assertResultMessage(Frequency.MESSAGE_FREQUENCY_CONSTRAINTS);
 
-        commandBox.runCommand("edit 1 /tag *&");
+        commandBox.runCommand("update 1 /tag *&");
         assertResultMessage(Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
@@ -122,7 +122,7 @@ public class EditCommandTest extends AddressBookGuiTest {
      */
     private void assertEditSuccess(int filteredPersonListIndex, int addressBookIndex,
                                     String detailsToEdit, TestTask editedPerson) {
-        commandBox.runCommand("edit " + filteredPersonListIndex + " " + detailsToEdit);
+        commandBox.runCommand("update " + filteredPersonListIndex + " " + detailsToEdit);
 
         // confirm the new card contains the right data
         PersonCardHandle editedCard = personListPanel.navigateToPerson(editedPerson.getName().fullName);
