@@ -1,7 +1,9 @@
 package utask.staging.ui;
 
 import com.jfoenix.controls.JFXDecorator;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.fxml.FXML;
@@ -39,6 +41,9 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 //    private Config config;
 
     @FXML
+    private JFXListView<Label> lstViewTask;
+
+    @FXML
     private JFXTextField txtCommand;
 
     @FXML
@@ -46,6 +51,9 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 
     @FXML
     private Label lblSuggestion;
+
+    @FXML
+    private JFXTextArea txtAreaResults;
 
     @FXML
     void txtEventOnKeyReleased(KeyEvent event) {
@@ -69,13 +77,20 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 //        bar.enqueue(new SnackbarEvent("Notification Msg"))
     }
 
+    private String previousCommand = "";
+
     @FXML
     void txtEventOnKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.UP) {
-            txtCommand.setText("Previous entered command....");
+            txtCommand.setText(previousCommand);
             lblSuggestion.setText("");
         } else if (event.getCode() == KeyCode.DOWN) {
             txtCommand.setText(lblSuggestion.getText());
+            lblSuggestion.setText("");
+        } else if (event.getCode() == KeyCode.ENTER) {
+            txtAreaResults.appendText(txtCommand.getText() + "\n");
+            previousCommand = txtCommand.getText();
+            txtCommand.setText("");
             lblSuggestion.setText("");
         }
     }
@@ -103,6 +118,13 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         decorator.setPrefSize(800, 600);
         decorator.setCustomMaximize(true);
         Scene scene = new Scene(decorator);
+
+        for (int i = 0; i < 4; i++) {
+            lstViewTask.getItems().add(new Label("Item " + i));
+        }
+
+        lstViewTask.getSelectionModel().select(3);
+        lstViewTask.getFocusModel().focus(3);
 
         this.primaryStage.setScene(scene);
         this.primaryStage.show();

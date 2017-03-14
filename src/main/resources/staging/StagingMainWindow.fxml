@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +12,10 @@
 
 <VBox prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane prefHeight="491.0" prefWidth="600.0">
+         <children>
+            <JFXListView fx:id="lstViewTask" layoutX="14.0" layoutY="14.0" prefHeight="457.0" prefWidth="219.0" />
+         </children></AnchorPane>
       <JFXTextField fx:id="txtCommand" labelFloat="true" onKeyPressed="#txtEventOnKeyPressed" onKeyReleased="#txtEventOnKeyReleased" prefHeight="35.0" promptText="Enter your commands here...">
          <font>
             <Font size="14.0" />
@@ -27,5 +32,10 @@
          </padding>
       </Label>
       <HBox fx:id="hBoxSuggestion" prefHeight="35.0" prefWidth="600.0" />
+      <JFXTextArea fx:id="txtAreaResults">
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" />
+         </VBox.margin>
+      </JFXTextArea>
    </children>
 </VBox>
