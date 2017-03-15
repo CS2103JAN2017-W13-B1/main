@@ -8,7 +8,9 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.utask.model.task.Deadline;
+import seedu.utask.model.task.DeadlineTask;
 import seedu.utask.model.task.EventTask;
+import seedu.utask.model.task.FloatingTask;
 import seedu.utask.model.task.Frequency;
 import seedu.utask.model.task.Name;
 import seedu.utask.model.task.ReadOnlyTask;
@@ -21,91 +23,120 @@ import seedu.utask.model.task.UniqueTaskList;
  */
 public class EditCommand extends Command {
 
-    public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_WORD = "update";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Edits the details of the task specified "
+            + "by the index number used in the last task listing. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS ] [t/TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 p/91234567 e/johndoe@yahoo.com";
+            + "Parameters: INDEX (must be a positive integer) [/name NAME] [/by DEADLINE] "
+            + "[/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]...\n"
+            + "Example: " + COMMAND_WORD + " 1 /name do homework";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in the address book.";
 
-    private final int filteredPersonListIndex;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final int filteredTaskListIndex;
+    private final EditTaskDescriptor editTaskDescriptor;
 
     /**
-     * @param filteredPersonListIndex the index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param filteredTaskListIndex
+     *            the index of the person in the filtered person list to edit
+     * @param editTaskDescriptor
+     *            details to edit the person with
      */
-    public EditCommand(int filteredPersonListIndex, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(int filteredPersonListIndex,
+            EditTaskDescriptor editPersonDescriptor) {
         assert filteredPersonListIndex > 0;
         assert editPersonDescriptor != null;
 
         // converts filteredPersonListIndex from one-based to zero-based.
-        this.filteredPersonListIndex = filteredPersonListIndex - 1;
+        this.filteredTaskListIndex = filteredPersonListIndex - 1;
 
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editTaskDescriptor = new EditTaskDescriptor(editPersonDescriptor);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        List<ReadOnlyTask> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
-        if (filteredPersonListIndex >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (filteredTaskListIndex >= lastShownList.size()) {
+            throw new CommandException(
+                    Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        ReadOnlyTask personToEdit = lastShownList.get(filteredPersonListIndex);
-        Task editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        // Retrieve task to be edited from save file
+        ReadOnlyTask taskToEdit = lastShownList.get(filteredTaskListIndex);
+
+        // create modified task from existing task
+        Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
 
         try {
-            model.updatePerson(filteredPersonListIndex, editedPerson);
+            model.updateTask(filteredTaskListIndex, editedTask);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
         model.updateFilteredListToShowAll();
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, personToEdit));
+        return new CommandResult(
+                String.format(MESSAGE_EDIT_PERSON_SUCCESS, taskToEdit));
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Person} with the details of
+     * {@code personToEdit} edited with {@code editPersonDescriptor}.
      */
-    private static Task createEditedPerson(ReadOnlyTask personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Task createEditedTask(ReadOnlyTask taskToEdit,
+            EditTaskDescriptor editTaskDescriptor) {
+        assert taskToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElseGet(personToEdit::getName);
-        Deadline updatedPhone = editPersonDescriptor.getPhone().orElseGet(personToEdit::getDeadline);
-        Timestamp updatedEmail = editPersonDescriptor.getEmail().orElseGet(personToEdit::getTimestamp);
-        Frequency updatedAddress = editPersonDescriptor.getAddress().orElseGet(personToEdit::getFrequency);
-        UniqueTagList updatedTags = editPersonDescriptor.getTags().orElseGet(personToEdit::getTags);
+        Name updatedName = editTaskDescriptor.getName()
+                .orElseGet(taskToEdit::getName);
+        Deadline updatedDeadline = editTaskDescriptor.getDeadline()
+                .orElseGet(taskToEdit::getDeadline);
+        Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
+                .orElseGet(taskToEdit::getTimestamp);
+        Frequency updatedFrequency = editTaskDescriptor.getFrequency()
+                .orElseGet(taskToEdit::getFrequency);
+        UniqueTagList updatedTags = editTaskDescriptor.getTags()
+                .orElseGet(taskToEdit::getTags);
 
-        //TODO
-        return new EventTask(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        // TODO
+        Task placeholder = null;
+        if (!updatedDeadline.isEmpty() && !updatedTimestamp.isEmpty()) {
+            placeholder = new EventTask(updatedName, updatedDeadline,
+                    updatedTimestamp, updatedFrequency, updatedTags);
+        } else if (!updatedDeadline.isEmpty() && updatedTimestamp.isEmpty()) {
+            placeholder = new DeadlineTask(updatedName, updatedDeadline,
+                    updatedFrequency, updatedTags);
+        } else if (updatedDeadline.isEmpty() && updatedTimestamp.isEmpty()) {
+            placeholder = new FloatingTask(updatedName, updatedFrequency,
+                    updatedTags);
+        }
+        return placeholder;
+        // return new EventTask(updatedName, updatedDeadline, updatedTimestamp,
+        // updatedFrequency, updatedTags);
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the person with. Each non-empty field value
+     * will replace the corresponding field value of the person.
      */
-    public static class EditPersonDescriptor {
+    public static class EditTaskDescriptor {
         private Optional<Name> name = Optional.empty();
-        private Optional<Deadline> phone = Optional.empty();
-        private Optional<Timestamp> email = Optional.empty();
-        private Optional<Frequency> address = Optional.empty();
+        private Optional<Deadline> deadLine = Optional.empty();
+        private Optional<Timestamp> timeStamp = Optional.empty();
+        private Optional<Frequency> frequency = Optional.empty();
         private Optional<UniqueTagList> tags = Optional.empty();
 
-        public EditPersonDescriptor() {}
+        public EditTaskDescriptor() {
+        }
 
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditTaskDescriptor(EditTaskDescriptor toCopy) {
             this.name = toCopy.getName();
-            this.phone = toCopy.getPhone();
-            this.email = toCopy.getEmail();
-            this.address = toCopy.getAddress();
+            this.deadLine = toCopy.getDeadline();
+            this.timeStamp = toCopy.getTimeStamp();
+            this.frequency = toCopy.getFrequency();
             this.tags = toCopy.getTags();
         }
 
@@ -113,7 +144,8 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyPresent(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyPresent(this.name, this.deadLine,
+                    this.timeStamp, this.frequency, this.tags);
         }
 
         public void setName(Optional<Name> name) {
@@ -125,31 +157,31 @@ public class EditCommand extends Command {
             return name;
         }
 
-        public void setPhone(Optional<Deadline> phone) {
-            assert phone != null;
-            this.phone = phone;
+        public void setDeadline(Optional<Deadline> deadLine) {
+            assert deadLine != null;
+            this.deadLine = deadLine;
         }
 
-        public Optional<Deadline> getPhone() {
-            return phone;
+        public Optional<Deadline> getDeadline() {
+            return deadLine;
         }
 
-        public void setEmail(Optional<Timestamp> email) {
-            assert email != null;
-            this.email = email;
+        public void setTimeStamp(Optional<Timestamp> timeStamp) {
+            assert timeStamp != null;
+            this.timeStamp = timeStamp;
         }
 
-        public Optional<Timestamp> getEmail() {
-            return email;
+        public Optional<Timestamp> getTimeStamp() {
+            return timeStamp;
         }
 
-        public void setAddress(Optional<Frequency> address) {
-            assert address != null;
-            this.address = address;
+        public void setFrequency(Optional<Frequency> frequency) {
+            assert frequency != null;
+            this.frequency = frequency;
         }
 
-        public Optional<Frequency> getAddress() {
-            return address;
+        public Optional<Frequency> getFrequency() {
+            return frequency;
         }
 
         public void setTags(Optional<UniqueTagList> tags) {
