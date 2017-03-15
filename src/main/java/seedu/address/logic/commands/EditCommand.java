@@ -79,7 +79,7 @@ public class EditCommand extends Command {
         }
         model.updateFilteredListToShowAll();
         return new CommandResult(
-                String.format(MESSAGE_EDIT_PERSON_SUCCESS, taskToEdit));
+                String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedTask));
     }
 
     /**
