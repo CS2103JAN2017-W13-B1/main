@@ -24,7 +24,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import utask.staging.ui.SearchResultsAnchorPane.ReadonlySearchTask;
+import utask.staging.ui.SearchResultsAnchorPane.ReadOnlyTask;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -107,8 +107,12 @@ public class StagingMainWindow extends StagingUiPart<Region> {
             } else if (search.isSearchActive() && text.matches("^select\\s\\d+$")) {
                 String params = (text.toLowerCase().split(" "))[1];
                 int index = Integer.parseInt(params);
-                ReadonlySearchTask task = search.selectIndex(index);
+                ReadOnlyTask task = search.selectIndex(index);
                 txtAreaResults.appendText("GOTTEN >> " + task.name + " " + task.date + " " + task.tags);
+            } else if (text.matches("^sort\\s\\d+$")) {
+                String params = (text.toLowerCase().split(" "))[1];
+                int index = Integer.parseInt(params);
+                search.sort(index);
             }
 
             txtAreaResults.appendText(txtCommand.getText() + "\n");
@@ -126,6 +130,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 
     private TaskAnchorPane task;
     private SearchResultsAnchorPane search;
+    private SearchTaskComponentController stask;
 
     public StagingMainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -141,18 +146,25 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
 //        Scene scene = new Scene(getRoot());
-//        primaryStage.setScene(scene);
+//        primaryStage.setScene(new Scene(getRoot()));
 
-        JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot());
+        //TODO!!!
 
+        boolean isMacOS = System.getProperty("os.name") == "Mac";
+
+        JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot(), isMacOS, true, true);
         decorator.setPrefSize(800, 600);
         decorator.setCustomMaximize(true);
-        Scene scene = new Scene(decorator);
 
+        Scene scene = new Scene(decorator);
+        scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/jfoenix-fonts.css").toExternalForm());
+        scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
+        scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
 
         search = new SearchResultsAnchorPane(topPlaceholder);
 
-
+        this.primaryStage.setMinWidth(700);
+        this.primaryStage.setMinHeight(800);
         this.primaryStage.setScene(scene);
         this.primaryStage.show();
 //      decorator.setCustomMaximize(true);
@@ -202,7 +214,8 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 //    }
 
     void fillInnerParts() {
-        task = new TaskAnchorPane(topPlaceholder);
+//        task = new TaskAnchorPane(topPlaceholder);
+        new SearchTaskComponentController(topPlaceholder);
 //        browserPanel = new BrowserPanel(browserPlaceholder);
 //        personListPanel = new PersonListPanel(getPersonListPlaceholder(), logic.getFilteredPersonList());
 //        new ResultDisplay(getResultDisplayPlaceholder());
