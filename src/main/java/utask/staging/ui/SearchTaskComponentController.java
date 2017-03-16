@@ -1,20 +1,22 @@
 package utask.staging.ui;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.util.Callback;
+import seedu.address.commons.util.FxViewUtil;
 
 public class SearchTaskComponentController extends StagingUiPart<Region> {
 
@@ -68,8 +70,6 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
      * Initializes the table columns and sets up sorting and filtering.
      */
     private void initialize() {
-        System.out.println(masterData == null);
-
         // 0. Initialize the columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());        
@@ -81,24 +81,26 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
         FilteredList<ReadOnlySearchTask> filteredData = new FilteredList<>(masterData, p -> true);
 
         // 2. Set the filter Predicate whenever the filter changes.
-        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(task -> {
-                // If filter text is empty, display all persons.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (task.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
-                } else if (task.getLastName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                }
-                return false; // Does not match.
-            });
-        });
+//        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+//            filteredData.setPredicate(task -> {
+//                // If filter text is empty, display all persons.
+//                if (newValue == null || newValue.isEmpty()) {
+//                    return true;
+//                }
+//
+//                // Compare first name and last name of every person with filter text.
+//                String lowerCaseFilter = newValue.toLowerCase();
+//
+//                if (task.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
+//                    return true; // Filter matches first name.
+//                } else if (task.getLastName().toLowerCase().contains(lowerCaseFilter)) {
+//                    return true; // Filter matches last name.
+//                }
+//                return false; // Does not match.
+//            });
+//        });
+        
+      
 
         // 3. Wrap the FilteredList in a SortedList.
         SortedList<ReadOnlySearchTask> sortedData = new SortedList<>(filteredData);
@@ -106,8 +108,42 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
         // 4. Bind the SortedList comparator to the TableView comparator.
         sortedData.comparatorProperty().bind(personTable.comparatorProperty());
 
+        filterField.onKeyPressedProperty().set(new EventHandler<KeyEvent>() {
+            @Override public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    //sortedData.remove(2);
+                    System.out.println("RUN ENT");
+                    personTable.getSortOrder().clear();
+                    firstNameColumn.setSortType(SortType.ASCENDING);
+                    personTable.getSortOrder().addAll(lastNameColumn);
+                } else if (event.getCode() == KeyCode.BACK_SPACE) {
+                    //sortedData.remove(2);
+                    System.out.println("RUN BS");
+                    personTable.getSortOrder().clear();    
+                    firstNameColumn.setSortType(SortType.ASCENDING);
+                    personTable.getSortOrder().addAll(firstNameColumn);
+                } else if (event.getCode() == KeyCode.A) {
+                    //sortedData.remove(2);
+                    System.out.println("RUN A");
+                    personTable.getSortOrder().clear();  
+                    firstNameColumn.setSortType(SortType.DESCENDING);                    
+                    personTable.getSortOrder().addAll(firstNameColumn);
+                } else if (event.getCode() == KeyCode.DELETE) {
+                    //sortedData.remove(2);
+                    ReadOnlySearchTask remove = personTable.getSelectionModel().getSelectedItem();                    
+                    
+                    masterData.remove(remove);
+                }
+                
+                
+                
+            }
+        });
+        
+        
         // 5. Add sorted (and filtered) data to the table.
         personTable.setItems(sortedData);
+        FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 }

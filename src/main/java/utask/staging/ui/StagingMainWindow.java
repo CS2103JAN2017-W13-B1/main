@@ -214,7 +214,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 //    }
 
     void fillInnerParts() {
-//        task = new TaskAnchorPane(topPlaceholder);
+//      task = new TaskAnchorPane(topPlaceholder);
         new SearchTaskComponentController(topPlaceholder);
 //        browserPanel = new BrowserPanel(browserPlaceholder);
 //        personListPanel = new PersonListPanel(getPersonListPlaceholder(), logic.getFilteredPersonList());
