@@ -38,9 +38,9 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
     private ObservableList<ReadOnlySearchTask> masterData;
 
     private Pane parent;
-    
+
 //    public SearchTaskComponentController(Pane parent, Keyboard keyboard){
-//        
+
 //    }
 
     /**
@@ -72,11 +72,11 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
     private void initialize() {
         // 0. Initialize the columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());        
-        indexColumn.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(personTable.getItems().indexOf(cellData.getValue()) + 1));        
+        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+        indexColumn.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(personTable.getItems().indexOf(
+                                        cellData.getValue()) + 1));
         indexColumn.setSortable(false);
-        
-        
+
         // 1. Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<ReadOnlySearchTask> filteredData = new FilteredList<>(masterData, p -> true);
 
@@ -99,8 +99,6 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
 //                return false; // Does not match.
 //            });
 //        });
-        
-      
 
         // 3. Wrap the FilteredList in a SortedList.
         SortedList<ReadOnlySearchTask> sortedData = new SortedList<>(filteredData);
@@ -119,28 +117,23 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
                 } else if (event.getCode() == KeyCode.BACK_SPACE) {
                     //sortedData.remove(2);
                     System.out.println("RUN BS");
-                    personTable.getSortOrder().clear();    
+                    personTable.getSortOrder().clear();
                     firstNameColumn.setSortType(SortType.ASCENDING);
                     personTable.getSortOrder().addAll(firstNameColumn);
                 } else if (event.getCode() == KeyCode.A) {
                     //sortedData.remove(2);
                     System.out.println("RUN A");
-                    personTable.getSortOrder().clear();  
-                    firstNameColumn.setSortType(SortType.DESCENDING);                    
+                    personTable.getSortOrder().clear();
+                    firstNameColumn.setSortType(SortType.DESCENDING);
                     personTable.getSortOrder().addAll(firstNameColumn);
                 } else if (event.getCode() == KeyCode.DELETE) {
                     //sortedData.remove(2);
-                    ReadOnlySearchTask remove = personTable.getSelectionModel().getSelectedItem();                    
-                    
+                    ReadOnlySearchTask remove = personTable.getSelectionModel().getSelectedItem();
                     masterData.remove(remove);
                 }
-                
-                
-                
             }
         });
-        
-        
+
         // 5. Add sorted (and filtered) data to the table.
         personTable.setItems(sortedData);
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
