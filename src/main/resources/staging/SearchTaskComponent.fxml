@@ -11,6 +11,7 @@
 	<children>
 		<TableView fx:id="personTable" prefHeight="-1.0" prefWidth="-1.0" tableMenuButtonVisible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
 			<columns>
+				<TableColumn fx:id="indexColumn" prefWidth="50.0" resizable="false" text="#" />
 				<TableColumn fx:id="firstNameColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="120.0" text="First Name" />
 				<TableColumn fx:id="lastNameColumn" maxWidth="5000.0" minWidth="10.0" prefWidth="120.0" text="Last Name" />
 			</columns>

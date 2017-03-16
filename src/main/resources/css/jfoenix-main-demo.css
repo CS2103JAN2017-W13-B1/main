@@ -781,7 +781,7 @@
 
 .tree-table-view{
 	-fx-tree-table-color: rgba(82, 100, 174, 0.4);
-	-fx-tree-table-rippler-color : rgba(82, 100, 174, 0.6);
+	/*-fx-tree-table-rippler-color : rgba(82, 100, 174, 0.6);*/
 }
  .tree-table-view:focused .tree-table-row-cell:selected {
 	-fx-background-color: -fx-tree-table-color  ;
@@ -983,22 +983,23 @@
 
 .table-view {
 	-fx-tree-table-color: rgba(255, 0, 0, 0.2);
-	-fx-tree-table-rippler-color : rgba(255, 0, 0, 0.4);
+	/*-fx-selection-bar-non-focused: RED;*/
+	/*-fx-tree-table-rippler-color : rgba(255, 0, 0, 0.4);*/
 }
  .table-view:focused .table-row-cell:selected {
-	-fx-background-color: -fx-tree-table-color  ;
+	-fx-background-color: -fx-tree-table-color;
 	-fx-table-cell-border-color: -fx-tree-table-color;
 	-fx-text-fill: BLACK;
 }
 
- .table-view:focused .table-row-cell:selected .table-cell{
+ .table-view:focused .table-row-cell:selected .table-cell {
 	-fx-text-fill: BLACK;
 }
 
-.table-view .jfx-rippler {
+/*.table-view .jfx-rippler {
 	-jfx-rippler-fill: -fx-tree-table-rippler-color;
 }
-
+*/
 .table-view .column-header ,
 .table-view .column-header-background,
 .table-view .column-header-background .filler{
@@ -1025,7 +1026,7 @@
 
 .table-view .column-header-background{
 	-fx-border-width : 0 0.0 1 0;
-	-fx-border-color:#F3F3F3;
+	-fx-border-color: #F3F3F3;
 }
 
 .table-view .table-cell{
@@ -1044,15 +1045,17 @@
 	-fx-background-color: -fx-tree-table-color;
 }
 
-.table-view .column-resize-line, .table-view .column-drag-header{
+/*.table-view .column-resize-line, .table-view .column-drag-header{
 	-fx-background-color: -fx-tree-table-rippler-color;
-}
+}*/
 
 .table-view:focused {
-  -fx-background-color: -fx-tree-table-color,-fx-box-border,-fx-control-inner-background;
+  -fx-background-color: TRANSPARENT,-fx-box-border,-fx-control-inner-background;
   -fx-background-insets: -1.4, 0, 1;
   -fx-background-radius: 1.4, 0, 0;
   -fx-padding: 1; /* 0.083333em; */
+/*
+  -fx-background-color: #000;*/
 }
 
 .table-row-cell > .disclosure-node > .arrow {
@@ -1066,4 +1069,11 @@
 
 .table-row-group{
 	-fx-background-color:rgba(230,230,230);
+}
+
+.table-row-cell:selected {
+   -fx-background-color: -fx-tree-table-color;
+}
+.table-row-cell:selected .text {
+ 	fx-fill: BLACK ;
 }
