@@ -4,6 +4,8 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 
 ---
 
+## Table of contents
+
 1. [Setting Up](#setting-up)
 2. [Design](#design)
 3. [Implementation](#implementation)
@@ -16,6 +18,16 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 * [Appendix D: Glossary](#appendix-d--glossary)
 * [Appendix E : Product Survey](#appendix-e--product-survey)
 
+## Introduction
+
+uTask is a task manager for advanced users to manage their daily tasks through keyboard commands. It is
+a java desktop application has a GUI implemented with JavaFX.
+
+This Developer Guide provides general information about setting up and design for uTask. It focuses
+primarily on setting up, design, implementation, testing and DevOps. It will help developers to understand
+how uTask works and how to further improve it. The guide is in top-down manner, so you can look at the
+overall picture of uTask and then breaking down the various components in each sub-section. Each sub-section
+is self-contained, you can easily set up and start contributing by following the guide.
 
 ## 1. Setting up
 
@@ -35,13 +47,13 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 
 ### 1.2. Importing the project into Eclipse
 
-0. Fork this repo, and clone the fork to your computer
-1. Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given
+1. Fork this repo, and clone the fork to your computer
+2. Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given
    in the prerequisites above)
-2. Click `File` > `Import`
-3. Click `Gradle` > `Gradle Project` > `Next` > `Next`
-4. Click `Browse`, then locate the project's directory
-5. Click `Finish`
+3. Click `File` > `Import`
+4. Click `Gradle` > `Gradle Project` > `Next` > `Next`
+5. Click `Browse`, then locate the project's directory
+6. Click `Finish`
 
   > * If you are asked whether to 'keep' or 'overwrite' config files, choose to 'keep'.
   > * Depending on your connection speed and server load, it can even take up to 30 minutes for the set up to finish
