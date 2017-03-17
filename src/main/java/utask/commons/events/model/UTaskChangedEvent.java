@@ -3,7 +3,7 @@ package utask.commons.events.model;
 import utask.commons.events.BaseEvent;
 import utask.model.ReadOnlyUTask;
 
-/** Indicates the AddressBook in the model has changed*/
+/** Indicates the UTask in the model has changed*/
 public class UTaskChangedEvent extends BaseEvent {
 
     public final ReadOnlyUTask data;

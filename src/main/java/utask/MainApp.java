@@ -77,7 +77,7 @@ public class MainApp extends Application {
         Optional<ReadOnlyUTask> addressBookOptional;
         ReadOnlyUTask initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
+            addressBookOptional = storage.readUTask();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }

@@ -21,18 +21,18 @@ public interface Storage extends UTaskStorage, UserPrefsStorage {
     void saveUserPrefs(UserPrefs userPrefs) throws IOException;
 
     @Override
-    String getAddressBookFilePath();
+    String getUTaskFilePath();
 
     @Override
-    Optional<ReadOnlyUTask> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyUTask> readUTask() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyUTask addressBook) throws IOException;
+    void saveUTask(ReadOnlyUTask uTask) throws IOException;
 
     /**
-     * Saves the current version of the Address Book to the hard disk.
+     * Saves the current version of the UTask to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
-    void handleAddressBookChangedEvent(UTaskChangedEvent abce);
+    void handleUTaskChangedEvent(UTaskChangedEvent abce);
 }

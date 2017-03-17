@@ -17,7 +17,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 
 /**
- * An Immutable AddressBook that is serializable to XML format
+ * An Immutable UTask that is serializable to XML format
  */
 @XmlRootElement(name = "addressbook")
 public class XmlSerializableUTask implements ReadOnlyUTask {

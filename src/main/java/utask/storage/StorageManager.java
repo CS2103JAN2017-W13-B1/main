@@ -15,23 +15,23 @@ import utask.model.ReadOnlyUTask;
 import utask.model.UserPrefs;
 
 /**
- * Manages storage of AddressBook data in local storage.
+ * Manages storage of UTask data in local storage.
  */
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private UTaskStorage addressBookStorage;
+    private UTaskStorage uTaskStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(UTaskStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(UTaskStorage uTaskStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.addressBookStorage = addressBookStorage;
+        this.uTaskStorage = uTaskStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
-    public StorageManager(String addressBookFilePath, String userPrefsFilePath) {
-        this(new XmlUTaskStorage(addressBookFilePath), new JsonUserPrefsStorage(userPrefsFilePath));
+    public StorageManager(String uTaskFilePath, String userPrefsFilePath) {
+        this(new XmlUTaskStorage(uTaskFilePath), new JsonUserPrefsStorage(userPrefsFilePath));
     }
 
     // ================ UserPrefs methods ==============================
@@ -50,39 +50,39 @@ public class StorageManager extends ComponentManager implements Storage {
     // ================ AddressBook methods ==============================
 
     @Override
-    public String getAddressBookFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+    public String getUTaskFilePath() {
+        return uTaskStorage.getUTaskFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyUTask> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(addressBookStorage.getAddressBookFilePath());
+    public Optional<ReadOnlyUTask> readUTask() throws DataConversionException, IOException {
+        return readUTask(uTaskStorage.getUTaskFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyUTask> readAddressBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyUTask> readUTask(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
+        return uTaskStorage.readUTask(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyUTask addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
+    public void saveUTask(ReadOnlyUTask addressBook) throws IOException {
+        saveUTask(addressBook, uTaskStorage.getUTaskFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyUTask addressBook, String filePath) throws IOException {
+    public void saveUTask(ReadOnlyUTask uTask, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveAddressBook(addressBook, filePath);
+        uTaskStorage.saveUTask(uTask, filePath);
     }
 
 
     @Override
     @Subscribe
-    public void handleAddressBookChangedEvent(UTaskChangedEvent event) {
+    public void handleUTaskChangedEvent(UTaskChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
-            saveAddressBook(event.data);
+            saveUTask(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

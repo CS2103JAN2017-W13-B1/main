@@ -61,14 +61,14 @@ public class StorageManagerTest {
          * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
          */
         UTask original = new TypicalTestPersons().getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyUTask retrieved = storageManager.readAddressBook().get();
+        storageManager.saveUTask(original);
+        ReadOnlyUTask retrieved = storageManager.readUTask().get();
         assertEquals(original, new UTask(retrieved));
     }
 
     @Test
     public void getAddressBookFilePath() {
-        assertNotNull(storageManager.getAddressBookFilePath());
+        assertNotNull(storageManager.getUTaskFilePath());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class StorageManagerTest {
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));
         EventsCollector eventCollector = new EventsCollector();
-        storage.handleAddressBookChangedEvent(new UTaskChangedEvent(new UTask()));
+        storage.handleUTaskChangedEvent(new UTaskChangedEvent(new UTask()));
         assertTrue(eventCollector.get(0) instanceof DataSavingExceptionEvent);
     }
 
@@ -92,7 +92,7 @@ public class StorageManagerTest {
         }
 
         @Override
-        public void saveAddressBook(ReadOnlyUTask addressBook, String filePath) throws IOException {
+        public void saveUTask(ReadOnlyUTask addressBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

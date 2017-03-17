@@ -14,31 +14,31 @@ public interface UTaskStorage {
     /**
      * Returns the file path of the data file.
      */
-    String getAddressBookFilePath();
+    String getUTaskFilePath();
 
     /**
-     * Returns AddressBook data as a {@link ReadOnlyUTask}.
+     * Returns UTask data as a {@link ReadOnlyUTask}.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyUTask> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyUTask> readUTask() throws DataConversionException, IOException;
 
     /**
-     * @see #getAddressBookFilePath()
+     * @see #getUTaskFilePath()
      */
-    Optional<ReadOnlyUTask> readAddressBook(String filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyUTask> readUTask(String filePath) throws DataConversionException, IOException;
 
     /**
      * Saves the given {@link ReadOnlyUTask} to the storage.
-     * @param addressBook cannot be null.
+     * @param uTask cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyUTask addressBook) throws IOException;
+    void saveUTask(ReadOnlyUTask uTask) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyUTask)
+     * @see #saveUTask(ReadOnlyUTask)
      */
-    void saveAddressBook(ReadOnlyUTask addressBook, String filePath) throws IOException;
+    void saveUTask(ReadOnlyUTask uTask, String filePath) throws IOException;
 
 }

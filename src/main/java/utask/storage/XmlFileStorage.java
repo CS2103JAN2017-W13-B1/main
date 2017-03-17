@@ -9,11 +9,11 @@ import utask.commons.exceptions.DataConversionException;
 import utask.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores UTask data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given addressbook data to the specified file.
+     * Saves the given UTask data to the specified file.
      */
     public static void saveDataToFile(File file, XmlSerializableUTask addressBook)
             throws FileNotFoundException {
@@ -25,7 +25,7 @@ public class XmlFileStorage {
     }
 
     /**
-     * Returns address book in the file or an empty address book
+     * Returns UTask in the file or an empty UTask
      */
     public static XmlSerializableUTask loadDataFromSaveFile(File file) throws DataConversionException,
                                                                             FileNotFoundException {

@@ -24,21 +24,21 @@ public class XmlUTaskStorage implements UTaskStorage {
         this.filePath = filePath;
     }
 
-    public String getAddressBookFilePath() {
+    public String getUTaskFilePath() {
         return filePath;
     }
 
     @Override
-    public Optional<ReadOnlyUTask> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(filePath);
+    public Optional<ReadOnlyUTask> readUTask() throws DataConversionException, IOException {
+        return readUTask(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}
+     * Similar to {@link #readUTask()}
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyUTask> readAddressBook(String filePath) throws DataConversionException,
+    public Optional<ReadOnlyUTask> readUTask(String filePath) throws DataConversionException,
                                                                                  FileNotFoundException {
         assert filePath != null;
 
@@ -55,15 +55,15 @@ public class XmlUTaskStorage implements UTaskStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyUTask addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+    public void saveUTask(ReadOnlyUTask addressBook) throws IOException {
+        saveUTask(addressBook, filePath);
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyUTask)}
+     * Similar to {@link #saveUTask(ReadOnlyUTask)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveAddressBook(ReadOnlyUTask addressBook, String filePath) throws IOException {
+    public void saveUTask(ReadOnlyUTask addressBook, String filePath) throws IOException {
         assert addressBook != null;
         assert filePath != null;
 
