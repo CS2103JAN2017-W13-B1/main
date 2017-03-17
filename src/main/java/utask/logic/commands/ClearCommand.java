@@ -1,6 +1,6 @@
 package utask.logic.commands;
 
-import utask.model.AddressBook;
+import utask.model.UTask;
 
 /**
  * Clears the address book.
@@ -14,7 +14,7 @@ public class ClearCommand extends Command {
     @Override
     public CommandResult execute() {
         assert model != null;
-        model.resetData(new AddressBook());
+        model.resetData(new UTask());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

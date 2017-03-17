@@ -1,8 +1,8 @@
 package utask.model.util;
 
 import utask.commons.exceptions.IllegalValueException;
-import utask.model.AddressBook;
-import utask.model.ReadOnlyAddressBook;
+import utask.model.ReadOnlyUTask;
+import utask.model.UTask;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.EventTask;
@@ -25,11 +25,11 @@ public class SampleDataUtil {
         }
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
+    public static ReadOnlyUTask getSampleAddressBook() {
         try {
-            AddressBook sampleAB = new AddressBook();
+            UTask sampleAB = new UTask();
             for (Task samplePerson : getSamplePersons()) {
-                sampleAB.addPerson(samplePerson);
+                sampleAB.addTask(samplePerson);
             }
             return sampleAB;
         } catch (DuplicateTaskException e) {

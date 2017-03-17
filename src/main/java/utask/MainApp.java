@@ -20,10 +20,10 @@ import utask.commons.util.ConfigUtil;
 import utask.commons.util.StringUtil;
 import utask.logic.Logic;
 import utask.logic.LogicManager;
-import utask.model.AddressBook;
 import utask.model.Model;
 import utask.model.ModelManager;
-import utask.model.ReadOnlyAddressBook;
+import utask.model.ReadOnlyUTask;
+import utask.model.UTask;
 import utask.model.UserPrefs;
 import utask.model.util.SampleDataUtil;
 import utask.storage.Storage;
@@ -74,8 +74,8 @@ public class MainApp extends Application {
     }
 
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyUTask> addressBookOptional;
+        ReadOnlyUTask initialData;
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -84,10 +84,10 @@ public class MainApp extends Application {
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            initialData = new UTask();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            initialData = new UTask();
         }
 
         return new ModelManager(initialData, userPrefs);

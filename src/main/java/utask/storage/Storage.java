@@ -6,7 +6,7 @@ import java.util.Optional;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.storage.DataSavingExceptionEvent;
 import utask.commons.exceptions.DataConversionException;
-import utask.model.ReadOnlyAddressBook;
+import utask.model.ReadOnlyUTask;
 import utask.model.UserPrefs;
 
 /**
@@ -24,10 +24,10 @@ public interface Storage extends UTaskStorage, UserPrefsStorage {
     String getAddressBookFilePath();
 
     @Override
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyUTask> readAddressBook() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    void saveAddressBook(ReadOnlyUTask addressBook) throws IOException;
 
     /**
      * Saves the current version of the Address Book to the hard disk.

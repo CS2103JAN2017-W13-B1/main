@@ -35,10 +35,10 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.exceptions.CommandException;
-import utask.model.AddressBook;
 import utask.model.Model;
 import utask.model.ModelManager;
-import utask.model.ReadOnlyAddressBook;
+import utask.model.ReadOnlyUTask;
+import utask.model.UTask;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
@@ -62,13 +62,13 @@ public class LogicManagerTest {
     private Logic logic;
 
     // These are for checking the correctness of the events raised
-    private ReadOnlyAddressBook latestSavedAddressBook;
+    private ReadOnlyUTask latestSavedAddressBook;
     private boolean helpShown;
     private int targetedJumpIndex;
 
     @Subscribe
     private void handleLocalModelChangedEvent(UTaskChangedEvent abce) {
-        latestSavedAddressBook = new AddressBook(abce.data);
+        latestSavedAddressBook = new UTask(abce.data);
     }
 
     @Subscribe
@@ -89,7 +89,7 @@ public class LogicManagerTest {
         logic = new LogicManager(model, new StorageManager(tempAddressBookFile, tempPreferencesFile));
         EventsCenter.getInstance().registerHandler(this);
 
-        latestSavedAddressBook = new AddressBook(model.getAddressBook()); // last
+        latestSavedAddressBook = new UTask(model.getAddressBook()); // last
                                                                           // saved
                                                                           // assumed
                                                                           // to
@@ -116,11 +116,11 @@ public class LogicManagerTest {
      * Executes the command, confirms that a CommandException is not thrown and
      * that the result message is correct. Also confirms that both the 'address
      * book' and the 'last shown list' are as specified.
-     * @see #assertCommandBehavior(boolean, String, String, ReadOnlyAddressBook,
+     * @see #assertCommandBehavior(boolean, String, String, ReadOnlyUTask,
      *      List)
      */
     private void assertCommandSuccess(String inputCommand, String expectedMessage,
-            ReadOnlyAddressBook expectedAddressBook, List<? extends ReadOnlyTask> expectedShownList) {
+            ReadOnlyUTask expectedAddressBook, List<? extends ReadOnlyTask> expectedShownList) {
         assertCommandBehavior(false, inputCommand, expectedMessage, expectedAddressBook, expectedShownList);
     }
 
@@ -128,11 +128,11 @@ public class LogicManagerTest {
      * Executes the command, confirms that a CommandException is thrown and that
      * the result message is correct. Both the 'address book' and the 'last
      * shown list' are verified to be unchanged.
-     * @see #assertCommandBehavior(boolean, String, String, ReadOnlyAddressBook,
+     * @see #assertCommandBehavior(boolean, String, String, ReadOnlyUTask,
      *      List)
      */
     private void assertCommandFailure(String inputCommand, String expectedMessage) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        UTask expectedAddressBook = new UTask(model.getAddressBook());
         List<ReadOnlyTask> expectedShownList = new ArrayList<>(model.getFilteredTaskList());
         assertCommandBehavior(true, inputCommand, expectedMessage, expectedAddressBook, expectedShownList);
     }
@@ -148,7 +148,7 @@ public class LogicManagerTest {
      * - {@code expectedAddressBook} was saved to the storage file. <br>
      */
     private void assertCommandBehavior(boolean isCommandExceptionExpected, String inputCommand, String expectedMessage,
-            ReadOnlyAddressBook expectedAddressBook, List<? extends ReadOnlyTask> expectedShownList) {
+            ReadOnlyUTask expectedAddressBook, List<? extends ReadOnlyTask> expectedShownList) {
 
         try {
             CommandResult result = logic.execute(inputCommand);
@@ -175,13 +175,13 @@ public class LogicManagerTest {
 
     @Test
     public void execute_help() {
-        assertCommandSuccess("help", HelpCommand.SHOWING_HELP_MESSAGE, new AddressBook(), Collections.emptyList());
+        assertCommandSuccess("help", HelpCommand.SHOWING_HELP_MESSAGE, new UTask(), Collections.emptyList());
         assertTrue(helpShown);
     }
 
     @Test
     public void execute_exit() {
-        assertCommandSuccess("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT, new AddressBook(),
+        assertCommandSuccess("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT, new UTask(),
                 Collections.emptyList());
     }
 
@@ -192,7 +192,7 @@ public class LogicManagerTest {
         model.addPerson(helper.generatePerson(2));
         model.addPerson(helper.generatePerson(3));
 
-        assertCommandSuccess("clear", ClearCommand.MESSAGE_SUCCESS, new AddressBook(), Collections.emptyList());
+        assertCommandSuccess("clear", ClearCommand.MESSAGE_SUCCESS, new UTask(), Collections.emptyList());
     }
 
 //    @Test
@@ -219,8 +219,8 @@ public class LogicManagerTest {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.simpleTask();
-        AddressBook expectedAB = new AddressBook();
-        expectedAB.addPerson(toBeAdded);
+        UTask expectedAB = new UTask();
+        expectedAB.addTask(toBeAdded);
 
         // execute command and verify result
         assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
@@ -246,7 +246,7 @@ public class LogicManagerTest {
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        AddressBook expectedAB = helper.generateAddressBook(2);
+        UTask expectedAB = helper.generateAddressBook(2);
         List<? extends ReadOnlyTask> expectedList = expectedAB.getTaskList();
 
         // prepare address book state
@@ -290,7 +290,7 @@ public class LogicManagerTest {
         List<Task> personList = helper.generatePersonList(2);
 
         // set AB state to 2 persons
-        model.resetData(new AddressBook());
+        model.resetData(new UTask());
         for (Task p : personList) {
             model.addPerson(p);
         }
@@ -314,7 +314,7 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threePersons = helper.generatePersonList(3);
 
-        AddressBook expectedAB = helper.generateAddressBook(threePersons);
+        UTask expectedAB = helper.generateAddressBook(threePersons);
         helper.addToModel(model, threePersons);
 
         assertCommandSuccess("select 2", String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, 2), expectedAB,
@@ -339,8 +339,8 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threePersons = helper.generatePersonList(3);
 
-        AddressBook expectedAB = helper.generateAddressBook(threePersons);
-        expectedAB.removePerson(threePersons.get(1));
+        UTask expectedAB = helper.generateAddressBook(threePersons);
+        expectedAB.removeTask(threePersons.get(1));
         helper.addToModel(model, threePersons);
 
         assertCommandSuccess("delete 2",
@@ -363,7 +363,7 @@ public class LogicManagerTest {
         Task p2 = helper.generatePersonWithName("KEYKEYKEY sduauo");
 
         List<Task> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        UTask expectedAB = helper.generateAddressBook(fourPersons);
         List<Task> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToModel(model, fourPersons);
 
@@ -380,7 +380,7 @@ public class LogicManagerTest {
         Task p4 = helper.generatePersonWithName("KEy sduauo");
 
         List<Task> fourPersons = helper.generatePersonList(p3, p1, p4, p2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        UTask expectedAB = helper.generateAddressBook(fourPersons);
         List<Task> expectedList = fourPersons;
         helper.addToModel(model, fourPersons);
 
@@ -397,7 +397,7 @@ public class LogicManagerTest {
         Task p1 = helper.generatePersonWithName("sduauo");
 
         List<Task> fourPersons = helper.generatePersonList(pTarget1, p1, pTarget2, pTarget3);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        UTask expectedAB = helper.generateAddressBook(fourPersons);
         List<Task> expectedList = helper.generatePersonList(pTarget1, pTarget2, pTarget3);
         helper.addToModel(model, fourPersons);
 
@@ -457,8 +457,8 @@ public class LogicManagerTest {
         /**
          * Generates an AddressBook with auto-generated persons.
          */
-        AddressBook generateAddressBook(int numGenerated) throws Exception {
-            AddressBook addressBook = new AddressBook();
+        UTask generateAddressBook(int numGenerated) throws Exception {
+            UTask addressBook = new UTask();
             addToAddressBook(addressBook, numGenerated);
             return addressBook;
         }
@@ -466,8 +466,8 @@ public class LogicManagerTest {
         /**
          * Generates an AddressBook based on the list of Persons given.
          */
-        AddressBook generateAddressBook(List<Task> persons) throws Exception {
-            AddressBook addressBook = new AddressBook();
+        UTask generateAddressBook(List<Task> persons) throws Exception {
+            UTask addressBook = new UTask();
             addToAddressBook(addressBook, persons);
             return addressBook;
         }
@@ -477,16 +477,16 @@ public class LogicManagerTest {
          * @param addressBook
          *            The AddressBook to which the Persons will be added
          */
-        void addToAddressBook(AddressBook addressBook, int numGenerated) throws Exception {
+        void addToAddressBook(UTask addressBook, int numGenerated) throws Exception {
             addToAddressBook(addressBook, generatePersonList(numGenerated));
         }
 
         /**
          * Adds the given list of Persons to the given AddressBook
          */
-        void addToAddressBook(AddressBook addressBook, List<Task> personsToAdd) throws Exception {
+        void addToAddressBook(UTask addressBook, List<Task> personsToAdd) throws Exception {
             for (Task p : personsToAdd) {
-                addressBook.addPerson(p);
+                addressBook.addTask(p);
             }
         }
 

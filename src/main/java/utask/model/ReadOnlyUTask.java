@@ -8,7 +8,7 @@ import utask.model.task.ReadOnlyTask;
 /**
  * Unmodifiable view of an address book
  */
-public interface ReadOnlyAddressBook {
+public interface ReadOnlyUTask {
 
     /**
      * Returns an unmodifiable view of the persons list.

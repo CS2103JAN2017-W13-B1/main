@@ -1,7 +1,7 @@
 package utask.testutil;
 
 import utask.commons.exceptions.IllegalValueException;
-import utask.model.AddressBook;
+import utask.model.UTask;
 import utask.model.tag.Tag;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
@@ -13,14 +13,14 @@ import utask.model.task.UniqueTaskList;
  */
 public class UTaskBuilder {
 
-    private AddressBook addressBook;
+    private UTask addressBook;
 
-    public UTaskBuilder(AddressBook addressBook) {
+    public UTaskBuilder(UTask addressBook) {
         this.addressBook = addressBook;
     }
 
     public UTaskBuilder withPerson(Task person) throws UniqueTaskList.DuplicateTaskException {
-        addressBook.addPerson(person);
+        addressBook.addTask(person);
         return this;
     }
 
@@ -29,7 +29,7 @@ public class UTaskBuilder {
         return this;
     }
 
-    public AddressBook build() {
+    public UTask build() {
         return addressBook;
     }
 }

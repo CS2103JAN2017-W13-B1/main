@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import utask.TestApp;
 import utask.commons.core.EventsCenter;
 import utask.commons.events.BaseEvent;
-import utask.model.AddressBook;
+import utask.model.UTask;
 import utask.model.task.ReadOnlyTask;
 import utask.testutil.TestUtil;
 import utask.testutil.TypicalTestPersons;
@@ -86,8 +86,8 @@ public abstract class UTaskGuiTest {
      * Override this in child classes to set the initial local data.
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
      */
-    protected AddressBook getInitialData() {
-        AddressBook ab = new AddressBook();
+    protected UTask getInitialData() {
+        UTask ab = new UTask();
         TypicalTestPersons.loadAddressBookWithSampleData(ab);
         return ab;
     }

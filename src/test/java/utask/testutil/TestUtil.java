@@ -29,7 +29,7 @@ import utask.TestApp;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.FileUtil;
 import utask.commons.util.XmlUtil;
-import utask.model.AddressBook;
+import utask.model.UTask;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
@@ -39,7 +39,7 @@ import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.Timestamp;
-import utask.storage.XmlSerializableAddressBook;
+import utask.storage.XmlSerializableUTask;
 
 /**
  * A utility class for test cases.
@@ -145,8 +145,8 @@ public class TestUtil {
         createDataFileWithSampleData(TestApp.SAVE_LOCATION_FOR_TESTING);
     }
 
-    public static XmlSerializableAddressBook generateSampleStorageAddressBook() {
-        return new XmlSerializableAddressBook(new AddressBook());
+    public static XmlSerializableUTask generateSampleStorageAddressBook() {
+        return new XmlSerializableUTask(new UTask());
     }
 
     /**

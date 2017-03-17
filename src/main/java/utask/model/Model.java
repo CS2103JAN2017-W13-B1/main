@@ -13,10 +13,10 @@ import utask.model.task.UniqueTaskList.DuplicateTaskException;
  */
 public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyUTask newData);
 
     /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    ReadOnlyUTask getAddressBook();
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException;

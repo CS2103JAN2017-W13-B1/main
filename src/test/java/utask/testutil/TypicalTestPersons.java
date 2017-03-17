@@ -1,7 +1,7 @@
 package utask.testutil;
 
 import utask.commons.exceptions.IllegalValueException;
-import utask.model.AddressBook;
+import utask.model.UTask;
 import utask.model.task.EventTask;
 import utask.model.task.UniqueTaskList;
 
@@ -43,10 +43,10 @@ public class TypicalTestPersons {
         }
     }
 
-    public static void loadAddressBookWithSampleData(AddressBook ab) {
+    public static void loadAddressBookWithSampleData(UTask ab) {
         for (TestTask person : new TypicalTestPersons().getTypicalPersons()) {
             try {
-                ab.addPerson(new EventTask(person));
+                ab.addTask(new EventTask(person));
             } catch (UniqueTaskList.DuplicateTaskException e) {
                 assert false : "not possible";
             }
@@ -57,8 +57,8 @@ public class TypicalTestPersons {
         return new TestTask[]{a, b, c, d, e, f, g};
     }
 
-    public AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
+    public UTask getTypicalAddressBook() {
+        UTask ab = new UTask();
         loadAddressBookWithSampleData(ab);
         return ab;
     }

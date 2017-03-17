@@ -6,9 +6,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utask.commons.core.Config;
 import utask.commons.core.GuiSettings;
-import utask.model.ReadOnlyAddressBook;
+import utask.model.ReadOnlyUTask;
 import utask.model.UserPrefs;
-import utask.storage.XmlSerializableAddressBook;
+import utask.storage.XmlSerializableUTask;
 import utask.testutil.TestUtil;
 
 /**
@@ -22,13 +22,13 @@ public class TestApp extends MainApp {
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     public static final String APP_TITLE = "Test App";
     protected static final String ADDRESS_BOOK_NAME = "Test";
-    protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
+    protected Supplier<ReadOnlyUTask> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyUTask> initialDataSupplier, String saveFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
         this.saveFileLocation = saveFileLocation;
@@ -36,7 +36,7 @@ public class TestApp extends MainApp {
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
             TestUtil.createDataFileWithData(
-                    new XmlSerializableAddressBook(this.initialDataSupplier.get()),
+                    new XmlSerializableUTask(this.initialDataSupplier.get()),
                     this.saveFileLocation);
         }
     }
