@@ -47,7 +47,7 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
 
-    // ================ AddressBook methods ==============================
+    // ================ UTask methods ==============================
 
     @Override
     public String getUTaskFilePath() {
@@ -66,8 +66,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void saveUTask(ReadOnlyUTask addressBook) throws IOException {
-        saveUTask(addressBook, uTaskStorage.getUTaskFilePath());
+    public void saveUTask(ReadOnlyUTask uTask) throws IOException {
+        saveUTask(uTask, uTaskStorage.getUTaskFilePath());
     }
 
     @Override

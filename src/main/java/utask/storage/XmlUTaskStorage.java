@@ -12,7 +12,7 @@ import utask.commons.util.FileUtil;
 import utask.model.ReadOnlyUTask;
 
 /**
- * A class to access AddressBook data stored as an xml file on the hard disk.
+ * A class to access UTask data stored as an xml file on the hard disk.
  */
 public class XmlUTaskStorage implements UTaskStorage {
 

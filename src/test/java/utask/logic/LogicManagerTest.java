@@ -314,7 +314,7 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threePersons = helper.generatePersonList(3);
 
-        UTask expectedAB = helper.generateAddressBook(threePersons);
+        UTask expectedAB = helper.generateUTask(threePersons);
         helper.addToModel(model, threePersons);
 
         assertCommandSuccess("select 2", String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, 2), expectedAB,
@@ -339,7 +339,7 @@ public class LogicManagerTest {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threePersons = helper.generatePersonList(3);
 
-        UTask expectedAB = helper.generateAddressBook(threePersons);
+        UTask expectedAB = helper.generateUTask(threePersons);
         expectedAB.removeTask(threePersons.get(1));
         helper.addToModel(model, threePersons);
 
@@ -363,7 +363,7 @@ public class LogicManagerTest {
         Task p2 = helper.generatePersonWithName("KEYKEYKEY sduauo");
 
         List<Task> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        UTask expectedAB = helper.generateAddressBook(fourPersons);
+        UTask expectedAB = helper.generateUTask(fourPersons);
         List<Task> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToModel(model, fourPersons);
 
@@ -380,7 +380,7 @@ public class LogicManagerTest {
         Task p4 = helper.generatePersonWithName("KEy sduauo");
 
         List<Task> fourPersons = helper.generatePersonList(p3, p1, p4, p2);
-        UTask expectedAB = helper.generateAddressBook(fourPersons);
+        UTask expectedAB = helper.generateUTask(fourPersons);
         List<Task> expectedList = fourPersons;
         helper.addToModel(model, fourPersons);
 
@@ -397,7 +397,7 @@ public class LogicManagerTest {
         Task p1 = helper.generatePersonWithName("sduauo");
 
         List<Task> fourPersons = helper.generatePersonList(pTarget1, p1, pTarget2, pTarget3);
-        UTask expectedAB = helper.generateAddressBook(fourPersons);
+        UTask expectedAB = helper.generateUTask(fourPersons);
         List<Task> expectedList = helper.generatePersonList(pTarget1, pTarget2, pTarget3);
         helper.addToModel(model, fourPersons);
 
@@ -455,38 +455,38 @@ public class LogicManagerTest {
         }
 
         /**
-         * Generates an AddressBook with auto-generated persons.
+         * Generates an UTask with auto-generated persons.
          */
         UTask generateAddressBook(int numGenerated) throws Exception {
-            UTask addressBook = new UTask();
-            addToAddressBook(addressBook, numGenerated);
-            return addressBook;
+            UTask uTask = new UTask();
+            addToUTask(uTask, numGenerated);
+            return uTask;
         }
 
         /**
-         * Generates an AddressBook based on the list of Persons given.
+         * Generates an UTask based on the list of Tasks given.
          */
-        UTask generateAddressBook(List<Task> persons) throws Exception {
-            UTask addressBook = new UTask();
-            addToAddressBook(addressBook, persons);
-            return addressBook;
+        UTask generateUTask(List<Task> tasks) throws Exception {
+            UTask uTask = new UTask();
+            addToUTask(uTask, tasks);
+            return uTask;
         }
 
         /**
-         * Adds auto-generated Person objects to the given AddressBook
-         * @param addressBook
-         *            The AddressBook to which the Persons will be added
+         * Adds auto-generated Task objects to the given UTask
+         * @param uTask
+         *            The UTask to which the Task will be added
          */
-        void addToAddressBook(UTask addressBook, int numGenerated) throws Exception {
-            addToAddressBook(addressBook, generatePersonList(numGenerated));
+        void addToUTask(UTask uTask, int numGenerated) throws Exception {
+            addToUTask(uTask, generatePersonList(numGenerated));
         }
 
         /**
-         * Adds the given list of Persons to the given AddressBook
+         * Adds the given list of Tasks to the given UTask
          */
-        void addToAddressBook(UTask addressBook, List<Task> personsToAdd) throws Exception {
-            for (Task p : personsToAdd) {
-                addressBook.addTask(p);
+        void addToUTask(UTask uTask, List<Task> tasksToAdd) throws Exception {
+            for (Task p : tasksToAdd) {
+                uTask.addTask(p);
             }
         }
 

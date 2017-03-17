@@ -15,10 +15,10 @@ public class XmlFileStorage {
     /**
      * Saves the given UTask data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableUTask addressBook)
+    public static void saveDataToFile(File file, XmlSerializableUTask uTask)
             throws FileNotFoundException {
         try {
-            XmlUtil.saveDataToFile(file, addressBook);
+            XmlUtil.saveDataToFile(file, uTask);
         } catch (JAXBException e) {
             assert false : "Unexpected exception " + e.getMessage();
         }

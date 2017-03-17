@@ -92,8 +92,8 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(null, "SomeFile.xml");
     }
 
-    private void saveAddressBook(ReadOnlyUTask addressBook, String filePath) throws IOException {
-        new XmlUTaskStorage(filePath).saveUTask(addressBook, addToTestDataPathIfNotNull(filePath));
+    private void saveAddressBook(ReadOnlyUTask readOnlyUTask, String filePath) throws IOException {
+        new XmlUTaskStorage(filePath).saveUTask(readOnlyUTask, addToTestDataPathIfNotNull(filePath));
     }
 
     @Test

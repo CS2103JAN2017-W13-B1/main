@@ -1,8 +1,8 @@
 {
-  "appTitle" : "Typical App Title",
+  "appTitle" : "TypicalUTask",
   "logLevel" : "INFO",
   "userPrefsFilePath" : "C:\\preferences.json",
-  "addressBookFilePath" : "addressbook.xml",
-  "addressBookName" : "TypicalAddressBookName",
+  "uTaskFilePath" : "utask.xml",
+  "uTaskName" : "TypicalUTask",
   "extra" : "extra value"
 }

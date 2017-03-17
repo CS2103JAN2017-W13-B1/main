@@ -25,25 +25,25 @@ public class UTaskTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final UTask addressBook = new UTask();
+    private final UTask uTask = new UTask();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getTaskList());
-        assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), uTask.getTaskList());
+        assertEquals(Collections.emptyList(), uTask.getTagList());
     }
 
     @Test
     public void resetData_null_throwsAssertionError() {
         thrown.expect(AssertionError.class);
-        addressBook.resetData(null);
+        uTask.resetData(null);
     }
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
         UTask newData = new TypicalTestPersons().getTypicalAddressBook();
-        addressBook.resetData(newData);
-        assertEquals(newData, addressBook);
+        uTask.resetData(newData);
+        assertEquals(newData, uTask);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class UTaskTest {
         AddressBookStub newData = new AddressBookStub(newPersons, newTags);
 
         thrown.expect(AssertionError.class);
-        addressBook.resetData(newData);
+        uTask.resetData(newData);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class UTaskTest {
         AddressBookStub newData = new AddressBookStub(newPersons, newTags);
 
         thrown.expect(AssertionError.class);
-        addressBook.resetData(newData);
+        uTask.resetData(newData);
     }
 
     /**
