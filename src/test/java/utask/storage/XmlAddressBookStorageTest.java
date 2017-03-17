@@ -16,7 +16,6 @@ import utask.commons.util.FileUtil;
 import utask.model.AddressBook;
 import utask.model.ReadOnlyAddressBook;
 import utask.model.task.EventTask;
-import utask.storage.XmlAddressBookStorage;
 import utask.testutil.TypicalTestPersons;
 
 public class XmlAddressBookStorageTest {

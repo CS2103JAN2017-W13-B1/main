@@ -9,8 +9,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import utask.commons.util.FileUtil;
-
 public class FileUtilTest {
 
     @Rule

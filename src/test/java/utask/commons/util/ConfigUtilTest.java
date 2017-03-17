@@ -15,8 +15,6 @@ import org.junit.rules.TemporaryFolder;
 
 import utask.commons.core.Config;
 import utask.commons.exceptions.DataConversionException;
-import utask.commons.util.ConfigUtil;
-import utask.commons.util.FileUtil;
 
 public class ConfigUtilTest {
 

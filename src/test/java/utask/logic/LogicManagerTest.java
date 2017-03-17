@@ -24,8 +24,6 @@ import utask.commons.core.EventsCenter;
 import utask.commons.events.model.AddressBookChangedEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
-import utask.logic.Logic;
-import utask.logic.LogicManager;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.CommandResult;

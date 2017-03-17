@@ -17,10 +17,6 @@ import utask.commons.events.storage.DataSavingExceptionEvent;
 import utask.model.AddressBook;
 import utask.model.ReadOnlyAddressBook;
 import utask.model.UserPrefs;
-import utask.storage.JsonUserPrefsStorage;
-import utask.storage.Storage;
-import utask.storage.StorageManager;
-import utask.storage.XmlAddressBookStorage;
 import utask.testutil.EventsCollector;
 import utask.testutil.TypicalTestPersons;
 

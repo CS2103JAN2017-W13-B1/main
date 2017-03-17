@@ -11,8 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import utask.commons.util.FileUtil;
-import utask.commons.util.XmlUtil;
 import utask.model.AddressBook;
 import utask.storage.XmlSerializableAddressBook;
 import utask.testutil.AddressBookBuilder;

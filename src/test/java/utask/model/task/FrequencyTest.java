@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import utask.model.task.Frequency;
-
 public class FrequencyTest {
 
     @Test

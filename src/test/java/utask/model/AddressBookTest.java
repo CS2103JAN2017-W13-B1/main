@@ -14,8 +14,6 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import utask.model.AddressBook;
-import utask.model.ReadOnlyAddressBook;
 import utask.model.tag.Tag;
 import utask.model.task.EventTask;
 import utask.model.task.ReadOnlyTask;

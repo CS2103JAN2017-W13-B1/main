@@ -15,8 +15,8 @@ import java.util.Optional;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.Command;
 import utask.logic.commands.EditCommand;
-import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.EditCommand.EditTaskDescriptor;
+import utask.logic.commands.IncorrectCommand;
 import utask.model.tag.UniqueTagList;
 
 /**

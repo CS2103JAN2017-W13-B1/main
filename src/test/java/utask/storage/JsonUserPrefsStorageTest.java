@@ -16,7 +16,6 @@ import org.junit.rules.TemporaryFolder;
 import utask.commons.exceptions.DataConversionException;
 import utask.commons.util.FileUtil;
 import utask.model.UserPrefs;
-import utask.storage.JsonUserPrefsStorage;
 
 public class JsonUserPrefsStorageTest {
 
