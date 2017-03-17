@@ -21,7 +21,7 @@ import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.DuplicateTaskException;
 
 /**
- * Wraps all data at the address-book level
+ * Wraps all data at the utask level
  * Duplicates are not allowed (by .equals comparison)
  */
 public class UTask implements ReadOnlyUTask {
@@ -77,7 +77,7 @@ public class UTask implements ReadOnlyUTask {
         syncMasterTagListWith(tasks);
     }
 
-//// person-level operations
+//// task-level operations
 
     /**
      * Adds a task to UTask.

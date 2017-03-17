@@ -89,7 +89,7 @@ public class LogicManagerTest {
         logic = new LogicManager(model, new StorageManager(tempAddressBookFile, tempPreferencesFile));
         EventsCenter.getInstance().registerHandler(this);
 
-        latestSavedAddressBook = new UTask(model.getAddressBook()); // last
+        latestSavedAddressBook = new UTask(model.getUTask()); // last
                                                                           // saved
                                                                           // assumed
                                                                           // to
@@ -132,7 +132,7 @@ public class LogicManagerTest {
      *      List)
      */
     private void assertCommandFailure(String inputCommand, String expectedMessage) {
-        UTask expectedAddressBook = new UTask(model.getAddressBook());
+        UTask expectedAddressBook = new UTask(model.getUTask());
         List<ReadOnlyTask> expectedShownList = new ArrayList<>(model.getFilteredTaskList());
         assertCommandBehavior(true, inputCommand, expectedMessage, expectedAddressBook, expectedShownList);
     }
@@ -163,7 +163,7 @@ public class LogicManagerTest {
         assertEquals(expectedShownList, model.getFilteredTaskList());
 
         // Confirm the state of data (saved and in-memory) is as expected
-        assertEquals(expectedAddressBook, model.getAddressBook());
+        assertEquals(expectedAddressBook, model.getUTask());
         assertEquals(expectedAddressBook, latestSavedAddressBook);
     }
 
@@ -188,9 +188,9 @@ public class LogicManagerTest {
     @Test
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        model.addPerson(helper.generatePerson(1));
-        model.addPerson(helper.generatePerson(2));
-        model.addPerson(helper.generatePerson(3));
+        model.addTask(helper.generatePerson(1));
+        model.addTask(helper.generatePerson(2));
+        model.addTask(helper.generatePerson(3));
 
         assertCommandSuccess("clear", ClearCommand.MESSAGE_SUCCESS, new UTask(), Collections.emptyList());
     }
@@ -235,7 +235,7 @@ public class LogicManagerTest {
         Task toBeAdded = helper.simpleTask();
 
         // setup starting state
-        model.addPerson(toBeAdded); // person already in internal address book
+        model.addTask(toBeAdded); // person already in internal address book
 
         // execute command and verify result
         assertCommandFailure(helper.generateCreateCommand(toBeAdded), CreateCommand.MESSAGE_DUPLICATE_PERSON);
@@ -292,7 +292,7 @@ public class LogicManagerTest {
         // set AB state to 2 persons
         model.resetData(new UTask());
         for (Task p : personList) {
-            model.addPerson(p);
+            model.addTask(p);
         }
 
         assertCommandFailure(commandWord + " 3", expectedMessage);
@@ -504,7 +504,7 @@ public class LogicManagerTest {
          */
         void addToModel(Model model, List<Task> personsToAdd) throws Exception {
             for (Task p : personsToAdd) {
-                model.addPerson(p);
+                model.addTask(p);
             }
         }
 

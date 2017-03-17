@@ -6,13 +6,13 @@ import utask.model.tag.Tag;
 import utask.model.task.ReadOnlyTask;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of a UTask
  */
 public interface ReadOnlyUTask {
 
     /**
-     * Returns an unmodifiable view of the persons list.
-     * This list will not contain any duplicate persons.
+     * Returns an unmodifiable view of the task list.
+     * This list will not contain any duplicate tasks.
      */
     ObservableList<ReadOnlyTask> getTaskList();
 
