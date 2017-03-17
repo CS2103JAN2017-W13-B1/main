@@ -1,5 +1,6 @@
 package utask.staging.ui;
 
+import javafx.animation.TranslateTransition;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import seedu.address.commons.util.FxViewUtil;
 
 public class SearchTaskComponentController extends StagingUiPart<Region> {
@@ -60,7 +62,7 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
         masterData.add(new ReadOnlySearchTask("Martin", "Mueller"));
 
         this.parent = parent;
-
+        rootPane.setTranslateY(-500);
         initialize();
     }
 
@@ -119,7 +121,8 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
                     System.out.println("RUN BS");
                     personTable.getSortOrder().clear();
                     firstNameColumn.setSortType(SortType.ASCENDING);
-                    personTable.getSortOrder().addAll(firstNameColumn);
+                    ObservableList<TableColumn<ReadOnlySearchTask, ?>> order = personTable.getSortOrder();
+                    order.addAll(firstNameColumn);
                 } else if (event.getCode() == KeyCode.A) {
                     //sortedData.remove(2);
                     System.out.println("RUN A");
@@ -138,5 +141,25 @@ public class SearchTaskComponentController extends StagingUiPart<Region> {
         personTable.setItems(sortedData);
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
+    }
+
+    public void play() {
+        TranslateTransition openNav = new TranslateTransition(new Duration(350), rootPane);
+        openNav.setToY(0);
+        openNav.play();
+//        TranslateTransition closeNav = new TranslateTransition(new Duration(350), rootPane);
+//        menu.setOnAction((ActionEvent evt)->{
+//            if(navList.getTranslateX()!=0){
+//                openNav.play();
+//            }else{
+//                closeNav.setToX(-(navList.getWidth()));
+//                closeNav.play();
+//            }
+//        });
+    }
+    public void done() {
+        TranslateTransition closeNav = new TranslateTransition(new Duration(350), rootPane);
+        closeNav.setToY(-(rootPane.getHeight()));
+        closeNav.play();
     }
 }

@@ -24,7 +24,6 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import utask.staging.ui.SearchResultsAnchorPane.ReadOnlyTask;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -102,27 +101,30 @@ public class StagingMainWindow extends StagingUiPart<Region> {
             final Matcher matcher = searchRegex.matcher(text);
 
             if (matcher.matches()) {
-                search.fliter(matcher.group("txt").toLowerCase());
-                search.overlay();
-            } else if (search.isSearchActive() && text.matches("^select\\s\\d+$")) {
-                String params = (text.toLowerCase().split(" "))[1];
-                int index = Integer.parseInt(params);
-                ReadOnlyTask task = search.selectIndex(index);
-                txtAreaResults.appendText("GOTTEN >> " + task.name + " " + task.date + " " + task.tags);
-            } else if (text.matches("^sort\\s\\d+$")) {
-                String params = (text.toLowerCase().split(" "))[1];
-                int index = Integer.parseInt(params);
-                search.sort(index);
+//                search.fliter(matcher.group("txt").toLowerCase());
+//                search.overlay();
+                stask.play();
             }
+//            } else if (search.isSearchActive() && text.matches("^select\\s\\d+$")) {
+//                String params = (text.toLowerCase().split(" "))[1];
+//                int index = Integer.parseInt(params);
+//                ReadOnlyTask task = search.selectIndex(index);
+//                txtAreaResults.appendText("GOTTEN >> " + task.name + " " + task.date + " " + task.tags);
+//            } else if (text.matches("^sort\\s\\d+$")) {
+//                String params = (text.toLowerCase().split(" "))[1];
+//                int index = Integer.parseInt(params);
+//                search.sort(index);
+//            }
 
             txtAreaResults.appendText(txtCommand.getText() + "\n");
             previousCommand = txtCommand.getText();
             txtCommand.setText("");
             lblSuggestion.setText("");
         } else if (event.getCode() == KeyCode.ESCAPE) {
-            if (search.handleEscape()) {
-                task.setOverlay();
-            }
+//            if (search.handleEscape()) {
+//                task.setOverlay();
+//            }
+            stask.done();
         }
     }
 
@@ -161,8 +163,9 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
         scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
 
-        search = new SearchResultsAnchorPane(topPlaceholder);
+//        search = new SearchResultsAnchorPane(topPlaceholder);
 
+        stask = new SearchTaskComponentController(topPlaceholder);
         this.primaryStage.setMinWidth(700);
         this.primaryStage.setMinHeight(800);
         this.primaryStage.setScene(scene);
@@ -215,7 +218,6 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 
     void fillInnerParts() {
 //      task = new TaskAnchorPane(topPlaceholder);
-        new SearchTaskComponentController(topPlaceholder);
 //        browserPanel = new BrowserPanel(browserPlaceholder);
 //        personListPanel = new PersonListPanel(getPersonListPlaceholder(), logic.getFilteredPersonList());
 //        new ResultDisplay(getResultDisplayPlaceholder());
