@@ -9,7 +9,7 @@ import utask.model.ReadOnlyAddressBook;
 /**
  * Represents a storage for {@link utask.model.AddressBook}.
  */
-public interface AddressBookStorage {
+public interface UTaskStorage {
 
     /**
      * Returns the file path of the data file.

@@ -20,7 +20,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.testutil.TypicalTestPersons;
 
-public class AddressBookTest {
+public class UTaskTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

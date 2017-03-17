@@ -13,8 +13,8 @@ import org.junit.rules.ExpectedException;
 
 import utask.model.AddressBook;
 import utask.storage.XmlSerializableAddressBook;
-import utask.testutil.AddressBookBuilder;
 import utask.testutil.TestUtil;
+import utask.testutil.UTaskBuilder;
 
 public class XmlUtilTest {
 
@@ -85,7 +85,7 @@ public class XmlUtilTest {
         assertEquals((new AddressBook(dataToWrite)).toString(), (new AddressBook(dataFromFile)).toString());
         //TODO: use equality instead of string comparisons
 
-        AddressBookBuilder builder = new AddressBookBuilder(new AddressBook());
+        UTaskBuilder builder = new UTaskBuilder(new AddressBook());
         dataToWrite = new XmlSerializableAddressBook(
                 builder.withPerson(TestUtil.generateSamplePersonData().get(0)).withTag("Friends").build());
 

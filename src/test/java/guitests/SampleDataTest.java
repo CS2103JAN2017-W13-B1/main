@@ -9,7 +9,7 @@ import utask.model.task.Task;
 import utask.model.util.SampleDataUtil;
 import utask.testutil.TestUtil;
 
-public class SampleDataTest extends AddressBookGuiTest {
+public class SampleDataTest extends UTaskGuiTest {
     @Override
     protected AddressBook getInitialData() {
         // return null to force test app to load data from file only

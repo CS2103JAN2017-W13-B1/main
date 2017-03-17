@@ -7,7 +7,7 @@ import org.junit.Test;
 import utask.commons.core.Messages;
 import utask.testutil.TestTask;
 
-public class FindCommandTest extends AddressBookGuiTest {
+public class FindCommandTest extends UTaskGuiTest {
 
     @Test
     public void find_nonEmptyList() {

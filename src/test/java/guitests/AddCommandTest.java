@@ -10,7 +10,7 @@ import utask.logic.commands.CreateCommand;
 import utask.testutil.TestTask;
 import utask.testutil.TestUtil;
 
-public class AddCommandTest extends AddressBookGuiTest {
+public class AddCommandTest extends UTaskGuiTest {
 
     @Test
     public void add() {

@@ -8,7 +8,7 @@ import org.junit.Test;
 import utask.testutil.TestTask;
 import utask.testutil.TestUtil;
 
-public class DeleteCommandTest extends AddressBookGuiTest {
+public class DeleteCommandTest extends UTaskGuiTest {
 
     @Test
     public void delete() {

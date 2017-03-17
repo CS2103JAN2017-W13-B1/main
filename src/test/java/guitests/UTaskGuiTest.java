@@ -32,7 +32,7 @@ import utask.testutil.TypicalTestPersons;
 /**
  * A GUI Test class for AddressBook.
  */
-public abstract class AddressBookGuiTest {
+public abstract class UTaskGuiTest {
 
     /* The TestName Rule makes the current test name available inside test methods */
     @Rule

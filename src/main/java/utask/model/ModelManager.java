@@ -7,7 +7,7 @@ import javafx.collections.transformation.FilteredList;
 import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.UnmodifiableObservableList;
-import utask.commons.events.model.AddressBookChangedEvent;
+import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.util.CollectionUtil;
 import utask.commons.util.StringUtil;
 import utask.model.task.ReadOnlyTask;
@@ -55,7 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+        raise(new UTaskChangedEvent(addressBook));
     }
 
     @Override

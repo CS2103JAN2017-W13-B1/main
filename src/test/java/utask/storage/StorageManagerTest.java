@@ -12,7 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import utask.commons.events.model.AddressBookChangedEvent;
+import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.storage.DataSavingExceptionEvent;
 import utask.model.AddressBook;
 import utask.model.ReadOnlyAddressBook;
@@ -77,7 +77,7 @@ public class StorageManagerTest {
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));
         EventsCollector eventCollector = new EventsCollector();
-        storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
+        storage.handleAddressBookChangedEvent(new UTaskChangedEvent(new AddressBook()));
         assertTrue(eventCollector.get(0) instanceof DataSavingExceptionEvent);
     }
 

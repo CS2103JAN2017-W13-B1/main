@@ -21,7 +21,7 @@ import org.junit.rules.TemporaryFolder;
 import com.google.common.eventbus.Subscribe;
 
 import utask.commons.core.EventsCenter;
-import utask.commons.events.model.AddressBookChangedEvent;
+import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.logic.commands.ClearCommand;
@@ -67,7 +67,7 @@ public class LogicManagerTest {
     private int targetedJumpIndex;
 
     @Subscribe
-    private void handleLocalModelChangedEvent(AddressBookChangedEvent abce) {
+    private void handleLocalModelChangedEvent(UTaskChangedEvent abce) {
         latestSavedAddressBook = new AddressBook(abce.data);
     }
 

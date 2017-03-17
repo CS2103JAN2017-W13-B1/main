@@ -8,7 +8,7 @@ import com.google.common.eventbus.Subscribe;
 
 import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
-import utask.commons.events.model.AddressBookChangedEvent;
+import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.storage.DataSavingExceptionEvent;
 import utask.commons.exceptions.DataConversionException;
 import utask.model.ReadOnlyAddressBook;
@@ -20,11 +20,11 @@ import utask.model.UserPrefs;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
+    private UTaskStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(UTaskStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
@@ -79,7 +79,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+    public void handleAddressBookChangedEvent(UTaskChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
