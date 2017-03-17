@@ -44,9 +44,9 @@ public class TypicalTestPersons {
     }
 
     public static void loadAddressBookWithSampleData(UTask ab) {
-        for (TestTask person : new TypicalTestPersons().getTypicalPersons()) {
+        for (TestTask task : new TypicalTestPersons().getTypicalPersons()) {
             try {
-                ab.addTask(new EventTask(person));
+                ab.addTask(new EventTask(task));
             } catch (UniqueTaskList.DuplicateTaskException e) {
                 assert false : "not possible";
             }

@@ -41,7 +41,7 @@ public class SelectCommandTest extends UTaskGuiTest {
 
     private void assertSelectionSuccess(int index) {
         commandBox.runCommand("select " + index);
-        assertResultMessage("Selected Person: " + index);
+        assertResultMessage("Selected Task: " + index);
         assertPersonSelected(index);
     }
 

@@ -19,7 +19,7 @@ import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing task in the address book.
  */
 public class EditCommand extends Command {
 
@@ -33,28 +33,28 @@ public class EditCommand extends Command {
             + "[/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]...\n"
             + "Example: " + COMMAND_WORD + " 1 /name do homework";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited task: %1$s";
+    public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
 
     private final int filteredTaskListIndex;
     private final EditTaskDescriptor editTaskDescriptor;
 
     /**
      * @param filteredTaskListIndex
-     *            the index of the person in the filtered person list to edit
+     *            the index of the task in the filtered task list to edit
      * @param editTaskDescriptor
-     *            details to edit the person with
+     *            details to edit the task with
      */
-    public EditCommand(int filteredPersonListIndex,
-            EditTaskDescriptor editPersonDescriptor) {
-        assert filteredPersonListIndex > 0;
-        assert editPersonDescriptor != null;
+    public EditCommand(int filteredTaskListIndex,
+            EditTaskDescriptor editTaskDescriptor) {
+        assert filteredTaskListIndex > 0;
+        assert editTaskDescriptor != null;
 
-        // converts filteredPersonListIndex from one-based to zero-based.
-        this.filteredTaskListIndex = filteredPersonListIndex - 1;
+        // converts filteredTaskListIndex from one-based to zero-based.
+        this.filteredTaskListIndex = filteredTaskListIndex - 1;
 
-        this.editTaskDescriptor = new EditTaskDescriptor(editPersonDescriptor);
+        this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
     }
 
     @Override
@@ -75,16 +75,16 @@ public class EditCommand extends Command {
         try {
             model.updateTask(filteredTaskListIndex, editedTask);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
         model.updateFilteredListToShowAll();
         return new CommandResult(
-                String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedTask));
+                String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of
-     * {@code personToEdit} edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Task} with the details of
+     * {@code taskToEdit} edited with {@code editTaskDescriptor}.
      */
     private static Task createEditedTask(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor) {
@@ -119,7 +119,7 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value
+     * Stores the details to edit the task with. Each non-empty field value
      * will replace the corresponding field value of the person.
      */
     public static class EditTaskDescriptor {

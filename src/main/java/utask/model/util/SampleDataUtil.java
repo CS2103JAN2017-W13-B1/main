@@ -28,8 +28,8 @@ public class SampleDataUtil {
     public static ReadOnlyUTask getSampleAddressBook() {
         try {
             UTask sampleAB = new UTask();
-            for (Task samplePerson : getSamplePersons()) {
-                sampleAB.addTask(samplePerson);
+            for (Task sampleTask : getSamplePersons()) {
+                sampleAB.addTask(sampleTask);
             }
             return sampleAB;
         } catch (DuplicateTaskException e) {

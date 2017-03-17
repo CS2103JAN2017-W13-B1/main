@@ -36,7 +36,7 @@ public class UniqueTaskList implements Iterable<Task> {
      * Adds a task to the list.
      *
      * @throws DuplicateTaskException
-     *             if the task to add is a duplicate of an existing person in
+     *             if the task to add is a duplicate of an existing task in
      *             the list.
      */
     public void add(Task toAdd) throws DuplicateTaskException {
@@ -81,7 +81,7 @@ public class UniqueTaskList implements Iterable<Task> {
         // updated task.
         // The right way is to implement observable properties in the Task
         // class.
-        // Then, PersonCard should then bind its text labels to those observable
+        // Then, TaskCard should then bind its text labels to those observable
         // properties.
         //internalList.set(index, taskToUpdate);
     }

@@ -23,7 +23,7 @@ public abstract class CreateCommand extends Command {
             + " read essay /by 200217 /from 1830 to 2030 /repeat Every Monday /tag urgent /tag assignment";
 
     public static final String MESSAGE_SUCCESS = "New task created: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in uTask";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in uTask";
 
     protected Task toAdd;
     protected final Frequency frequency;
@@ -56,7 +56,7 @@ public abstract class CreateCommand extends Command {
             model.addTask(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniqueTaskList.DuplicateTaskException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
 
     }

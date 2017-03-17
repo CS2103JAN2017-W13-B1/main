@@ -46,7 +46,7 @@ public class Frequency {
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid task email.
      */
     public static boolean isValidFrequency(String test) {
         return test.matches(FREQUENCY_VALIDATION_REGEX);

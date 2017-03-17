@@ -87,7 +87,7 @@ public class XmlUtilTest {
 
         UTaskBuilder builder = new UTaskBuilder(new UTask());
         dataToWrite = new XmlSerializableUTask(
-                builder.withTask(TestUtil.generateSamplePersonData().get(0)).withTag("Friends").build());
+                builder.withTask(TestUtil.generateSampleTaskData().get(0)).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableUTask.class);

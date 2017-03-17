@@ -18,16 +18,16 @@ public class AddCommandTest extends UTaskGuiTest {
         TestTask[] currentList = td.getTypicalPersons();
         TestTask personToAdd = td.h;
         assertAddSuccess(personToAdd, currentList);
-        currentList = TestUtil.addPersonsToList(currentList, personToAdd);
+        currentList = TestUtil.addTasksToList(currentList, personToAdd);
 
         //add another person
         personToAdd = td.i;
         assertAddSuccess(personToAdd, currentList);
-        currentList = TestUtil.addPersonsToList(currentList, personToAdd);
+        currentList = TestUtil.addTasksToList(currentList, personToAdd);
 
         //add duplicate person
         commandBox.runCommand(td.h.getAddCommand());
-        assertResultMessage(CreateCommand.MESSAGE_DUPLICATE_PERSON);
+        assertResultMessage(CreateCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(personListPanel.isListMatching(currentList));
 
         //add to empty list
@@ -47,7 +47,7 @@ public class AddCommandTest extends UTaskGuiTest {
         assertMatching(personToAdd, addedCard);
 
         //confirm the list now contains all previous persons plus the new person
-        TestTask[] expectedList = TestUtil.addPersonsToList(currentList, personToAdd);
+        TestTask[] expectedList = TestUtil.addTasksToList(currentList, personToAdd);
         assertTrue(personListPanel.isListMatching(expectedList));
     }
 

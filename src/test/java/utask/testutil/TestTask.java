@@ -8,7 +8,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Timestamp;
 
 /**
- * A mutable person object. For testing only.
+ * A mutable task object. For testing only.
  */
 public class TestTask implements ReadOnlyTask {
 
@@ -23,14 +23,14 @@ public class TestTask implements ReadOnlyTask {
     }
 
     /**
-     * Creates a copy of {@code personToCopy}.
+     * Creates a copy of {@code taskToCopy}.
      */
-    public TestTask(TestTask personToCopy) {
-        this.name = personToCopy.getName();
-        this.deadline = personToCopy.getDeadline();
-        this.timestamp = personToCopy.getTimestamp();
-        this.frequency = personToCopy.getFrequency();
-        this.tags = personToCopy.getTags();
+    public TestTask(TestTask taskToCopy) {
+        this.name = taskToCopy.getName();
+        this.deadline = taskToCopy.getDeadline();
+        this.timestamp = taskToCopy.getTimestamp();
+        this.frequency = taskToCopy.getFrequency();
+        this.tags = taskToCopy.getTags();
     }
 
     public void setName(Name name) {
