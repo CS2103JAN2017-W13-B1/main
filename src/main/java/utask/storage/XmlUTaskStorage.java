@@ -42,34 +42,34 @@ public class XmlUTaskStorage implements UTaskStorage {
                                                                                  FileNotFoundException {
         assert filePath != null;
 
-        File addressBookFile = new File(filePath);
+        File uTaskFile = new File(filePath);
 
-        if (!addressBookFile.exists()) {
-            logger.info("AddressBook file "  + addressBookFile + " not found");
+        if (!uTaskFile.exists()) {
+            logger.info("UTask file "  + uTaskFile + " not found");
             return Optional.empty();
         }
 
-        ReadOnlyUTask addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        ReadOnlyUTask uTaskOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
 
-        return Optional.of(addressBookOptional);
+        return Optional.of(uTaskOptional);
     }
 
     @Override
-    public void saveUTask(ReadOnlyUTask addressBook) throws IOException {
-        saveUTask(addressBook, filePath);
+    public void saveUTask(ReadOnlyUTask uTask) throws IOException {
+        saveUTask(uTask, filePath);
     }
 
     /**
      * Similar to {@link #saveUTask(ReadOnlyUTask)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveUTask(ReadOnlyUTask addressBook, String filePath) throws IOException {
-        assert addressBook != null;
+    public void saveUTask(ReadOnlyUTask uTask, String filePath) throws IOException {
+        assert uTask != null;
         assert filePath != null;
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableUTask(addressBook));
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableUTask(uTask));
     }
 
 }
