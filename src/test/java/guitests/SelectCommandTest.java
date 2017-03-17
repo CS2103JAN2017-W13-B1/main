@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import seedu.utask.model.task.ReadOnlyTask;
+import utask.model.task.ReadOnlyTask;
 
 public class SelectCommandTest extends AddressBookGuiTest {
 
