@@ -3,7 +3,6 @@ package utask.staging.ui;
 import com.jfoenix.controls.JFXListView;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -32,11 +31,11 @@ public class TodoListPanel extends StagingUiPart<Region> {
     }
 
     private void populate() {
-        lstTasks.getItems().add(new TaskListCard().getRoot());
-        lstTasks.getItems().add(new TaskListCard().getRoot());
-        lstTasks.getItems().add(new TaskListCard().getRoot());
-        lstTasks.getItems().add(new TaskListCard().getRoot());
-        lstTasks.getItems().add(new TaskListCard().getRoot());
-        lstTasks.getItems().add(new TaskListCard().getRoot());
+//        lstTasks.getItems().add(new TaskListCard().getRoot());
+//        lstTasks.getItems().add(new TaskListCard().getRoot());
+//        lstTasks.getItems().add(new TaskListCard().getRoot());
+//        lstTasks.getItems().add(new TaskListCard().getRoot());
+//        lstTasks.getItems().add(new TaskListCard().getRoot());
+//        lstTasks.getItems().add(new TaskListCard().getRoot());
     }
 }

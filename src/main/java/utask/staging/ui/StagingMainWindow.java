@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -23,9 +25,15 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.tag.UniqueTagList;
+import seedu.utask.model.task.FloatingTask;
+import seedu.utask.model.task.Frequency;
+import seedu.utask.model.task.Name;
+import seedu.utask.model.task.ReadOnlyTask;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
@@ -235,6 +243,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
     // }
 
     void fillInnerParts() {
+                
         task = new TaskListPanel(personListPanelPlaceholder);
         new TodoListPanel(todoListPanelPlaceholder);
         

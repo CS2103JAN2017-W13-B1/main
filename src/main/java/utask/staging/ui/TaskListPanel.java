@@ -2,31 +2,32 @@ package utask.staging.ui;
 
 import com.jfoenix.controls.JFXListView;
 
-import javafx.event.Event;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.util.FxViewUtil;
+import seedu.utask.model.task.ReadOnlyTask;
 
 public class TaskListPanel extends StagingUiPart<Region> {
-
+//    private final Logger logger = LogsCenter.getLogger(StagingUiPart.class);    
     private static final String FXML = "TaskAnchorPane.fxml";
 
     @FXML
-    private JFXListView<Region> list;
+    private JFXListView<ReadOnlyTask> list;
 
     @FXML
     private Label dueLabel;
     @FXML
-    private JFXListView<Region> dueList;
+    private JFXListView<ReadOnlyTask> dueList;
     @FXML
-    private JFXListView<Region> subList;
+    private JFXListView<ReadOnlyTask> subList;
     @FXML
     private ScrollPane rootPane;
     //
@@ -46,9 +47,9 @@ public class TaskListPanel extends StagingUiPart<Region> {
 
         assert (placeholder != null);
 
-        parent = placeholder;
+        this.parent = placeholder;
         populate();
-
+        
         //
         // dueLabel.setVisible(false);
         // dueList.setVisible(false);
@@ -62,21 +63,29 @@ public class TaskListPanel extends StagingUiPart<Region> {
     // parent.getChildren().clear();
     // parent.getChildren().add(rootPane);
     // }
+    
+    private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks, ListView<ReadOnlyTask> prevListView) {
+        listView.setItems(tasks);
+        listView.setCellFactory(lw -> new TaskListViewCell(prevListView));
+        setEventHandlerForSelectionChangeEvent(listView);
+    }
 
     private void populate() {
         // Platform.runLater(() -> {
+                
+        ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
+        double height = 130.0;
+        System.out.println(dueTasks.size());
+        JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
+        setConnections(due, dueTasks, null);
+        due.setMinHeight(height * dueTasks.size());
 
-        double height = 150.0;
-        JFXListView<Region> due = createListControlAndAddToParent("Due", container);
-        due.getItems().add(new TaskListCard().getRoot());
-        due.setMinHeight(height);
 
-        JFXListView<Region> today = createListControlAndAddToParent("Today", container);
-        today.getItems().add(new TaskListCard().getRoot());
-        today.getItems().add(new TaskListCard().getRoot());
-        today.getItems().add(new TaskListCard().getRoot());
-        today.getItems().add(new TaskListCard().getRoot());
-        today.setMinHeight(height * 4);
+        ObservableList<ReadOnlyTask> todayTasks = TypicalTaskBuilder.today();
+        System.out.println(todayTasks.size());
+        JFXListView<ReadOnlyTask> today = createListControlAndAddToParent("Today", container);
+        setConnections(today, todayTasks, due);
+        today.setMinHeight(height * todayTasks.size());
         //
         // subList.getItems().add(new TaskListCard().getRoot());
         //
@@ -115,26 +124,62 @@ public class TaskListPanel extends StagingUiPart<Region> {
     public void freeResources() {
     }
 
-    private JFXListView<Region> createListControlAndAddToParent(String name, Pane parent) {
+    private JFXListView<ReadOnlyTask> createListControlAndAddToParent(String name, Pane parent) {
         Label label = new Label(name);
         label.getStyleClass().add("list-label");
-        JFXListView<Region> list = new JFXListView<Region>();
+        JFXListView<ReadOnlyTask> list = new JFXListView<ReadOnlyTask>();
         list.getStyleClass().add("custom-jfx-list-view1");
-        
+
         parent.getChildren().add(label);
         parent.getChildren().add(list);
-        
+
         return list;
     }
 
-    private void showHeader(JFXListView<Region> subList) {
-        Node node = subList.getGroupnode();
+    private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
+        listView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        //logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                       //raise(new PersonPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
 
-        assert node != null;
+    public void scrollTo(ListView<ReadOnlyTask> listView, int index) {
+        Platform.runLater(() -> {
+            listView.scrollTo(index);
+            listView.getSelectionModel().clearAndSelect(index);
+        });
+    }
 
-        Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1, true, true,
-                true, true, true, true, true, true, true, true, null));
+    class TaskListViewCell extends ListCell<ReadOnlyTask> {
+        
+        private ListView<ReadOnlyTask> previousList;
+        
+        public TaskListViewCell(ListView<ReadOnlyTask> previousList){
+            //Can be null if it is the first list
+            this.previousList = previousList;
+        }
 
+        @Override
+        protected void updateItem(ReadOnlyTask task, boolean empty) {
+            super.updateItem(task, empty);
+
+            if (empty || task == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                
+                int offset = 1;
+                
+                if (previousList != null) {
+                    offset = previousList.getItems().size() + 1;
+                }
+                
+                setGraphic(new TaskListCard(task, getIndex() + offset).getRoot());
+            }
+        }
     }
 }
 
