@@ -20,7 +20,7 @@
 /* Input Demo */
 
 .text-field {
-    -fx-max-width: 300;
+    /*-fx-max-width: 300;*/
 }
 
 .jfx-text-field, .jfx-password-field{
@@ -30,7 +30,7 @@
     -fx-alignment: top-left ;
     -jfx-focus-color: #4059A9;
     -jfx-unfocus-color: #4d4d4d;
-    -fx-max-width: 300;
+    /*-fx-max-width: 300;*/
 }
 
 
@@ -199,7 +199,7 @@
   	-jfx-cell-horizontal-margin: 0.0;
   	-jfx-cell-vertical-margin: 5.0;
   	-jfx-vertical-gap : 10;
-  	-jfx-expanded : false;  	
+  	-jfx-expanded : true;  	
   	-fx-pref-width:200;
 }
 

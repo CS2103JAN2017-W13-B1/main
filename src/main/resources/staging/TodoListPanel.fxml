@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<JFXListView fx:id="lstTasks" VBox.vgrow="ALWAYS" styleClass="custom-jfx-list-view1"/>
+	</children>
+</VBox>
+
