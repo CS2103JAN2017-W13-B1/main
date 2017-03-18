@@ -143,7 +143,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 
     JFXSnackbar bar;
 
-    private TaskAnchorPane task;
+    private TaskListPanel task;
     private SearchResultsAnchorPane search;
     private SearchTaskComponentController stask;
 
@@ -235,8 +235,8 @@ public class StagingMainWindow extends StagingUiPart<Region> {
     // }
 
     void fillInnerParts() {
-        task = new TaskAnchorPane(personListPanelPlaceholder);
-        task = new TaskAnchorPane(todoListPanelPlaceholder);
+        task = new TaskListPanel(personListPanelPlaceholder);
+        new TodoListPanel(todoListPanelPlaceholder);
         
         // browserPanel = new BrowserPanel(browserPlaceholder);
         // personListPanel = new PersonListPanel(getPersonListPlaceholder(),

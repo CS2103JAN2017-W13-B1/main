@@ -1090,6 +1090,15 @@
 	-fx-box-border: transparent;	
 }
 
-#lstTasks {
-	-jfx-expanded : true;
+.list-label{
+	-fx-text-fill: #0E0E0E;
+	-fx-padding: 10 10 10 10;
+	-fx-font-family: "Roboto";
+	-fx-font-size: 16.0;
+	-fx-pref-height: 25;
+}
+
+
+.list-cell:empty {
+    -fx-opacity: 0;
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="120.0" maxWidth="260.0" minHeight="120.0" minWidth="260.0" prefHeight="120.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="120.0" minHeight="120.0" prefWidth="260.0" minWidth="260.0" prefHeight="120.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox HBox.hgrow="ALWAYS">
          <HBox.margin>

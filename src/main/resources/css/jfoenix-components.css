@@ -165,7 +165,7 @@
 	-fx-background-radius: 2em;
 }
 
-
+/*
 .jfx-list-cell-container{
 	-fx-alignment: center-left;
 }
@@ -192,9 +192,9 @@
 .jfx-list-cell .jfx-rippler{
 	-jfx-rippler-fill:BLUE;
 }
+*/
 
-
-.jfx-list-view {
+/*.jfx-list-view {
 	-fx-background-insets: 0;
   	-jfx-cell-horizontal-margin: 0.0;
   	-jfx-cell-vertical-margin: 5.0;
@@ -202,7 +202,7 @@
   	-jfx-expanded : true;  	
   	-fx-pref-width:200;
 }
-
+*/
 
  .jfx-toggle-button{
   		-jfx-toggle-color: RED;
@@ -242,12 +242,12 @@
 	-fx-text-fill: #ff4081;	
 }
 
-.jfx-list-cell-content-container {
+/*.jfx-list-cell-content-container {
 	-fx-alignment: center-left;
 }
 .jfx-list-cell-container .label {
   	-fx-text-fill: BLACK ;
-}
+}*/
 
 .combo-box-popup .list-view .jfx-list-cell:odd:selected .jfx-list-cell-container,
 .combo-box-popup .list-view .jfx-list-cell:even:selected .jfx-list-cell-container { 
