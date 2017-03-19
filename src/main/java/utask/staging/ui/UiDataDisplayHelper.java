@@ -1,4 +1,4 @@
-package staging;
+package utask.staging.ui;
 
 import java.util.HashMap;
 

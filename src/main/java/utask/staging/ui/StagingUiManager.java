@@ -48,7 +48,7 @@ public class StagingUiManager extends ComponentManager implements Ui {
         primaryStage.setTitle(config.getAppTitle());
 
         //Set the application icon.
-        //primaryStage.getIcons().add(getImage(ICON_APPLICATION));
+        primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
             mainWindow = new UTMainWindow(primaryStage, config, prefs, logic);
@@ -57,7 +57,7 @@ public class StagingUiManager extends ComponentManager implements Ui {
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
-            //showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
     }
 
@@ -120,10 +120,11 @@ public class StagingUiManager extends ComponentManager implements Ui {
         mainWindow.getTodoListPanel().scrollTo(event.targetIndex);
     }
 
+    //TODO: Remove, no more browser
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-//        mainWindow.loadPersonPage(event.getNewSelection());
+        //mainWindow.loadPersonPage(event.getNewSelection());
     }
 
 }

@@ -1,30 +1,27 @@
-package staging;
+package utask.staging.ui;
 
 import java.util.Date;
 import java.util.logging.Logger;
 
-import org.controlsfx.control.StatusBar;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.ui.StatusBarFooter;
-import seedu.address.ui.UiPart;
 
-public class UTStatusBarFooter extends UiPart<Region> {
+public class UTStatusBarFooter extends StagingUiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
+    private static final String FXML = "UTStatusBarFooter.fxml";
 
     @FXML
-    private StatusBar syncStatus;
+    private Label syncStatus;
     @FXML
-    private StatusBar saveLocationStatus;
-
-    private static final String FXML = "StatusBarFooter.fxml";
+    private Label saveLocationStatus;
 
     public UTStatusBarFooter(AnchorPane placeHolder, String saveLocation) {
         super(FXML);

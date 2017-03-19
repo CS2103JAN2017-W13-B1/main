@@ -16,7 +16,6 @@ import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import staging.UiDataDisplayHelper;
 
 public class UTCommandBox extends StagingUiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(UTCommandBox.class);
@@ -33,6 +32,8 @@ public class UTCommandBox extends StagingUiPart<Region> {
 
     @FXML
     private Label lblSuggestion;
+
+    private String lastValidCommand = "";
 
     public UTCommandBox(Pane parent, Logic logic) {
         super(FXML);
@@ -69,6 +70,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
 
             // process result of the command
             setStyleToIndicateCommandSuccess();
+            lastValidCommand = commandTextField.getText();
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
@@ -85,6 +87,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
      * Show full suggested command format on recognised command pattern.
      */
     private void handleKeyPressed(KeyEvent ke) {
+        //TODO: Upgrade to binary tree
         String input = commandTextField.getText();
 
         if (!"".equals(input)) {

@@ -34,7 +34,6 @@ import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.HelpWindow;
-import staging.UTStatusBarFooter;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
