@@ -67,7 +67,7 @@ public class LogicManagerTest {
     private int targetedJumpIndex;
 
     @Subscribe
-    private void handleLocalModelChangedEvent(UTaskChangedEvent abce) {
+    public void handleLocalModelChangedEvent(UTaskChangedEvent abce) {
         latestSavedAddressBook = new UTask(abce.data);
     }
 
