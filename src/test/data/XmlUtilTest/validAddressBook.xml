@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
-    <persons>
+<utask>
+    <tasks>
         <name>alice</name>
         <deadline>200217</deadline>
         <timestamp>1830 to 2000</timestamp>
         <frequency></frequency>
-    </persons>
-    <persons>
+    </tasks>
+    <tasks>
         <name>brth from 0000 to 2359</name>
         <deadline></deadline>
         <timestamp></timestamp>
         <frequency></frequency>
-    </persons>
-    <persons>
+    </tasks>
+    <tasks>
         <name>char</name>
         <deadline></deadline>
         <timestamp></timestamp>
         <frequency>every mon</frequency>
-    </persons>
-</addressbook>
+    </tasks>
+</utask>
