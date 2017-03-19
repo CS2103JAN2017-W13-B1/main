@@ -217,7 +217,7 @@ _Figure 2.5.1 : Structure of the Storage Component_
 
 **API** : [`Storage.java`](../src/main/java/utask/storage/Storage.java)
 
-The `Storage` component,
+The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
@@ -335,7 +335,7 @@ Here are the steps to convert the project documentation files to PDF format.
  1. Make sure you have set up GitHub Pages as described in [UsingGithubPages.md](UsingGithubPages.md#setting-up).
  1. Using Chrome, go to the [GitHub Pages version](UsingGithubPages.md#viewing-the-project-site) of the
     documentation file. <br>
-    e.g. For [UserGuide.md](UserGuide.md), the URL will be `https://<your-username-or-organization-name>.github.io/addressbook-level4/docs/UserGuide.html`.
+    e.g. For [UserGuide.md](UserGuide.md), the URL will be `https://github.com/CS2103JAN2017-W13-B1/main/blob/master/docs/UserGuide.md`.
  1. Click on the `Print` option in Chrome's menu.
  1. Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. <br>
     For best results, use the settings indicated in the screenshot below. <br>
@@ -361,25 +361,24 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new task |
 `* * *` | user | retrieve unfinished tasks for the day | decide what is to be done soon
-`* * *` | user | rescheduling an existing task | change task's deadline or start date or end date accordingly
+`* * *` | user | reschedule an existing task | change task's deadline or start date or end date accordingly
 `* * *` | user | rename an existing task’s name |
 `* * *` | user | delete an existing task | remove an entry of the list of stored tasks
 `* * *` | user | undo previous operations | revert mistake made recently
-`* * *` | advanced user | enter partial commands | still use the program without viewing the help tutorial
+`* * *` | advanced user | enter partial commands | still use the program without viewing the help instructions
 `* * *` | user | search tasks using contents from tasks' description | search tasks details without needing to know full description
 `* * *` | user who have multiple devices/Cloud | specify file path for file saving | synchronize saved file across multiple computers with cloud storage
-`* *` | user with many different tasks | group them by tag | find them easily by tag
-`* *` | user | create Tag |
-`* *` | user | rename Tag |
-`* *` | user | delete Tag |
+`* *` | user with many different tasks | group them by tags | find them easily by tag
+`* *` | user | create a tag | use tag to manage tasks
+`* *` | user | rename a tag | update tags' names
+`* *` | user | delete a tag | remove unused tags
 `* *` | user | search entry by Tag / Tag Color | search efficiently by tag
 `* *` | user with many important tasks | set alarms as a reminder to remind me of tasks | get reminders before task happens
 `* *` | user who has to do task on a regular basis | set recurring tasks | avoid creating similar events every now and then
 `* *` | user | redo undone operations | revert accidental undos
 `* *` | Google Calendar user | import existing schedules to uTask | get to work without adding duplicate tasks
-`*` | advanced User | change the theme of the program | work with light or dark themes depends on the time of the day
+`*` | advanced user | change the theme of the program | work with light or dark themes according to the time of the day
 `*` | user who has limited screen room space | use the application on different screen sizes; in a way it is responsive to different screen size | optimally view important information regardless of screen size
-`*` | advanced User | set a personalized alarm |
 `*` | user | use voice command | create task with a different input (voice)
 
 {More to be added}
