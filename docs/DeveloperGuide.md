@@ -4,6 +4,8 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 
 ---
 
+## Table of contents
+
 1. [Setting Up](#setting-up)
 2. [Design](#design)
 3. [Implementation](#implementation)
@@ -16,6 +18,16 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 * [Appendix D: Glossary](#appendix-d--glossary)
 * [Appendix E : Product Survey](#appendix-e--product-survey)
 
+## Introduction
+
+uTask is a task manager for advanced users to manage their daily tasks through keyboard commands. It is
+a java desktop application has a GUI implemented with JavaFX.
+
+This Developer Guide provides general information about setting up and design for uTask. It focuses
+primarily on setting up, design, implementation, testing and DevOps. It will help developers to understand
+how uTask works and how to further improve it. The guide is in top-down manner, so you can look at the
+overall picture of uTask and then breaking down the various components in each sub-section. Each sub-section
+is self-contained, you can easily set up and start contributing by following the guide.
 
 ## 1. Setting up
 
@@ -35,13 +47,13 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 
 ### 1.2. Importing the project into Eclipse
 
-0. Fork this repo, and clone the fork to your computer
-1. Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given
+1. Fork this repo, and clone the fork to your computer
+2. Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given
    in the prerequisites above)
-2. Click `File` > `Import`
-3. Click `Gradle` > `Gradle Project` > `Next` > `Next`
-4. Click `Browse`, then locate the project's directory
-5. Click `Finish`
+3. Click `File` > `Import`
+4. Click `Gradle` > `Gradle Project` > `Next` > `Next`
+5. Click `Browse`, then locate the project's directory
+6. Click `Finish`
 
   > * If you are asked whether to 'keep' or 'overwrite' config files, choose to 'keep'.
   > * Depending on your connection speed and server load, it can even take up to 30 minutes for the set up to finish
@@ -86,7 +98,7 @@ Given below is a quick overview of each component.
 > Tip: The `.pptx` files used to create diagrams in this document can be found in the [diagrams](diagrams/) folder.
 > To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called [`MainApp`](../src/main/java/seedu/address/MainApp.java). It is responsible for,
+`Main` has only one class called [`MainApp`](../src/main/java/utask/MainApp.java). It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
@@ -120,15 +132,15 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
 command `delete 1`.
 
-<img src="images\SDforDeletePerson.png" width="800"><br>
+<img src="images/SDforDeleteTask.png" width="800"><br>
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
->Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed,
+>Note how the `Model` simply raises a `UTaskChangedEvent` when the UTask data are changed,
  instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates
 being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time. <br>
-<img src="images\SDforDeletePersonEventHandling.png" width="800"><br>
+<img src="images/SDforDeleteTaskEventHandling.png" width="800"><br>
 _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 > Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
@@ -139,22 +151,22 @@ The sections below give more details of each component.
 
 ### 2.2. UI component
 
-Author: Alice Bee
+Author: Team-uTask
 
 <img src="images/UiClassDiagram.png" width="800"><br>
 _Figure 2.2.1 : Structure of the UI Component_
 
-**API** : [`Ui.java`](../src/main/java/seedu/address/ui/Ui.java)
+**API** : [`Ui.java`](../src/main/java/utask/ui/Ui.java)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`,
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`,
 `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
  that are in the `src/main/resources/view` folder.<br>
- For example, the layout of the [`MainWindow`](../src/main/java/seedu/address/ui/MainWindow.java) is specified in
+ For example, the layout of the [`MainWindow`](../src/main/java/utask/ui/MainWindow.java) is specified in
  [`MainWindow.fxml`](../src/main/resources/view/MainWindow.fxml)
 
-The `UI` component,
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
@@ -162,57 +174,57 @@ The `UI` component,
 
 ### 2.3. Logic component
 
-Author: Bernard Choo
+Author: Team-uTask
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 _Figure 2.3.1 : Structure of the Logic Component_
 
-**API** : [`Logic.java`](../src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](../src/main/java/utask/logic/Logic.java)
 
 1. `Logic` uses the `Parser` class to parse the user command.
 2. This results in a `Command` object which is executed by the `LogicManager`.
-3. The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+3. The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
 4. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")`
  API call.<br>
-<img src="images/DeletePersonSdForLogic.png" width="800"><br>
+<img src="images/DeleteTaskSdForLogic.png" width="800"><br>
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 ### 2.4. Model component
 
-Author: Cynthia Dharman
+Author: Team-uTask
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
 _Figure 2.4.1 : Structure of the Model Component_
 
-**API** : [`Model.java`](../src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](../src/main/java/utask/model/Model.java)
 
-The `Model`,
+The `Model`:
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes a `UnmodifiableObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list
+* stores the UTask data.
+* exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' e.g. the UI can be bound to this list
   so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 ### 2.5. Storage component
 
-Author: Darius Foong
+Author: Team-uTask
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
 _Figure 2.5.1 : Structure of the Storage Component_
 
-**API** : [`Storage.java`](../src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](../src/main/java/utask/storage/Storage.java)
 
-The `Storage` component,
+The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
 ### 2.6. Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `utask.commons` package.
 
 ## 3. Implementation
 
@@ -263,13 +275,13 @@ We have two types of tests:
 
 2. **Non-GUI Tests** - These are tests not involving the GUI. They include,
    1. _Unit tests_ targeting the lowest level methods/classes. <br>
-      e.g. `seedu.address.commons.UrlUtilTest`
+      e.g. `utask.commons.UrlUtilTest`
    2. _Integration tests_ that are checking the integration of multiple code units
      (those code units are assumed to be working).<br>
-      e.g. `seedu.address.storage.StorageManagerTest`
+      e.g. `utask.storage.StorageManagerTest`
    3. Hybrids of unit and integration tests. These test are checking multiple code units as well as
       how the are connected together.<br>
-      e.g. `seedu.address.logic.LogicManagerTest`
+      e.g. `utask.logic.LogicManagerTest`
 
 #### Headless GUI Testing
 Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
@@ -323,7 +335,7 @@ Here are the steps to convert the project documentation files to PDF format.
  1. Make sure you have set up GitHub Pages as described in [UsingGithubPages.md](UsingGithubPages.md#setting-up).
  1. Using Chrome, go to the [GitHub Pages version](UsingGithubPages.md#viewing-the-project-site) of the
     documentation file. <br>
-    e.g. For [UserGuide.md](UserGuide.md), the URL will be `https://<your-username-or-organization-name>.github.io/addressbook-level4/docs/UserGuide.html`.
+    e.g. For [UserGuide.md](UserGuide.md), the URL will be `https://github.com/CS2103JAN2017-W13-B1/main/blob/master/docs/UserGuide.md`.
  1. Click on the `Print` option in Chrome's menu.
  1. Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. <br>
     For best results, use the settings indicated in the screenshot below. <br>
@@ -349,26 +361,25 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new task |
 `* * *` | user | retrieve unfinished tasks for the day | decide what is to be done soon
-`* * *` | user | rescheduling an existing task | change task's deadline or start date or end date accordingly
+`* * *` | user | reschedule an existing task | change task's deadline or start date or end date accordingly
 `* * *` | user | rename an existing task’s name |
 `* * *` | user | delete an existing task | remove an entry of the list of stored tasks
 `* * *` | user | undo previous operations | revert mistake made recently
-`* * *` | advanced user | enter partial commands | still use the program without viewing the help tutorial
+`* * *` | advanced user | enter partial commands | still use the program without viewing the help instructions
 `* * *` | user | search tasks using contents from tasks' description | search tasks details without needing to know full description
 `* * *` | user who have multiple devices/Cloud | specify file path for file saving | synchronize saved file across multiple computers with cloud storage
-`* *` | user with many different tasks | group them by tag | find them easily by tag
-`* *` | user | create Tag | 
-`* *` | user | rename Tag | 
-`* *` | user | delete Tag | 
+`* *` | user with many different tasks | group them by tags | find them easily by tag
+`* *` | user | create a tag | use tag to manage tasks
+`* *` | user | rename a tag | update tags' names
+`* *` | user | delete a tag | remove unused tags
 `* *` | user | search entry by Tag / Tag Color | search efficiently by tag
 `* *` | user with many important tasks | set alarms as a reminder to remind me of tasks | get reminders before task happens
 `* *` | user who has to do task on a regular basis | set recurring tasks | avoid creating similar events every now and then
 `* *` | user | redo undone operations | revert accidental undos
 `* *` | Google Calendar user | import existing schedules to uTask | get to work without adding duplicate tasks
-`*` | advanced User | change the theme of the program | work with light or dark themes depends on the time of the day
+`*` | advanced user | change the theme of the program | work with light or dark themes according to the time of the day
 `*` | user who has limited screen room space | use the application on different screen sizes; in a way it is responsive to different screen size | optimally view important information regardless of screen size
-`*` | advanced User | set a personalized alarm | 
-`*` | user | use voice command | create task with a different input (voice)
+`*` | user | use voice commands | create task with a different input (voice)
 
 {More to be added}
 
@@ -378,19 +389,19 @@ Priority | As a ... | I want to ... | So that I can...
 
 #### Use case: Create Task
 
-**MSS**
+**MSS**:
 
 1. User creates new task with necessary inputs
 2. µTask creates the task with given inputs <br>
 Use case ends.
 
-**Extensions**
+**Extensions**:
 
 2a. The start time or end time given is invalid
 
-> 2a1. µTask shows an error message and prompt for re-enters of required information
-> 2a2. User re-enters the required information
-Use case resumes at step 2
+> 2a1. µTask shows an error message and prompt for re-enters of required information <br>
+> 2a2. User re-enters the required information <br>
+> Use case resumes at step 2
 
 
 #### Use case: List undone tasks
@@ -398,7 +409,7 @@ Use case resumes at step 2
 **MSS**:
 
 1. User requests to list uncompleted tasks
-2. µTask lists uncompleted tasks in chronological order. <br>
+2. µTask lists uncompleted tasks in chronological order <br>
 Use case ends
 
 
@@ -406,8 +417,8 @@ Use case ends
 
 1a. The list is empty due to no undone task
 
-1a1. µTask notifies the user that no task is undone.
-Use case ends
+> 1a1. µTask notifies the user that no task is undone. <br>
+> Use case ends
 
 
 #### Use case: Rescheduling a task
@@ -418,18 +429,19 @@ Use case ends
 2. µTask reschedules the selected task<br>
 Use case ends.
 
-**Extensions**
+**Extensions**:
+
 1a. The list is empty
 
 > Use case ends
 
 1b. The given index is invalid
 
-> µTask shows an error message <br>
+> 1b1. µTask shows an error message <br>
 > Use case ends
 
 1c. The given datetime is invalid
-> µTask shows an error message <br>
+> 1c1. µTask shows an error message <br>
   Use case ends
 
 #### Use case: Delete Task
@@ -440,7 +452,7 @@ Use case ends.
 2. µTask deletes the task <br>
 Use case ends.
 
-**Extensions**
+**Extensions**:
 
 1a. The list is empty
 
@@ -448,34 +460,30 @@ Use case ends.
 
 1b. The given index is invalid
 
-> µTask shows an error message <br>
+> 1b1. µTask shows an error message <br>
   Use case ends
 
 
 #### Use case: Mark a task as done
 
-**MSS**
+**MSS**:
 
-1. User requests to mark a specific task as done
-2. µTask shows a list of undone tasks
-3. User selects a task to mark
-4. µTask mark the task as `done`<br>
+1. User supplies a selected index in the undone task list
+2. µTask mark the task as `done`<br>
 Use case ends.
 
-**Extensions**
+**Extensions**:
 
-3a. The given index is invalid
+1a. The given index is invalid
 
-> 3a1. Program shows an error message
+> 1a1. Program shows an error message
 Use case ends
-
-{More to be added}
 
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_121` or higher installed.
 2. Should be able to handle at least 500 tasks without a noticeable sluggishness in performance for typical usage.
-3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+3. Should be able to accomplish most of the tasks faster using commands than using the mouse.
 4. Should come with automated unit tests and open source code.
 5. Should favor DOS style commands over Unix-style commands.
 6. Should still work regardless of internet connection.
@@ -483,26 +491,24 @@ Use case ends
 8. Should support unicode encoding.
 9. Should be lightweight, at most 10 megabyte on system resources.
 10. Should be compact, at most 5 megabyte in save file size.
-{More to be added}
 
 ## Appendix D : Glossary
 
-
-##### Tasks
+##### Task
 > There are **three** types of tasks in µTask. They are Deadline, Event and Float.
 
-> * **Deadlines** are tasks with only end date
-> * **Events** are tasks with both a start date and end date 
-> * **Floats** are tasks with no start date and end date 
+> * **DeadlineTask** are tasks with only end date
+> * **EventTask** are tasks with both a start date and end date
+> * **FloatingTask** are tasks with no start date and end date
 
-##### Deadline
-> Task with only end date is defined as Deadline
+##### DeadlineTask
+> Task with only end date
 
-##### Event
-> Task with both a start date and end date is defined as Event.
+##### EventTask
+> Task with both a start date and end date
 
-##### Float
-> Task with no start date and end date is defined as Float
+##### FloatingTask
+> Task with no start date and end date
 
 ##### Mainstream OS
 
@@ -513,6 +519,8 @@ Use case ends
 
 #### Google Calendar
 
+Author: TAN JIAN HONG, DENVER
+
 Pros:
 
 * Keyboard shortcuts that support product functions
@@ -522,7 +530,7 @@ Pros:
 * Selectable calendar views (based monthly/weekly/daily/agenda)
 * Selectable calendar types (able to show/hide all)
 * Mobile push notifications enabled
-* Ability to cross sync to cloud server 
+* Ability to cross sync to cloud server
 * Supports repetitive events occurring on a regular basis
 * Support “drag and drop” interactions for events
 * Online collaboration made easy with invitation
@@ -534,12 +542,14 @@ Cons:
 * Editing event requires UI interactions
 * No support for task with just deadlines
 * No support for floating tasks
-* No support for event priority 
+* No support for event priority
 * No support for reservation of multiple timeslots
 * No support for event status
 <br><br>
 
 #### Microsoft Outlook
+
+Author: TENG YONG HAO
 
 Pros:
 
@@ -562,12 +572,14 @@ Cons:
 
 #### HiTask
 
+Author: LIU JIAHAO
+
 Pros:
 
 * HiTask allows users to resolve issues through multiple workflows.
 * HiTask has full function task management features from setting task priorities to grouping tasks.
 * HiTask allows users to create custom reports
-* HiTask allows users to  view your tasks, calendar, and team on a single screen. 
+* HiTask allows users to  view your tasks, calendar, and team on a single screen.
 * HiTask allows  users to drag-n-drop to attach files to projects and tasks, share within the team.
 * HiTask allows users to send an email to your HiTask account to create tasks
 * HiTask allows full two-way synchronization with Google Tasks and Google Calendar
