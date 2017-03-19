@@ -98,7 +98,7 @@ Given below is a quick overview of each component.
 > Tip: The `.pptx` files used to create diagrams in this document can be found in the [diagrams](diagrams/) folder.
 > To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called [`MainApp`](../src/main/java/seedu/address/MainApp.java). It is responsible for,
+`Main` has only one class called [`MainApp`](../src/main/java/utask/MainApp.java). It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
@@ -132,15 +132,15 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
 command `delete 1`.
 
-<img src="images\SDforDeletePerson.png" width="800"><br>
+<img src="images\SDforDeleteTask.png" width="800"><br>
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
->Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed,
+>Note how the `Model` simply raises a `UTaskChangedEvent` when the UTask data are changed,
  instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates
 being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time. <br>
-<img src="images\SDforDeletePersonEventHandling.png" width="800"><br>
+<img src="images\SDforDeleteTaskEventHandling.png" width="800"><br>
 _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 > Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
@@ -151,19 +151,19 @@ The sections below give more details of each component.
 
 ### 2.2. UI component
 
-Author: Alice Bee
+Author: Team-uTask
 
 <img src="images/UiClassDiagram.png" width="800"><br>
 _Figure 2.2.1 : Structure of the UI Component_
 
-**API** : [`Ui.java`](../src/main/java/seedu/address/ui/Ui.java)
+**API** : [`Ui.java`](../src/main/java/utask/ui/Ui.java)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`,
 `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
  that are in the `src/main/resources/view` folder.<br>
- For example, the layout of the [`MainWindow`](../src/main/java/seedu/address/ui/MainWindow.java) is specified in
+ For example, the layout of the [`MainWindow`](../src/main/java/utask/ui/MainWindow.java) is specified in
  [`MainWindow.fxml`](../src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
@@ -369,9 +369,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | search tasks using contents from tasks' description | search tasks details without needing to know full description
 `* * *` | user who have multiple devices/Cloud | specify file path for file saving | synchronize saved file across multiple computers with cloud storage
 `* *` | user with many different tasks | group them by tag | find them easily by tag
-`* *` | user | create Tag | 
-`* *` | user | rename Tag | 
-`* *` | user | delete Tag | 
+`* *` | user | create Tag |
+`* *` | user | rename Tag |
+`* *` | user | delete Tag |
 `* *` | user | search entry by Tag / Tag Color | search efficiently by tag
 `* *` | user with many important tasks | set alarms as a reminder to remind me of tasks | get reminders before task happens
 `* *` | user who has to do task on a regular basis | set recurring tasks | avoid creating similar events every now and then
@@ -379,7 +379,7 @@ Priority | As a ... | I want to ... | So that I can...
 `* *` | Google Calendar user | import existing schedules to uTask | get to work without adding duplicate tasks
 `*` | advanced User | change the theme of the program | work with light or dark themes depends on the time of the day
 `*` | user who has limited screen room space | use the application on different screen sizes; in a way it is responsive to different screen size | optimally view important information regardless of screen size
-`*` | advanced User | set a personalized alarm | 
+`*` | advanced User | set a personalized alarm |
 `*` | user | use voice command | create task with a different input (voice)
 
 {More to be added}
@@ -504,8 +504,8 @@ Use case ends
 > There are **three** types of tasks in µTask. They are Deadline, Event and Float.
 
 > * **Deadlines** are tasks with only end date
-> * **Events** are tasks with both a start date and end date 
-> * **Floats** are tasks with no start date and end date 
+> * **Events** are tasks with both a start date and end date
+> * **Floats** are tasks with no start date and end date
 
 ##### Deadline
 > Task with only end date is defined as Deadline
@@ -534,7 +534,7 @@ Pros:
 * Selectable calendar views (based monthly/weekly/daily/agenda)
 * Selectable calendar types (able to show/hide all)
 * Mobile push notifications enabled
-* Ability to cross sync to cloud server 
+* Ability to cross sync to cloud server
 * Supports repetitive events occurring on a regular basis
 * Support “drag and drop” interactions for events
 * Online collaboration made easy with invitation
@@ -546,7 +546,7 @@ Cons:
 * Editing event requires UI interactions
 * No support for task with just deadlines
 * No support for floating tasks
-* No support for event priority 
+* No support for event priority
 * No support for reservation of multiple timeslots
 * No support for event status
 <br><br>
@@ -579,7 +579,7 @@ Pros:
 * HiTask allows users to resolve issues through multiple workflows.
 * HiTask has full function task management features from setting task priorities to grouping tasks.
 * HiTask allows users to create custom reports
-* HiTask allows users to  view your tasks, calendar, and team on a single screen. 
+* HiTask allows users to  view your tasks, calendar, and team on a single screen.
 * HiTask allows  users to drag-n-drop to attach files to projects and tasks, share within the team.
 * HiTask allows users to send an email to your HiTask account to create tasks
 * HiTask allows full two-way synchronization with Google Tasks and Google Calendar
