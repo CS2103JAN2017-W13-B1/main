@@ -519,7 +519,7 @@ Use case ends
 
 #### Google Calendar
 
-Author: Denvor
+Author: TAN JIAN HONG, DENVER
 
 Pros:
 
@@ -549,7 +549,7 @@ Cons:
 
 #### Microsoft Outlook
 
-Author: Teng YongHao
+Author: TENG YONGHAO
 
 Pros:
 
