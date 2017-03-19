@@ -1,5 +1,7 @@
 package utask.staging.ui;
 
+import java.util.logging.Logger;
+
 import com.jfoenix.controls.JFXListView;
 
 import javafx.application.Platform;
@@ -12,11 +14,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.utask.model.task.ReadOnlyTask;
 
 public class TaskListPanel extends StagingUiPart<Region> {
-//    private final Logger logger = LogsCenter.getLogger(StagingUiPart.class);
+    private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
     private static final String FXML = "TaskAnchorPane.fxml";
 
     @FXML
@@ -24,17 +28,18 @@ public class TaskListPanel extends StagingUiPart<Region> {
 
     @FXML
     private Label dueLabel;
+
     @FXML
     private JFXListView<ReadOnlyTask> dueList;
+
     @FXML
     private JFXListView<ReadOnlyTask> subList;
+
     @FXML
     private ScrollPane rootPane;
-    //
+
     @FXML
     private VBox container;
-    // @FXML
-    // private Pane rootPane;
 
     private Pane parent;
 
@@ -42,82 +47,60 @@ public class TaskListPanel extends StagingUiPart<Region> {
      * @param placeholder
      *            The AnchorPane where the BrowserPanel must be inserted
      */
-    public TaskListPanel(Pane placeholder) {
+    public TaskListPanel(Pane placeholder, ObservableList<ReadOnlyTask> tasks) {
         super(FXML);
 
-        assert (placeholder != null);
+        assert (placeholder != null && tasks != null);
 
         this.parent = placeholder;
         populate();
-        //
-        // dueLabel.setVisible(false);
-        // dueList.setVisible(false);
-        //// dueList.setOpacity(0);
-        // dueLabel.setManaged(false);
-        // dueList.setManaged(false);
-    }
-
-    // public void setOverlay() {
-    // //TODO: Detect if search is active then overlay
-    // parent.getChildren().clear();
-    // parent.getChildren().add(rootPane);
-    // }
-    private void setConnections(ListView<ReadOnlyTask> listView,
-            ObservableList<ReadOnlyTask> tasks, ListView<ReadOnlyTask> prevListView) {
-        listView.setItems(tasks);
-        listView.setCellFactory(lw -> new TaskListViewCell(prevListView));
-        setEventHandlerForSelectionChangeEvent(listView);
     }
 
     private void populate() {
-        // Platform.runLater(() -> {
+        Platform.runLater(() -> {
+            ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
+            double height = 130.0;
+            JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
+            setConnections(due, dueTasks, null);
+            due.setMinHeight(height * dueTasks.size());
 
-        ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
-        double height = 130.0;
-        JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
-        setConnections(due, dueTasks, null);
-        due.setMinHeight(height * dueTasks.size());
+            ObservableList<ReadOnlyTask> todayTasks = TypicalTaskBuilder.today();
+            JFXListView<ReadOnlyTask> today = createListControlAndAddToParent("Today", container);
+            setConnections(today, todayTasks, due);
+            today.setMinHeight(height * todayTasks.size());
 
-        ObservableList<ReadOnlyTask> todayTasks = TypicalTaskBuilder.today();
-        JFXListView<ReadOnlyTask> today = createListControlAndAddToParent("Today", container);
-        setConnections(today, todayTasks, due);
-        today.setMinHeight(height * todayTasks.size());
-        //
-        // subList.getItems().add(new TaskListCard().getRoot());
-        //
-//        list.minHeightProperty().bind(Bindings.size(list.getItems()).multiply(height));
-//        list.setMinHeight(list.getItems().size() * height );
-//        System.out.println(list.getItems().size() * height );
-
-        // JFXScrollPane.smoothScrolling((ScrollPane)
-        // rootPane.getChildren().get(0));
-        // tomorrowList.getItems().add(new TaskListCard().getRoot());
-        // tomorrowList.getItems().add(new TaskListCard().getRoot());
-        // tomorrowList.getItems().add(new TaskListCard().getRoot());
-        // tomorrowList.getItems().add(new TaskListCard().getRoot());
-        // tomorrowList.getItems().add(new TaskListCard().getRoot());
-        // tomorrowList.getItems().add(new TaskListCard().getRoot());
-        // tomorrowList.setMinHeight(1000);
-
-        // list.setExpanded(true);
-        //
-        // due.getItems().add(new TaskListCard().getRoot());
-
-        // lstTasks.getSelectionModel().select(-1);
-        // lstTasks.getFocusModel().focus(-1);
-        //
-        // Node group = subList.getGroupnode();
-        //
-        // System.out.println(group == null);
-
-        FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
-        parent.getChildren().add(rootPane);
-        //
-        // });
-
+            FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
+            parent.getChildren().add(rootPane);
+        });
     }
 
-    public void freeResources() {
+    private void setConnections(ListView<ReadOnlyTask> listView,
+        ObservableList<ReadOnlyTask> tasks, ListView<ReadOnlyTask> previousListView) {
+        listView.setItems(tasks);
+        listView.setCellFactory(lw -> new TaskListViewCell(previousListView));
+        setEventHandlerForSelectionChangeEvent(listView);
+    }
+
+//    private void addToPlaceholder(AnchorPane placeHolderPane) {
+//        SplitPane.setResizableWithParent(placeHolderPane, false);
+//        FxViewUtil.applyAnchorBoundaryParameters(getRoot(), 0.0, 0.0, 0.0, 0.0);
+//        placeHolderPane.getChildren().add(getRoot());
+//    }
+    private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
+        listView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in task list panel changed to : '" + newValue + "'");
+                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+    public void scrollTo(ListView<ReadOnlyTask> listView, int index) {
+        Platform.runLater(() -> {
+            listView.scrollTo(index);
+            listView.getSelectionModel().clearAndSelect(index);
+        });
     }
 
     private JFXListView<ReadOnlyTask> createListControlAndAddToParent(String name, Pane parent) {
@@ -132,23 +115,6 @@ public class TaskListPanel extends StagingUiPart<Region> {
         parent.getChildren().add(list);
 
         return list;
-    }
-
-    private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
-        listView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        //logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                       //raise(new PersonPanelSelectionChangedEvent(newValue));
-                    }
-                });
-    }
-
-    public void scrollTo(ListView<ReadOnlyTask> listView, int index) {
-        Platform.runLater(() -> {
-            listView.scrollTo(index);
-            listView.getSelectionModel().clearAndSelect(index);
-        });
     }
 
     class TaskListViewCell extends ListCell<ReadOnlyTask> {

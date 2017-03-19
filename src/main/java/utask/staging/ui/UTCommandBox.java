@@ -2,6 +2,8 @@ package utask.staging.ui;
 
 import java.util.logging.Logger;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -33,6 +35,13 @@ public class UTCommandBox extends StagingUiPart<Region> {
     }
 
     private void addToParent(Pane parent) {
+        commandTextField.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                handleCommandInputChanged();
+            }
+        });
+
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
 //        SplitPane.setResizableWithParent(placeHolderPane, false);
@@ -41,7 +50,6 @@ public class UTCommandBox extends StagingUiPart<Region> {
 //        FxViewUtil.applyAnchorBoundaryParameters(commandTextField, 0.0, 0.0, 0.0, 0.0);
     }
 
-    @FXML
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
