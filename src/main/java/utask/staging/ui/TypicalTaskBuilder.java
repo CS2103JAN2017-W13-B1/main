@@ -49,7 +49,7 @@ public class TypicalTaskBuilder {
         try {
             FloatingTask f = new FloatingTask(new Name("Take Medicine"), new Frequency("-"), new UniqueTagList("daily"));
             tasks.add(f);
-            f = new FloatingTask(new Name("Buy Icecream"), new Frequency("-"), new UniqueTagList(""));
+            f = new FloatingTask(new Name("Buy Icecream"), new Frequency("-"), new UniqueTagList());
             tasks.add(f);
             f = new FloatingTask(new Name("Buy more pens"), new Frequency("-"), new UniqueTagList("Important"));
             tasks.add(f);

@@ -73,7 +73,7 @@ public class TaskListPanel extends StagingUiPart<Region> {
         // Platform.runLater(() -> {
 
         ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
-        double height = 120.0;
+        double height = 130.0;
         JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
         setConnections(due, dueTasks, null);
         due.setMinHeight(height * dueTasks.size());

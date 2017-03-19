@@ -33,7 +33,7 @@ public class StagingUiManager extends ComponentManager implements Ui {
     private Logic logic;
     private Config config;
     private UserPrefs prefs;
-    private StagingMainWindow mainWindow;
+    private UTMainWindow mainWindow;
 
     public StagingUiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
@@ -51,7 +51,7 @@ public class StagingUiManager extends ComponentManager implements Ui {
         //primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
-            mainWindow = new StagingMainWindow(primaryStage, config, prefs, logic);
+            mainWindow = new UTMainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
 
