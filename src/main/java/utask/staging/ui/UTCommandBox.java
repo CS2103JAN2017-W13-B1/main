@@ -5,7 +5,9 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -14,11 +16,12 @@ import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import staging.UiDataDisplayHelper;
 
 public class UTCommandBox extends StagingUiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(UTCommandBox.class);
     private static final String FXML = "UTCommandBox.fxml";
-    public static final String ERROR_STYLE_CLASS = "error";
+    public static final String ERROR_STYLE_CLASS = "error-textfield";
 
     private final Logic logic;
 
@@ -28,6 +31,9 @@ public class UTCommandBox extends StagingUiPart<Region> {
     @FXML
     private TextField commandTextField;
 
+    @FXML
+    private Label lblSuggestion;
+
     public UTCommandBox(Pane parent, Logic logic) {
         super(FXML);
         this.logic = logic;
@@ -35,10 +41,17 @@ public class UTCommandBox extends StagingUiPart<Region> {
     }
 
     private void addToParent(Pane parent) {
+        //TODO: Simpify with lambda expression
         commandTextField.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 handleCommandInputChanged();
+            }
+        });
+
+        commandTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                handleKeyPressed(ke);
             }
         });
 
@@ -68,6 +81,18 @@ public class UTCommandBox extends StagingUiPart<Region> {
         }
     }
 
+    /**
+     * Show full suggested command format on recognised command pattern.
+     */
+    private void handleKeyPressed(KeyEvent ke) {
+        String input = commandTextField.getText();
+
+        if (!"".equals(input)) {
+            input = (input.toLowerCase().split(" "))[0];
+            String suggestion = UiDataDisplayHelper.getInputSuggestionForPreamble(input);
+            lblSuggestion.setText(suggestion);
+        }
+    }
 
     /**
      * Sets the command box style to indicate a successful command.

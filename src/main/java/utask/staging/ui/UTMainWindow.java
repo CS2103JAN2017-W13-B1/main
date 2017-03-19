@@ -1,5 +1,6 @@
 package utask.staging.ui;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,10 +10,12 @@ import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
@@ -47,6 +50,9 @@ public class UTMainWindow extends StagingUiPart<Region> {
     private Stage primaryStage;
     private Logic logic;
     private Config config;
+
+    private ArrayList<ListView> chain;
+    private TodoListPanel todoListPanel;
 
     // Independent Ui parts residing in this Ui container
     @FXML
@@ -236,8 +242,10 @@ public class UTMainWindow extends StagingUiPart<Region> {
     }
 
     void fillInnerParts() {
-        new TaskListPanel(personListPanelPlaceholder, logic.getFilteredPersonList());
-        new TodoListPanel(todoListPanelPlaceholder, logic.getFilteredPersonList());
+        chain = new ArrayList<>();
+        new TaskListPanel(personListPanelPlaceholder, logic.getFilteredPersonList(), chain);
+        todoListPanel = new TodoListPanel(todoListPanelPlaceholder, logic.getFilteredPersonList(), chain);
+
         new UTResultDisplay(resultDisplayPlaceholder);
         new UTStatusBarFooter(statusbarPlaceholder, config.getAddressBookFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
@@ -320,9 +328,9 @@ public class UTMainWindow extends StagingUiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    // public PersonListPanel getPersonListPanel() {
-    // return this.personListPanel;
-    // }
+    public TodoListPanel getTodoListPanel() {
+        return todoListPanel;
+    }
     //
     // void loadPersonPage(ReadOnlyTask person) {
     // browserPanel.loadPersonPage(person);

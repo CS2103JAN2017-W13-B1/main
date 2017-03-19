@@ -1,5 +1,6 @@
 package utask.staging.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.jfoenix.controls.JFXListView;
@@ -47,35 +48,37 @@ public class TaskListPanel extends StagingUiPart<Region> {
      * @param placeholder
      *            The AnchorPane where the BrowserPanel must be inserted
      */
-    public TaskListPanel(Pane placeholder, ObservableList<ReadOnlyTask> tasks) {
+    public TaskListPanel(Pane placeholder, ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> chain) {
         super(FXML);
 
         assert (placeholder != null && tasks != null);
 
         this.parent = placeholder;
-        populate();
+        populate(chain);
     }
 
-    private void populate() {
-        Platform.runLater(() -> {
-            ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
-            double height = 130.0;
-            JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
-            setConnections(due, dueTasks, null);
-            due.setMinHeight(height * dueTasks.size());
+    private void populate(ArrayList<ListView> chain) {
+//        Platform.runLater(() -> {
+        ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
+        double height = 130.0;
+        JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
+        setConnections(due, dueTasks, null);
+        chain.add(due);
+        due.setMinHeight(height * dueTasks.size());
 
-            ObservableList<ReadOnlyTask> todayTasks = TypicalTaskBuilder.today();
-            JFXListView<ReadOnlyTask> today = createListControlAndAddToParent("Today", container);
-            setConnections(today, todayTasks, due);
-            today.setMinHeight(height * todayTasks.size());
+        ObservableList<ReadOnlyTask> todayTasks = TypicalTaskBuilder.today();
+        JFXListView<ReadOnlyTask> today = createListControlAndAddToParent("Today", container);
+        setConnections(today, todayTasks, chain);
+        chain.add(today);
+        today.setMinHeight(height * todayTasks.size());
 
-            FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
-            parent.getChildren().add(rootPane);
-        });
+        FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
+        parent.getChildren().add(rootPane);
+//        });
     }
 
     private void setConnections(ListView<ReadOnlyTask> listView,
-        ObservableList<ReadOnlyTask> tasks, ListView<ReadOnlyTask> previousListView) {
+        ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> previousListView) {
         listView.setItems(tasks);
         listView.setCellFactory(lw -> new TaskListViewCell(previousListView));
         setEventHandlerForSelectionChangeEvent(listView);
@@ -117,13 +120,14 @@ public class TaskListPanel extends StagingUiPart<Region> {
         return list;
     }
 
+    //TODO: EXTRACT THIS
     class TaskListViewCell extends ListCell<ReadOnlyTask> {
 
-        private ListView<ReadOnlyTask> previousList;
+        private ArrayList<ListView> previousLists;
 
-        public TaskListViewCell(ListView<ReadOnlyTask> previousList) {
+        public TaskListViewCell(ArrayList<ListView> previousLists) {
             //Can be null if it is the first list
-            this.previousList = previousList;
+            this.previousLists = previousLists;
         }
 
         @Override
@@ -137,8 +141,13 @@ public class TaskListPanel extends StagingUiPart<Region> {
 
                 int offset = 1;
 
-                if (previousList != null) {
-                    offset = previousList.getItems().size() + 1;
+                //TODO:
+                if (previousLists != null) {
+                    System.out.println("TASK >> " + previousLists.size());
+
+                    for (ListView lw : previousLists) {
+                        offset += lw.getItems().size();
+                    }
                 }
 
                 setGraphic(new TaskListCard(task, getIndex() + offset).getRoot());

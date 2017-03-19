@@ -1,9 +1,11 @@
 package utask.staging.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.jfoenix.controls.JFXListView;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -27,20 +29,20 @@ public class TodoListPanel extends StagingUiPart<Region> {
     @FXML
     private JFXListView<ReadOnlyTask> lstTasks;
 
-    public TodoListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks) {
+    public TodoListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> chain) {
         super(FXML);
 
         assert(parent != null && tasks != null);
-        setConnections(lstTasks, tasks, null);
+        setConnections(lstTasks, tasks, chain);
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 
     private void setConnections(ListView<ReadOnlyTask> listView,
-        ObservableList<ReadOnlyTask> tasks, ListView<ReadOnlyTask> prevListView) {
+        ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> previousListView) {
         listView.setItems(tasks);
-        listView.setCellFactory(lw -> new TaskListViewCell(prevListView));
+        listView.setCellFactory(lw -> new TaskListViewCell(previousListView));
         setEventHandlerForSelectionChangeEvent(listView);
     }
 
@@ -61,14 +63,21 @@ public class TodoListPanel extends StagingUiPart<Region> {
                 });
     }
 
-    //TODO: Extract method
-    class TaskListViewCell extends ListCell<ReadOnlyTask> {
+    public void scrollTo(int index) {
+        Platform.runLater(() -> {
+            lstTasks.scrollTo(index);
+            lstTasks.getSelectionModel().clearAndSelect(index);
+        });
+    }
 
-        private ListView<ReadOnlyTask> previousList;
+  //TODO: EXTRACT THIS
+    public class TaskListViewCell extends ListCell<ReadOnlyTask> {
 
-        public TaskListViewCell(ListView<ReadOnlyTask> previousList) {
+        private ArrayList<ListView> previousLists;
+
+        public TaskListViewCell(ArrayList<ListView> previousLists) {
             //Can be null if it is the first list
-            this.previousList = previousList;
+            this.previousLists = previousLists;
         }
 
         @Override
@@ -81,8 +90,13 @@ public class TodoListPanel extends StagingUiPart<Region> {
             } else {
 
                 int offset = 1;
-                if (previousList != null) {
-                    offset = previousList.getItems().size() + 1;
+
+                //TODO:
+                if (previousLists != null) {
+                    System.out.println("TODO >> " + previousLists.size());
+                    for (ListView lw : previousLists) {
+                        offset += lw.getItems().size();
+                    }
                 }
 
                 setGraphic(new TaskListCard(task, getIndex() + offset).getRoot());

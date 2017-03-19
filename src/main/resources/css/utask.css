@@ -125,3 +125,7 @@
 .list-cell:empty {
     -fx-opacity: 0;
 }
+
+.error-textfield {
+	-jfx-focus-color: #ff1744;
+}
