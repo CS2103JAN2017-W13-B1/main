@@ -9,8 +9,6 @@ import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -25,15 +23,9 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.FloatingTask;
-import seedu.utask.model.task.Frequency;
-import seedu.utask.model.task.Name;
-import seedu.utask.model.task.ReadOnlyTask;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
@@ -80,7 +72,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 
     @FXML
     private AnchorPane todoListPanelPlaceholder;
-    
+
     @FXML
     void txtEventOnKeyReleased(KeyEvent event) {
         String text = txtCommand.getText();
@@ -183,6 +175,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
         scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/jfoenix-fonts.css").toExternalForm());
         scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
         scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
+        scene.getStylesheets().add(StagingMainWindow.class.getResource("/css/utask.css").toExternalForm());
 
         // search = new SearchResultsAnchorPane(topPlaceholder);
 
@@ -207,7 +200,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
-     * 
+     *
      * @param keyCombination
      *            the KeyCombination value of the accelerator
      */
@@ -243,10 +236,10 @@ public class StagingMainWindow extends StagingUiPart<Region> {
     // }
 
     void fillInnerParts() {
-                
+
         task = new TaskListPanel(personListPanelPlaceholder);
         new TodoListPanel(todoListPanelPlaceholder);
-        
+
         // browserPanel = new BrowserPanel(browserPlaceholder);
         // personListPanel = new PersonListPanel(getPersonListPlaceholder(),
         // logic.getFilteredPersonList());
@@ -282,7 +275,7 @@ public class StagingMainWindow extends StagingUiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
-     * 
+     *
      * @param iconSource
      *            e.g. {@code "/images/help_icon.png"}
      */

@@ -9,7 +9,7 @@
 
 <HBox maxHeight="120.0" minHeight="120.0" minWidth="260.0" prefHeight="120.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox HBox.hgrow="ALWAYS">
+      <VBox HBox.hgrow="NEVER">
          <HBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </HBox.margin>
@@ -44,7 +44,8 @@
             </Label>
             <HBox fx:id="tagPane" prefHeight="100.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="Important" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+               	<!--
+                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="I" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -52,60 +53,7 @@
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </padding>
                   </Label>
-                  
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: BLUE;" text="Urgent" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                     </padding>
-                  </Label>
-                  
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: BLUE;" text="Urgent" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                     </padding>
-                  </Label>
-                  
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: BLUE;" text="Urgent" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                     </padding>
-                  </Label>
-                  
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: BLUE;" text="Urgent" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                     </padding>
-                  </Label>
-                  
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: BLUE;" text="Urgent" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                     </padding>
-                  </Label>
-                  
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: BLUE;" text="Urgent" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                     </padding>
-                  </Label>
+                  -->
                </children>
             </HBox>
          </children>
