@@ -410,7 +410,7 @@ public class LogicManagerTest {
      */
     class TestDataHelper {
 
-        Task simpleTask() throws Exception {
+        private Task simpleTask() throws Exception {
             Name name = new Name("My debug task");
             Deadline deadline = new Deadline("010117");
             Timestamp timestamp = new Timestamp("1830 to 2030");
@@ -429,14 +429,14 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the task data field values
          */
-        Task generateTask(int seed) throws Exception {
+        private Task generateTask(int seed) throws Exception {
             return new EventTask(new Name("Task " + seed), new Deadline("010117"),
                     new Timestamp("0000 to 2359"), new Frequency("Every " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1))));
         }
 
         /** Generates the correct add command based on the task given */
-        String generateCreateCommand(Task p) {
+        private String generateCreateCommand(Task p) {
             StringBuffer cmd = new StringBuffer();
 
             cmd.append("create ");
@@ -457,7 +457,7 @@ public class LogicManagerTest {
         /**
          * Generates an UTask with auto-generated persons.
          */
-        UTask generateAddressBook(int numGenerated) throws Exception {
+        private UTask generateAddressBook(int numGenerated) throws Exception {
             UTask uTask = new UTask();
             addToUTask(uTask, numGenerated);
             return uTask;
@@ -466,7 +466,7 @@ public class LogicManagerTest {
         /**
          * Generates an UTask based on the list of Tasks given.
          */
-        UTask generateUTask(List<Task> tasks) throws Exception {
+        private UTask generateUTask(List<Task> tasks) throws Exception {
             UTask uTask = new UTask();
             addToUTask(uTask, tasks);
             return uTask;
@@ -477,14 +477,14 @@ public class LogicManagerTest {
          * @param uTask
          *            The UTask to which the Task will be added
          */
-        void addToUTask(UTask uTask, int numGenerated) throws Exception {
+        private void addToUTask(UTask uTask, int numGenerated) throws Exception {
             addToUTask(uTask, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given UTask
          */
-        void addToUTask(UTask uTask, List<Task> tasksToAdd) throws Exception {
+        private void addToUTask(UTask uTask, List<Task> tasksToAdd) throws Exception {
             for (Task p : tasksToAdd) {
                 uTask.addTask(p);
             }
@@ -495,14 +495,14 @@ public class LogicManagerTest {
          * @param model
          *            The model to which the Persons will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception {
+        private void addToModel(Model model, int numGenerated) throws Exception {
             addToModel(model, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Persons to the given model
          */
-        void addToModel(Model model, List<Task> personsToAdd) throws Exception {
+        private void addToModel(Model model, List<Task> personsToAdd) throws Exception {
             for (Task p : personsToAdd) {
                 model.addTask(p);
             }
@@ -511,7 +511,7 @@ public class LogicManagerTest {
         /**
          * Generates a list of Persons based on the flags.
          */
-        List<Task> generateTaskList(int numGenerated) throws Exception {
+        private List<Task> generateTaskList(int numGenerated) throws Exception {
             List<Task> persons = new ArrayList<>();
             for (int i = 1; i <= numGenerated; i++) {
                 persons.add(generateTask(i));
@@ -519,7 +519,7 @@ public class LogicManagerTest {
             return persons;
         }
 
-        List<Task> generateTaskList(Task... tasks) {
+        private List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
 
@@ -527,7 +527,7 @@ public class LogicManagerTest {
          * Generates a Task object with given name. Other fields will have
          * some dummy values.
          */
-        Task generateTaskWithName(String name) throws Exception {
+        private Task generateTaskWithName(String name) throws Exception {
             return new EventTask(new Name(name), new Deadline("010117"), new Timestamp("0000 to 1300"),
                     new Frequency("-"), new UniqueTagList(new Tag("tag")));
         }
