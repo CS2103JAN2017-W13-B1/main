@@ -549,7 +549,7 @@ Cons:
 
 #### Microsoft Outlook
 
-Author: TENG YONGHAO
+Author: TENG YONG HAO
 
 Pros:
 
