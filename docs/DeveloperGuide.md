@@ -132,7 +132,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
 command `delete 1`.
 
-<img src="images\SDforDeleteTask.png" width="800"><br>
+<img src="images/SDforDeleteTask.png" width="800"><br>
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 >Note how the `Model` simply raises a `UTaskChangedEvent` when the UTask data are changed,
@@ -140,7 +140,7 @@ _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates
 being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time. <br>
-<img src="images\SDforDeleteTaskEventHandling.png" width="800"><br>
+<img src="images/SDforDeleteTaskEventHandling.png" width="800"><br>
 _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 > Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
@@ -379,7 +379,7 @@ Priority | As a ... | I want to ... | So that I can...
 `* *` | Google Calendar user | import existing schedules to uTask | get to work without adding duplicate tasks
 `*` | advanced user | change the theme of the program | work with light or dark themes according to the time of the day
 `*` | user who has limited screen room space | use the application on different screen sizes; in a way it is responsive to different screen size | optimally view important information regardless of screen size
-`*` | user | use voice command | create task with a different input (voice)
+`*` | user | use voice commands | create task with a different input (voice)
 
 {More to be added}
 
@@ -389,19 +389,19 @@ Priority | As a ... | I want to ... | So that I can...
 
 #### Use case: Create Task
 
-**MSS**
+**MSS**:
 
 1. User creates new task with necessary inputs
 2. µTask creates the task with given inputs <br>
 Use case ends.
 
-**Extensions**
+**Extensions**:
 
 2a. The start time or end time given is invalid
 
-> 2a1. µTask shows an error message and prompt for re-enters of required information
-> 2a2. User re-enters the required information
-Use case resumes at step 2
+> 2a1. µTask shows an error message and prompt for re-enters of required information <br>
+> 2a2. User re-enters the required information <br>
+> Use case resumes at step 2
 
 
 #### Use case: List undone tasks
@@ -409,7 +409,7 @@ Use case resumes at step 2
 **MSS**:
 
 1. User requests to list uncompleted tasks
-2. µTask lists uncompleted tasks in chronological order. <br>
+2. µTask lists uncompleted tasks in chronological order <br>
 Use case ends
 
 
@@ -417,8 +417,8 @@ Use case ends
 
 1a. The list is empty due to no undone task
 
-1a1. µTask notifies the user that no task is undone.
-Use case ends
+> 1a1. µTask notifies the user that no task is undone. <br>
+> Use case ends
 
 
 #### Use case: Rescheduling a task
@@ -429,18 +429,19 @@ Use case ends
 2. µTask reschedules the selected task<br>
 Use case ends.
 
-**Extensions**
+**Extensions**:
+
 1a. The list is empty
 
 > Use case ends
 
 1b. The given index is invalid
 
-> µTask shows an error message <br>
+> 1b1. µTask shows an error message <br>
 > Use case ends
 
 1c. The given datetime is invalid
-> µTask shows an error message <br>
+> 1c1. µTask shows an error message <br>
   Use case ends
 
 #### Use case: Delete Task
@@ -451,7 +452,7 @@ Use case ends.
 2. µTask deletes the task <br>
 Use case ends.
 
-**Extensions**
+**Extensions**:
 
 1a. The list is empty
 
@@ -459,34 +460,30 @@ Use case ends.
 
 1b. The given index is invalid
 
-> µTask shows an error message <br>
+> 1b1. µTask shows an error message <br>
   Use case ends
 
 
 #### Use case: Mark a task as done
 
-**MSS**
+**MSS**:
 
-1. User requests to mark a specific task as done
-2. µTask shows a list of undone tasks
-3. User selects a task to mark
-4. µTask mark the task as `done`<br>
+1. User supplies a selected index in the undone task list
+2. µTask mark the task as `done`<br>
 Use case ends.
 
-**Extensions**
+**Extensions**:
 
-3a. The given index is invalid
+1a. The given index is invalid
 
-> 3a1. Program shows an error message
+> 1a1. Program shows an error message
 Use case ends
-
-{More to be added}
 
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_121` or higher installed.
 2. Should be able to handle at least 500 tasks without a noticeable sluggishness in performance for typical usage.
-3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+3. Should be able to accomplish most of the tasks faster using commands than using the mouse.
 4. Should come with automated unit tests and open source code.
 5. Should favor DOS style commands over Unix-style commands.
 6. Should still work regardless of internet connection.
@@ -494,7 +491,6 @@ Use case ends
 8. Should support unicode encoding.
 9. Should be lightweight, at most 10 megabyte on system resources.
 10. Should be compact, at most 5 megabyte in save file size.
-{More to be added}
 
 ## Appendix D : Glossary
 
