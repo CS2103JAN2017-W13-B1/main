@@ -494,22 +494,21 @@ Use case ends
 
 ## Appendix D : Glossary
 
-
-##### Tasks
+##### Task
 > There are **three** types of tasks in µTask. They are Deadline, Event and Float.
 
-> * **Deadlines** are tasks with only end date
-> * **Events** are tasks with both a start date and end date
-> * **Floats** are tasks with no start date and end date
+> * **DeadlineTask** are tasks with only end date
+> * **EventTask** are tasks with both a start date and end date
+> * **FloatingTask** are tasks with no start date and end date
 
-##### Deadline
-> Task with only end date is defined as Deadline
+##### DeadlineTask
+> Task with only end date
 
-##### Event
-> Task with both a start date and end date is defined as Event.
+##### EventTask
+> Task with both a start date and end date
 
-##### Float
-> Task with no start date and end date is defined as Float
+##### FloatingTask
+> Task with no start date and end date
 
 ##### Mainstream OS
 
@@ -519,6 +518,8 @@ Use case ends
 ## Appendix E : Product Survey
 
 #### Google Calendar
+
+Author: Denvor
 
 Pros:
 
@@ -548,6 +549,8 @@ Cons:
 
 #### Microsoft Outlook
 
+Author: Teng YongHao
+
 Pros:
 
 * Able to create task from email
@@ -568,6 +571,8 @@ Cons:
 <br><br>
 
 #### HiTask
+
+Author: LIU JIAHAO
 
 Pros:
 
