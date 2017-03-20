@@ -44,6 +44,4 @@ public class UTResultDisplay extends StagingUiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         displayed.setValue(event.message);
     }
-
 }
-

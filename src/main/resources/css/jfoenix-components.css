@@ -134,45 +134,6 @@
     -fx-background-radius: 2em;
 }
 
-/*
-.jfx-list-cell-container{
--fx-alignment: center-left;
-}
-.jfx-list-cell-container > .label{
--fx-text-fill: BLACK ;
-}
-
-
-.jfx-list-cell:odd:selected > .jfx-rippler > StackPane , .jfx-list-cell:even:selected > .jfx-rippler > StackPane{ 
--fx-background-color: rgba(0,0,255,0.2);
-}
-
-.jfx-list-cell {
--fx-background-insets: 0.0 ; 
--fx-text-fill: BLACK; 
-}
-.jfx-list-cell:odd, .jfx-list-cell:even {
--fx-background-color:  WHITE;
-}
-.jfx-list-cell:filled:hover { 
--fx-text-fill: black;
-}
-
-.jfx-list-cell .jfx-rippler{
--jfx-rippler-fill:BLUE;
-}
-*/
-
-/*.jfx-list-view {
--fx-background-insets: 0;
--jfx-cell-horizontal-margin: 0.0;
--jfx-cell-vertical-margin: 5.0;
--jfx-vertical-gap : 10;
--jfx-expanded : true;   
--fx-pref-width:200;
-}
-*/
-
 .jfx-toggle-button {
     -jfx-toggle-color: RED;
 }
@@ -206,12 +167,6 @@
     -fx-text-fill: #ff4081;
 }
 
-/*.jfx-list-cell-content-container {
--fx-alignment: center-left;
-}
-.jfx-list-cell-container .label {
--fx-text-fill: BLACK ;
-}*/
 .combo-box-popup .list-view .jfx-list-cell:odd:selected .jfx-list-cell-container, .combo-box-popup .list-view .jfx-list-cell:even:selected .jfx-list-cell-container {
     -fx-background-color: rgba(0.0, 0.0, 255.0, 0.2);
 }
@@ -239,7 +194,6 @@
 /*
  * TREE TABLE CSS
  */
-
 .tree-table-view {
     -fx-tree-table-color: rgba(255, 0, 0, 0.2);
     -fx-tree-table-rippler-color: rgba(255, 0, 0, 0.4);
@@ -325,3 +279,39 @@
 .tree-table-view .menu-item .label {
     -fx-padding: 5 0 5 0;
 }
+/*.jfx-list-cell-container {
+    -fx-alignment: center-left;
+}
+.jfx-list-cell-container > .label {
+    -fx-text-fill: BLACK;
+}
+.jfx-list-cell:odd:selected > .jfx-rippler > StackPane, .jfx-list-cell:even:selected > .jfx-rippler > StackPane {
+    -fx-background-color: rgba(0, 0, 255, 0.2);
+}
+.jfx-list-cell {
+    -fx-background-insets: 0.0;
+    -fx-text-fill: BLACK;
+}
+.jfx-list-cell:odd, .jfx-list-cell:even {
+    -fx-background-color: WHITE;
+}
+.jfx-list-cell:filled:hover {
+    -fx-text-fill: black;
+}
+.jfx-list-cell .jfx-rippler {
+    -jfx-rippler-fill: BLUE;
+}
+.jfx-list-view {
+    -fx-background-insets: 0;
+    -jfx-cell-horizontal-margin: 0.0;
+    -jfx-cell-vertical-margin: 5.0;
+    -jfx-vertical-gap: 10;
+    -jfx-expanded: true;
+    -fx-pref-width: 200;
+}
+.jfx-list-cell-content-container {
+    -fx-alignment: center-left;
+}
+.jfx-list-cell-container .label {
+    -fx-text-fill: BLACK;
+}*/

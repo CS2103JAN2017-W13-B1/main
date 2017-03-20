@@ -1,5 +1,5 @@
 /*
- *  Apply google Roboto font to all UI components 
+ * Apply google Roboto font to all UI components
  */
 .root {
     -fx-font-family: "Roboto";
