@@ -21,6 +21,7 @@ import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
+import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 import utask.staging.ui.events.SearchRequestEvent;
 
 public class UTSearchTaskOverlay extends StagingUiPart<Region> {
@@ -28,6 +29,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(UTSearchTaskOverlay.class);
     private static final String FXML = "UTSearchTaskOverlay.fxml";
 
+    private static final int SEARCHPANE_HIDDEN_Y_POS = -3000;
     private final TranslateTransition openTransitionEffect = new TranslateTransition(new Duration(350), getRoot());
     private final TranslateTransition closeTransitionEffect = new TranslateTransition(new Duration(350), getRoot());
 
@@ -47,6 +49,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     private ObservableList<ReadOnlySearchTask> masterData;
 
     private Pane parent;
+    private boolean isSearchOverlayShown = false;
 
 //    private static UTSearchTaskOverlay instance;
 
@@ -88,18 +91,13 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
      * Initializes the table columns and sets up sorting and filtering.
      */
     private void initialize() {
-        rootPane.setTranslateY(-3000);
+        rootPane.setTranslateY(SEARCHPANE_HIDDEN_Y_POS);
         // 0. Initialize the columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
         indexColumn.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(personTable.getItems().indexOf(
                                         cellData.getValue()) + 1));
         indexColumn.setSortable(false);
-
-//        personTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-//        firstNameColumn.setMaxWidth(1f * Integer.MAX_VALUE * 15); // 15% width
-//        lastNameColumn.setMaxWidth(1f * Integer.MAX_VALUE * 50); // 50% width
-//        indexColumn.setMaxWidth(1f * Integer.MAX_VALUE * 25); // 25% width
 
         // 1. Wrap the ObservableList in a FilteredList (initially display all data).
         filteredData = new FilteredList<>(masterData, p -> true);
@@ -138,9 +136,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     }
 
     public void sort(TableColumn<ReadOnlySearchTask, String> column) {
-        personTable.getSortOrder().clear();
-        firstNameColumn.setSortType(SortType.ASCENDING);
-        personTable.getSortOrder().addAll(column);
+        sort(column, SortType.ASCENDING);
     }
 
     public void sort(TableColumn<ReadOnlySearchTask, String> column, SortType sortOrder) {
@@ -173,24 +169,38 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 
     public void delete() {
         ReadOnlySearchTask remove = personTable.getSelectionModel().getSelectedItem();
-        masterData.remove(remove);
+
+        if (remove != null) {
+            masterData.remove(remove);
+        }
     }
 
-    public void open() {
-        openTransitionEffect.setToY(0);
-        openTransitionEffect.play();
+    public void openIfSearchIsNotShowing() {
+        if (!isSearchOverlayShown) {
+            openTransitionEffect.setToY(0);
+            openTransitionEffect.play();
+            isSearchOverlayShown = true;
+        }
     }
 
-    public void close() {
-        closeTransitionEffect.setToY(-(rootPane.getHeight()));
-        closeTransitionEffect.play();
+    public void closeIfSearchIsShowing() {
+        if (isSearchOverlayShown) {
+            closeTransitionEffect.setToY(SEARCHPANE_HIDDEN_Y_POS);
+            closeTransitionEffect.play();
+            isSearchOverlayShown = false;
+        }
     }
 
     @Subscribe
     private void handleSearchRequestEvent(SearchRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        System.out.println(event.searchKeywords.trim());
         filterResultsByKeywords(filteredData, event.searchKeywords.trim());
-        open();
+        openIfSearchIsNotShowing();
+    }
+
+    @Subscribe
+    private void handleKeyboardEscapeKeyPressedEvent(KeyboardEscapeKeyPressedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        closeIfSearchIsShowing();
     }
 }

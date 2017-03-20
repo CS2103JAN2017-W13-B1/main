@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -16,6 +17,7 @@ import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 
 public class UTCommandBox extends StagingUiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(UTCommandBox.class);
@@ -87,6 +89,11 @@ public class UTCommandBox extends StagingUiPart<Region> {
      * Show full suggested command format on recognised command pattern.
      */
     private void handleKeyPressed(KeyEvent ke) {
+        if (ke.getCode() == KeyCode.ESCAPE) {
+            raise(new KeyboardEscapeKeyPressedEvent());
+            return;
+        }
+
         //TODO: Upgrade to binary tree
         String input = commandTextField.getText();
 
