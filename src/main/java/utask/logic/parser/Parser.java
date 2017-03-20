@@ -17,6 +17,7 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
+import utask.staging.ui.stubs.SearchCommand;
 
 /**
  * Parses user input.
@@ -70,6 +71,9 @@ public class Parser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case SearchCommand.COMMAND_WORD:
+            return new SearchCommand(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
