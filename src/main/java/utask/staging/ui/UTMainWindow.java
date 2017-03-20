@@ -1,12 +1,9 @@
 package utask.staging.ui;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
@@ -16,13 +13,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -69,10 +65,13 @@ public class UTMainWindow extends StagingUiPart<Region> {
     private JFXTextArea txtAreaResults;
 
     @FXML
-    private SplitPane topPlaceholder;
+    private Pane topPlaceholder;
 
     @FXML
     private VBox personList;
+
+    @FXML
+    private VBox rootPane;
 
     @FXML
     private AnchorPane personListPanelPlaceholder;
@@ -88,80 +87,6 @@ public class UTMainWindow extends StagingUiPart<Region> {
 
     @FXML
     private AnchorPane statusbarPlaceholder;
-
-    @FXML
-    void txtEventOnKeyReleased(KeyEvent event) {
-        String text = txtCommand.getText();
-
-        if (!"".equals(text)) {
-            String command = (text.toLowerCase().split(" "))[0];
-            switch (command) {
-            case "add":
-                lblSuggestion.setText("add NAME ... .. . . . .");
-                break;
-            case "edit":
-                lblSuggestion.setText("edit INDEX . . .. . . . ");
-                break;
-            }
-        }
-        // bar.close();
-        // bar.enqueue(new SnackbarEvent(keywords));
-        // HBox.setHgrow(bar, Priority.ALWAYS);;
-        // bar.setMinWidth(hBoxSuggestion.getWidth());
-        // bar.enqueue(new SnackbarEvent("Notification Msg"))
-    }
-
-    private String previousCommand = "";
-    private static final Pattern searchRegex = Pattern.compile("search\\s(?<txt>\\S+)");
-
-    @FXML
-    void txtEventOnKeyPressed(KeyEvent event) {
-        if (event.getCode() == KeyCode.UP) {
-            txtCommand.setText(previousCommand);
-            lblSuggestion.setText("");
-        } else if (event.getCode() == KeyCode.DOWN) {
-            txtCommand.setText(lblSuggestion.getText());
-            lblSuggestion.setText("");
-        } else if (event.getCode() == KeyCode.ENTER) {
-            String text = txtCommand.getText();
-
-            final Matcher matcher = searchRegex.matcher(text);
-
-            if (matcher.matches()) {
-                // search.fliter(matcher.group("txt").toLowerCase());
-                // search.overlay();
-                stask.play();
-            }
-            // } else if (search.isSearchActive() &&
-            // text.matches("^select\\s\\d+$")) {
-            // String params = (text.toLowerCase().split(" "))[1];
-            // int index = Integer.parseInt(params);
-            // ReadOnlyTask task = search.selectIndex(index);
-            // txtAreaResults.appendText("GOTTEN >> " + task.name + " " +
-            // task.date + " " + task.tags);
-            // } else if (text.matches("^sort\\s\\d+$")) {
-            // String params = (text.toLowerCase().split(" "))[1];
-            // int index = Integer.parseInt(params);
-            // search.sort(index);
-            // }
-
-            txtAreaResults.appendText(txtCommand.getText() + "\n");
-            previousCommand = txtCommand.getText();
-            txtCommand.setText("");
-            lblSuggestion.setText("");
-        } else if (event.getCode() == KeyCode.ESCAPE) {
-            // if (search.handleEscape()) {
-            // task.setOverlay();
-            // }
-            stask.done();
-        }
-    }
-
-    JFXSnackbar bar;
-
-    private TaskListPanel task;
-    private SearchResultsAnchorPane search;
-    private SearchTaskComponentController stask;
 
     public UTMainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -194,9 +119,6 @@ public class UTMainWindow extends StagingUiPart<Region> {
         this.primaryStage.setScene(scene);
 
         setAccelerators();
-
-        // search = new SearchResultsAnchorPane(topPlaceholder);
-        // stask = new SearchTaskComponentController(topPlaceholder);
     }
 
     public Stage getPrimaryStage() {
@@ -231,7 +153,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
          */
-        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        rootPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
@@ -247,6 +169,9 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTResultDisplay(resultDisplayPlaceholder);
         new UTStatusBarFooter(statusbarPlaceholder, config.getAddressBookFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
+
+
+        new UTSearchTaskOverlay(topPlaceholder);
     }
 
     // private AnchorPane getCommandBoxPlaceholder() {
