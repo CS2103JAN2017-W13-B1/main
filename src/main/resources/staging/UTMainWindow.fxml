@@ -26,7 +26,7 @@
 					style="-fx-background-radius:5em" text="Help" />
 			</rightItems>
 		</JFXToolbar>
-		<StackPane fx:id="topPlaceholder">
+		<StackPane fx:id="topPlaceholder" VBox.vgrow="ALWAYS">
 			<children>
 				<SplitPane id="splitPane" dividerPositions="0.8"
 					VBox.vgrow="ALWAYS">

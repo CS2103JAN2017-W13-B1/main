@@ -88,13 +88,18 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
      * Initializes the table columns and sets up sorting and filtering.
      */
     private void initialize() {
-        rootPane.setTranslateY(-500);
+        rootPane.setTranslateY(-3000);
         // 0. Initialize the columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
         indexColumn.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(personTable.getItems().indexOf(
                                         cellData.getValue()) + 1));
         indexColumn.setSortable(false);
+
+//        personTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//        firstNameColumn.setMaxWidth(1f * Integer.MAX_VALUE * 15); // 15% width
+//        lastNameColumn.setMaxWidth(1f * Integer.MAX_VALUE * 50); // 50% width
+//        indexColumn.setMaxWidth(1f * Integer.MAX_VALUE * 25); // 25% width
 
         // 1. Wrap the ObservableList in a FilteredList (initially display all data).
         filteredData = new FilteredList<>(masterData, p -> true);
@@ -128,6 +133,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
         // 5. Add sorted (and filtered) data to the table.
         personTable.setItems(sortedData);
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
+        FxViewUtil.applyAnchorBoundaryParameters(personTable, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 
