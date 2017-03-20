@@ -92,12 +92,12 @@ public class TodoListPanel extends StagingUiPart<Region> {
                 int offset = 1;
 
                 //TODO:
-                if (previousLists != null) {
-                    System.out.println("TODO >> " + previousLists.size());
-                    for (ListView lw : previousLists) {
-                        offset += lw.getItems().size();
-                    }
-                }
+//                if (previousLists != null) {
+//                    System.out.println("TODO >> " + previousLists.size());
+//                    for (ListView lw : previousLists) {
+//                        offset += lw.getItems().size();
+//                    }
+//                }
 
                 setGraphic(new TaskListCard(task, getIndex() + offset).getRoot());
             }

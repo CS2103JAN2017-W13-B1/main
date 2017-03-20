@@ -38,22 +38,22 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     @FXML
     private TextField filterField;
     @FXML
-    private TableView<ReadOnlySearchTask> personTable;
+    private TableView<ReadOnlyObservableTask> personTable;
     @FXML
-    private TableColumn<ReadOnlySearchTask, Number> indexColumn;
+    private TableColumn<ReadOnlyObservableTask, Number> indexColumn;
     @FXML
-    private TableColumn<ReadOnlySearchTask, String> firstNameColumn;
+    private TableColumn<ReadOnlyObservableTask, String> firstNameColumn;
     @FXML
-    private TableColumn<ReadOnlySearchTask, String> lastNameColumn;
+    private TableColumn<ReadOnlyObservableTask, String> lastNameColumn;
 
-    private ObservableList<ReadOnlySearchTask> masterData;
+    private ObservableList<ReadOnlyObservableTask> masterData;
 
     private Pane parent;
     private boolean isSearchOverlayShown = false;
 
 //    private static UTSearchTaskOverlay instance;
 
-    private FilteredList<ReadOnlySearchTask> filteredData;
+    private FilteredList<ReadOnlyObservableTask> filteredData;
 
     public UTSearchTaskOverlay(Pane parent) {
         super(FXML);
@@ -66,15 +66,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 
     private void populateData() {
         masterData = FXCollections.observableArrayList();
-        masterData.add(new ReadOnlySearchTask("Hans", "Muster"));
-        masterData.add(new ReadOnlySearchTask("Ruth", "Mueller"));
-        masterData.add(new ReadOnlySearchTask("Heinz", "Kurz"));
-        masterData.add(new ReadOnlySearchTask("Cornelia", "Meier"));
-        masterData.add(new ReadOnlySearchTask("Werner", "Meyer"));
-        masterData.add(new ReadOnlySearchTask("Lydia", "Kunz"));
-        masterData.add(new ReadOnlySearchTask("Anna", "Best"));
-        masterData.add(new ReadOnlySearchTask("Stefan", "Meier"));
-        masterData.add(new ReadOnlySearchTask("Martin", "Mueller"));
+        masterData.add(new ReadOnlyObservableTask("Hans", "Muster"));
     }
 
 //    public static UTSearchTaskOverlay getInstance(Pane parent) {
@@ -85,67 +77,43 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 //        return instance;
 //    }
 
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     * Initializes the table columns and sets up sorting and filtering.
-     */
     private void initialize() {
         rootPane.setTranslateY(SEARCHPANE_HIDDEN_Y_POS);
-        // 0. Initialize the columns.
+
+        //Initialize the columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
         indexColumn.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(personTable.getItems().indexOf(
                                         cellData.getValue()) + 1));
         indexColumn.setSortable(false);
 
-        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+        //Wrap the ObservableList in a FilteredList (initially display all data).
         filteredData = new FilteredList<>(masterData, p -> true);
 
-        // 2. Set the filter Predicate whenever the filter changes.
-//        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
-//            filteredData.setPredicate(task -> {
-//                // If filter text is empty, display all persons.
-//                if (newValue == null || newValue.isEmpty()) {
-//                    return true;
-//                }
-//
-//                // Compare first name and last name of every person with filter text.
-//                String lowerCaseFilter = newValue.toLowerCase();
-//
-//                if (task.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
-//                    return true; // Filter matches first name.
-//                } else if (task.getLastName().toLowerCase().contains(lowerCaseFilter)) {
-//                    return true; // Filter matches last name.
-//                }
-//                return false; // Does not match.
-//            });
-//        });
+        //Wrap the FilteredList in a SortedList.
+        SortedList<ReadOnlyObservableTask> sortedData = new SortedList<>(filteredData);
 
-        // 3. Wrap the FilteredList in a SortedList.
-        SortedList<ReadOnlySearchTask> sortedData = new SortedList<>(filteredData);
-
-        // 4. Bind the SortedList comparator to the TableView comparator.
+        //Bind the SortedList comparator to the TableView comparator.
         sortedData.comparatorProperty().bind(personTable.comparatorProperty());
 
-        // 5. Add sorted (and filtered) data to the table.
+        //Add sorted (and filtered) data to the table.
         personTable.setItems(sortedData);
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         FxViewUtil.applyAnchorBoundaryParameters(personTable, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 
-    public void sort(TableColumn<ReadOnlySearchTask, String> column) {
+    public void sort(TableColumn<ReadOnlyObservableTask, String> column) {
         sort(column, SortType.ASCENDING);
     }
 
-    public void sort(TableColumn<ReadOnlySearchTask, String> column, SortType sortOrder) {
+    public void sort(TableColumn<ReadOnlyObservableTask, String> column, SortType sortOrder) {
         personTable.getSortOrder().clear();
         firstNameColumn.setSortType(sortOrder);
         personTable.getSortOrder().addAll(column);
     }
 
-    public void filterResultsByKeywords(FilteredList<ReadOnlySearchTask> filteredData, String keywords) {
+    public void filterResultsByKeywords(FilteredList<ReadOnlyObservableTask> filteredData, String keywords) {
         filteredData.setPredicate(task -> {
             // If filter text is empty, display all persons.
             if (keywords == null || keywords.isEmpty()) {
@@ -168,7 +136,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     }
 
     public void delete() {
-        ReadOnlySearchTask remove = personTable.getSelectionModel().getSelectedItem();
+        ReadOnlyObservableTask remove = personTable.getSelectionModel().getSelectedItem();
 
         if (remove != null) {
             masterData.remove(remove);
