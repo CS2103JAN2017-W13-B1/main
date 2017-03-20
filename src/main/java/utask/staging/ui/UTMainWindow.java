@@ -22,13 +22,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import seedu.address.commons.core.Config;
-import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.util.FxViewUtil;
-import seedu.address.logic.Logic;
-import seedu.address.model.UserPrefs;
-import seedu.address.ui.HelpWindow;
+import utask.commons.core.Config;
+import utask.commons.core.GuiSettings;
+import utask.commons.events.ui.ExitAppRequestEvent;
+import utask.commons.util.FxViewUtil;
+import utask.logic.Logic;
+import utask.model.UserPrefs;
+import utask.ui.HelpWindow;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
@@ -163,11 +163,11 @@ public class UTMainWindow extends StagingUiPart<Region> {
 
     void fillInnerParts() {
         chain = new ArrayList<>();
-        new TaskListPanel(personListPanelPlaceholder, logic.getFilteredPersonList(), chain);
-        todoListPanel = new TodoListPanel(todoListPanelPlaceholder, logic.getFilteredPersonList(), chain);
+        new TaskListPanel(personListPanelPlaceholder, logic.getFilteredTaskList(), chain);
+        todoListPanel = new TodoListPanel(todoListPanelPlaceholder, logic.getFilteredTaskList(), chain);
 
         new UTResultDisplay(resultDisplayPlaceholder);
-        new UTStatusBarFooter(statusbarPlaceholder, config.getAddressBookFilePath());
+        new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
 
 

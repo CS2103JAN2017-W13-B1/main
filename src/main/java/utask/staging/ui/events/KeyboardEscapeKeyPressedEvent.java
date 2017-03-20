@@ -1,6 +1,6 @@
 package utask.staging.ui.events;
 
-import seedu.address.commons.events.BaseEvent;
+import utask.commons.events.BaseEvent;
 
 public class KeyboardEscapeKeyPressedEvent extends BaseEvent {
     @Override

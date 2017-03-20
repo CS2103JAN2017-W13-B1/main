@@ -2,16 +2,16 @@ package utask.staging.ui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.Deadline;
-import seedu.utask.model.task.DeadlineTask;
-import seedu.utask.model.task.EventTask;
-import seedu.utask.model.task.FloatingTask;
-import seedu.utask.model.task.Frequency;
-import seedu.utask.model.task.Name;
-import seedu.utask.model.task.ReadOnlyTask;
-import seedu.utask.model.task.Timestamp;
+import utask.commons.exceptions.IllegalValueException;
+import utask.model.tag.UniqueTagList;
+import utask.model.task.Deadline;
+import utask.model.task.DeadlineTask;
+import utask.model.task.EventTask;
+import utask.model.task.FloatingTask;
+import utask.model.task.Frequency;
+import utask.model.task.Name;
+import utask.model.task.ReadOnlyTask;
+import utask.model.task.Timestamp;
 
 
 //CHECKSTYLE.OFF: LineLength

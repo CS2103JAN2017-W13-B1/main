@@ -4,10 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.testutil.TestTask;
+import utask.commons.core.Messages;
+import utask.testutil.TestTask;
 
-public class FindCommandTest extends AddressBookGuiTest {
+public class FindCommandTest extends UTaskGuiTest {
 
     @Test
     public void find_nonEmptyList() {
@@ -34,7 +34,7 @@ public class FindCommandTest extends AddressBookGuiTest {
     private void assertFindResult(String command, TestTask... expectedHits) {
         commandBox.runCommand(command);
         assertListSize(expectedHits.length);
-        assertResultMessage(expectedHits.length + " persons listed!");
+        assertResultMessage(expectedHits.length + " tasks listed!");
         assertTrue(personListPanel.isListMatching(expectedHits));
     }
 }

@@ -10,9 +10,9 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.text.TextAlignment;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
-import seedu.utask.model.task.ReadOnlyTask;
+import utask.model.tag.Tag;
+import utask.model.tag.UniqueTagList;
+import utask.model.task.ReadOnlyTask;
 
 public class TaskListCard extends StagingUiPart<Region> {
 

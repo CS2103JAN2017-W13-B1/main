@@ -10,25 +10,25 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import seedu.address.commons.core.Config;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.Version;
-import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.commons.util.ConfigUtil;
-import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.Logic;
-import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.Storage;
-import seedu.address.storage.StorageManager;
-import seedu.address.ui.Ui;
+import utask.commons.core.Config;
+import utask.commons.core.EventsCenter;
+import utask.commons.core.LogsCenter;
+import utask.commons.core.Version;
+import utask.commons.events.ui.ExitAppRequestEvent;
+import utask.commons.exceptions.DataConversionException;
+import utask.commons.util.ConfigUtil;
+import utask.commons.util.StringUtil;
+import utask.logic.Logic;
+import utask.logic.LogicManager;
+import utask.model.Model;
+import utask.model.ModelManager;
+import utask.model.ReadOnlyUTask;
+import utask.model.UTask;
+import utask.model.UserPrefs;
+import utask.model.util.SampleDataUtil;
+import utask.storage.Storage;
+import utask.storage.StorageManager;
+import utask.ui.Ui;
 
 /**
  * The main entry point to the application.
@@ -52,7 +52,7 @@ public class StageDriver extends Application {
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
-        storage = new StorageManager(config.getAddressBookFilePath(), config.getUserPrefsFilePath());
+        storage = new StorageManager(config.getUTaskFilePath(), config.getUserPrefsFilePath());
 
         userPrefs = initPrefs(config);
 
@@ -73,20 +73,20 @@ public class StageDriver extends Application {
     }
 
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyUTask> addressBookOptional;
+        ReadOnlyUTask initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
+            addressBookOptional = storage.readUTask();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            initialData = new UTask();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            initialData = new UTask();
         }
 
         return new ModelManager(initialData, userPrefs);

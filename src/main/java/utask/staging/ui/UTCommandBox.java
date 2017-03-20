@@ -11,12 +11,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.util.FxViewUtil;
-import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
+import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.NewResultAvailableEvent;
+import utask.commons.util.FxViewUtil;
+import utask.logic.Logic;
+import utask.logic.commands.CommandResult;
+import utask.logic.commands.exceptions.CommandException;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 
 public class UTCommandBox extends StagingUiPart<Region> {

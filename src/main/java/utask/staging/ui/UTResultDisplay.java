@@ -10,10 +10,10 @@ import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.util.FxViewUtil;
-import seedu.address.ui.ResultDisplay;
+import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.NewResultAvailableEvent;
+import utask.commons.util.FxViewUtil;
+import utask.ui.ResultDisplay;
 
 /**
  * A ui for the status bar that is displayed at the header of the application.
@@ -44,6 +44,4 @@ public class UTResultDisplay extends StagingUiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         displayed.setValue(event.message);
     }
-
 }
-

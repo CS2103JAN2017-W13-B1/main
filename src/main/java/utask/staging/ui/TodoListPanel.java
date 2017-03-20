@@ -13,11 +13,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.util.FxViewUtil;
-import seedu.address.ui.PersonListPanel;
-import seedu.utask.model.task.ReadOnlyTask;
+import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
+import utask.commons.util.FxViewUtil;
+import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.TodoListPanel.TaskListViewCell;
+import utask.ui.PersonListPanel;
 
 public class TodoListPanel extends StagingUiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);

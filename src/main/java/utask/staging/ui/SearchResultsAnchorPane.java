@@ -19,7 +19,7 @@ import javafx.scene.control.TreeTableColumn.SortType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
-import seedu.address.commons.util.FxViewUtil;
+import utask.commons.util.FxViewUtil;
 
 public class SearchResultsAnchorPane extends StagingUiPart<Region> {
 

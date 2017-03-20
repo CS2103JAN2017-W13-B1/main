@@ -15,10 +15,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.util.FxViewUtil;
-import seedu.utask.model.task.ReadOnlyTask;
+import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
+import utask.commons.util.FxViewUtil;
+import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.TaskListPanel.TaskListViewCell;
 
 public class TaskListPanel extends StagingUiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);

@@ -19,8 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.util.FxViewUtil;
+import utask.commons.core.LogsCenter;
+import utask.commons.util.FxViewUtil;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 import utask.staging.ui.events.SearchRequestEvent;
 

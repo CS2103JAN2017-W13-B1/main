@@ -9,10 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.util.FxViewUtil;
-import seedu.address.ui.StatusBarFooter;
+import utask.commons.core.LogsCenter;
+import utask.commons.events.model.UTaskChangedEvent;
+import utask.commons.util.FxViewUtil;
+import utask.ui.StatusBarFooter;
 
 public class UTStatusBarFooter extends StagingUiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
@@ -45,7 +45,7 @@ public class UTStatusBarFooter extends StagingUiPart<Region> {
     }
 
     @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+    public void handleAddressBookChangedEvent(UTaskChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);

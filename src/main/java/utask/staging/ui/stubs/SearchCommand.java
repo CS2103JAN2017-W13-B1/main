@@ -1,9 +1,9 @@
 package utask.staging.ui.stubs;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
+import utask.commons.core.EventsCenter;
+import utask.logic.commands.Command;
+import utask.logic.commands.CommandResult;
+import utask.logic.commands.exceptions.CommandException;
 import utask.staging.ui.events.SearchRequestEvent;
 
 public class SearchCommand extends Command {
