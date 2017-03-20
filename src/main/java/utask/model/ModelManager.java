@@ -102,6 +102,14 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(expression::satisfies);
     }
 
+    //@@author A0138493W
+    @Override
+    public void sortFilteredTaskList(UnmodifiableObservableList<ReadOnlyTask> lastShownList, String keywords) {
+        indicateUTaskChanged();
+    }
+
+    //@@author
+
     //========== Inner classes/interfaces used for filtering =================================================
 
     interface Expression {

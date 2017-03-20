@@ -2,13 +2,7 @@
 
 package utask.logic.parser;
 
-import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static utask.logic.parser.CliSyntax.KEYWORDS_ARGS_FORMAT;
-
-import java.util.regex.Matcher;
-
 import utask.logic.commands.Command;
-import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.SortCommand;
 
 /**
@@ -20,15 +14,9 @@ public class SortCommandParser {
      * and returns an SortCommandParser object for execution.
      */
     public Command parse(String args) {
-        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
-
-        // keywords delimited by whitespace
-        final String keywords = matcher.toString();
-        return new SortCommand(keywords);
+        //remove whitespace
+        final String keyword =  args.replaceAll("\\s+", "");
+        return new SortCommand(keyword);
     }
 
 }
