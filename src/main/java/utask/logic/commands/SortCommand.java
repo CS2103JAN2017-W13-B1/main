@@ -1,6 +1,6 @@
-package utask.logic.commands;
+//@@author A0138493W
 
-import java.util.Set;
+package utask.logic.commands;
 
 import utask.logic.commands.exceptions.CommandException;
 
@@ -9,20 +9,21 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": List all tasks/events with filters. "
-            + "Parameters: sort SORTING_ORDER\n"
-            + "Example: " + COMMAND_WORD
-            + " completed tasks, tag \"Important\", sort earliest first";
+            + ": Sort all tasks/events with filters. "
+            + "Parameters: SORTING_ORDER\n"
+            + "Example: " + COMMAND_WORD + " earliest";
 
-    private final Set<String> keywords;
+    public static final String MESSAGE_SUCCESS = "Sorted all tasks by ";
 
-    public SortCommand(Set<String> keywords) {
+    private final String keywords;
+
+    public SortCommand(String keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         model.updateFilteredTaskList(keywords);
-        return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+        return new CommandResult(MESSAGE_SUCCESS + keywords);
     }
 }
