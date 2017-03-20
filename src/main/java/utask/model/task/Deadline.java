@@ -3,7 +3,7 @@ package utask.model.task;
 import utask.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Task's deadline in the UTask.
  * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
  */
 public class Deadline {
@@ -17,7 +17,7 @@ public class Deadline {
     /**
      * Validates given deadline.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given deadline string is invalid.
      */
     public Deadline(String deadline) throws IllegalValueException {
         assert deadline != null;
