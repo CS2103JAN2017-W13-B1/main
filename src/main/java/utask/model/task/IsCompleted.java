@@ -7,7 +7,7 @@ import utask.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in
  * {@link #isValidBoolean(String)}
  */
-// @@author A0138423J
+//@@author A0138423J
 public class IsCompleted {
     public static final String MESSAGE_NAME_CONSTRAINTS = "Task status should be true/false or "
             + "yes/no case insensitive, and it should not be blank";

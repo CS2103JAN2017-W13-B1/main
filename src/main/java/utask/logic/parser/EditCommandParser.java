@@ -2,6 +2,7 @@ package utask.logic.parser;
 
 import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static utask.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static utask.logic.parser.CliSyntax.PREFIX_DONE;
 import static utask.logic.parser.CliSyntax.PREFIX_FREQUENCY;
 import static utask.logic.parser.CliSyntax.PREFIX_NAME;
 import static utask.logic.parser.CliSyntax.PREFIX_TAG;
@@ -22,6 +23,7 @@ import utask.model.tag.UniqueTagList;
 /**
  * Parses input arguments and creates a new EditCommand object
  */
+//@@author A0138423J
 public class EditCommandParser {
 
     /**
@@ -31,7 +33,8 @@ public class EditCommandParser {
     public Command parse(String args) {
         assert args != null;
         ArgumentTokenizer argsTokenizer =
-                new ArgumentTokenizer(PREFIX_NAME, PREFIX_DEADLINE, PREFIX_TIMESTAMP, PREFIX_FREQUENCY, PREFIX_TAG);
+                new ArgumentTokenizer(PREFIX_NAME, PREFIX_DEADLINE, PREFIX_TIMESTAMP,
+                        PREFIX_FREQUENCY, PREFIX_TAG, PREFIX_DONE);
         argsTokenizer.tokenize(args);
         List<Optional<String>> preambleFields = ParserUtil.splitPreamble(argsTokenizer.getPreamble().orElse(""), 2);
 
