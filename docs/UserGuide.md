@@ -84,7 +84,7 @@ Refer to the [Features](#features) section below for details of each command.<br
 
 ----------
 
-<!-- @@author Team-uTask-->
+<!-- @@author A0138423J-->
 ## 3. Features
 
 > **Command Format**
@@ -181,13 +181,14 @@ Format: `deletetag INDEX`
 > * Deletes the tag at the specified `INDEX`. <br>
 > * The index refers to the index number shown on the retrieved listing after `listtag` command is used. <br>
 > * The index **must be a positive integer** 1, 2, 3, ...
+> * All existing tasks affected will have the specific tag removed.
 
 Examples:
 
 * `listtag`<br>
   `deletetag 2`<br>
   Deletes the 2nd tag in μTask.
-* All existing tasks affected will have the specific tag removed.
+
 
 ### 3.7. Creating task: `create`
 
@@ -244,7 +245,7 @@ Examples:
 
 Description: Finds tasks whose description contains any of the given keywords.<br>
 
-Format: `Find KEYWORD...`
+Format: `find KEYWORD...`
 
 > * The search is case sensitive. e.g `grocery` will not match `Grocery`
 > * The order of the keywords does not matter. e.g. `Grocery Store` will match `Store Grocery`
@@ -310,8 +311,8 @@ Format: `done INDEX`
 
 
 > * Updates the task at the specified `INDEX`.
-    The index refers to the index number shown after `list` or `find` command has been executed.<br>
-    The index **must be a positive integer** 1, 2, 3, ...
+> * The index refers to the index number shown after `list` or `find` command has been executed.<br>
+> * The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:
 
