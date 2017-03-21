@@ -18,7 +18,7 @@ public class IsCompleted {
      */
     public static final String ISCOMPLETED_VALIDATION_REGEX = "^(YES|yes|Y|y|TRUE|true|T|t|NO|no|N|n|FALSE|false|F|f)$";
     //
-    public final Boolean isCompleted;
+    public final String value;
 
     /**
      * Validates given status.
@@ -50,11 +50,11 @@ public class IsCompleted {
         default:
             valToBool = true;
         }
-        this.isCompleted = valToBool;
+        this.value = valToBool.toString();
     }
 
     private IsCompleted() {
-        this.isCompleted = false;
+        this.value = "false";
     }
 
     public static IsCompleted getEmptyIsCompleted() {
@@ -70,20 +70,20 @@ public class IsCompleted {
 
     @Override
     public String toString() {
-        return isCompleted.toString();
+        return value.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof IsCompleted // instanceof handles nulls
-                        && this.isCompleted
-                                .equals(((IsCompleted) other).isCompleted)); // state
+                        && this.value
+                                .equals(((IsCompleted) other).value)); // state
                                                                              // check
     }
 
     @Override
     public int hashCode() {
-        return isCompleted.hashCode();
+        return value.hashCode();
     }
 }
