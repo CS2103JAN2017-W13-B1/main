@@ -20,7 +20,7 @@ import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList;
 
 /**
- * Edits the details of an existing task in the address book.
+ * Edits the details of an existing task in the uTask.
  */
 //@@author A0138423J
 public class EditCommand extends Command {
@@ -37,7 +37,7 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the uTask.";
 
     private final int filteredTaskListIndex;
     private final EditTaskDescriptor editTaskDescriptor;
@@ -122,7 +122,7 @@ public class EditCommand extends Command {
 
     /**
      * Stores the details to edit the task with. Each non-empty field value
-     * will replace the corresponding field value of the person.
+     * will replace the corresponding field value of the Task.
      */
     public static class EditTaskDescriptor {
         private Optional<Name> name = Optional.empty();

@@ -10,6 +10,7 @@ import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
+import utask.logic.commands.DoneCommand;
 import utask.logic.commands.EditCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
@@ -50,6 +51,9 @@ public class Parser {
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
+
+        case DoneCommand.COMMAND_WORD:
+            return new DoneCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
