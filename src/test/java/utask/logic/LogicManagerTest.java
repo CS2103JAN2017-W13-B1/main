@@ -24,6 +24,7 @@ import utask.commons.core.EventsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
+import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.CommandResult;
@@ -427,6 +428,33 @@ public class LogicManagerTest {
         assertCommandSuccess("sort latest", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
     }
 
+    @Test
+    public void execute_sort_tag_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateTaskwithTags("task 1", generateTagList("b", "c"));
+        Task first = helper.generateTaskwithTags("task 2", generateTagList("e", "a"));
+        Task fourth = helper.generateTaskwithTags("task 3", generateTagList("d", "h"));
+        Task third = helper.generateTaskwithTags("task 4", generateTagList("e", "b"));
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(first, second, third, fourth);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort tag", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
+    /**
+     * Generates a UniqueTagList with 2 tags
+     * @throws IllegalValueException
+     */
+    private UniqueTagList generateTagList(String tagNmae1, String tagName2) throws IllegalValueException {
+        Tag tag1 = new Tag(tagNmae1);
+        Tag tag2 = new Tag(tagName2);
+        return new UniqueTagList(tag1, tag2);
+    }
+
     //@@author
 
     @Test
@@ -621,6 +649,15 @@ public class LogicManagerTest {
         private Task generateDeadlineTask(String name, String deadline) throws Exception {
             return new EventTask(new Name(name), new Deadline(deadline), new Timestamp("0000 to 1300"),
                     new Frequency("-"), new UniqueTagList(new Tag("tag")));
+        }
+
+        /**
+         * Generates a Task object with given name and deadline Other fields will have
+         * some dummy values.
+         */
+        private Task generateTaskwithTags(String name, UniqueTagList tags) throws Exception {
+            return new EventTask(new Name(name), new Deadline("150317"), new Timestamp("0000 to 1300"),
+                    new Frequency("-"), tags);
         }
     }
 }
