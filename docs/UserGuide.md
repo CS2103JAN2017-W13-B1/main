@@ -1,13 +1,32 @@
 # μTask - User Guide
 
-By : `Team SE-EDU`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jun 2016`  &nbsp;&nbsp;&nbsp;&nbsp; Licence: `MIT`
+By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbsp;&nbsp; Licence: `MIT`
 
 ---
 
-1. [Quick Start](#quick-start)
-2. [Features](#features)
-3. [FAQ](#faq)
-4. [Command Summary](#command-summary)
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Quick Start](#quick-start)
+3. [Features](#features)
+4. [FAQ](#faq)
+5. [Command Summary](#command-summary)
+
+<!-- @@author Team-uTask -->
+## Introduction
+
+Manage your tasks with just **1 line** of input from your keyboard.
+
+Do you desire to create, retrieve, update and delete your tasks? **1 line** from μTask is all you need.<br>
+Do you wish to search, sort, filter and label your tasks?  **1 line** from μTask is all you need.
+
+In a cosmopolitan city like Singapore, majority of us live our day to day lives filled with an endless list consisting of *things to do*, *deadlines* and *events*. We, as developers, comprehend your difficulty in managing that list and wish to ease the process of task management for you.
+
+Hence, that is the objective of μTask, our Task manager which processes your commands through *simple* keyboard inputs. μTask is swift, straightforward, and encompasses all of the features you require to manage your tasks.
+
+Simply type in your command, and hit <kbd>Enter</kbd> to let μTask to do the heavy lifting for task management. Meanwhile you can focus your attention to other important matters at hand.
+<br><br>
+<!-- @@author -->
 
 ## 1. Quick Start
 
