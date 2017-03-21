@@ -9,7 +9,7 @@ import utask.commons.exceptions.IllegalValueException;
  */
 // @@author A0138423J
 public class IsCompleted {
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Task status should be true/false or "
+    public static final String MESSAGE_ISCOMPLETED_CONSTRAINTS = "Task status should be true/false or "
             + "yes/no case insensitive, and it should not be blank";
 
     /*
@@ -30,27 +30,25 @@ public class IsCompleted {
         assert input != null;
         String trimmedName = input.trim();
         if (!isValidBoolean(trimmedName)) {
-            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_ISCOMPLETED_CONSTRAINTS);
         }
-        char value = input.toLowerCase().charAt(0);
-        Boolean valToBool = false;
+        this.value = checkValue(input).toString();
+    }
+
+    private Boolean checkValue(String strToEvaluate) throws IllegalValueException {
+        char value = strToEvaluate.toLowerCase().charAt(0);
         switch (value) {
         case 't':
-            valToBool = true;
-            break;
+            return true;
         case 'y':
-            valToBool = true;
-            break;
+            return true;
         case 'f':
-            valToBool = false;
-            break;
+            return false;
         case 'n':
-            valToBool = false;
-            break;
+            return false;
         default:
-            valToBool = true;
+            throw new IllegalValueException(MESSAGE_ISCOMPLETED_CONSTRAINTS);
         }
-        this.value = valToBool.toString();
     }
 
     private IsCompleted() {
@@ -74,7 +72,7 @@ public class IsCompleted {
 
     @Override
     public String toString() {
-        return value.toString();
+        return value;
     }
 
     @Override
