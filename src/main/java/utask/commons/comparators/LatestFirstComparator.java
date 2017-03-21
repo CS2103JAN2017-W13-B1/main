@@ -8,9 +8,9 @@ import java.util.Comparator;
 import utask.model.task.ReadOnlyTask;
 
 /**
- * Compares the ReadOnlyTask in ascending dates.
+ * Compares the ReadOnlyTask in descending dates.
  */
-public class EarliestFirstComparator implements Comparator<ReadOnlyTask> {
+public class LatestFirstComparator implements Comparator<ReadOnlyTask> {
 
     @Override
     public int compare(ReadOnlyTask o1, ReadOnlyTask o2) {
@@ -34,6 +34,6 @@ public class EarliestFirstComparator implements Comparator<ReadOnlyTask> {
             }
         }
 
-        return preTime - nextTime;
+        return nextTime - preTime;
     }
 }

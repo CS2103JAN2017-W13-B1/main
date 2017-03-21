@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.transformation.FilteredList;
 import utask.commons.comparators.EarliestFirstComparator;
+import utask.commons.comparators.LatestFirstComparator;
 import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.UnmodifiableObservableList;
@@ -108,9 +109,18 @@ public class ModelManager extends ComponentManager implements Model {
     public void sortFilteredTaskList(String sortingOrder) {
         assert sortingOrder != null;
         switch(sortingOrder) {
+        case "": //default sorting order
+            uTask.sortByComparator(new EarliestFirstComparator());
+            break;
+
         case Model.SORT_ORDER_BY_EARLIEST_FIRST:
             uTask.sortByComparator(new EarliestFirstComparator());
             break;
+
+        case Model.SORT_ORDER_BY_LATEST_FIRST:
+            uTask.sortByComparator(new LatestFirstComparator());
+            break;
+
         default:
             logger.warning(Model.SORT_ORDER_ERROR + sortingOrder);
         }
