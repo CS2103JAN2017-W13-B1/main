@@ -196,13 +196,6 @@ public class LogicManagerTest {
         assertCommandSuccess("clear", ClearCommand.MESSAGE_SUCCESS, new UTask(), Collections.emptyList());
     }
 
-//    @Test
-//    public void execute_add_invalidArgsFormat() {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateCommand.MESSAGE_USAGE);
-//        assertCommandFailure("create valid Name /by invalidDate", expectedMessage);
-//        assertCommandFailure("create valid Name /by 200217 /from invalid /tag important", expectedMessage);
-//    }
-
     @Test
     public void execute_add_invalidTaskData() {
         //assertCommandFailure("create []\\[;]", Name.MESSAGE_NAME_CONSTRAINTS);
@@ -400,6 +393,23 @@ public class LogicManagerTest {
         assertCommandSuccess("sort za", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
     }
 
+    @Test
+    public void execute_sort_earliest_first_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateDeadlineTask("task 1", "160317");
+        Task first = helper.generateDeadlineTask("task 2", "150317");
+        Task fourth = helper.generateDeadlineTask("task 3", "180317");
+        Task third = helper.generateDeadlineTask("task 4", "170317");
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(first, second, third, fourth);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
     //@@author
 
     @Test
@@ -592,7 +602,7 @@ public class LogicManagerTest {
          * some dummy values.
          */
         private Task generateDeadlineTask(String name, String deadline) throws Exception {
-            return new EventTask(new Name(name), new Deadline("deadline"), new Timestamp("0000 to 1300"),
+            return new EventTask(new Name(name), new Deadline(deadline), new Timestamp("0000 to 1300"),
                     new Frequency("-"), new UniqueTagList(new Tag("tag")));
         }
     }
