@@ -19,6 +19,7 @@ import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
+import utask.logic.commands.UndoneCommand;
 
 /**
  * Parses user input.
@@ -54,6 +55,9 @@ public class Parser {
 
         case DoneCommand.COMMAND_WORD:
             return new DoneCommandParser().parse(arguments);
+
+        case UndoneCommand.COMMAND_WORD:
+            return new UndoneCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);

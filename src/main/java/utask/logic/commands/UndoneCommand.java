@@ -16,19 +16,19 @@ import utask.model.task.Task;
  * Edits the details of an existing task in the uTask.
  */
 // @@author A0138423J
-public class DoneCommand extends Command {
+public class UndoneCommand extends Command {
 
-    public static final String COMMAND_WORD = "done";
+    public static final String COMMAND_WORD = "undone";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Updates the status to completed of the task specified "
+            + ": Updates the status to uncompleted of the task specified "
             + "by the index number used in the last task listing. \n"
             + "Parameters: INDEX (must be a positive integer) " + "Example: "
             + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DONE_TASK_SUCCESS = "Done task: %1$s";
+    public static final String MESSAGE_DONE_TASK_SUCCESS = "Undone task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";
-    public static final String MESSAGE_DUPLICATE_STATUS = "This task is already completed in uTask.";
+    public static final String MESSAGE_DUPLICATE_STATUS = "This task is already uncompleted in uTask.";
     public static final String MESSAGE_INTERNAL_ERROR = "Error updating isCompleted attribute.";
 
     private final int filteredTaskListIndex;
@@ -37,7 +37,7 @@ public class DoneCommand extends Command {
      * @param filteredTaskListIndex
      *            the index of the task in the filtered task list to edit
      */
-    public DoneCommand(int filteredTaskListIndex) {
+    public UndoneCommand(int filteredTaskListIndex) {
         assert filteredTaskListIndex > 0;
 
         // converts filteredTaskListIndex from one-based to zero-based.
@@ -58,13 +58,13 @@ public class DoneCommand extends Command {
         ReadOnlyTask taskToEdit = lastShownList.get(filteredTaskListIndex);
 
         // If value already true, inform the user
-        if ("true".equals(taskToEdit.getIsCompleted().toString())) {
+        if ("false".equals(taskToEdit.getIsCompleted().toString())) {
             throw new CommandException(MESSAGE_DUPLICATE_STATUS);
         }
         Task temp = null;
 
         try {
-            temp = createEditedTask(taskToEdit, true);
+            temp = createEditedTask(taskToEdit, false);
             model.updateTask(filteredTaskListIndex, temp);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
