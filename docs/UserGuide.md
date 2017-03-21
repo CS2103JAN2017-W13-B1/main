@@ -23,13 +23,14 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 	3.9.   [Finding tasks by keywords: `find`](#39-finding-tasks-by-keywords-find) <br>
 	3.10.   [Viewing a task: `select`](#310-viewing-a-task-select) <br>
 	3.11.   [Updating a task: `update`](#311-updating-a-task-update) <br>
-	3.12.   [Updating status of task: `done`](#312-updating-status-of-task-done) <br>
-	3.13.   [Deleting a task: `delete`](#313-deleting-a-task-delete) <br>
-	3.14.   [Clearing all entries : `clear`](#314-clearing-all-entries--clear) <br>
-	3.15.   [Undoing previous actions: `undo`](#315-undoing-previous-actions-undo) <br>
-	3.16.   [Redoing previous actions: `redo`](#316-redoing-previous-actions-redo) <br>
-	3.17.   [Exiting the program : `exit`](#317-exiting-the-program--exit) <br>
-	3.18.   [Saving the data](#318-saving-the-data)
+	3.12.   [Updating completed task: `done`](#312-updating-completed-task-done) <br>
+	3.13.   [Updating uncompleted task: `undone`](#313-updating-uncompleted-task-undone) <br>
+	3.14.   [Deleting a task: `delete`](#313-deleting-a-task-delete) <br>
+	3.15.   [Clearing all entries : `clear`](#314-clearing-all-entries--clear) <br>
+	3.16.   [Undoing previous actions: `undo`](#315-undoing-previous-actions-undo) <br>
+	3.17.   [Redoing previous actions: `redo`](#316-redoing-previous-actions-redo) <br>
+	3.18.   [Exiting the program : `exit`](#317-exiting-the-program--exit) <br>
+	3.19.   [Saving the data](#318-saving-the-data)
 4. [FAQ](#4-faq)
 5. [Commands Summary](#5-commands-summary)
 
@@ -307,7 +308,7 @@ Examples:
 * `update 2 /tag urgent`<br>
   Updates the tag of the task at `index` 2 to "urgent and removes all existing tags, if applicable.
 
-### 3.12. Updating status of task: `done`
+### 3.12. Updating completed task: `done`
 
 Description: Updates the `status` of an existing task to `yes`. <br>
 
@@ -323,7 +324,23 @@ Examples:
 * `done 1`<br>
   Updates the status of task at `index` 1 to done.
 
-### 3.13. Deleting a task: `delete`
+### 3.13. Updating uncompleted task: `undone`
+
+Description: Updates the `status` of an existing task to `no`. <br>
+
+Format: `undone INDEX`
+
+
+> * Updates the task at the specified `INDEX`.
+> * The index refers to the index number shown after `list` or `find` command has been executed.<br>
+> * The index **must be a positive integer** 1, 2, 3, ...
+
+Examples:
+
+* `undone 1`<br>
+  Updates the status of task at `index` 1 to undone.
+
+### 3.14. Deleting a task: `delete`
 
 Description: Deletes the specified task from μTask. <br>
 
@@ -343,13 +360,13 @@ Examples:
   `delete 1`<br>
   Deletes the 1st task in the results of the `find` command.
 
-### 3.14. Clearing all entries : `clear`
+### 3.15. Clearing all entries : `clear`
 
 Description: Clears all stored tasks from the μTask.<br>
 
 Format: `clear`
 
-### 3.15. Undoing previous actions: `undo`
+### 3.16. Undoing previous actions: `undo`
 
 Description: Reverts changes made within μTask based on the provided amount of `STEPS`. <br>
 
@@ -364,7 +381,7 @@ Examples:
 * `undo /last 4`<br>
   Reverts last 4 commands executed within μTask.
 
-### 3.16. Redoing previous actions: `redo`
+### 3.17. Redoing previous actions: `redo`
 
 Description: Re-applies the changes reverted by undo within μTask based on the provided amount of `STEPS`. <br>
 
@@ -379,13 +396,13 @@ Examples:
 * `redo /last 4`<br>
   Re-applies last 4 changes reverted by undo within μTask.
 
-### 3.17. Exiting the program : `exit`
+### 3.18. Exiting the program : `exit`
 
 Description: Exits the program.<br>
 
 Format: `exit`
 
-### 3.18. Saving the data
+### 3.19. Saving the data
 
 Description:  μTask data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
