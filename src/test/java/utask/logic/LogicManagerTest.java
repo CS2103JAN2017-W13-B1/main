@@ -380,7 +380,7 @@ public class LogicManagerTest {
 
         // prepare task list state
         helper.addToModel(model, fourTasks);
-        assertCommandSuccess("sort " + Model.SORT_ORDER_BY_A_TO_Z, SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+        assertCommandSuccess("sort az", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
     }
 
     @Test
@@ -397,8 +397,10 @@ public class LogicManagerTest {
 
         // prepare task list state
         helper.addToModel(model, fourTasks);
-        assertCommandSuccess("sort " + Model.SORT_ORDER_BY_Z_TO_A, SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+        assertCommandSuccess("sort za", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
     }
+
+    //@@author
 
     @Test
     public void execute_find_invalidArgsFormat() {
@@ -581,6 +583,16 @@ public class LogicManagerTest {
          */
         private Task generateTaskWithName(String name) throws Exception {
             return new EventTask(new Name(name), new Deadline("010117"), new Timestamp("0000 to 1300"),
+                    new Frequency("-"), new UniqueTagList(new Tag("tag")));
+        }
+
+        //@@author A0138493W
+        /**
+         * Generates a Task object with given name and deadline Other fields will have
+         * some dummy values.
+         */
+        private Task generateDeadlineTask(String name, String deadline) throws Exception {
+            return new EventTask(new Name(name), new Deadline("deadline"), new Timestamp("0000 to 1300"),
                     new Frequency("-"), new UniqueTagList(new Tag("tag")));
         }
     }
