@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.NewResultAvailableEvent;
+import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.logic.commands.CommandResult;
@@ -90,10 +91,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
      * Show full suggested command format on recognised command pattern.
      */
     private void handleKeyPressed(KeyEvent ke) {
-        if (ke.getCode() == KeyCode.ESCAPE) {
-            raise(new KeyboardEscapeKeyPressedEvent());
-            return;
-        }
+        handleSpecialKeyCombination(ke);
 
         //TODO: Upgrade to binary tree
         String input = commandTextField.getText();
@@ -102,6 +100,15 @@ public class UTCommandBox extends StagingUiPart<Region> {
             input = (input.toLowerCase().split(" "))[0];
             String suggestion = SuggestionHelper.getInputSuggestionOfPreamble(input);
             lblSuggestion.setText(suggestion);
+        }
+    }
+
+    private void handleSpecialKeyCombination(KeyEvent ke) {
+        if (ke.getCode() == KeyCode.ESCAPE) {
+            raise(new KeyboardEscapeKeyPressedEvent());
+            return;
+        } else if (ke.getCode() == KeyCode.F1) {
+            raise(new ShowHelpRequestEvent());
         }
     }
 

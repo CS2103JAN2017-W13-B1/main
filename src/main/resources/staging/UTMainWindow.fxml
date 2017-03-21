@@ -14,8 +14,7 @@
 				<Label>μTask</Label>
 			</leftItems>			
 			<rightItems>
-				<JFXButton prefHeight="40" prefWidth="60" text="File" />
-				<JFXButton prefHeight="40" prefWidth="60" text="Help" />			
+				<JFXButton fx:id="btnHelp" prefHeight="40" prefWidth="100" text="Help [F1]" />			
 			</rightItems>
 		</JFXToolbar>
 		<StackPane fx:id="topPlaceholder" VBox.vgrow="ALWAYS">

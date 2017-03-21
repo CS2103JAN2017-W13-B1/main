@@ -46,28 +46,30 @@ public class UTListViewHelper {
     }
 
     public void updateListViews() {
-        addToOffsetMap(listViews.get(0), 1);
+        Platform.runLater(() -> {
+            addToOffsetMap(listViews.get(0), 1);
 
-        if (listViews.size() > 1) { //There's no point to refresh one list
-            int totalSize = 0;
+            if (listViews.size() > 1) { //There's no point to refresh one list
+                int totalSize = 0;
 
-            //Traverse and update following listview index based on previous size
-            for (int j = 1; j < listViews.size(); j++) {
-                ListView<ReadOnlyTask> prevListView = listViews.get(j - 1);
-                ListView<ReadOnlyTask> currListView = listViews.get(j);
+                //Traverse and update following listview index based on previous size
+                for (int j = 1; j < listViews.size(); j++) {
+                    ListView<ReadOnlyTask> prevListView = listViews.get(j - 1);
+                    ListView<ReadOnlyTask> currListView = listViews.get(j);
 
-                totalSize += prevListView.getItems().size();
+                    totalSize += prevListView.getItems().size();
 
-                final int value = totalSize; //Required by Java compiler
+                    final int value = totalSize; //Required by Java compiler
 
-                addToOffsetMap(currListView, value);
-                currListView.setCellFactory(l -> new TaskListViewCell(value));
-            }
+                    addToOffsetMap(currListView, value);
+                    currListView.setCellFactory(l -> new TaskListViewCell(value));
+                }
 
 //            for (ListView<ReadOnlyTask> lv : listViews) {
 //                lv.refresh();
 //            }
-        }
+            }
+        });
     }
 
     public int getTotalSizeOfAllListViews() {

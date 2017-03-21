@@ -1,6 +1,5 @@
 package utask.staging.ui;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.jfoenix.controls.JFXListView;
@@ -28,7 +27,7 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
     @FXML
     private JFXListView<ReadOnlyTask> lstTasks;
 
-    public UTTodoListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> chain) {
+    public UTTodoListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks) {
         super(FXML);
 
         assert(parent != null && tasks != null);
@@ -37,17 +36,15 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
         lstTasks.getStyleClass().add("custom-jfx-list-view1");
         lstTasks.setStyle("-jfx-expanded : true;");
 
-        setConnections(lstTasks, tasks, chain);
+        setConnections(lstTasks, tasks);
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 
-    private void setConnections(ListView<ReadOnlyTask> listView,
-        ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> previousListView) {
+    private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
         UTListViewHelper.getInstance().addListView(listView);
-//        System.out.println("SETCONN : TODO");
         //listView.setCellFactory(lw -> new TaskListViewCell(3));
         setEventHandlerForSelectionChangeEvent(listView);
     }

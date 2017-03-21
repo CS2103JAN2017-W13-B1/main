@@ -42,6 +42,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
     private VBox container;
 
     private Pane parent;
+    private static final double CARD_HEIGHT = 150.0;
 
     /**
      * @param placeholder
@@ -59,28 +60,24 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
     private void populate() {
 //        Platform.runLater(() -> {
         ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
-        double height = 150.0;
         JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
-        setConnections(due, dueTasks, 0);
-        due.setMinHeight(height * dueTasks.size());
+        setConnections(due, dueTasks);
+        due.setMinHeight(CARD_HEIGHT * dueTasks.size());
 
         ObservableList<ReadOnlyTask> todayTasks = TypicalTaskBuilder.today();
         JFXListView<ReadOnlyTask> today = createListControlAndAddToParent("Today", container);
-        setConnections(today, todayTasks, 1);
-        today.setMinHeight(height * todayTasks.size());
+        setConnections(today, todayTasks);
+        today.setMinHeight(CARD_HEIGHT * todayTasks.size());
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
 //        });
 
-        Platform.runLater(() -> {
-            UTListViewHelper.getInstance().updateListViews();
-        });
+        UTListViewHelper.getInstance().updateListViews();
+
     }
 
-    private void setConnections(ListView<ReadOnlyTask> listView,
-        ObservableList<ReadOnlyTask> tasks, int fake) {
-        System.out.println("SETCONN : TAKS");
+    private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
         UTListViewHelper.getInstance().addListView(listView);
         //listView.setCellFactory(lw -> new TaskListViewCell(fake));

@@ -1,17 +1,13 @@
 package utask.staging.ui;
 
-import java.util.ArrayList;
-
 import com.jfoenix.controls.JFXDecorator;
 
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -32,14 +28,13 @@ public class UTMainWindow extends StagingUiPart<Region> {
 
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "UTMainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_HEIGHT = 700;
+    private static final int MIN_WIDTH = 630;
 
     private Stage primaryStage;
     private Logic logic;
     private Config config;
 
-    private ArrayList<ListView> chain;
     private UTTodoListPanel todoListPanel;
 
     // Independent Ui parts residing in this Ui container
@@ -64,6 +59,9 @@ public class UTMainWindow extends StagingUiPart<Region> {
     @FXML
     private Pane statusbarPlaceholder;
 
+    @FXML
+    private Button btnHelp;
+
     public UTMainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -79,12 +77,15 @@ public class UTMainWindow extends StagingUiPart<Region> {
         setWindowDefaultSize(prefs);
 
         JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot(), false, true, true);
+        decorator.setPrefSize(MIN_WIDTH, MIN_HEIGHT);
+        decorator.setCustomMaximize(true);
+
         Scene scene = new Scene(decorator);
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-fonts.css").toExternalForm());
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/utask.css").toExternalForm());
         this.primaryStage.setScene(scene);
-
+        initialize();
         setAccelerators();
     }
 
@@ -93,7 +94,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
     }
 
     private void setAccelerators() {
-       //setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(btnHelp, KeyCombination.valueOf("F1"));
     }
 
     /**
@@ -102,7 +103,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
      * @param keyCombination
      *            the KeyCombination value of the accelerator
      */
-    private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
+    private void setAccelerator(Button control, KeyCombination keyCombination) {
         //menuItem.setAccelerator(keyCombination);
 
         /*
@@ -120,18 +121,35 @@ public class UTMainWindow extends StagingUiPart<Region> {
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
          */
-        rootPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-                menuItem.getOnAction().handle(new ActionEvent());
-                event.consume();
+
+        control.getScene().getAccelerators().put(keyCombination, new Runnable() {
+            @Override
+            public void run() {
+                handleHelp();
+            }
+        });
+
+//        rootPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+//            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+//                menuItem.getOnAction().handle(new ActionEvent());
+//                event.consume();
+//            }
+//        });
+    }
+
+    private void initialize() {
+        btnHelp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                handleHelp();
             }
         });
     }
 
     void fillInnerParts() {
-        chain = new ArrayList<>();
         new UTTaskListPanel(personListPanelPlaceholder, logic.getFilteredTaskList());
-        todoListPanel = new UTTodoListPanel(todoListPanelPlaceholder, logic.getFilteredTaskList(), chain);
+        todoListPanel = new UTTodoListPanel(todoListPanelPlaceholder, logic.getFilteredTaskList());
         new UTResultDisplay(resultDisplayPlaceholder);
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
