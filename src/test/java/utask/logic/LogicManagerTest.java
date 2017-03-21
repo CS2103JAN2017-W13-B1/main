@@ -351,7 +351,7 @@ public class LogicManagerTest {
 
     //@@author A0138493W
     @Test
-    public void execute_sort_default() throws Exception{
+    public void execute_sort_default() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         List<Task> twoTasks = helper.generateTaskList(2);
@@ -367,7 +367,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_sort_AToZ_order() throws Exception{
+    public void execute_sort_AToZ_order() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task second = helper.generateTaskWithName("beta");
@@ -380,7 +380,24 @@ public class LogicManagerTest {
 
         // prepare task list state
         helper.addToModel(model, fourTasks);
-        assertCommandSuccess("sort az", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+        assertCommandSuccess("sort " + Model.SORT_ORDER_BY_A_TO_Z, SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
+    @Test
+    public void execute_sort_ZToA_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateTaskWithName("beta");
+        Task first = helper.generateTaskWithName("alpha");
+        Task fourth = helper.generateTaskWithName("gamma");
+        Task third = helper.generateTaskWithName("deta");
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(fourth, third, second, first);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort " + Model.SORT_ORDER_BY_Z_TO_A, SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
     }
 
     @Test
