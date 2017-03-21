@@ -56,8 +56,8 @@ public class XmlAdaptedTask {
         deadline = source.getDeadline().value;
         timestamp = source.getTimestamp().value;
         frequency = source.getFrequency().value;
+        iscompleted = source.getIsCompleted().value;
         tagged = new ArrayList<>();
-        iscompleted = source.getIsCompleted().isCompleted.toString();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
