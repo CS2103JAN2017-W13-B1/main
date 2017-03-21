@@ -266,7 +266,7 @@ public class LogicManagerTest {
 
     // author A0138423J
     @Test
-    public void execute_done_undone_success_failure() throws Exception {
+    public void executeDoneUndoneSuccessFailure() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.generateEventTaskWithSeed(1);
@@ -316,7 +316,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_update_success() throws Exception {
+    public void executeUpdateSuccess() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.generateFloatingTaskWithSeed(1);
@@ -386,7 +386,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_update_failure() throws Exception {
+    public void executeUpdateFailure() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         // toBeAdded name is "Task 1"
         Task toBeAdded = helper.generateFloatingTaskWithSeed(1);
@@ -484,7 +484,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_selectInvalidArgsFormat_errorMessageShown()
+    public void executeSelectInvalidArgsFormatErrorMessageShown()
             throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 SelectCommand.MESSAGE_USAGE);
@@ -492,7 +492,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_selectIndexNotFound_errorMessageShown()
+    public void executeSelectIndexNotFoundErrorMessageShown()
             throws Exception {
         assertIndexNotFoundBehaviorForCommand("select");
     }
@@ -513,7 +513,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_deleteInvalidArgsFormat_errorMessageShown()
+    public void executeDeleteInvalidArgsFormatErrorMessageShown()
             throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 DeleteCommand.MESSAGE_USAGE);
@@ -521,7 +521,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_deleteIndexNotFound_errorMessageShown()
+    public void executeDeleteIndexNotFoundErrorMessageShown()
             throws Exception {
         assertIndexNotFoundBehaviorForCommand("delete");
     }
