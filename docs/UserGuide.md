@@ -33,6 +33,8 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 4. [FAQ](#4-faq)
 5. [Commands Summary](#5-commands-summary)
 
+----------
+
 <!-- @@author Team-uTask -->
 ## 1. Introduction
 
@@ -47,6 +49,8 @@ Hence, that is the objective of μTask, our Task manager which processes your co
 
 Simply type in your command, and hit <kbd>Enter</kbd> to let μTask to do the heavy lifting for task management. Meanwhile you can focus your attention to other important matters at hand.
 <br><br>
+
+----------
 
 <!-- @@author Team-uTask-->
 
