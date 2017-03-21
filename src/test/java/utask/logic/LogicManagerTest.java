@@ -46,6 +46,7 @@ import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.EventTask;
 import utask.model.task.Frequency;
+import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
@@ -524,10 +525,11 @@ public class LogicManagerTest {
             Deadline deadline = new Deadline("010117");
             Timestamp timestamp = new Timestamp("1830 to 2030");
             Frequency frequency = new Frequency("Every Monday");
+            IsCompleted iscompleted = new IsCompleted("no");
             Tag tag1 = new Tag("urgent");
             Tag tag2 = new Tag("assignment");
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
-            return new EventTask(name, deadline, timestamp, frequency, tags);
+            return new EventTask(name, deadline, timestamp, frequency, tags, iscompleted);
         }
 
         /**
@@ -541,7 +543,8 @@ public class LogicManagerTest {
         private Task generateTask(int seed) throws Exception {
             return new EventTask(new Name("Task " + seed), new Deadline("010117"),
                     new Timestamp("0000 to 2359"), new Frequency("Every " + seed),
-                    new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1))));
+                    new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1)))
+                    , new IsCompleted("no"));
         }
 
         /** Generates the correct add command based on the task given */
@@ -638,7 +641,7 @@ public class LogicManagerTest {
          */
         private Task generateTaskWithName(String name) throws Exception {
             return new EventTask(new Name(name), new Deadline("010117"), new Timestamp("0000 to 1300"),
-                    new Frequency("-"), new UniqueTagList(new Tag("tag")));
+                    new Frequency("-"), new UniqueTagList(new Tag("tag")), new IsCompleted("no"));
         }
 
         //@@author A0138493W
@@ -648,7 +651,7 @@ public class LogicManagerTest {
          */
         private Task generateDeadlineTask(String name, String deadline) throws Exception {
             return new EventTask(new Name(name), new Deadline(deadline), new Timestamp("0000 to 1300"),
-                    new Frequency("-"), new UniqueTagList(new Tag("tag")));
+                    new Frequency("-"), new UniqueTagList(new Tag("tag")), new IsCompleted("no"));
         }
 
         /**
@@ -657,7 +660,7 @@ public class LogicManagerTest {
          */
         private Task generateTaskwithTags(String name, UniqueTagList tags) throws Exception {
             return new EventTask(new Name(name), new Deadline("150317"), new Timestamp("0000 to 1300"),
-                    new Frequency("-"), tags);
+                    new Frequency("-"), tags, new IsCompleted("no"));
         }
     }
 }
