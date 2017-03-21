@@ -6,17 +6,35 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Quick Start](#quick-start)
-	2.1.   [Installing](#installing)
-	2.2.   [Launching](#launching)
-	2.3.   [Using the Interface](#using-the-interface)
-3. [Features](#features)
-4. [FAQ](#faq)
-5. [Command Summary](#command-summary)
+1. [Introduction](#1-introduction)
+2. [Quick Start](#2-quick-start)
+	2.1.   [Installing](#21-installing)
+	2.2.   [Launching](#22-launching)
+	2.3.   [Using the Interface](#23-using-the-interface)
+3. [Features](#3-features)
+	3.1.   [Viewing help : `help`](#31-viewing-help-help)
+	3.2.   [Setting save location: `setpath`](#32-setting-save-location-setpath)
+	3.3.   [Creating tag: `createtag`](#33-creating-tag-createtag)
+	3.4.   [Listing tags: `listtag`](#34-listing-tags-listtag)
+	3.5.   [Updating a tag: `updatetag`](#35-updating-a-tag-updatetag)
+	3.6.   [Deleting a tag: `deletetag`](#36-deleting-a-tag-deletetag)
+	3.7.   [Creating task: `create`](#37-creating-task-create)
+	3.8.   [Listing tasks: `list`](#38-listing-tasks-list)
+	3.9.   [Finding tasks by keywords: `find`](#39-finding-tasks-by-keywords-find)
+	3.10.   [Viewing a task: `select`](#310-viewing-a-task-select)
+	3.11.   [Updating a task: `edit`](#311-updating-a-task-edit)
+	3.12.   [Updating status of task: `done`](#312-updating-status-of-task-done)
+	3.13.   [Deleting a task: `delete`](#313-deleting-a-task-delete)
+	3.14.   [Clearing all entries : `clear`](#314-clearing-all-entries-clear)
+	3.15.   [Undoing previous actions: `undo`](#315-undoing-previous-actions-undo)
+	3.16.   [Redoing previous actions: `redo`](#316-redoing-previous-actions-redo)
+	3.17.   [Exiting the program : `exit`](#317-exiting-the-program-exit)
+	3.18.   [Saving the data](#318-saving-the-data)
+4. [FAQ](#4-faq)
+5. [Commands Summary](#5-commands-summary)
 
 <!-- @@author Team-uTask -->
-## Introduction
+## 1. Introduction
 
 Manage your tasks with just **1 line** of input from your keyboard.
 
@@ -32,9 +50,9 @@ Simply type in your command, and hit <kbd>Enter</kbd> to let μTask to do the he
 
 <!-- @@author Team-uTask-->
 
-## Quick Start
+## 2. Quick Start
 
-### Installing
+### 2.1. Installing
 1. Ensure you have Java version `1.8.0_60` or later installed in your Computer.<br>
 
    > Having any Java 8 version is not enough. <br>
@@ -43,15 +61,16 @@ Simply type in your command, and hit <kbd>Enter</kbd> to let μTask to do the he
 2. Download the latest `uTask.jar` from the [releases](../../../releases) tab.
 3. Copy `uTask.jar` to the folder you want to use as the home folder for your task management.
 
-### Launching
+### 2.2. Launching
 
 Double-click the file to start the app. The Graphic User Interface should appear in a few seconds.
    <img src="images/uTask_v0.3.jpg" width="600"><br>
    
-### Using the Interface
+### 2.3. Using the Interface
 
 Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
    e.g. typing **`help`** and pressing <kbd>Enter</kbd> will open the help window.
+
 Some example commands you can try:
 
    * **`list`** : lists all task.
@@ -65,8 +84,8 @@ Refer to the [Features](#features) section below for details of each command.<br
 
 ----------
 
-
-## Features
+<!-- @@author Team-uTask-->
+## 3. Features
 
 > **Command Format**
 >
@@ -75,7 +94,7 @@ Refer to the [Features](#features) section below for details of each command.<br
 > * Items with `...` after them can have multiple instances.
 > * Parameters can be in any order.
 
-### 2.1. Viewing help : `help`
+### 3.1 Viewing help : `help`
 
 Description: Displays a help menu to aid users in using μTask. <br>
 
@@ -83,27 +102,27 @@ Format: `help`
 
 > Help is also shown if you enter an incorrect command e.g. `abcd`
 
-### 2.2. Setting save location: `setpath`
+### 3.2. Setting save location: `setpath`
 
 Description: Designates the save directory for μTask. <br>
 
 Format: `setpath PATH`
 
-> `PATH` provided by the user has to be a valid folder for the command to successfully execute.
+> `PATH` provided by the user has to be a valid folder for the command to execute successfully.
 > `PATH` has to be enclosed within quotes `"`
 
 Examples:
 
 * `setpath "C:\TEMP"`
 
-### 2.3. Creating tag: `createtag`
+### 3.3. Creating tag: `createtag`
 
 Description: Creates a new tag in μTask. <br>
 
 Format: `createtag NAME [/color COLOR]`
 
-> * `NAME` provided must be unique and currently not existing in the μTask
-> * `COLOR` provided can come in a form of 6 digit hexadecimal `RRGGBB` or plain English
+> * `NAME` provided must be unique and currently not existing in the μTask.
+> * `COLOR` provided can come in a form of 6 digit hexadecimal `RRGGBB` or plain English.
 
 | Symbol | Meaning            | Example        |
 |--------|--------------------|----------------|
@@ -116,7 +135,7 @@ Examples:
 * `createtag urgent /color dark red`
 * `createtag low priority /color 00ffff`
 
-### 2.4. Listing tags: `listtag`
+### 3.4. Listing tags: `listtag`
 
 Description: Lists μTask's current database for all stored tags.<br>
 
@@ -127,7 +146,7 @@ Format: `listtag`
 Examples:
 * `listtag`
 
-### 2.5. Updating a tag: `updatetag`
+### 3.5. Updating a tag: `updatetag`
 
 Description: Updates an existing tag in μTask. You can perform update on a specific task after `listtag` command has been executed. <br>
 
@@ -153,7 +172,7 @@ Examples:
 * `updatetag 2 /color 888888`<br>
   Updates the tag at `index` 2 to have `888888` as color.
 
-### 2.6. Deleting a tag: `deletetag`
+### 3.6. Deleting a tag: `deletetag`
 
 Description: Deletes the specified tag from μTask.<br>
 
@@ -170,7 +189,7 @@ Examples:
   Deletes the 2nd tag in μTask.
 * All existing tasks affected will have the specific tag removed.
 
-### 2.7. Creating task: `create`
+### 3.7. Creating task: `create`
 
 Description: Creates a new task in μTask. <br>
 
@@ -205,7 +224,7 @@ Examples:
 * `create watch movie from me to you /from 1830 010317 to 010317 2030 `
 * `create read essay by tutor /by 200217 /tag urgent /tag assignment`
 
-### 2.8. Listing / Searching tasks: `list`
+### 3.8. Listing tasks: `list`
 
 Description: Searches μTask's current database for specific tasks based on inputs provided.<br>
 
@@ -221,7 +240,7 @@ Examples:
 * `list deadline /by 2359 310817 /tag math /done NO`
 * `list event /from 201017 to 221017 /done YES`
 
-### 2.9. Finding all tasks containing any keyword in their description: `find`
+### 3.9. Finding tasks by keywords: `find`
 
 Description: Finds tasks whose description contains any of the given keywords.<br>
 
@@ -241,7 +260,7 @@ Examples:
 * `find Impt Clear John`<br>
   Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
 
-### 2.10. Viewing a task: `select`
+### 3.10. Viewing a task: `select`
 
 Description: Views specific task's details based on the given index provided. <br>
 
@@ -260,7 +279,7 @@ Examples:
 * `select last`<br>
   Displays in depth details of the task with the maximal `index`.
 
-### 2.11. Updating a task: `edit`
+### 3.11. Updating a task: `edit`
 
 Description: Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
 
@@ -283,7 +302,7 @@ Examples:
 * `update 2 /tag urgent`<br>
   Updates the tag of the task at `index` 2 to "urgent and removes all existing tags, if applicable.
 
-### 2.12. Updating status of task: `done`
+### 3.12. Updating status of task: `done`
 
 Description: Updates the `status` of an existing task to `yes`. <br>
 
@@ -299,7 +318,7 @@ Examples:
 * `done 1`<br>
   Updates the status of task at `index` 1 to done.
 
-### 2.13. Deleting a task: `delete`
+### 3.13. Deleting a task: `delete`
 
 Description: Deletes the specified task from μTask. <br>
 
@@ -319,13 +338,13 @@ Examples:
   `delete 1`<br>
   Deletes the 1st task in the results of the `find` command.
 
-### 2.14. Clearing all entries : `clear`
+### 3.14. Clearing all entries : `clear`
 
 Description: Clears all stored tasks from the μTask.<br>
 
 Format: `clear`
 
-### 2.15. Undoing previous actions: `undo`
+### 3.15. Undoing previous actions: `undo`
 
 Description: Reverts changes made within μTask based on the provided amount of `STEPS`. <br>
 
@@ -340,7 +359,7 @@ Examples:
 * `undo /last 4`<br>
   Reverts last 4 commands executed within μTask.
 
-### 2.16. Redoing previous actions: `redo`
+### 3.16. Redoing previous actions: `redo`
 
 Description: Re-applies the changes reverted by undo within μTask based on the provided amount of `STEPS`. <br>
 
@@ -355,13 +374,13 @@ Examples:
 * `redo /last 4`<br>
   Re-applies last 4 changes reverted by undo within μTask.
 
-### 2.17. Exiting the program : `exit`
+### 3.17. Exiting the program : `exit`
 
 Description: Exits the program.<br>
 
 Format: `exit`
 
-### 2.18. Saving the data
+### 3.18. Saving the data
 
 Description:  μTask data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
@@ -370,7 +389,7 @@ There is no need to save manually.
 ----------
 
 
-## 3. FAQ
+## 4. FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with
@@ -380,7 +399,7 @@ There is no need to save manually.
 ----------
 
 
-## 4. Commands Format List
+## 5. Commands Summary
 
 Command | Format
 -------- | :--------
