@@ -4,11 +4,6 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 
 ---
 
- 1. item
-	 2. item
-	 3. item
- 2. item
-
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
