@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import javafx.collections.transformation.FilteredList;
+import utask.commons.comparators.EarliestFirstComparator;
 import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.UnmodifiableObservableList;
@@ -104,7 +105,15 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author A0138493W
     @Override
-    public void sortFilteredTaskList(UnmodifiableObservableList<ReadOnlyTask> lastShownList, String keywords) {
+    public void sortFilteredTaskList(String sortingOrder) {
+        assert sortingOrder != null;
+        switch(sortingOrder) {
+        case Model.SORT_ORDER_BY_EARLIEST_FIRST:
+            uTask.sortByComparator(new EarliestFirstComparator());
+            break;
+        default:
+            logger.warning(Model.SORT_ORDER_ERROR + sortingOrder);
+        }
         indicateUTaskChanged();
     }
 

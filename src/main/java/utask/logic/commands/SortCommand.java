@@ -2,9 +2,7 @@
 
 package utask.logic.commands;
 
-import utask.commons.core.UnmodifiableObservableList;
 import utask.logic.commands.exceptions.CommandException;
-import utask.model.task.ReadOnlyTask;
 
 /**
  * Sorts last displayed list from the uTask.
@@ -14,11 +12,11 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sort last displayed tasks list with filters. "
+            + ": Sort tasks list with filters. "
             + "Parameters: [SORTING_ORDER]\n"
             + "Example: " + COMMAND_WORD + " earliest";
 
-    public static final String MESSAGE_SUCCESS = "Last displayed tasks list has been sorted";
+    public static final String MESSAGE_SUCCESS = "Tasks list has been sorted";
 
     private final String keywords;
 
@@ -28,9 +26,7 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
-        model.sortFilteredTaskList(lastShownList, keywords);
+        model.sortFilteredTaskList(keywords);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

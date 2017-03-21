@@ -1,6 +1,7 @@
 package utask.model;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import utask.commons.core.UnmodifiableObservableList;
 import utask.model.tag.Tag;
@@ -50,6 +52,17 @@ public class UTask implements ReadOnlyUTask {
         this();
         resetData(toBeCopied);
     }
+
+    //@@author A0138493W
+    /**
+     * Sort task by comparator
+     */
+    public void sortByComparator(Comparator<ReadOnlyTask> comparator) {
+        assert comparator != null;
+        FXCollections.sort(tasks.getInternalList(), comparator);
+    }
+
+    //@@author
 
 //// list overwrite operations
 
