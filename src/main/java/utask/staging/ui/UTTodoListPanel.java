@@ -18,9 +18,9 @@ import utask.commons.util.FxViewUtil;
 import utask.model.task.ReadOnlyTask;
 import utask.ui.PersonListPanel;
 
-public class TodoListPanel extends StagingUiPart<Region> {
+public class UTTodoListPanel extends StagingUiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
-    private static final String FXML = "TodoListPanel.fxml";
+    private static final String FXML = "UTTodoListPanel.fxml";
 
     @FXML
     private VBox rootPane;
@@ -28,7 +28,7 @@ public class TodoListPanel extends StagingUiPart<Region> {
     @FXML
     private JFXListView<ReadOnlyTask> lstTasks;
 
-    public TodoListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> chain) {
+    public UTTodoListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> chain) {
         super(FXML);
 
         assert(parent != null && tasks != null);
@@ -46,7 +46,7 @@ public class TodoListPanel extends StagingUiPart<Region> {
     private void setConnections(ListView<ReadOnlyTask> listView,
         ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> previousListView) {
         listView.setItems(tasks);
-        UTListViewHelper.getInstance().add(listView);
+        UTListViewHelper.getInstance().addListView(listView);
 //        System.out.println("SETCONN : TODO");
         //listView.setCellFactory(lw -> new TaskListViewCell(3));
         setEventHandlerForSelectionChangeEvent(listView);

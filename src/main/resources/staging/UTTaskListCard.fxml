@@ -47,7 +47,7 @@
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="Important" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                      <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="0.0" right="5.0" top="5.0" />
                      </HBox.margin>
                      <padding>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
@@ -55,7 +55,7 @@
                   </Label>
                   <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: GREEN;" text="Daily" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                      <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="0.0" right="5.0" top="5.0" />
                      </HBox.margin>
                      <padding>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

@@ -1,4 +1,4 @@
-package utask.staging.ui;
+package utask.staging.ui.helper;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,14 +12,14 @@ import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Timestamp;
 
-
+//DEMO CLASS
 //CHECKSTYLE.OFF: LineLength
 public class TypicalTaskBuilder {
     public static ObservableList<ReadOnlyTask> due() {
         ObservableList<ReadOnlyTask> tasks = FXCollections.observableArrayList();
 
         try {
-            DeadlineTask f = new DeadlineTask(new Name("Update John on project specs"), new Deadline("010317"), new Frequency("-"), new UniqueTagList("Work", "Urgent"));
+            DeadlineTask f = new DeadlineTask(new Name("Update John on project specs"), new Deadline("010317"), Frequency.getEmptyFrequency(), new UniqueTagList("Work", "Urgent"));
             tasks.add(f);
         } catch (IllegalValueException e) {
             e.printStackTrace();
@@ -31,8 +31,8 @@ public class TypicalTaskBuilder {
         ObservableList<ReadOnlyTask> tasks = FXCollections.observableArrayList();
 
         try {
-            DeadlineTask f = new DeadlineTask(new Name("Help Alice with MSWord"), new Deadline("010417"), new Frequency("-"), new UniqueTagList("Asap"));
-            EventTask e = new EventTask(new Name("Dinner with friends"), new Deadline("010417"), new Timestamp("1730 to 2200"), new Frequency("-"), new UniqueTagList("Life", "NonWork"));
+            DeadlineTask f = new DeadlineTask(new Name("Help Alice with MSWord"), new Deadline("010417"), Frequency.getEmptyFrequency(), new UniqueTagList("Asap"));
+            EventTask e = new EventTask(new Name("Dinner with friends"), new Deadline("010417"), new Timestamp("1730 to 2200"), new Frequency("Every Monday"), new UniqueTagList("Life", "NonWork"));
             tasks.add(f);
             tasks.add(e);
         } catch (IllegalValueException e) {

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.scene.control.ListView;
 import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.helper.TaskListViewCell;
 
 /*
  * UTListViewHelper coordinates multiple listview to ensure their index numbers are in running sequence
@@ -14,12 +15,11 @@ import utask.model.task.ReadOnlyTask;
  * */
 public class UTListViewHelper {
     private static UTListViewHelper instance = null;
-    private final ArrayList<ListView<ReadOnlyTask>> listviews;
+    private final ArrayList<ListView<ReadOnlyTask>> listViews;
     private final HashMap<ListView<ReadOnlyTask>, Integer> offsetMap;
 
-
     private UTListViewHelper() {
-        listviews = new ArrayList<ListView<ReadOnlyTask>>();
+        listViews = new ArrayList<ListView<ReadOnlyTask>>();
         offsetMap = new HashMap<ListView<ReadOnlyTask>, Integer>();
     }
 
@@ -31,32 +31,25 @@ public class UTListViewHelper {
         return instance;
     }
 
-    public void add(ListView<ReadOnlyTask> lw) {
-        listviews.add(lw);
-        lw.setCellFactory(l -> new TaskListViewCell(0));
+    public void addListView(ListView<ReadOnlyTask> lv) {
+        listViews.add(lv);
+        addDefaultCellFactory(lv);
     }
 
-    public int getTotalSize() {
-        int  totalSize = 0;
-
-        for (ListView<ReadOnlyTask> lv : listviews) {
-
-            totalSize += lv.getItems().size();
-        }
-
-        return totalSize;
+    private void addDefaultCellFactory(ListView<ReadOnlyTask> lv) {
+        lv.setCellFactory(l -> new TaskListViewCell(0));
     }
 
-    public void updateListView() {
-        if (listviews.size() > 1) {
+    public void updateListViews() {
+        addToOffsetMap(listViews.get(0), 1);
 
+        if (listViews.size() > 1) { //There's no point to refresh one list
             int totalSize = 0;
 
-            addToOffsetMap(listviews.get(0), 1);
-
-            for (int j = 1; j < listviews.size(); j++) {
-                ListView<ReadOnlyTask> prevListView = listviews.get(j - 1);
-                ListView<ReadOnlyTask> currListView = listviews.get(j);
+            //Traverse and update following listview index based on previous size
+            for (int j = 1; j < listViews.size(); j++) {
+                ListView<ReadOnlyTask> prevListView = listViews.get(j - 1);
+                ListView<ReadOnlyTask> currListView = listViews.get(j);
 
                 totalSize += prevListView.getItems().size();
 
@@ -66,36 +59,27 @@ public class UTListViewHelper {
                 currListView.setCellFactory(l -> new TaskListViewCell(value));
             }
 
-            for (ListView<ReadOnlyTask> lv : listviews) {
-                lv.refresh();
-            }
+//            for (ListView<ReadOnlyTask> lv : listViews) {
+//                lv.refresh();
+//            }
         }
+    }
+
+    public int getTotalSizeOfAllListViews() {
+        int  totalSize = 0;
+
+        for (ListView<ReadOnlyTask> lv : listViews) {
+            totalSize += lv.getItems().size();
+        }
+
+        return totalSize;
     }
 
     private void addToOffsetMap(ListView<ReadOnlyTask> lv, int offset) {
         offsetMap.put(lv, offset);
     }
 
-    public void scrollTo(int index) {
-        assert (index >= 0);
 
-        ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
-        scrollTo(listView, index);
-    }
-
-    private void scrollTo(ListView<ReadOnlyTask> listView, int index) {
-        Platform.runLater(() -> {
-
-            int actualIndex = getActualIndex(listView, index);
-
-            for (ListView<ReadOnlyTask> lv : listviews) {
-                lv.getSelectionModel().clearSelection();
-            }
-
-            listView.scrollTo(actualIndex);
-            listView.getSelectionModel().select(actualIndex);
-        });
-    }
 
     /*
      * Normalise the given to index to listview numbering
@@ -114,7 +98,7 @@ public class UTListViewHelper {
     }
 
     /*
-     * Searches for the listview given by the index
+     * Searches for a listview given by the index
      *
      * @param index is zero-based
      *
@@ -122,7 +106,7 @@ public class UTListViewHelper {
     private ListView<ReadOnlyTask> getActualListViewFromDisplayIndex(int index) {
         int  totalSize = 0;
 
-        for (ListView<ReadOnlyTask> lv : listviews) {
+        for (ListView<ReadOnlyTask> lv : listViews) {
 
             totalSize += lv.getItems().size();
 
@@ -133,5 +117,31 @@ public class UTListViewHelper {
 
         return null;
     }
-}
 
+    private void clearSelectionOfAllListViews() {
+        for (ListView<ReadOnlyTask> lv : listViews) {
+            lv.getSelectionModel().clearSelection();
+        }
+    }
+
+    public void scrollTo(int index) {
+        assert (index >= 0);
+
+        ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
+
+        assert(listView != null);
+
+        scrollTo(listView, index);
+    }
+
+    private void scrollTo(ListView<ReadOnlyTask> listView, int index) {
+        Platform.runLater(() -> {
+            int actualIndex = getActualIndex(listView, index);
+
+            clearSelectionOfAllListViews();
+
+            listView.scrollTo(actualIndex);
+            listView.getSelectionModel().select(actualIndex);
+        });
+    }
+}

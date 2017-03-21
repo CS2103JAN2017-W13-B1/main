@@ -26,6 +26,7 @@ public class SelectCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+    //@@author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -33,7 +34,7 @@ public class SelectCommand extends Command {
 //      if (lastShownList.size() < targetIndex) {
 //      throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 //       }
-        if (UTListViewHelper.getInstance().getTotalSize() < targetIndex) {
+        if (UTListViewHelper.getInstance().getTotalSizeOfAllListViews() < targetIndex) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 

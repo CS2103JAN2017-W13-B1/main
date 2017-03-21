@@ -17,10 +17,11 @@ import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
 import utask.commons.util.FxViewUtil;
 import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.helper.TypicalTaskBuilder;
 
-public class TaskListPanel extends StagingUiPart<Region> {
-    private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
-    private static final String FXML = "TaskAnchorPane.fxml";
+public class UTTaskListPanel extends StagingUiPart<Region> {
+    private final Logger logger = LogsCenter.getLogger(UTTaskListPanel.class);
+    private static final String FXML = "UTTaskListPanel.fxml";
 
     @FXML
     private JFXListView<ReadOnlyTask> list;
@@ -46,7 +47,7 @@ public class TaskListPanel extends StagingUiPart<Region> {
      * @param placeholder
      *            The AnchorPane where the BrowserPanel must be inserted
      */
-    public TaskListPanel(Pane placeholder, ObservableList<ReadOnlyTask> tasks) {
+    public UTTaskListPanel(Pane placeholder, ObservableList<ReadOnlyTask> tasks) {
         super(FXML);
 
         assert (placeholder != null && tasks != null);
@@ -73,7 +74,7 @@ public class TaskListPanel extends StagingUiPart<Region> {
 //        });
 
         Platform.runLater(() -> {
-            UTListViewHelper.getInstance().updateListView();
+            UTListViewHelper.getInstance().updateListViews();
         });
     }
 
@@ -81,7 +82,7 @@ public class TaskListPanel extends StagingUiPart<Region> {
         ObservableList<ReadOnlyTask> tasks, int fake) {
         System.out.println("SETCONN : TAKS");
         listView.setItems(tasks);
-        UTListViewHelper.getInstance().add(listView);
+        UTListViewHelper.getInstance().addListView(listView);
         //listView.setCellFactory(lw -> new TaskListViewCell(fake));
         setEventHandlerForSelectionChangeEvent(listView);
     }

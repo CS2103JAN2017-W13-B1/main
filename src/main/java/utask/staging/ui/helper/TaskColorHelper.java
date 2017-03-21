@@ -1,4 +1,4 @@
-package utask.staging.ui;
+package utask.staging.ui.helper;
 
 import java.util.Random;
 

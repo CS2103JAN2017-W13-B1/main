@@ -13,10 +13,11 @@ import javafx.scene.text.TextAlignment;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.helper.TaskColorHelper;
 
-public class TaskListCard extends StagingUiPart<Region> {
+public class UTTaskListCard extends StagingUiPart<Region> {
 
-    private static final String FXML = "TodoListCard.fxml";
+    private static final String FXML = "UTTaskListCard.fxml";
     private static final String LABEL_CSS = "-fx-padding: 1px; -fx-text-fill: WHITE; -fx-background-color: %s;";
 
     @FXML
@@ -31,16 +32,36 @@ public class TaskListCard extends StagingUiPart<Region> {
     @FXML
     private HBox tagPane;
 
-    public TaskListCard(ReadOnlyTask task, int displayedIndex) {
+    @FXML
+    private Label lblDate;
+
+    public UTTaskListCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         assert(task != null && displayedIndex > 0);
 
         name.setText(task.getName().fullName);
         id.setText(displayedIndex + " ");
-        // phone.setText(task.getDeadline().value);
-        // address.setText(task.getFrequency().value);
-        // email.setText(task.getTimestamp().value);
+        String friendlyDate = buildFriendlyDateToDisplay(task);
+        lblDate.setText(friendlyDate);
         initTags(task);
+    }
+
+    private String buildFriendlyDateToDisplay(ReadOnlyTask task) {
+        StringBuilder sb = new StringBuilder();
+
+        if (!task.getFrequency().isEmpty()) {
+            sb.append(task.getFrequency().value + ", ");
+        }
+
+        if (!task.getDeadline().isEmpty()) {
+            sb.append(task.getDeadline().value);
+        }
+
+        if (!task.getTimestamp().isEmpty()) {
+            sb.append(", " + task.getTimestamp().value);
+        }
+
+        return sb.toString();
     }
 
     private void initTags(ReadOnlyTask task) {
@@ -48,7 +69,7 @@ public class TaskListCard extends StagingUiPart<Region> {
 
         for (Tag tag : tags) {
             Label label = createTagLabel(tag.tagName);
-            HBox.setMargin(label, new Insets(5, 5, 5, 5));
+            HBox.setMargin(label, new Insets(5, 5, 5, 0));
             tagPane.getChildren().add(label);
         }
     }

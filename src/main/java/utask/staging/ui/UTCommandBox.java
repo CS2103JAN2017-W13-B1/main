@@ -18,6 +18,7 @@ import utask.logic.Logic;
 import utask.logic.commands.CommandResult;
 import utask.logic.commands.exceptions.CommandException;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
+import utask.staging.ui.helper.SuggestionHelper;
 
 public class UTCommandBox extends StagingUiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(UTCommandBox.class);
@@ -99,7 +100,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
 
         if (!"".equals(input)) {
             input = (input.toLowerCase().split(" "))[0];
-            String suggestion = UiDataDisplayHelper.getInputSuggestionForPreamble(input);
+            String suggestion = SuggestionHelper.getInputSuggestionOfPreamble(input);
             lblSuggestion.setText(suggestion);
         }
     }
