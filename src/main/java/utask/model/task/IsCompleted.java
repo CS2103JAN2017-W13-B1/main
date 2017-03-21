@@ -7,7 +7,7 @@ import utask.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in
  * {@link #isValidBoolean(String)}
  */
-//@@author A0138423J
+// @@author A0138423J
 public class IsCompleted {
     public static final String MESSAGE_NAME_CONSTRAINTS = "Task status should be true/false or "
             + "yes/no case insensitive, and it should not be blank";
@@ -21,7 +21,7 @@ public class IsCompleted {
     public final Boolean isCompleted;
 
     /**
-     * Validates given name.
+     * Validates given status.
      *
      * @throws IllegalValueException
      *             if given name string is invalid.
@@ -47,8 +47,18 @@ public class IsCompleted {
         case 'n':
             valToBool = false;
             break;
+        default:
+            valToBool = true;
         }
         this.isCompleted = valToBool;
+    }
+
+    private IsCompleted() {
+        this.isCompleted = false;
+    }
+
+    public static IsCompleted getEmptyIsCompleted() {
+        return new IsCompleted();
     }
 
     /**
