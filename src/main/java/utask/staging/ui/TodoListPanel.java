@@ -3,7 +3,6 @@ package utask.staging.ui;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 
 import javafx.application.Platform;
@@ -38,7 +37,6 @@ public class TodoListPanel extends StagingUiPart<Region> {
         lstTasks.getStyleClass().add("custom-jfx-list-view1");
         lstTasks.setStyle("-jfx-expanded : true;");
 
-        lstTasks.setExpanded(true);
         setConnections(lstTasks, tasks, chain);
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
@@ -48,7 +46,9 @@ public class TodoListPanel extends StagingUiPart<Region> {
     private void setConnections(ListView<ReadOnlyTask> listView,
         ObservableList<ReadOnlyTask> tasks, ArrayList<ListView> previousListView) {
         listView.setItems(tasks);
-        listView.setCellFactory(lw -> new TaskListViewCell(previousListView));
+        UTListViewHelper.getInstance().add(listView);
+//        System.out.println("SETCONN : TODO");
+        //listView.setCellFactory(lw -> new TaskListViewCell(3));
         setEventHandlerForSelectionChangeEvent(listView);
     }
 
@@ -74,39 +74,5 @@ public class TodoListPanel extends StagingUiPart<Region> {
             lstTasks.scrollTo(index);
             lstTasks.getSelectionModel().clearAndSelect(index);
         });
-    }
-
-  //TODO: EXTRACT THIS
-    public class TaskListViewCell extends JFXListCell<ReadOnlyTask> {
-
-        private ArrayList<ListView> previousLists;
-
-        public TaskListViewCell(ArrayList<ListView> previousLists) {
-            //Can be null if it is the first list
-            this.previousLists = previousLists;
-        }
-
-        @Override
-        public void updateItem(ReadOnlyTask task, boolean empty) {
-            super.updateItem(task, empty);
-
-            if (empty || task == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-
-                int offset = 1;
-
-                //TODO:
-//                if (previousLists != null) {
-//                    System.out.println("TODO >> " + previousLists.size());
-//                    for (ListView lw : previousLists) {
-//                        offset += lw.getItems().size();
-//                    }
-//                }
-
-                setGraphic(new TaskListCard(task, getIndex() + offset).getRoot());
-            }
-        }
     }
 }

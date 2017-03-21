@@ -15,8 +15,8 @@
 			<columns>
 				<TableColumn fx:id="indexColumn" minWidth="50.0" text="#" />
 				<TableColumn fx:id="firstNameColumn" minWidth="200"
-					text="First Name" />
-				<TableColumn fx:id="lastNameColumn" minWidth="200" text="Last Name" />
+					text="Task Name" />
+				<TableColumn fx:id="lastNameColumn" minWidth="200" text="Deadline" />
 			</columns>
 			<columnResizePolicy>
 				<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
