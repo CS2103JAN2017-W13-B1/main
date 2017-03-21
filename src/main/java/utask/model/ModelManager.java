@@ -138,6 +138,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         default:
             logger.warning(Model.SORT_ORDER_ERROR + sortingOrder);
+            break;
         }
         indicateUTaskChanged();
     }
