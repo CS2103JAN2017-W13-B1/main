@@ -13,7 +13,7 @@ public class TagComparator implements Comparator<ReadOnlyTask> {
 
     @Override
     public int compare(ReadOnlyTask o1, ReadOnlyTask o2) {
-        return o1.getTags().toString().compareTo(o2.getTags().toString());
+        return o1.getTags().getFirstTagName().compareTo(o2.getTags().getFirstTagName());
     }
 
 }

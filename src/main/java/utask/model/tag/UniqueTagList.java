@@ -99,6 +99,14 @@ public class UniqueTagList implements Iterable<Tag> {
         return allTagNames;
     }
 
+    public String getFirstTagName() {
+        if (internalList.isEmpty()) {
+            return "z";
+        } else {
+            return internalList.get(0).toString();
+        }
+    }
+
     /**
      * Replaces the Tags in this list with those in the argument tag list.
      */
