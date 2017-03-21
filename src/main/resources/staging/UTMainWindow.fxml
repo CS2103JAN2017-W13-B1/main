@@ -12,7 +12,7 @@
 		<JFXToolbar VBox.vgrow="NEVER">
 			<leftItems>
 				<Label>μTask</Label>
-			</leftItems>			
+			</leftItems>		
 			<rightItems>
 				<JFXButton fx:id="btnHelp" prefHeight="40" prefWidth="100" text="Help [F1]" />			
 			</rightItems>

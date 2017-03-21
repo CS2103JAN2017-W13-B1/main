@@ -100,6 +100,8 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
         columnFrequency.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getFrequency().value));
         columnTag.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getTags().getAllTagNames()));
 
+        //TODO: Add isDone binding after merged with master
+
         columnIndex.setSortable(false);
 
         //Wrap the ObservableList in a FilteredList (initially display all data).
