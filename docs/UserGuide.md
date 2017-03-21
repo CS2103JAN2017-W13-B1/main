@@ -22,7 +22,7 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 	3.8.   [Listing tasks: `list`](#38-listing-tasks-list)
 	3.9.   [Finding tasks by keywords: `find`](#39-finding-tasks-by-keywords-find)
 	3.10.   [Viewing a task: `select`](#310-viewing-a-task-select)
-	3.11.   [Updating a task: `edit`](#311-updating-a-task-edit)
+	3.11.   [Updating a task: `update`](#311-updating-a-task-update)
 	3.12.   [Updating status of task: `done`](#312-updating-status-of-task-done)
 	3.13.   [Deleting a task: `delete`](#313-deleting-a-task-delete)
 	3.14.   [Clearing all entries : `clear`](#314-clearing-all-entries-clear)
@@ -280,7 +280,7 @@ Examples:
 * `select last`<br>
   Displays in depth details of the task with the maximal `index`.
 
-### 3.11. Updating a task: `edit`
+### 3.11. Updating a task: `update`
 
 Description: Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
 
@@ -404,21 +404,21 @@ There is no need to save manually.
 
 Command | Format
 -------- | :--------
-Help | `help`
-Set Path| `setpath PATH`
-CreateTag | `createtag NAME [/color COLOR]`
-ListTag | `listtag`
-UpdateTag | `updatetag INDEX [/name NAME] [/color COLOR]`
-DeleteTag | `deletetag INDEX`
-CreateTask | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
-ListTask | `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
-Find | `find KEYWORD...`
-Select | `select INDEX` *or* `select last`
-UpdateTask | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
-Done | `done INDEX`
-DeleteTask | `delete INDEX`
-Clear | `clear`
-Undo | `undo [/last STEPS]`
-Redo | `redo [/last STEPS]`
-Exit | `exit`
+help | `help`
+setpath| `setpath PATH`
+createtag | `createtag NAME [/color COLOR]`
+listtag | `listtag`
+updatetag | `updatetag INDEX [/name NAME] [/color COLOR]`
+deletetag | `deletetag INDEX`
+create | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
+list | `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
+find | `find KEYWORD...`
+select | `select INDEX` *or* `select last`
+update | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
+done | `done INDEX`
+delete | `delete INDEX`
+clear | `clear`
+undo | `undo [/last STEPS]`
+redo | `redo [/last STEPS]`
+exit | `exit`
 
