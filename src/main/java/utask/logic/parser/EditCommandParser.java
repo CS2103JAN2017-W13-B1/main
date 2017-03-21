@@ -50,6 +50,7 @@ public class EditCommandParser {
             editTaskDescriptor.setTimeStamp(ParserUtil.parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
             editTaskDescriptor.setFrequency(ParserUtil.parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
             editTaskDescriptor.setTags(parseTagsForEdit(ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
+            editTaskDescriptor.setIsCompleted(ParserUtil.parseIsCompleted(argsTokenizer.getValue(PREFIX_DONE)));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
