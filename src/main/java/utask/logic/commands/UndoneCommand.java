@@ -26,7 +26,7 @@ public class UndoneCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) " + "Example: "
             + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DONE_TASK_SUCCESS = "Undone task: %1$s";
+    public static final String MESSAGE_UNDONE_TASK_SUCCESS = "Undone task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";
     public static final String MESSAGE_DUPLICATE_STATUS = "This task is already uncompleted in uTask.";
     public static final String MESSAGE_INTERNAL_ERROR = "Error updating isCompleted attribute.";
@@ -71,7 +71,7 @@ public class UndoneCommand extends Command {
         }
         model.updateFilteredListToShowAll();
         return new CommandResult(
-                String.format(MESSAGE_DONE_TASK_SUCCESS, temp));
+                String.format(MESSAGE_UNDONE_TASK_SUCCESS, temp));
     }
 
     /**
