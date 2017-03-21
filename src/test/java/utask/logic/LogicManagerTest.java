@@ -34,6 +34,7 @@ import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
+import utask.logic.commands.SortCommand;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.Model;
 import utask.model.ModelManager;
@@ -148,7 +149,7 @@ public class LogicManagerTest {
      * - {@code expectedAddressBook} was saved to the storage file. <br>
      */
     private void assertCommandBehavior(boolean isCommandExceptionExpected, String inputCommand, String expectedMessage,
-            ReadOnlyUTask expectedAddressBook, List<? extends ReadOnlyTask> expectedShownList) {
+            ReadOnlyUTask expectedUTask, List<? extends ReadOnlyTask> expectedShownList) {
 
         try {
             CommandResult result = logic.execute(inputCommand);
@@ -163,8 +164,8 @@ public class LogicManagerTest {
         assertEquals(expectedShownList, model.getFilteredTaskList());
 
         // Confirm the state of data (saved and in-memory) is as expected
-        assertEquals(expectedAddressBook, model.getUTask());
-        assertEquals(expectedAddressBook, latestSavedAddressBook);
+        assertEquals(expectedUTask, model.getUTask());
+        assertEquals(expectedUTask, latestSavedAddressBook);
     }
 
     @Test
@@ -345,6 +346,23 @@ public class LogicManagerTest {
 
         assertCommandSuccess("delete 2",
                 String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, threePersons.get(1)), expectedAB,
+                expectedAB.getTaskList());
+    }
+
+    //@@author A0138493W
+    @Test
+    public void execute_sort_default() throws Exception{
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> twoTasks = helper.generateTaskList(2);
+        UTask expectedAB = helper.generateUTask(twoTasks);
+
+        // prepare task list state
+        helper.addToModel(model, twoTasks);
+
+        assertCommandSuccess("sort",
+                SortCommand.MESSAGE_SUCCESS,
+                expectedAB,
                 expectedAB.getTaskList());
     }
 
