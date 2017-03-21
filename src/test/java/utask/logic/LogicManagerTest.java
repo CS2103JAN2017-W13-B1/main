@@ -31,6 +31,7 @@ import utask.logic.commands.CommandResult;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.DoneCommand;
+import utask.logic.commands.EditCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
@@ -46,7 +47,9 @@ import utask.model.UTask;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
+import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
+import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
 import utask.model.task.IsCompleted;
 import utask.model.task.Name;
@@ -207,9 +210,9 @@ public class LogicManagerTest {
     @Test
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        model.addTask(helper.generateTask(1));
-        model.addTask(helper.generateTask(2));
-        model.addTask(helper.generateTask(3));
+        model.addTask(helper.generateEventTaskWithSeed(1));
+        model.addTask(helper.generateEventTaskWithSeed(2));
+        model.addTask(helper.generateEventTaskWithSeed(3));
 
         assertCommandSuccess("clear", ClearCommand.MESSAGE_SUCCESS, new UTask(),
                 Collections.emptyList());
@@ -266,7 +269,7 @@ public class LogicManagerTest {
     public void execute_done_undone_success_failure() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
-        Task toBeAdded = helper.generateTask(1);
+        Task toBeAdded = helper.generateEventTaskWithSeed(1);
 
         UTask expectedAB = new UTask();
         expectedAB.addTask(toBeAdded);
@@ -313,6 +316,113 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void execute_update_success() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateFloatingTaskWithSeed(1);
+        // toBeAdded missing new Deadline("010117"), new Timestamp("0000 to 2359")
+
+        UTask expectedAB = new UTask();
+        expectedAB.addTask(toBeAdded);
+
+        // execute command and verify result
+        assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
+                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedAB, expectedAB.getTaskList());
+
+        // create similar tasks with common attributes
+        // dTask missing (new Timestamp("0000 to 2359"))
+        DeadlineTask dTask = (DeadlineTask) helper.generateDeadlineTaskWithSeed(1);
+        EventTask eTask = (EventTask) helper.generateEventTaskWithSeed(1);
+
+        // attempt to update fTask into dTask
+        expectedAB.updateTask(0, dTask);
+
+        assertCommandSuccess("update 1 /by 010117",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, dTask),
+                expectedAB, expectedAB.getTaskList());
+
+        // attempt to update dTask into eTask
+        expectedAB.updateTask(0, eTask);
+
+        assertCommandSuccess("update 1 /from 0000 to 2359",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
+                expectedAB, expectedAB.getTaskList());
+
+        // execute test for update name
+        eTask.setName(new Name("Update Name"));
+        expectedAB.updateTask(0, eTask);
+
+        assertCommandSuccess("update 1 /name Update Name",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
+                expectedAB, expectedAB.getTaskList());
+
+
+        // execute test for update frequency
+        eTask.setFrequency(new Frequency("Every Sunday"));
+        expectedAB.updateTask(0, eTask);
+
+        assertCommandSuccess("update 1 /repeat Every Sunday",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
+                expectedAB, expectedAB.getTaskList());
+
+
+        // execute test for update isComplete
+        eTask.setCompleted(new IsCompleted("true"));
+        expectedAB.updateTask(0, eTask);
+
+        assertCommandSuccess("update 1 /done true",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
+                expectedAB, expectedAB.getTaskList());
+
+
+        // execute test for update tags
+        eTask.setTags(generateTagList("Urgent", "Important"));
+        expectedAB.updateTask(0, eTask);
+
+        assertCommandSuccess("update 1 /tag Urgent /tag Important",
+                String.format(EditCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
+                expectedAB, expectedAB.getTaskList());
+    }
+
+    @Test
+    public void execute_update_failure() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        // toBeAdded name is "Task 1"
+        Task toBeAdded = helper.generateFloatingTaskWithSeed(1);
+        // toBeAdded name is "Task 2"
+        Task toBeAdded2 = helper.generateFloatingTaskWithSeed(2);
+        // toBeAdded missing new Deadline("010117"), new Timestamp("0000 to 2359")
+
+        UTask expectedAB = new UTask();
+        expectedAB.addTask(toBeAdded);
+
+        // execute command and verify result add Task 1
+        assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
+                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedAB, expectedAB.getTaskList());
+
+        // execute incomplete command without index and verify result
+        assertCommandFailure("update ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+
+        // execute incomplete command without parameters and verify result
+        assertCommandFailure("update 1 ",
+                EditCommand.MESSAGE_NOT_EDITED);
+
+        // execute command and verify result add Task 2
+        expectedAB.addTask(toBeAdded2);
+        assertCommandSuccess(helper.generateCreateCommand(toBeAdded2),
+                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded2),
+                expectedAB, expectedAB.getTaskList());
+
+        // test to change task 1 into task 2 (conflict test)
+        assertCommandFailure("update 1 /name Task 2 /repeat Every 2 /tag tag2 /tag tag3",
+                EditCommand.MESSAGE_DUPLICATE_TASK);
+    }
+    // @author A0138423J
+
+    @Test
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
@@ -324,6 +434,7 @@ public class LogicManagerTest {
 
         assertCommandSuccess("list", ListCommand.MESSAGE_SUCCESS, expectedAB,
                 expectedList);
+
     }
 
     /**
@@ -653,9 +764,27 @@ public class LogicManagerTest {
          * @param seed
          *            used to generate the task data field values
          */
-        private Task generateTask(int seed) throws Exception {
+        // author A0138423J
+        private Task generateEventTaskWithSeed(int seed) throws Exception {
             return new EventTask(new Name("Task " + seed),
                     new Deadline("010117"), new Timestamp("0000 to 2359"),
+                    new Frequency("Every " + seed),
+                    new UniqueTagList(new Tag("tag" + Math.abs(seed)),
+                            new Tag("tag" + Math.abs(seed + 1))),
+                    new IsCompleted("no"));
+        }
+
+        private Task generateDeadlineTaskWithSeed(int seed) throws Exception {
+            return new DeadlineTask(new Name("Task " + seed),
+                    new Deadline("010117"),
+                    new Frequency("Every " + seed),
+                    new UniqueTagList(new Tag("tag" + Math.abs(seed)),
+                            new Tag("tag" + Math.abs(seed + 1))),
+                    new IsCompleted("no"));
+        }
+
+        private Task generateFloatingTaskWithSeed(int seed) throws Exception {
+            return new FloatingTask(new Name("Task " + seed),
                     new Frequency("Every " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)),
                             new Tag("tag" + Math.abs(seed + 1))),
@@ -669,10 +798,18 @@ public class LogicManagerTest {
             cmd.append("create ");
 
             cmd.append(p.getName().toString());
-            cmd.append(" /by ").append(p.getDeadline());
-            cmd.append(" /from ").append(p.getTimestamp());
-            cmd.append(" /repeat ").append(p.getFrequency());
-
+            if (!p.getDeadline().isEmpty()) {
+                cmd.append(" /by ").append(p.getDeadline());
+            }
+            if (!p.getTimestamp().isEmpty()) {
+                cmd.append(" /from ").append(p.getTimestamp());
+            }
+            if (!p.getFrequency().isEmpty()) {
+                cmd.append(" /repeat ").append(p.getFrequency());
+            }
+            if (!p.getIsCompleted().isEmpty()) {
+                cmd.append(" /done ").append(p.getIsCompleted());
+            }
             UniqueTagList tags = p.getTags();
             for (Tag t : tags) {
                 cmd.append(" /tag ").append(t.tagName);
@@ -747,7 +884,7 @@ public class LogicManagerTest {
         private List<Task> generateTaskList(int numGenerated) throws Exception {
             List<Task> persons = new ArrayList<>();
             for (int i = 1; i <= numGenerated; i++) {
-                persons.add(generateTask(i));
+                persons.add(generateEventTaskWithSeed(i));
             }
             return persons;
         }

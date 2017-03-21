@@ -61,6 +61,10 @@ public class IsCompleted {
         return new IsCompleted();
     }
 
+    public boolean isEmpty() {
+        return "".equals(value);
+    }
+
     /**
      * Returns true if a given string is a valid true/false or yes/no.
      */
