@@ -24,6 +24,7 @@ import utask.commons.core.EventsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
+import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.CommandResult;
@@ -34,6 +35,7 @@ import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
+import utask.logic.commands.SortCommand;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.Model;
 import utask.model.ModelManager;
@@ -148,7 +150,7 @@ public class LogicManagerTest {
      * - {@code expectedAddressBook} was saved to the storage file. <br>
      */
     private void assertCommandBehavior(boolean isCommandExceptionExpected, String inputCommand, String expectedMessage,
-            ReadOnlyUTask expectedAddressBook, List<? extends ReadOnlyTask> expectedShownList) {
+            ReadOnlyUTask expectedUTask, List<? extends ReadOnlyTask> expectedShownList) {
 
         try {
             CommandResult result = logic.execute(inputCommand);
@@ -163,8 +165,8 @@ public class LogicManagerTest {
         assertEquals(expectedShownList, model.getFilteredTaskList());
 
         // Confirm the state of data (saved and in-memory) is as expected
-        assertEquals(expectedAddressBook, model.getUTask());
-        assertEquals(expectedAddressBook, latestSavedAddressBook);
+        assertEquals(expectedUTask, model.getUTask());
+        assertEquals(expectedUTask, latestSavedAddressBook);
     }
 
     @Test
@@ -194,13 +196,6 @@ public class LogicManagerTest {
 
         assertCommandSuccess("clear", ClearCommand.MESSAGE_SUCCESS, new UTask(), Collections.emptyList());
     }
-
-//    @Test
-//    public void execute_add_invalidArgsFormat() {
-//        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, CreateCommand.MESSAGE_USAGE);
-//        assertCommandFailure("create valid Name /by invalidDate", expectedMessage);
-//        assertCommandFailure("create valid Name /by 200217 /from invalid /tag important", expectedMessage);
-//    }
 
     @Test
     public void execute_add_invalidTaskData() {
@@ -347,6 +342,120 @@ public class LogicManagerTest {
                 String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, threePersons.get(1)), expectedAB,
                 expectedAB.getTaskList());
     }
+
+    //@@author A0138493W
+    @Test
+    public void execute_sort_default() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> twoTasks = helper.generateTaskList(2);
+        UTask expectedAB = helper.generateUTask(twoTasks);
+
+        // prepare task list state
+        helper.addToModel(model, twoTasks);
+
+        assertCommandSuccess("sort",
+                SortCommand.MESSAGE_SUCCESS,
+                expectedAB,
+                expectedAB.getTaskList());
+    }
+
+    @Test
+    public void execute_sort_AToZ_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateTaskWithName("beta");
+        Task first = helper.generateTaskWithName("alpha");
+        Task fourth = helper.generateTaskWithName("gamma");
+        Task third = helper.generateTaskWithName("deta");
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(first, second, third, fourth);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort az", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
+    @Test
+    public void execute_sort_ZToA_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateTaskWithName("beta");
+        Task first = helper.generateTaskWithName("alpha");
+        Task fourth = helper.generateTaskWithName("gamma");
+        Task third = helper.generateTaskWithName("deta");
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(fourth, third, second, first);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort za", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
+    @Test
+    public void execute_sort_earliest_first_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateDeadlineTask("task 1", "160317");
+        Task first = helper.generateDeadlineTask("task 2", "150317");
+        Task fourth = helper.generateDeadlineTask("task 3", "180317");
+        Task third = helper.generateDeadlineTask("task 4", "170317");
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(first, second, third, fourth);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
+    @Test
+    public void execute_sort_latest_first_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateDeadlineTask("task 1", "160317");
+        Task first = helper.generateDeadlineTask("task 2", "150317");
+        Task fourth = helper.generateDeadlineTask("task 3", "180317");
+        Task third = helper.generateDeadlineTask("task 4", "170317");
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(fourth, third, second, first);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort latest", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
+    @Test
+    public void execute_sort_tag_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateTaskwithTags("task 1", generateTagList("b", "c"));
+        Task first = helper.generateTaskwithTags("task 2", generateTagList("e", "a"));
+        Task fourth = helper.generateTaskwithTags("task 3", generateTagList("d", "h"));
+        Task third = helper.generateTaskwithTags("task 4", generateTagList("e", "b"));
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(first, second, third, fourth);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort tag", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
+    /**
+     * Generates a UniqueTagList with 2 tags
+     * @throws IllegalValueException
+     */
+    private UniqueTagList generateTagList(String tagNmae1, String tagName2) throws IllegalValueException {
+        Tag tag1 = new Tag(tagNmae1);
+        Tag tag2 = new Tag(tagName2);
+        return new UniqueTagList(tag1, tag2);
+    }
+
+    //@@author
 
     @Test
     public void execute_find_invalidArgsFormat() {
@@ -530,6 +639,25 @@ public class LogicManagerTest {
         private Task generateTaskWithName(String name) throws Exception {
             return new EventTask(new Name(name), new Deadline("010117"), new Timestamp("0000 to 1300"),
                     new Frequency("-"), new UniqueTagList(new Tag("tag")));
+        }
+
+        //@@author A0138493W
+        /**
+         * Generates a Task object with given name and deadline Other fields will have
+         * some dummy values.
+         */
+        private Task generateDeadlineTask(String name, String deadline) throws Exception {
+            return new EventTask(new Name(name), new Deadline(deadline), new Timestamp("0000 to 1300"),
+                    new Frequency("-"), new UniqueTagList(new Tag("tag")));
+        }
+
+        /**
+         * Generates a Task object with given name and deadline Other fields will have
+         * some dummy values.
+         */
+        private Task generateTaskwithTags(String name, UniqueTagList tags) throws Exception {
+            return new EventTask(new Name(name), new Deadline("150317"), new Timestamp("0000 to 1300"),
+                    new Frequency("-"), tags);
         }
     }
 }
