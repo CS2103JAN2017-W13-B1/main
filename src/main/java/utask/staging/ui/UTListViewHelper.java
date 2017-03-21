@@ -4,9 +4,13 @@ package utask.staging.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.scene.control.ListView;
+import utask.commons.core.EventsCenter;
 import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.TaskListViewCell;
 
 /*
@@ -21,6 +25,7 @@ public class UTListViewHelper {
     private UTListViewHelper() {
         listViews = new ArrayList<ListView<ReadOnlyTask>>();
         offsetMap = new HashMap<ListView<ReadOnlyTask>, Integer>();
+        EventsCenter.getInstance().registerHandler(this);
     }
 
     public static UTListViewHelper getInstance() {
@@ -143,5 +148,12 @@ public class UTListViewHelper {
             listView.scrollTo(actualIndex);
             listView.getSelectionModel().select(actualIndex);
         });
+    }
+
+    @Subscribe
+    public void handleTaskListPanelSelectionChangedEvent(TaskListPanelSelectionChangedEvent e) {
+        clearSelectionOfAllListViews();
+        ListView<ReadOnlyTask> sender = e.getSender();
+        sender.getSelectionModel().select(e.getNewSelection());
     }
 }
