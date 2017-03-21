@@ -12,19 +12,18 @@ import utask.model.tag.UniqueTagList;
 public abstract class Task implements ReadOnlyTask {
 
     protected Name name;
-
     protected Frequency frequency;
-    protected boolean isCompleted;
+    protected IsCompleted isCompleted;
     protected UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Frequency frequency, UniqueTagList tags) {
+    public Task(Name name, Frequency frequency, UniqueTagList tags, IsCompleted isCompleted) {
         assert !CollectionUtil.isAnyNull(name, frequency, tags);
         this.name = name;
         this.frequency = frequency;
-        this.isCompleted = false;
+        this.isCompleted = isCompleted;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -48,6 +47,16 @@ public abstract class Task implements ReadOnlyTask {
         return frequency;
     }
 
+    //@@author A0138423J
+    public void setCompleted(IsCompleted isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    @Override
+    public IsCompleted getIsCompleted() {
+        return isCompleted;
+    }
+
     @Override
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
@@ -68,6 +77,7 @@ public abstract class Task implements ReadOnlyTask {
 
         this.setName(replacement.getName());
         this.setFrequency(replacement.getFrequency());
+        this.setCompleted(replacement.getIsCompleted());
         this.setTags(replacement.getTags());
     }
 
@@ -81,7 +91,7 @@ public abstract class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, frequency, tags);
+        return Objects.hash(name, frequency, tags, isCompleted);
     }
 
     @Override
