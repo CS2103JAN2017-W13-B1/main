@@ -15,6 +15,9 @@ public interface Model {
     //@@author A0138493W
     public static final String SORT_ORDER_BY_EARLIEST_FIRST = "earliest";
     public static final String SORT_ORDER_BY_LATEST_FIRST = "latest";
+    public static final String SORT_ORDER_BY_A_TO_Z = "az";
+    public static final String SORT_ORDER_BY_Z_TO_A = "za";
+    public static final String SORT_ORDER_BY_TAG = "tag";
     public static final String SORT_ORDER_DEFAULT = SORT_ORDER_BY_EARLIEST_FIRST;
     public static final String SORT_ORDER_ERROR = "Unable to sort due to unrecognized sorting order ";
 
