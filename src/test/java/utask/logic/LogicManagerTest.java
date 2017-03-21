@@ -367,6 +367,23 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void execute_sort_AToZ_order() throws Exception{
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateTaskWithName("beta");
+        Task first = helper.generateTaskWithName("alpha");
+        Task fourth = helper.generateTaskWithName("gamma");
+        Task third = helper.generateTaskWithName("deta");
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(first, second, third, fourth);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort az", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
+    @Test
     public void execute_find_invalidArgsFormat() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         assertCommandFailure("find ", expectedMessage);
