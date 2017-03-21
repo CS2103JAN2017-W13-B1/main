@@ -410,6 +410,23 @@ public class LogicManagerTest {
         assertCommandSuccess("sort", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
     }
 
+    @Test
+    public void execute_sort_latest_first_order() throws Exception {
+        // prepare expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task second = helper.generateDeadlineTask("task 1", "160317");
+        Task first = helper.generateDeadlineTask("task 2", "150317");
+        Task fourth = helper.generateDeadlineTask("task 3", "180317");
+        Task third = helper.generateDeadlineTask("task 4", "170317");
+        List<Task> fourTasks = helper.generateTaskList(second, first, fourth, third);
+        List<Task> expectedList = helper.generateTaskList(fourth, third, second, first);
+        UTask expectedAB = helper.generateUTask(expectedList);
+
+        // prepare task list state
+        helper.addToModel(model, fourTasks);
+        assertCommandSuccess("sort latest", SortCommand.MESSAGE_SUCCESS, expectedAB, expectedList);
+    }
+
     //@@author
 
     @Test
