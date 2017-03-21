@@ -4,31 +4,36 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 
 ---
 
+ 1. item
+	 2. item
+	 3. item
+ 2. item
+
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
-2. [Quick Start](#2-quick-start)
-	2.1.   [Installing](#21-installing)
-	2.2.   [Launching](#22-launching)
+2. [Quick Start](#2-quick-start) <br>
+	2.1.   [Installing](#21-installing)<br>
+	2.2.   [Launching](#22-launching)<br>
 	2.3.   [Using the Interface](#23-using-the-interface)
-3. [Features](#3-features)
-	3.1.   [Viewing help : `help`](#31-viewing-help-help)
-	3.2.   [Setting save location: `setpath`](#32-setting-save-location-setpath)
-	3.3.   [Creating tag: `createtag`](#33-creating-tag-createtag)
-	3.4.   [Listing tags: `listtag`](#34-listing-tags-listtag)
-	3.5.   [Updating a tag: `updatetag`](#35-updating-a-tag-updatetag)
-	3.6.   [Deleting a tag: `deletetag`](#36-deleting-a-tag-deletetag)
-	3.7.   [Creating task: `create`](#37-creating-task-create)
-	3.8.   [Listing tasks: `list`](#38-listing-tasks-list)
-	3.9.   [Finding tasks by keywords: `find`](#39-finding-tasks-by-keywords-find)
-	3.10.   [Viewing a task: `select`](#310-viewing-a-task-select)
-	3.11.   [Updating a task: `update`](#311-updating-a-task-update)
-	3.12.   [Updating status of task: `done`](#312-updating-status-of-task-done)
-	3.13.   [Deleting a task: `delete`](#313-deleting-a-task-delete)
-	3.14.   [Clearing all entries : `clear`](#314-clearing-all-entries-clear)
-	3.15.   [Undoing previous actions: `undo`](#315-undoing-previous-actions-undo)
-	3.16.   [Redoing previous actions: `redo`](#316-redoing-previous-actions-redo)
-	3.17.   [Exiting the program : `exit`](#317-exiting-the-program-exit)
+3. [Features](#3-features) <br>
+	3.1.   [Viewing help : `help`](#31-viewing-help--help) <br>
+	3.2.   [Setting save location: `setpath`](#32-setting-save-location-setpath) <br>
+	3.3.   [Creating tag: `createtag`](#33-creating-tag-createtag) <br>
+	3.4.   [Listing tags: `listtag`](#34-listing-tags-listtag) <br>
+	3.5.   [Updating a tag: `updatetag`](#35-updating-a-tag-updatetag) <br>
+	3.6.   [Deleting a tag: `deletetag`](#36-deleting-a-tag-deletetag) <br>
+	3.7.   [Creating task: `create`](#37-creating-task-create) <br>
+	3.8.   [Listing tasks: `list`](#38-listing-tasks-list) <br>
+	3.9.   [Finding tasks by keywords: `find`](#39-finding-tasks-by-keywords-find) <br>
+	3.10.   [Viewing a task: `select`](#310-viewing-a-task-select) <br>
+	3.11.   [Updating a task: `update`](#311-updating-a-task-update) <br>
+	3.12.   [Updating status of task: `done`](#312-updating-status-of-task-done) <br>
+	3.13.   [Deleting a task: `delete`](#313-deleting-a-task-delete) <br>
+	3.14.   [Clearing all entries : `clear`](#314-clearing-all-entries--clear) <br>
+	3.15.   [Undoing previous actions: `undo`](#315-undoing-previous-actions-undo) <br>
+	3.16.   [Redoing previous actions: `redo`](#316-redoing-previous-actions-redo) <br>
+	3.17.   [Exiting the program : `exit`](#317-exiting-the-program--exit) <br>
 	3.18.   [Saving the data](#318-saving-the-data)
 4. [FAQ](#4-faq)
 5. [Commands Summary](#5-commands-summary)
