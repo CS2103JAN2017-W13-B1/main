@@ -14,6 +14,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_DEADLINE = new Prefix("/by");
     public static final Prefix PREFIX_TIMESTAMP = new Prefix("/from");
     public static final Prefix PREFIX_FREQUENCY = new Prefix("/repeat");
+    public static final Prefix PREFIX_DONE = new Prefix("/done");
     public static final Prefix PREFIX_TAG = new Prefix("/tag");
 
     /* Patterns definitions */
