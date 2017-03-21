@@ -112,8 +112,8 @@ Description: Designates the save directory for μTask. <br>
 
 Format: `setpath PATH`
 
-> `PATH` provided by the user has to be a valid folder for the command to execute successfully.
-> `PATH` has to be enclosed within quotes `"`
+> * `PATH` provided by the user has to be a valid folder for the command to execute successfully.
+> * `PATH` has to be enclosed within quotes `"`
 
 Examples:
 
@@ -201,9 +201,9 @@ Description: Creates a new task in μTask. <br>
 Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
 
 > * `DEADLINE`, `START_TIME` and `END_TIME` uses a combination of  `HHMM DDMMYY` format to represent date and time
-	 * The order of `HHMM` and `DDMMYY` is flexible
-	 * `DDMMYY` is mandatory
-	 * `HHMM` is optional because if it is not provided, default value of `0000` will be used
+    * The order of `HHMM` and `DDMMYY` is flexible
+    * `DDMMYY` is mandatory
+    * `HHMM` is optional because if it is not provided, default value of `0000` will be used
 
 
 | Symbol | Meaning            | Example        |
