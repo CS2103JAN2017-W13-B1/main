@@ -13,7 +13,8 @@ public class SearchCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Search a task to uTask.";
 
-    public static final String MESSAGE_SUCCESS = "Task(s) found";
+    public static final String MESSAGE_SUCCESS = "Searching for %s\n"
+                                                + "Press [ESC] to return";
 
     private final String searchKeywords;
 
@@ -27,7 +28,7 @@ public class SearchCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         EventsCenter.getInstance().post(new SearchRequestEvent(searchKeywords));
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, searchKeywords));
     }
 
 }

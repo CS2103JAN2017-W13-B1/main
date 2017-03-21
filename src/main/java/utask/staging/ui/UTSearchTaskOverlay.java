@@ -6,7 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.FXCollections;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -14,13 +14,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.SortType;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import utask.commons.core.LogsCenter;
 import utask.commons.util.FxViewUtil;
+import utask.logic.Logic;
+import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 import utask.staging.ui.events.SearchRequestEvent;
 
@@ -35,29 +36,42 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 
     @FXML
     private AnchorPane rootPane;
-    @FXML
-    private TextField filterField;
-    @FXML
-    private TableView<ReadOnlyObservableTask> personTable;
-    @FXML
-    private TableColumn<ReadOnlyObservableTask, Number> indexColumn;
-    @FXML
-    private TableColumn<ReadOnlyObservableTask, String> firstNameColumn;
-    @FXML
-    private TableColumn<ReadOnlyObservableTask, String> lastNameColumn;
 
-    private ObservableList<ReadOnlyObservableTask> masterData;
+    @FXML
+    private TableView<ReadOnlyTask> searchTable;
+
+    @FXML
+    private TableColumn<ReadOnlyTask, Number> columnIndex;
+
+    @FXML
+    private TableColumn<ReadOnlyTask, String> columnName;
+
+    @FXML
+    private TableColumn<ReadOnlyTask, String> columnDeadline;
+
+    @FXML
+    private TableColumn<ReadOnlyTask, String> columnTimestamp;
+
+    @FXML
+    private TableColumn<ReadOnlyTask, String> columnFrequency;
+
+    @FXML
+    private TableColumn<ReadOnlyTask, String> columnTag;
+
+    private ObservableList<ReadOnlyTask> masterData;
 
     private Pane parent;
     private boolean isSearchOverlayShown = false;
 
-//    private static UTSearchTaskOverlay instance;
+    private FilteredList<ReadOnlyTask> filteredData;
+    private Logic logic;
 
-    private FilteredList<ReadOnlyObservableTask> filteredData;
-
-    public UTSearchTaskOverlay(Pane parent) {
+    public UTSearchTaskOverlay(Pane parent, Logic logic) {
         super(FXML);
+
+        assert(parent != null & logic != null);
         this.parent = parent;
+        this.logic = logic;
 
         populateData();
         initialize();
@@ -65,55 +79,56 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     }
 
     private void populateData() {
-        masterData = FXCollections.observableArrayList();
-        masterData.add(new ReadOnlyObservableTask("Hans", "Muster"));
+//        masterData = FXCollections.observableArrayList();
+//        masterData.add(new ReadOnlyObservableTaskTemp("Hans", "Muster"));
+        masterData = logic.getFilteredTaskList();
     }
-
-//    public static UTSearchTaskOverlay getInstance(Pane parent) {
-//        if (instance == null) {
-//            instance = new UTSearchTaskOverlay(parent);
-//        }
-//
-//        return instance;
-//    }
 
     private void initialize() {
         rootPane.setTranslateX(SEARCHPANE_HIDDEN_X_POS);
 
         //Initialize the columns.
-        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        indexColumn.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(personTable.getItems().indexOf(
-                                        cellData.getValue()) + 1));
-        indexColumn.setSortable(false);
+
+        //TODO: Try bean property
+        //columnName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+
+        columnIndex.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(
+                searchTable.getItems().indexOf(cellData.getValue()) + 1));
+        columnName.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getName().fullName));
+        columnDeadline.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getDeadline().value));
+        columnTimestamp.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getTimestamp().value));
+        columnFrequency.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getFrequency().value));
+        columnTag.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getTags().getAllTagNames()));
+
+        columnIndex.setSortable(false);
 
         //Wrap the ObservableList in a FilteredList (initially display all data).
         filteredData = new FilteredList<>(masterData, p -> true);
 
         //Wrap the FilteredList in a SortedList.
-        SortedList<ReadOnlyObservableTask> sortedData = new SortedList<>(filteredData);
+        SortedList<ReadOnlyTask> sortedData = new SortedList<>(filteredData);
 
         //Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(personTable.comparatorProperty());
+        sortedData.comparatorProperty().bind(searchTable.comparatorProperty());
 
         //Add sorted (and filtered) data to the table.
-        personTable.setItems(sortedData);
+        searchTable.setItems(sortedData);
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
-        FxViewUtil.applyAnchorBoundaryParameters(personTable, 0.0, 0.0, 0.0, 0.0);
+        FxViewUtil.applyAnchorBoundaryParameters(searchTable, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 
-    public void sort(TableColumn<ReadOnlyObservableTask, String> column) {
+    public void sort(TableColumn<ReadOnlyTask, String> column) {
         sort(column, SortType.ASCENDING);
     }
 
-    public void sort(TableColumn<ReadOnlyObservableTask, String> column, SortType sortOrder) {
-        personTable.getSortOrder().clear();
-        firstNameColumn.setSortType(sortOrder);
-        personTable.getSortOrder().addAll(column);
+    public void sort(TableColumn<ReadOnlyTask, String> column, SortType sortOrder) {
+        searchTable.getSortOrder().clear();
+        columnName.setSortType(sortOrder);
+        searchTable.getSortOrder().addAll(column);
     }
 
-    public void filterResultsByKeywords(FilteredList<ReadOnlyObservableTask> filteredData, String keywords) {
+    public void filterResultsByKeywords(FilteredList<ReadOnlyTask> filteredData, String keywords) {
         filteredData.setPredicate(task -> {
             // If filter text is empty, display all persons.
             if (keywords == null || keywords.isEmpty()) {
@@ -129,17 +144,20 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 //                return true; // Filter matches last name.
 //            }
 
-            return task.getFirstName().toLowerCase().contains(lowerCaseFilter) ||
-            task.getLastName().toLowerCase().contains(lowerCaseFilter);
+            //TODO: Build comprehensive search
+            return task.getName().fullName.toLowerCase().contains(lowerCaseFilter) ||
+            task.getTags().getAllTagNames().toLowerCase().contains(lowerCaseFilter);
+
             //return false; // Does not match.
         });
     }
 
     public void delete() {
-        ReadOnlyObservableTask remove = personTable.getSelectionModel().getSelectedItem();
+        ReadOnlyTask remove = searchTable.getSelectionModel().getSelectedItem();
 
         if (remove != null) {
             masterData.remove(remove);
+            //TODO: Do actual remove
         }
     }
 

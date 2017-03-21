@@ -153,7 +153,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTResultDisplay(resultDisplayPlaceholder);
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
-        new UTSearchTaskOverlay(topPlaceholder);
+        new UTSearchTaskOverlay(topPlaceholder, logic);
     }
 
     // private AnchorPane getCommandBoxPlaceholder() {

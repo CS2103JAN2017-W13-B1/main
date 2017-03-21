@@ -10,13 +10,15 @@
 <AnchorPane fx:id="rootPane" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"
 	xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<TableView fx:id="personTable" prefHeight="-1.0" prefWidth="-1.0"
+		<TableView fx:id="searchTable" prefHeight="-1.0" prefWidth="-1.0"
 			tableMenuButtonVisible="false">
 			<columns>
-				<TableColumn fx:id="indexColumn" minWidth="50.0" text="#" />
-				<TableColumn fx:id="firstNameColumn" minWidth="200"
-					text="Task Name" />
-				<TableColumn fx:id="lastNameColumn" minWidth="200" text="Deadline" />
+				<TableColumn fx:id="columnIndex" minWidth="50.0" maxWidth="50.0" text="#" />
+				<TableColumn fx:id="columnName" minWidth="200" text="Task Name" />
+				<TableColumn fx:id="columnDeadline" minWidth="100" text="Deadline" />
+				<TableColumn fx:id="columnTimestamp" minWidth="100" text="Timestamp" />
+				<TableColumn fx:id="columnFrequency" minWidth="100" text="Repeat" />
+				<TableColumn fx:id="columnTag" minWidth="200" text="Tags" />
 			</columns>
 			<columnResizePolicy>
 				<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
