@@ -4,6 +4,11 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import javafx.collections.transformation.FilteredList;
+import utask.commons.comparators.AToZComparator;
+import utask.commons.comparators.EarliestFirstComparator;
+import utask.commons.comparators.LatestFirstComparator;
+import utask.commons.comparators.TagComparator;
+import utask.commons.comparators.ZToAComparator;
 import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.UnmodifiableObservableList;
@@ -101,6 +106,44 @@ public class ModelManager extends ComponentManager implements Model {
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
     }
+
+    //@@author A0138493W
+    @Override
+    public void sortFilteredTaskList(String sortingOrder) {
+        assert sortingOrder != null;
+        switch(sortingOrder) {
+        case "": //default sorting order
+            uTask.sortByComparator(new EarliestFirstComparator());
+            break;
+
+        case Model.SORT_ORDER_BY_EARLIEST_FIRST:
+            uTask.sortByComparator(new EarliestFirstComparator());
+            break;
+
+        case Model.SORT_ORDER_BY_LATEST_FIRST:
+            uTask.sortByComparator(new LatestFirstComparator());
+            break;
+
+        case Model.SORT_ORDER_BY_A_TO_Z:
+            uTask.sortByComparator(new AToZComparator());
+            break;
+
+        case Model.SORT_ORDER_BY_Z_TO_A:
+            uTask.sortByComparator(new ZToAComparator());
+            break;
+
+        case Model.SORT_ORDER_BY_TAG:
+            uTask.sortByComparator(new TagComparator());
+            break;
+
+        default:
+            logger.warning(Model.SORT_ORDER_ERROR + sortingOrder);
+            break;
+        }
+        indicateUTaskChanged();
+    }
+
+    //@@author
 
     //========== Inner classes/interfaces used for filtering =================================================
 

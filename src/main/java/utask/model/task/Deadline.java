@@ -1,9 +1,14 @@
 package utask.model.task;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import utask.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Task's deadline in the UTask.
  * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
  */
 public class Deadline {
@@ -17,7 +22,7 @@ public class Deadline {
     /**
      * Validates given deadline.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given deadline string is invalid.
      */
     public Deadline(String deadline) throws IllegalValueException {
         assert deadline != null;
@@ -39,6 +44,25 @@ public class Deadline {
     public boolean isEmpty() {
         return "".equals(value);
     }
+
+    //@@author A0138493W
+    /**
+     * Returns deadline as date.
+     *
+     * @return date
+     * @throws ParseException
+     */
+    public Date getDate() throws ParseException {
+        assert value != null;
+
+        DateFormat fmt = new SimpleDateFormat("ddMMyyyy");
+        StringBuilder dateString = new StringBuilder(value);
+        dateString.insert(4, "20");
+        Date date = fmt.parse(dateString.toString());
+        return date;
+    }
+
+    //@@author
 
     /**
      * Returns true if a given string is a valid task deadline.

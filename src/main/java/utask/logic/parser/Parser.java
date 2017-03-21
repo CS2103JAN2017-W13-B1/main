@@ -17,6 +17,7 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
+import utask.logic.commands.SortCommand;
 
 /**
  * Parses user input.
@@ -52,6 +53,9 @@ public class Parser {
 
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
