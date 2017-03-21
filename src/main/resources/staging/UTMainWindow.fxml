@@ -14,16 +14,15 @@
 				<Label>μTask</Label>
 			</leftItems>			
 			<rightItems>
-				<JFXButton  prefHeight="40" prefWidth="60" text="File" />
+				<JFXButton prefHeight="40" prefWidth="60" text="File" />
 				<JFXButton prefHeight="40" prefWidth="60" text="Help" />			
 			</rightItems>
 		</JFXToolbar>
 		<StackPane fx:id="topPlaceholder" VBox.vgrow="ALWAYS">
 			<children>
-				<SplitPane id="splitPane" dividerPositions="0.8"
-					VBox.vgrow="ALWAYS">
+				<SplitPane dividerPositions="0.8" VBox.vgrow="ALWAYS">
 					<items>
-						<VBox fx:id="personList" minWidth="340" prefWidth="340">
+						<VBox minWidth="340" prefWidth="340">
 							<padding>
 								<Insets left="10.0" right="10.0" />
 							</padding>
@@ -32,7 +31,7 @@
 									VBox.vgrow="ALWAYS" />
 							</children>
 						</VBox>
-						<VBox fx:id="todoList" minWidth="200" prefWidth="200">
+						<VBox minWidth="200" prefWidth="200">
 							<padding>
 								<Insets left="10.0" right="10.0" />
 							</padding>

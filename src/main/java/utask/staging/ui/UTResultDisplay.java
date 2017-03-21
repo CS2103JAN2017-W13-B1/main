@@ -8,7 +8,7 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.NewResultAvailableEvent;
@@ -26,12 +26,12 @@ public class UTResultDisplay extends StagingUiPart<Region> {
     private final StringProperty displayed = new SimpleStringProperty("");
 
     @FXML
-    private AnchorPane rootPane;
+    private Pane rootPane;
 
     @FXML
     private JFXTextArea resultDisplay;
 
-    public UTResultDisplay(AnchorPane parent) {
+    public UTResultDisplay(Pane parent) {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);

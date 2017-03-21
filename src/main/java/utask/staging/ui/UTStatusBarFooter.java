@@ -7,7 +7,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
@@ -23,7 +23,7 @@ public class UTStatusBarFooter extends StagingUiPart<Region> {
     @FXML
     private Label saveLocationStatus;
 
-    public UTStatusBarFooter(AnchorPane placeHolder, String saveLocation) {
+    public UTStatusBarFooter(Pane placeHolder, String saveLocation) {
         super(FXML);
         addToPlaceholder(placeHolder);
         setSyncStatus("Not updated yet in this session");
@@ -31,7 +31,7 @@ public class UTStatusBarFooter extends StagingUiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void addToPlaceholder(AnchorPane placeHolder) {
+    private void addToPlaceholder(Pane placeHolder) {
         FxViewUtil.applyAnchorBoundaryParameters(getRoot(), 0.0, 0.0, 0.0, 0.0);
         placeHolder.getChildren().add(getRoot());
     }

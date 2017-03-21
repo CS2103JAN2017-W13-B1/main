@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import utask.commons.core.LogsCenter;
-import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
 import utask.commons.util.FxViewUtil;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;

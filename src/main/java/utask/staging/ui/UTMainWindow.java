@@ -3,21 +3,15 @@ package utask.staging.ui;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXDecorator;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -50,43 +44,25 @@ public class UTMainWindow extends StagingUiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     @FXML
-    private JFXListView<Label> lstViewTask;
-
-    @FXML
-    private JFXTextField txtCommand;
-
-    @FXML
-    private HBox hBoxSuggestion;
-
-    @FXML
-    private Label lblSuggestion;
-
-    @FXML
-    private JFXTextArea txtAreaResults;
+    private VBox rootPane;
 
     @FXML
     private Pane topPlaceholder;
 
     @FXML
-    private VBox personList;
+    private Pane personListPanelPlaceholder;
 
     @FXML
-    private VBox rootPane;
+    private Pane todoListPanelPlaceholder;
 
     @FXML
-    private AnchorPane personListPanelPlaceholder;
+    private Pane commandBoxPlaceholder;
 
     @FXML
-    private AnchorPane todoListPanelPlaceholder;
+    private Pane resultDisplayPlaceholder;
 
     @FXML
-    private AnchorPane commandBoxPlaceholder;
-
-    @FXML
-    private AnchorPane resultDisplayPlaceholder;
-
-    @FXML
-    private AnchorPane statusbarPlaceholder;
+    private Pane statusbarPlaceholder;
 
     public UTMainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -101,21 +77,11 @@ public class UTMainWindow extends StagingUiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        // Scene scene = new Scene(getRoot());
-        // primaryStage.setScene(new Scene(getRoot()));
 
-        // TODO!!!
-        boolean isMacOS = System.getProperty("os.name") == "Mac";
-
-        JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot(), isMacOS, true, true);
-        decorator.setPrefSize(800, 600);
-        decorator.setCustomMaximize(true);
-
+        JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot(), false, true, true);
         Scene scene = new Scene(decorator);
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-fonts.css").toExternalForm());
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
-//        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-components.css").toExternalForm());
-//        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/utask.css").toExternalForm());
         this.primaryStage.setScene(scene);
 
@@ -127,7 +93,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
     }
 
     private void setAccelerators() {
-//        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+       //setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
 
     /**
@@ -137,7 +103,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
      *            the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
-        menuItem.setAccelerator(keyCombination);
+        //menuItem.setAccelerator(keyCombination);
 
         /*
          * TODO: the code below can be removed once the bug reported here
@@ -198,9 +164,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
-     *
-     * @param iconSource
-     *            e.g. {@code "/images/help_icon.png"}
+     * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
         FxViewUtil.setStageIcon(primaryStage, iconSource);
@@ -252,13 +216,4 @@ public class UTMainWindow extends StagingUiPart<Region> {
     public UTTodoListPanel getTodoListPanel() {
         return todoListPanel;
     }
-    //
-    // void loadPersonPage(ReadOnlyTask person) {
-    // browserPanel.loadPersonPage(person);
-    // }
-    //
-    // void releaseResources() {
-    // browserPanel.freeResources();
-    // }
-
 }
