@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXToolbar?>
+<?import com.jfoenix.controls.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.111"
 	xmlns:fx="http://javafx.com/fxml/1">
-	<stylesheets>
-		<URL value="@../css/jfoenix-fonts.css" />
-		<URL value="@../css/jfoenix-design.css" />
-		<URL value="@../css/jfoenix-components.css" />
-		<URL value="@../css/jfoenix-main-demo.css" />
-	</stylesheets>
 	<children>
 		<JFXToolbar VBox.vgrow="NEVER">
 			<leftItems>
 				<Label>μTask</Label>
-			</leftItems>
+			</leftItems>			
 			<rightItems>
-				<JFXButton buttonType="RAISED" prefHeight="40" prefWidth="60"
-					style="-fx-background-radius:5em" text="Help" />
+				<JFXButton  prefHeight="40" prefWidth="60" text="File" />
+				<JFXButton prefHeight="40" prefWidth="60" text="Help" />			
 			</rightItems>
 		</JFXToolbar>
 		<StackPane fx:id="topPlaceholder" VBox.vgrow="ALWAYS">

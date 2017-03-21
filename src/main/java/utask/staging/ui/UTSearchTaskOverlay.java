@@ -29,7 +29,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(UTSearchTaskOverlay.class);
     private static final String FXML = "UTSearchTaskOverlay.fxml";
 
-    private static final int SEARCHPANE_HIDDEN_Y_POS = -3000;
+    private static final int SEARCHPANE_HIDDEN_X_POS = -3000;
     private final TranslateTransition openTransitionEffect = new TranslateTransition(new Duration(350), getRoot());
     private final TranslateTransition closeTransitionEffect = new TranslateTransition(new Duration(350), getRoot());
 
@@ -78,7 +78,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 //    }
 
     private void initialize() {
-        rootPane.setTranslateY(SEARCHPANE_HIDDEN_Y_POS);
+        rootPane.setTranslateX(SEARCHPANE_HIDDEN_X_POS);
 
         //Initialize the columns.
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
@@ -145,7 +145,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 
     public void openIfSearchIsNotShowing() {
         if (!isSearchOverlayShown) {
-            openTransitionEffect.setToY(0);
+            openTransitionEffect.setToX(0);
             openTransitionEffect.play();
             isSearchOverlayShown = true;
         }
@@ -153,7 +153,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 
     public void closeIfSearchIsShowing() {
         if (isSearchOverlayShown) {
-            closeTransitionEffect.setToY(SEARCHPANE_HIDDEN_Y_POS);
+            closeTransitionEffect.setToX(SEARCHPANE_HIDDEN_X_POS);
             closeTransitionEffect.play();
             isSearchOverlayShown = false;
         }

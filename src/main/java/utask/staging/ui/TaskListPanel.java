@@ -3,13 +3,13 @@ package utask.staging.ui;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
@@ -19,7 +19,6 @@ import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
 import utask.commons.util.FxViewUtil;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.TaskListPanel.TaskListViewCell;
 
 public class TaskListPanel extends StagingUiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
@@ -61,7 +60,7 @@ public class TaskListPanel extends StagingUiPart<Region> {
     private void populate(ArrayList<ListView> chain) {
 //        Platform.runLater(() -> {
         ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
-        double height = 130.0;
+        double height = 150.0;
         JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
         setConnections(due, dueTasks, null);
         chain.add(due);
@@ -111,9 +110,10 @@ public class TaskListPanel extends StagingUiPart<Region> {
         Label label = new Label(name);
         label.getStyleClass().add("list-label");
         JFXListView<ReadOnlyTask> list = new JFXListView<ReadOnlyTask>();
-//        list.getStyleClass().add("jfx-list-view");
-//        list.setStyle("-jfx-expanded : true;");
-//        list.getStyleClass().add("custom-jfx-list-view1");
+        list.getStyleClass().add("jfx-list-view");
+        list.getStyleClass().add("custom-jfx-list-view1");
+
+//        JFXListViewSkin<T>
 
         parent.getChildren().add(label);
         parent.getChildren().add(list);
@@ -122,7 +122,7 @@ public class TaskListPanel extends StagingUiPart<Region> {
     }
 
     //TODO: EXTRACT THIS
-    class TaskListViewCell extends ListCell<ReadOnlyTask> {
+    class TaskListViewCell extends JFXListCell<ReadOnlyTask> {
 
         private ArrayList<ListView> previousLists;
 
@@ -132,7 +132,7 @@ public class TaskListPanel extends StagingUiPart<Region> {
         }
 
         @Override
-        protected void updateItem(ReadOnlyTask task, boolean empty) {
+        public void updateItem(ReadOnlyTask task, boolean empty) {
             super.updateItem(task, empty);
 
             if (empty || task == null) {
@@ -144,8 +144,6 @@ public class TaskListPanel extends StagingUiPart<Region> {
 
                 //TODO:
                 if (previousLists != null) {
-                    System.out.println("TASK >> " + previousLists.size());
-
                     for (ListView lw : previousLists) {
                         offset += lw.getItems().size();
                     }

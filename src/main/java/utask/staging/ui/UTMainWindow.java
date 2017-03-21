@@ -114,7 +114,8 @@ public class UTMainWindow extends StagingUiPart<Region> {
         Scene scene = new Scene(decorator);
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-fonts.css").toExternalForm());
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
-        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
+//        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-components.css").toExternalForm());
+//        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
         scene.getStylesheets().add(UTMainWindow.class.getResource("/css/utask.css").toExternalForm());
         this.primaryStage.setScene(scene);
 
@@ -165,12 +166,9 @@ public class UTMainWindow extends StagingUiPart<Region> {
         chain = new ArrayList<>();
         new TaskListPanel(personListPanelPlaceholder, logic.getFilteredTaskList(), chain);
         todoListPanel = new TodoListPanel(todoListPanelPlaceholder, logic.getFilteredTaskList(), chain);
-
         new UTResultDisplay(resultDisplayPlaceholder);
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
-
-
         new UTSearchTaskOverlay(topPlaceholder);
     }
 

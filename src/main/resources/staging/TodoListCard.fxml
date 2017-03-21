@@ -14,7 +14,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </HBox.margin>
          <children>
-            <Label fx:id="id" alignment="TOP_LEFT" contentDisplay="TOP" minWidth="30.0" prefHeight="160.0" text="999" VBox.vgrow="NEVER">
+            <Label fx:id="id" alignment="TOP_LEFT" contentDisplay="TOP" minWidth="30.0" text="999" VBox.vgrow="NEVER">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -22,12 +22,12 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <JFXCheckBox fx:id="done" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" minWidth="30.0" mnemonicParsing="false" prefHeight="100.0" text="" VBox.vgrow="NEVER">
+            <JFXCheckBox fx:id="done" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" minWidth="30.0" mnemonicParsing="false" text="" VBox.vgrow="NEVER">
                <font>
                   <Font size="1.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="5.0" />
+                  <Insets bottom="5.0" top="30.0" />
                </VBox.margin>
             </JFXCheckBox>
          </children>
@@ -43,9 +43,9 @@
                </VBox.margin>
             </Label>
             <HBox fx:id="tagPane" prefHeight="100.0">
+            <!--  
                <children>
-               	<!--
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="I" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="Important" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -53,9 +53,18 @@
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                      </padding>
                   </Label>
-                  -->
+                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: GREEN;" text="Daily" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </Label>
                </children>
+              -->
             </HBox>
+            <Label fx:id="lblDate" text="" textFill="#1a00ff" />
          </children>
          <HBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

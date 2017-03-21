@@ -3,12 +3,12 @@ package utask.staging.ui;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -17,7 +17,6 @@ import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
 import utask.commons.util.FxViewUtil;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.TodoListPanel.TaskListViewCell;
 import utask.ui.PersonListPanel;
 
 public class TodoListPanel extends StagingUiPart<Region> {
@@ -34,6 +33,12 @@ public class TodoListPanel extends StagingUiPart<Region> {
         super(FXML);
 
         assert(parent != null && tasks != null);
+
+        lstTasks.getStyleClass().add("jfx-list-view");
+        lstTasks.getStyleClass().add("custom-jfx-list-view1");
+        lstTasks.setStyle("-jfx-expanded : true;");
+
+        lstTasks.setExpanded(true);
         setConnections(lstTasks, tasks, chain);
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
@@ -72,7 +77,7 @@ public class TodoListPanel extends StagingUiPart<Region> {
     }
 
   //TODO: EXTRACT THIS
-    public class TaskListViewCell extends ListCell<ReadOnlyTask> {
+    public class TaskListViewCell extends JFXListCell<ReadOnlyTask> {
 
         private ArrayList<ListView> previousLists;
 
@@ -82,7 +87,7 @@ public class TodoListPanel extends StagingUiPart<Region> {
         }
 
         @Override
-        protected void updateItem(ReadOnlyTask task, boolean empty) {
+        public void updateItem(ReadOnlyTask task, boolean empty) {
             super.updateItem(task, empty);
 
             if (empty || task == null) {

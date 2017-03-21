@@ -17,6 +17,7 @@ import utask.model.task.ReadOnlyTask;
 public class TaskListCard extends StagingUiPart<Region> {
 
     private static final String FXML = "TodoListCard.fxml";
+    private static final String LABEL_CSS = "-fx-padding: 1px; -fx-text-fill: WHITE; -fx-background-color: %s;";
 
     @FXML
     private Label id;
@@ -32,6 +33,7 @@ public class TaskListCard extends StagingUiPart<Region> {
 
     public TaskListCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
+        assert(task != null && displayedIndex > 0);
 
         name.setText(task.getName().fullName);
         id.setText(displayedIndex + " ");
@@ -45,15 +47,23 @@ public class TaskListCard extends StagingUiPart<Region> {
         UniqueTagList tags = task.getTags();
 
         for (Tag tag : tags) {
-            Label label = new Label(tag.tagName);
-            label.setAlignment(Pos.CENTER);;
-            label.setTextAlignment(TextAlignment.CENTER);
-            label.setTextOverrun(OverrunStyle.CLIP);
-            label.setMinWidth(15.0);
-            label.setStyle("-fx-padding: 1px; -fx-text-fill: WHITE; -fx-background-color: " +
-                            TaskColorHelper.getARandomColor() + ";");
+            Label label = createTagLabel(tag.tagName);
             HBox.setMargin(label, new Insets(5, 5, 5, 5));
             tagPane.getChildren().add(label);
         }
+    }
+
+    private Label createTagLabel(String name) {
+        Label label = new Label(name);
+        label.setAlignment(Pos.CENTER);;
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setTextOverrun(OverrunStyle.CLIP);
+        label.setMinWidth(15.0);
+        label.setStyle(String.format(LABEL_CSS, TaskColorHelper.getARandomColor()));
+        return label;
+    }
+
+    private void preventRenderingOfHiddenElement() {
+        //dueList.setManaged(false);
     }
 }

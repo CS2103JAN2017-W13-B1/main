@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="rootPane" stylesheets="@../css/jfoenix-main-demo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
       <Label styleClass="list-label" text="Checklist">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-		<JFXListView fx:id="lstTasks" styleClass="custom-jfx-list-view1" VBox.vgrow="ALWAYS" />
+		<JFXListView fx:id="lstTasks" VBox.vgrow="ALWAYS"/>
 	</children>
 </VBox>
