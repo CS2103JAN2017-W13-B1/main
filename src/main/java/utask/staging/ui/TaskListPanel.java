@@ -71,8 +71,10 @@ public class TaskListPanel extends StagingUiPart<Region> {
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
 //        });
-        
-        done();
+
+        Platform.runLater(() -> {
+            UTListViewHelper.getInstance().updateListView();
+        });
     }
 
     private void setConnections(ListView<ReadOnlyTask> listView,
@@ -83,13 +85,6 @@ public class TaskListPanel extends StagingUiPart<Region> {
         //listView.setCellFactory(lw -> new TaskListViewCell(fake));
         setEventHandlerForSelectionChangeEvent(listView);
     }
-
-    public void done() {
-        Platform.runLater(() -> {
-            UTListViewHelper.getInstance().updateListView();
-        });
-    }
-
 
 //    private void addToPlaceholder(AnchorPane placeHolderPane) {
 //        SplitPane.setResizableWithParent(placeHolderPane, false);

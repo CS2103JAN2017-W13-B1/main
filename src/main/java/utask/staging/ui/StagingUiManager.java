@@ -117,7 +117,9 @@ public class StagingUiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.getTodoListPanel().scrollTo(event.targetIndex);
+//        mainWindow.getTodoListPanel().scrollTo(event.targetIndex);
+
+        UTListViewHelper.getInstance().scrollTo(event.targetIndex);
     }
 
     //TODO: Remove, no more browser

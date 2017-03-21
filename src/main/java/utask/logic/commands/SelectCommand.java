@@ -2,10 +2,9 @@ package utask.logic.commands;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.Messages;
-import utask.commons.core.UnmodifiableObservableList;
 import utask.commons.events.ui.JumpToListRequestEvent;
 import utask.logic.commands.exceptions.CommandException;
-import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.UTListViewHelper;
 
 /**
  * Selects a task identified using it's last displayed index from the address book.
@@ -30,9 +29,11 @@ public class SelectCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
-        if (lastShownList.size() < targetIndex) {
+        //UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+//      if (lastShownList.size() < targetIndex) {
+//      throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+//       }
+        if (UTListViewHelper.getInstance().getTotalSize() < targetIndex) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
