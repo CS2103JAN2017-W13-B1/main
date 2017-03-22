@@ -17,6 +17,7 @@ import utask.staging.ui.helper.TaskColorHelper;
 
 public class UTTaskListCard extends StagingUiPart<Region> {
 
+    public static final double CARD_HEIGHT = 150.0;
     private static final String FXML = "UTTaskListCard.fxml";
     private static final String LABEL_CSS = "-fx-padding: 1px; -fx-text-fill: WHITE; -fx-background-color: %s;";
 

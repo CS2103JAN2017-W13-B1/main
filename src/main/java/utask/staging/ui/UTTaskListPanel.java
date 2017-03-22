@@ -1,10 +1,12 @@
+//@@author A0139996A
 package utask.staging.ui;
 
 import java.util.logging.Logger;
 
 import com.jfoenix.controls.JFXListView;
 
-import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -20,20 +22,9 @@ import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.TypicalTaskBuilder;
 
 public class UTTaskListPanel extends StagingUiPart<Region> {
-    private final Logger logger = LogsCenter.getLogger(UTTaskListPanel.class);
     private static final String FXML = "UTTaskListPanel.fxml";
-
-    @FXML
-    private JFXListView<ReadOnlyTask> list;
-
-    @FXML
-    private Label dueLabel;
-
-    @FXML
-    private JFXListView<ReadOnlyTask> dueList;
-
-    @FXML
-    private JFXListView<ReadOnlyTask> subList;
+    private static final double CARD_HEIGHT = UTTaskListCard.CARD_HEIGHT;
+    private final Logger logger = LogsCenter.getLogger(UTTaskListPanel.class);
 
     @FXML
     private ScrollPane rootPane;
@@ -41,54 +32,78 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
     @FXML
     private VBox container;
 
-    private Pane parent;
-    private static final double CARD_HEIGHT = 150.0;
-
-    /**
-     * @param placeholder
-     *            The AnchorPane where the BrowserPanel must be inserted
-     */
-    public UTTaskListPanel(Pane placeholder, ObservableList<ReadOnlyTask> tasks) {
+    public UTTaskListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks) {
         super(FXML);
 
-        assert (placeholder != null && tasks != null);
+        assert (parent != null && tasks != null);
 
-        this.parent = placeholder;
-        populate();
+        addControlsToParent(parent);
     }
 
-    private void populate() {
-//        Platform.runLater(() -> {
-        ObservableList<ReadOnlyTask> dueTasks = TypicalTaskBuilder.due();
-        JFXListView<ReadOnlyTask> due = createListControlAndAddToParent("Due", container);
-        setConnections(due, dueTasks);
-        due.setMinHeight(CARD_HEIGHT * dueTasks.size());
-
-        ObservableList<ReadOnlyTask> todayTasks = TypicalTaskBuilder.today();
-        JFXListView<ReadOnlyTask> today = createListControlAndAddToParent("Today", container);
-        setConnections(today, todayTasks);
-        today.setMinHeight(CARD_HEIGHT * todayTasks.size());
+    private void addControlsToParent(Pane parent) {
+        createLabelledListViewControl(container, TypicalTaskBuilder.due(), "Due");
+        createLabelledListViewControl(container, TypicalTaskBuilder.today(), "Today");
+        createLabelledListViewControl(container, FXCollections.observableArrayList(), "Tomorrow");
+        createLabelledListViewControl(container, FXCollections.observableArrayList(), "Future");
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
-//        });
 
         UTListViewHelper.getInstance().updateListViews();
+    }
 
+    private void createLabelledListViewControl(Pane parent, ObservableList<ReadOnlyTask> tasks, String labelName) {
+
+        assert(tasks != null);
+
+        Label label = createLabel(labelName);
+        JFXListView<ReadOnlyTask> listView = createListView();
+
+        addLabelledListViewToParent(parent, label, listView);
+
+        setConnections(listView, tasks);
+        addStylingPropertiesToLabelBasedOnListViewSize(listView, label);
+        addStylingPropertiesToListView(listView);
+    }
+
+    private Label createLabel(String name) {
+        Label label = new Label(name);
+        label.getStyleClass().add("list-label");
+        return label;
+    }
+
+    private JFXListView<ReadOnlyTask> createListView() {
+        JFXListView<ReadOnlyTask> list = new JFXListView<ReadOnlyTask>();
+        list.getStyleClass().add("jfx-list-view");
+        list.getStyleClass().add("custom-jfx-list-view1");
+        return list;
+    }
+
+    private void addLabelledListViewToParent(Pane parent, Label label, JFXListView<ReadOnlyTask> list) {
+        parent.getChildren().add(label);
+        parent.getChildren().add(list);
+    }
+
+    private void addStylingPropertiesToListView(JFXListView<ReadOnlyTask> listView) {
+        listView.minHeightProperty().bind(Bindings.size(listView.getItems()).multiply(CARD_HEIGHT));
+    }
+
+    /**
+     * If listview has no items, it will not be visible.
+     * Use managedProperty to invoke redrawing on UI
+     */
+    private void addStylingPropertiesToLabelBasedOnListViewSize(JFXListView<ReadOnlyTask> listView, Label label) {
+        label.visibleProperty().bind(Bindings.size(listView.getItems()).greaterThan(0));
+        label.managedProperty().bind(label.visibleProperty());
     }
 
     private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
         UTListViewHelper.getInstance().addListView(listView);
-        //listView.setCellFactory(lw -> new TaskListViewCell(fake));
         setEventHandlerForSelectionChangeEvent(listView);
     }
 
-//    private void addToPlaceholder(AnchorPane placeHolderPane) {
-//        SplitPane.setResizableWithParent(placeHolderPane, false);
-//        FxViewUtil.applyAnchorBoundaryParameters(getRoot(), 0.0, 0.0, 0.0, 0.0);
-//        placeHolderPane.getChildren().add(getRoot());
-//    }
+    //@@author
     private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
         listView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -97,26 +112,6 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
                         raise(new TaskListPanelSelectionChangedEvent(listView, newValue));
                     }
                 });
-    }
-
-    public void scrollTo(ListView<ReadOnlyTask> listView, int index) {
-        Platform.runLater(() -> {
-            listView.scrollTo(index);
-            listView.getSelectionModel().clearAndSelect(index);
-        });
-    }
-
-    private JFXListView<ReadOnlyTask> createListControlAndAddToParent(String name, Pane parent) {
-        Label label = new Label(name);
-        label.getStyleClass().add("list-label");
-        JFXListView<ReadOnlyTask> list = new JFXListView<ReadOnlyTask>();
-        list.getStyleClass().add("jfx-list-view");
-        list.getStyleClass().add("custom-jfx-list-view1");
-
-        parent.getChildren().add(label);
-        parent.getChildren().add(list);
-
-        return list;
     }
 }
 

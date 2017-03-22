@@ -7,11 +7,11 @@
 
 <VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-      <Label styleClass="list-label" text="Checklist">
+      <Label styleClass="list-label" text="To-dos">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-		<JFXListView fx:id="lstTasks" VBox.vgrow="ALWAYS"/>
+		<JFXListView fx:id="lstTodoTasks" VBox.vgrow="ALWAYS"/>
 	</children>
 </VBox>

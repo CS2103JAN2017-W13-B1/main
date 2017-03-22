@@ -1,3 +1,4 @@
+//@@author A0139996A
 package utask.staging.ui;
 
 import java.util.logging.Logger;
@@ -18,58 +19,49 @@ import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.ui.PersonListPanel;
 
 public class UTTodoListPanel extends StagingUiPart<Region> {
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
     private static final String FXML = "UTTodoListPanel.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(UTTodoListPanel.class);
 
     @FXML
     private VBox rootPane;
 
     @FXML
-    private JFXListView<ReadOnlyTask> lstTasks;
+    private JFXListView<ReadOnlyTask> lstTodoTasks;
 
     public UTTodoListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks) {
         super(FXML);
 
         assert(parent != null && tasks != null);
 
-        lstTasks.getStyleClass().add("jfx-list-view");
-        lstTasks.getStyleClass().add("custom-jfx-list-view1");
-        lstTasks.setStyle("-jfx-expanded : true;");
-
-        setConnections(lstTasks, tasks);
+        addStyleSheetsToControls();
+        setConnections(lstTodoTasks, tasks);
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 
+    private void addStyleSheetsToControls() {
+        lstTodoTasks.getStyleClass().add("jfx-list-view");
+        lstTodoTasks.getStyleClass().add("custom-jfx-list-view1");
+        lstTodoTasks.setStyle("-jfx-expanded : true;");
+    }
+
     private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
+
+        //Add current listview to a helper for chain counting
         UTListViewHelper.getInstance().addListView(listView);
-        //listView.setCellFactory(lw -> new TaskListViewCell(3));
         setEventHandlerForSelectionChangeEvent(listView);
     }
 
-//    private void addToPlaceholder(AnchorPane placeHolderPane) {
-//        SplitPane.setResizableWithParent(placeHolderPane, false);
-//        FxViewUtil.applyAnchorBoundaryParameters(getRoot(), 0.0, 0.0, 0.0, 0.0);
-//        placeHolderPane.getChildren().add(getRoot());
-//    }
-
-    //TODO: Extract method
     private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
         listView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in task list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in to-dos list panel changed to : '" + newValue + "'");
                         raise(new TaskListPanelSelectionChangedEvent(listView, newValue));
                     }
                 });
-    }
-
-    public void scrollTo(int index) {
-        Platform.runLater(() -> {
-            lstTasks.scrollTo(index);
-            lstTasks.getSelectionModel().clearAndSelect(index);
-        });
     }
 }

@@ -37,7 +37,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
 
     private UTTodoListPanel todoListPanel;
 
-    // Independent Ui parts residing in this Ui container
+    //Independent Ui parts residing in this Ui container
     @FXML
     private VBox rootPane;
 
@@ -62,6 +62,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
     @FXML
     private Button btnHelp;
 
+    //@@author A0139996A
     public UTMainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -76,70 +77,56 @@ public class UTMainWindow extends StagingUiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
 
-        JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot(), false, true, true);
-        decorator.setPrefSize(MIN_WIDTH, MIN_HEIGHT);
-        decorator.setCustomMaximize(true);
-
-        Scene scene = new Scene(decorator);
-        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-fonts.css").toExternalForm());
-        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
-        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/utask.css").toExternalForm());
+        Scene scene = createScene();
+        setStyleSheets(scene);
         this.primaryStage.setScene(scene);
-        initialize();
+        setEventHandlers();
         setAccelerators();
     }
 
-    public Stage getPrimaryStage() {
-        return primaryStage;
+    /*
+     * Creates Scene
+     * JFXDecorator is used to create 'material' styled window frame
+     * */
+    private Scene createScene() {
+        JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot(), false, true, true);
+        decorator.setPrefSize(MIN_WIDTH, MIN_HEIGHT);
+        decorator.setCustomMaximize(true);
+        Scene scene = new Scene(decorator);
+        return scene;
     }
 
-    private void setAccelerators() {
-        setAccelerator(btnHelp, KeyCombination.valueOf("F1"));
+    /*
+     * Sets required CSS Stylesheets to a scene
+     *
+     * Note that fonts CSS has to be set first
+     * */
+    private void setStyleSheets(Scene scene) {
+        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-fonts.css").toExternalForm());
+        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
+        scene.getStylesheets().add(UTMainWindow.class.getResource("/css/utask.css").toExternalForm());
     }
 
     /**
-     * Sets the accelerator of a MenuItem.
+     * Sets the accelerator of a Button
      *
-     * @param keyCombination
-     *            the KeyCombination value of the accelerator
+     * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(Button control, KeyCombination keyCombination) {
-        //menuItem.setAccelerator(keyCombination);
-
-        /*
-         * TODO: the code below can be removed once the bug reported here
-         * https://bugs.openjdk.java.net/browse/JDK-8131666
-         * is fixed in later version of SDK.
-         *
-         * According to the bug report, TextInputControl (TextField, TextArea) will
-         * consume function-key events. Because CommandBox contains a TextField, and
-         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key event is consumed by
-         * the TextInputControl(s).
-         *
-         * For now, we add following event filter to capture such key events and open
-         * help window purposely so to support accelerators even when focus is
-         * in CommandBox or ResultDisplay.
-         */
-
         control.getScene().getAccelerators().put(keyCombination, new Runnable() {
             @Override
             public void run() {
                 handleHelp();
             }
         });
-
-//        rootPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-//            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-//                menuItem.getOnAction().handle(new ActionEvent());
-//                event.consume();
-//            }
-//        });
     }
 
-    private void initialize() {
-        btnHelp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    private void setAccelerators() {
+        setAccelerator(btnHelp, KeyCombination.valueOf("F1"));
+    }
 
+    private void setEventHandlers() {
+        btnHelp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 handleHelp();
@@ -156,21 +143,14 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTSearchTaskOverlay(topPlaceholder, logic);
     }
 
-    // private AnchorPane getCommandBoxPlaceholder() {
-    // return commandBoxPlaceholder;
-    // }
-    //
-    // private AnchorPane getStatusbarPlaceholder() {
-    // return statusbarPlaceholder;
-    // }
-    //
-    // private AnchorPane getResultDisplayPlaceholder() {
-    // return resultDisplayPlaceholder;
-    // }
-    //
-    // private AnchorPane getPersonListPlaceholder() {
-    // return personListPanelPlaceholder;
-    // }
+    public UTTodoListPanel getTodoListPanel() {
+        return todoListPanel;
+    }
+
+    //@@author
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     void hide() {
         primaryStage.hide();
@@ -229,9 +209,5 @@ public class UTMainWindow extends StagingUiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
-    }
-
-    public UTTodoListPanel getTodoListPanel() {
-        return todoListPanel;
     }
 }

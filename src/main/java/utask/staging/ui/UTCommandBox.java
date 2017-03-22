@@ -22,10 +22,11 @@ import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 import utask.staging.ui.helper.SuggestionHelper;
 
 public class UTCommandBox extends StagingUiPart<Region> {
-    private final Logger logger = LogsCenter.getLogger(UTCommandBox.class);
+
     private static final String FXML = "UTCommandBox.fxml";
     public static final String ERROR_STYLE_CLASS = "error-textfield";
 
+    private final Logger logger = LogsCenter.getLogger(UTCommandBox.class);
     private final Logic logic;
 
     @FXML
@@ -37,60 +38,35 @@ public class UTCommandBox extends StagingUiPart<Region> {
     @FXML
     private Label lblSuggestion;
 
-    private String lastValidCommand = "";
+    private String lastValidCommandEntry = "";
 
     public UTCommandBox(Pane parent, Logic logic) {
         super(FXML);
         this.logic = logic;
-        addToParent(parent);
+        addControlsToParent(parent);
     }
 
-    private void addToParent(Pane parent) {
-        //TODO: Simpify with lambda expression
-        commandTextField.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                handleCommandInputChanged();
-            }
-        });
+    private void addControlsToParent(Pane parent) {
+        setEventHandlers();
 
+        //SplitPane.setResizableWithParent(placeHolderPane, false);
+        FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
+        parent.getChildren().add(rootPane);
+    }
+
+    private void setEventHandlers() {
         commandTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
                 handleKeyPressed(ke);
             }
         });
-
-        FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
-        parent.getChildren().add(rootPane);
-//        SplitPane.setResizableWithParent(placeHolderPane, false);
-//        placeHolderPane.getChildren().add(commandTextField);
-//        FxViewUtil.applyAnchorBoundaryParameters(getRoot(), 0.0, 0.0, 0.0, 0.0);
-//        FxViewUtil.applyAnchorBoundaryParameters(commandTextField, 0.0, 0.0, 0.0, 0.0);
-    }
-
-    private void handleCommandInputChanged() {
-        try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
-
-            // process result of the command
-            setStyleToIndicateCommandSuccess();
-            lastValidCommand = commandTextField.getText();
-            commandTextField.setText("");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-
-        } catch (CommandException e) {
-            // handle command failure
-            setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
-        }
     }
 
     /**
      * Show full suggested command format on recognised command pattern.
      */
     private void handleKeyPressed(KeyEvent ke) {
+        //TODO: If special key handled, dont propagate
         handleSpecialKeyCombination(ke);
 
         //TODO: Upgrade to binary tree
@@ -104,11 +80,43 @@ public class UTCommandBox extends StagingUiPart<Region> {
     }
 
     private void handleSpecialKeyCombination(KeyEvent ke) {
-        if (ke.getCode() == KeyCode.ESCAPE) {
+        KeyCode keyPressed = ke.getCode();
+
+        switch (keyPressed) {
+        case ENTER :
+            handleCommandInputChanged();
+            break;
+        case ESCAPE :
             raise(new KeyboardEscapeKeyPressedEvent());
-            return;
-        } else if (ke.getCode() == KeyCode.F1) {
+            break;
+        case F1 :
             raise(new ShowHelpRequestEvent());
+            break;
+        case UP :
+            commandTextField.setText(lastValidCommandEntry);
+            break;
+        default:
+            break;
+        }
+    }
+
+    //@@author
+    private void handleCommandInputChanged() {
+        try {
+            CommandResult commandResult = logic.execute(commandTextField.getText());
+
+            // process result of the command
+            setStyleToIndicateCommandSuccess();
+            lastValidCommandEntry = commandTextField.getText();
+            commandTextField.setText("");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+
+        } catch (CommandException e) {
+            // handle command failure
+            setStyleToIndicateCommandFailure();
+            logger.info("Invalid command: " + commandTextField.getText());
+            raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }
 
