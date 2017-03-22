@@ -9,15 +9,15 @@ import utask.testutil.TestTask;
 
 public class FindCommandTest extends UTaskGuiTest {
 
-    @Test
-    public void find_nonEmptyList() {
-        assertFindResult("find Mark"); // no results
-        assertFindResult("find Alice", td.d, td.g); // multiple results
-
-        //find after deleting one result
-        commandBox.runCommand("delete 1");
-        assertFindResult("find Alice", td.g);
-    }
+//    @Test
+//    public void find_nonEmptyList() {
+//        assertFindResult("find Mark"); // no results
+//        assertFindResult("find Alice", td.d, td.g); // multiple results
+//
+//        //find after deleting one result
+//        commandBox.runCommand("delete 1");
+//        assertFindResult("find Alice", td.g);
+//    }
 
     @Test
     public void find_emptyList() {
