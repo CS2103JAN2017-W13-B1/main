@@ -40,6 +40,10 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         super(FXML);
         assert(task != null && displayedIndex > 0);
 
+        setTaskInfoToControls(task, displayedIndex);
+    }
+
+    private void setTaskInfoToControls(ReadOnlyTask task, int displayedIndex) {
         name.setText(task.getName().fullName);
         id.setText(displayedIndex + " ");
         String friendlyDate = buildFriendlyDateToDisplay(task);
@@ -47,6 +51,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         initTags(task);
     }
 
+    //TODO: Core model object should have friendly name parser
     private String buildFriendlyDateToDisplay(ReadOnlyTask task) {
         StringBuilder sb = new StringBuilder();
 
@@ -69,23 +74,23 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         UniqueTagList tags = task.getTags();
 
         for (Tag tag : tags) {
-            Label label = createTagLabel(tag.tagName);
-            HBox.setMargin(label, new Insets(5, 5, 5, 0));
+            Label label = createLabel(tag.tagName);
             tagPane.getChildren().add(label);
         }
     }
 
-    private Label createTagLabel(String name) {
+    private Label createLabel(String name) {
         Label label = new Label(name);
+        addStylingPropertiesToLabel(label);
+        return label;
+    }
+
+    private void addStylingPropertiesToLabel(Label label) {
         label.setAlignment(Pos.CENTER);;
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextOverrun(OverrunStyle.CLIP);
         label.setMinWidth(15.0);
         label.setStyle(String.format(LABEL_CSS, TaskColorHelper.getARandomColor()));
-        return label;
-    }
-
-    private void preventRenderingOfHiddenElement() {
-        //dueList.setManaged(false);
+        HBox.setMargin(label, new Insets(5, 5, 5, 0));
     }
 }

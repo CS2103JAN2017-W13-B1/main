@@ -45,7 +45,7 @@ public class DeleteCommand extends Command {
 
         //- 1 as helper method is using zero-based indexing
         List<ReadOnlyTask> lastShownList =
-                UTListViewHelper.getInstance().getFilteredTaskList(targetIndex - 1);
+                UTListViewHelper.getInstance().getUnderlyingListOfListViewByIndex(targetIndex - 1);
 
         int actualInt = UTListViewHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
         ReadOnlyTask taskToDelete = lastShownList.get(actualInt);

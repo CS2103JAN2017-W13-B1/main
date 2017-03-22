@@ -1,8 +1,8 @@
+// @@author A0139996A
 package utask.staging.ui;
 
 import java.util.logging.Logger;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -43,18 +43,16 @@ public class UTCommandBox extends StagingUiPart<Region> {
     public UTCommandBox(Pane parent, Logic logic) {
         super(FXML);
         this.logic = logic;
+        addEventHandlerToControls();
         addControlsToParent(parent);
     }
 
     private void addControlsToParent(Pane parent) {
-        setEventHandlers();
-
-        //SplitPane.setResizableWithParent(placeHolderPane, false);
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 
-    private void setEventHandlers() {
+    private void addEventHandlerToControls() {
         commandTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
                 handleKeyPressed(ke);

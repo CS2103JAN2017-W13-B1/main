@@ -17,6 +17,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import utask.commons.core.LogsCenter;
 import utask.commons.util.FxViewUtil;
+import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.TypicalTaskBuilder;
@@ -32,15 +33,16 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
     @FXML
     private VBox container;
 
-    public UTTaskListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks) {
+    public UTTaskListPanel(Pane parent, Logic logic) {
         super(FXML);
 
-        assert (parent != null && tasks != null);
+        assert (parent != null && logic != null);
 
-        addControlsToParent(parent);
+        addControlsToParent(parent, logic);
     }
 
-    private void addControlsToParent(Pane parent) {
+    private void addControlsToParent(Pane parent, Logic logic) {
+        //TODO: Use proper logic methods to populate
         createLabelledListViewControl(container, TypicalTaskBuilder.due(), "Due");
         createLabelledListViewControl(container, TypicalTaskBuilder.today(), "Today");
         createLabelledListViewControl(container, FXCollections.observableArrayList(), "Tomorrow");
@@ -49,6 +51,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
 
+        //TODO: This is not the right place to call!
         UTListViewHelper.getInstance().updateListViews();
     }
 

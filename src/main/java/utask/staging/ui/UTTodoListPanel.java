@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import com.jfoenix.controls.JFXListView;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -16,11 +15,9 @@ import utask.commons.core.LogsCenter;
 import utask.commons.util.FxViewUtil;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
-import utask.ui.PersonListPanel;
 
 public class UTTodoListPanel extends StagingUiPart<Region> {
     private static final String FXML = "UTTodoListPanel.fxml";
-
     private final Logger logger = LogsCenter.getLogger(UTTodoListPanel.class);
 
     @FXML
@@ -34,14 +31,14 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
 
         assert(parent != null && tasks != null);
 
-        addStyleSheetsToControls();
+        addStylingPropertiesToControls();
         setConnections(lstTodoTasks, tasks);
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
     }
 
-    private void addStyleSheetsToControls() {
+    private void addStylingPropertiesToControls() {
         lstTodoTasks.getStyleClass().add("jfx-list-view");
         lstTodoTasks.getStyleClass().add("custom-jfx-list-view1");
         lstTodoTasks.setStyle("-jfx-expanded : true;");
@@ -50,11 +47,12 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
     private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
 
-        //Add current listview to a helper for chain counting
+        //Add listview to helper for chain counting
         UTListViewHelper.getInstance().addListView(listView);
         setEventHandlerForSelectionChangeEvent(listView);
     }
 
+    //@@author
     private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
         listView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {

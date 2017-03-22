@@ -11,9 +11,9 @@ import utask.model.task.ReadOnlyTask;
 public class TaskListPanelSelectionChangedEvent extends BaseEvent {
 
     private final ReadOnlyTask newSelection;
-    private final ListView sender;
+    private final ListView<ReadOnlyTask> sender;
 
-    public TaskListPanelSelectionChangedEvent(ListView sender, ReadOnlyTask newSelection) {
+    public TaskListPanelSelectionChangedEvent(ListView<ReadOnlyTask> sender, ReadOnlyTask newSelection) {
         this.newSelection = newSelection;
         this.sender = sender;
     }
@@ -23,7 +23,7 @@ public class TaskListPanelSelectionChangedEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public ListView getSender() {
+    public ListView<ReadOnlyTask> getSender() {
         return sender;
     }
 

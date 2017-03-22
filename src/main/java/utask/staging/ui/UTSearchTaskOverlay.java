@@ -1,3 +1,4 @@
+//@@author A0139996A
 package utask.staging.ui;
 
 import java.util.logging.Logger;
@@ -50,6 +51,9 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     private TableColumn<ReadOnlyTask, String> columnDeadline;
 
     @FXML
+    private TableColumn<ReadOnlyTask, String> columnComplete;
+
+    @FXML
     private TableColumn<ReadOnlyTask, String> columnTimestamp;
 
     @FXML
@@ -69,40 +73,22 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     public UTSearchTaskOverlay(Pane parent, Logic logic) {
         super(FXML);
 
-        assert(parent != null & logic != null);
+        assert(parent != null && logic != null);
         this.parent = parent;
         this.logic = logic;
 
-        populateData();
+        masterData = logic.getFilteredTaskList();
         initialize();
         registerAsAnEventHandler(this);
-    }
-
-    private void populateData() {
-//        masterData = FXCollections.observableArrayList();
-//        masterData.add(new ReadOnlyObservableTaskTemp("Hans", "Muster"));
-        masterData = logic.getFilteredTaskList();
+        rootPane.setTranslateX(SEARCHPANE_HIDDEN_X_POS);
+        FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
+        FxViewUtil.applyAnchorBoundaryParameters(searchTable, 0.0, 0.0, 0.0, 0.0);
+        parent.getChildren().add(rootPane);
     }
 
     private void initialize() {
-        rootPane.setTranslateX(SEARCHPANE_HIDDEN_X_POS);
-
         //Initialize the columns.
-
-        //TODO: Try bean property
-        //columnName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-
-        columnIndex.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(
-                searchTable.getItems().indexOf(cellData.getValue()) + 1));
-        columnName.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getName().fullName));
-        columnDeadline.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getDeadline().value));
-        columnTimestamp.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getTimestamp().value));
-        columnFrequency.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getFrequency().value));
-        columnTag.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getTags().getAllTagNames()));
-
-        //TODO: Add isDone binding after merged with master
-
-        columnIndex.setSortable(false);
+        addCellFactoriesToColumn();
 
         //Wrap the ObservableList in a FilteredList (initially display all data).
         filteredData = new FilteredList<>(masterData, p -> true);
@@ -115,16 +101,29 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 
         //Add sorted (and filtered) data to the table.
         searchTable.setItems(sortedData);
-        FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
-        FxViewUtil.applyAnchorBoundaryParameters(searchTable, 0.0, 0.0, 0.0, 0.0);
-        parent.getChildren().add(rootPane);
     }
 
-    public void sort(TableColumn<ReadOnlyTask, String> column) {
+    private void addCellFactoriesToColumn() {
+
+        //TODO: Try bean property
+        //columnName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+
+        columnIndex.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(
+                                    searchTable.getItems().indexOf(cellData.getValue()) + 1));
+        columnName.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getName().fullName));
+        columnComplete.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getIsCompleted().value));
+        columnDeadline.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getDeadline().value));
+        columnTimestamp.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getTimestamp().value));
+        columnFrequency.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getFrequency().value));
+        columnTag.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getTags().getAllTagNames()));
+        columnIndex.setSortable(false);
+    }
+
+    private void sort(TableColumn<ReadOnlyTask, String> column) {
         sort(column, SortType.ASCENDING);
     }
 
-    public void sort(TableColumn<ReadOnlyTask, String> column, SortType sortOrder) {
+    private void sort(TableColumn<ReadOnlyTask, String> column, SortType sortOrder) {
         searchTable.getSortOrder().clear();
         columnName.setSortType(sortOrder);
         searchTable.getSortOrder().addAll(column);

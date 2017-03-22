@@ -42,37 +42,43 @@ public class UTListViewHelper {
         addDefaultCellFactory(lv);
     }
 
-    private void addDefaultCellFactory(ListView<ReadOnlyTask> lv) {
-        lv.setCellFactory(l -> new TaskListViewCell(0));
-    }
-
     public void updateListViews() {
         Platform.runLater(() -> {
-            addToOffsetMap(listViews.get(0), 1);
+            addToOffsetMap(listViews.get(0), 1); //First list starts counting from 1
 
-            if (listViews.size() > 1) { //There's no point to refresh one list
+            if (listViews.size() > 1) { //There's no point to refresh one list, otherwise
                 int totalSize = 0;
 
-                //Traverse and update following listview index based on previous size
-                for (int j = 1; j < listViews.size(); j++) {
-                    ListView<ReadOnlyTask> prevListView = listViews.get(j - 1);
-                    ListView<ReadOnlyTask> currListView = listViews.get(j);
+                //Traverse and update next listview index based on previous size
+                for (int i = 1; i < listViews.size(); i++) {
+                    ListView<ReadOnlyTask> prevListView = listViews.get(i - 1);
+                    ListView<ReadOnlyTask> currListView = listViews.get(i);
 
                     totalSize += prevListView.getItems().size();
 
                     final int value = totalSize; //Required by Java compiler
-
-                    addToOffsetMap(currListView, value);
                     currListView.setCellFactory(l -> new TaskListViewCell(value));
-                }
 
-//            for (ListView<ReadOnlyTask> lv : listViews) {
-//                lv.refresh();
-//            }
+                    addToOffsetMap(currListView, value); //Temporary cache this value for faster calculation
+                }
             }
         });
     }
 
+    //TODO: Possible to use lazy rendering to prevent double rendering
+    private void addDefaultCellFactory(ListView<ReadOnlyTask> lv) {
+        lv.setCellFactory(l -> new TaskListViewCell(0));
+    }
+
+    private void addToOffsetMap(ListView<ReadOnlyTask> lv, int offset) {
+        offsetMap.put(lv, offset);
+    }
+
+    /**
+     *  Returns total sizes of all listview
+     *
+     *  Recalculation is necessary every time
+     */
     public int getTotalSizeOfAllListViews() {
         int  totalSize = 0;
 
@@ -83,12 +89,22 @@ public class UTListViewHelper {
         return totalSize;
     }
 
-    private void addToOffsetMap(ListView<ReadOnlyTask> lv, int offset) {
-        offsetMap.put(lv, offset);
+    /*
+     * Normalise the given to index to actual numbering in listview
+     *
+     * @param index is zero-based
+     *
+     * */
+    public int getActualIndexFromDisplayIndex(int index) {
+        ListView<ReadOnlyTask> lw = getActualListViewFromDisplayIndex(index);
+
+        int actualInt = getActualIndexOfListView(lw, index);
+
+        return actualInt;
     }
 
     /*
-     * Normalise the given to index to listview numbering
+     * Normalise the given to index to actual numbering in listview
      *
      * @param index is zero-based
      *
@@ -101,14 +117,6 @@ public class UTListViewHelper {
         }
 
         return index - offset;
-    }
-
-    public int getActualIndexFromDisplayIndex(int displayIndex) {
-        ListView<ReadOnlyTask> lw = getActualListViewFromDisplayIndex(displayIndex);
-
-        int actualInt = getActualIndexOfListView(lw, displayIndex);
-
-        return actualInt;
     }
 
     /*
@@ -132,15 +140,12 @@ public class UTListViewHelper {
         return null;
     }
 
-    public ObservableList<ReadOnlyTask> getFilteredTaskList(int index) {
+    public ObservableList<ReadOnlyTask> getUnderlyingListOfListViewByIndex(int index) {
         assert (index >= 0);
 
         ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
 
         assert(listView != null);
-
-//        final UnmodifiableObservableList<ReadOnlyTask> finalList =
-//                (UnmodifiableObservableList<ReadOnlyTask>) listView.getItems();
 
         return listView.getItems();
     }

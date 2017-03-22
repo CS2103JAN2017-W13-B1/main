@@ -135,7 +135,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
     }
 
     void fillInnerParts() {
-        new UTTaskListPanel(personListPanelPlaceholder, logic.getFilteredTaskList());
+        new UTTaskListPanel(personListPanelPlaceholder, logic);
         todoListPanel = new UTTodoListPanel(todoListPanelPlaceholder, logic.getFilteredTaskList());
         new UTResultDisplay(resultDisplayPlaceholder);
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
