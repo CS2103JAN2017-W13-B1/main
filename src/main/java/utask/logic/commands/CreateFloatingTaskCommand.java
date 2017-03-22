@@ -9,15 +9,13 @@ import utask.model.task.Name;
 
 public class CreateFloatingTaskCommand extends CreateCommand {
 
-    public CreateFloatingTaskCommand(String name, String frequency, Set<String> tags)
-            throws IllegalValueException {
-        super(frequency, tags);
+    public CreateFloatingTaskCommand(String name, String frequency,
+            Set<String> tags, String isCompleted) throws IllegalValueException {
+        super(frequency, tags, isCompleted);
 
-        //TODO: Code smells
-        this.toAdd = new FloatingTask(
-                new Name(name),
-                this.frequency,
-                new UniqueTagList(tagSet));
+        // TODO: Code smells
+        this.toAdd = new FloatingTask(new Name(name), this.frequency,
+                new UniqueTagList(tagSet), this.isCompleted);
     }
 
 }

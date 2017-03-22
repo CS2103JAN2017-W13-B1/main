@@ -14,6 +14,7 @@ import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
+import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
@@ -32,6 +33,8 @@ public class XmlAdaptedTask {
     private String timestamp;
     @XmlElement(required = true)
     private String frequency;
+    @XmlElement(required = true)
+    private String iscompleted;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -53,6 +56,7 @@ public class XmlAdaptedTask {
         deadline = source.getDeadline().value;
         timestamp = source.getTimestamp().value;
         frequency = source.getFrequency().value;
+        iscompleted = source.getIsCompleted().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -81,6 +85,7 @@ public class XmlAdaptedTask {
         final Timestamp timestamp;
         final Frequency frequency;
         final UniqueTagList tags = new UniqueTagList(taskTags);
+        final IsCompleted iscompleted;
 
         //TODO: Do a helper/factory to spawn necessary objects
         if ("".equals(this.deadline)) {
@@ -101,12 +106,18 @@ public class XmlAdaptedTask {
             frequency = new Frequency(this.frequency);
         }
 
-        if (!"".equals(this.deadline) && !"".equals(this.timestamp)) {
-            return new EventTask(name, deadline, timestamp, frequency, tags);
-        } else if ("".equals(this.timestamp)) {
-            return new DeadlineTask(name, deadline, frequency, tags);
+        if ("".equals(this.iscompleted)) {
+            iscompleted = IsCompleted.getEmptyIsCompleted();
         } else {
-            return new FloatingTask(name, frequency, tags);
+            iscompleted = new IsCompleted(this.iscompleted);
+        }
+
+        if (!"".equals(this.deadline) && !"".equals(this.timestamp)) {
+            return new EventTask(name, deadline, timestamp, frequency, tags, iscompleted);
+        } else if ("".equals(this.timestamp)) {
+            return new DeadlineTask(name, deadline, frequency, tags, iscompleted);
+        } else {
+            return new FloatingTask(name, frequency, tags, iscompleted);
         }
     }
 }

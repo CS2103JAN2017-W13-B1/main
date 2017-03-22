@@ -8,8 +8,9 @@ public class DeadlineTask extends Task {
 
     private Deadline deadline;
 
-    public DeadlineTask(Name name, Deadline deadline, Frequency frequency, UniqueTagList tags) {
-        super(name, frequency, tags);
+    public DeadlineTask(Name name, Deadline deadline, Frequency frequency, UniqueTagList tags,
+            IsCompleted isCompleted) {
+        super(name, frequency, tags, isCompleted);
         this.deadline = deadline;
     }
 
@@ -17,7 +18,7 @@ public class DeadlineTask extends Task {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public DeadlineTask(ReadOnlyTask source) {
-        this(source.getName(), source.getDeadline(), source.getFrequency(), source.getTags());
+        this(source.getName(), source.getDeadline(), source.getFrequency(), source.getTags(), source.getIsCompleted());
     }
 
     public void setDeadline(Deadline deadline) {
@@ -38,7 +39,7 @@ public class DeadlineTask extends Task {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, deadline, frequency, tags);
+        return Objects.hash(name, deadline, frequency, tags, isCompleted);
     }
 
     @Override

@@ -47,6 +47,10 @@ public class UniqueTaskList implements Iterable<Task> {
         internalList.add(toAdd);
     }
 
+    public ObservableList<Task> getInternalList() {
+        return internalList;
+    }
+
     /**
      * Updates the task in the list at position {@code index} with
      * {@code editedTask}.

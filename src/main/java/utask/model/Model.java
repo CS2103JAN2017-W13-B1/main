@@ -12,6 +12,15 @@ import utask.model.task.UniqueTaskList.DuplicateTaskException;
  * The API of the Model component.
  */
 public interface Model {
+    //@@author A0138493W
+    public static final String SORT_ORDER_BY_EARLIEST_FIRST = "earliest";
+    public static final String SORT_ORDER_BY_LATEST_FIRST = "latest";
+    public static final String SORT_ORDER_BY_A_TO_Z = "az";
+    public static final String SORT_ORDER_BY_Z_TO_A = "za";
+    public static final String SORT_ORDER_BY_TAG = "tag";
+    public static final String SORT_ORDER_DEFAULT = SORT_ORDER_BY_EARLIEST_FIRST;
+    public static final String SORT_ORDER_ERROR = "Unable to sort due to unrecognized sorting order ";
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyUTask newData);
 
@@ -42,5 +51,8 @@ public interface Model {
 
     /** Updates the filter of the filtered task list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
+
+    /** Updates the filter of the sorted task list to sort by the given keywords*/
+    void sortFilteredTaskList(String keywords);
 
 }

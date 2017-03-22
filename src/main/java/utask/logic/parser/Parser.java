@@ -10,6 +10,7 @@ import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
+import utask.logic.commands.DoneCommand;
 import utask.logic.commands.EditCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
@@ -17,6 +18,8 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
+import utask.logic.commands.SortCommand;
+import utask.logic.commands.UndoneCommand;
 import utask.staging.ui.stubs.SearchCommand;
 
 /**
@@ -51,8 +54,17 @@ public class Parser {
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
+        case DoneCommand.COMMAND_WORD:
+            return new DoneCommandParser().parse(arguments);
+
+        case UndoneCommand.COMMAND_WORD:
+            return new UndoneCommandParser().parse(arguments);
+
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);

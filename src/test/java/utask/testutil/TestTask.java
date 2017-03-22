@@ -3,6 +3,7 @@ package utask.testutil;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.Frequency;
+import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Timestamp;
@@ -17,6 +18,7 @@ public class TestTask implements ReadOnlyTask {
     private Timestamp timestamp;
     private Deadline deadline;
     private UniqueTagList tags;
+    private IsCompleted iscompleted;
 
     public TestTask() {
         tags = new UniqueTagList();
@@ -31,6 +33,7 @@ public class TestTask implements ReadOnlyTask {
         this.timestamp = taskToCopy.getTimestamp();
         this.frequency = taskToCopy.getFrequency();
         this.tags = taskToCopy.getTags();
+        this.iscompleted = taskToCopy.getIsCompleted();
     }
 
     public void setName(Name name) {
@@ -51,6 +54,10 @@ public class TestTask implements ReadOnlyTask {
 
     public void setTags(UniqueTagList tags) {
         this.tags = tags;
+    }
+
+    public void setIsCompleted(IsCompleted iscompleted) {
+        this.iscompleted = iscompleted;
     }
 
     @Override
@@ -74,6 +81,11 @@ public class TestTask implements ReadOnlyTask {
     }
 
     @Override
+    public IsCompleted getIsCompleted() {
+        return iscompleted;
+    }
+
+    @Override
     public UniqueTagList getTags() {
         return tags;
     }
@@ -89,6 +101,7 @@ public class TestTask implements ReadOnlyTask {
         sb.append("/by " + this.getDeadline().value + " ");
         sb.append("/from " + this.getTimestamp().value + " ");
         sb.append("/repeat " + this.getFrequency().value + " ");
+        sb.append("/done " + this.getIsCompleted().value + " ");
         this.getTags().asObservableList().stream().forEach(s -> sb.append("/tag " + s.tagName + " "));
         return sb.toString();
     }

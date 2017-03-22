@@ -2,6 +2,7 @@ package utask.logic.parser;
 
 import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static utask.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static utask.logic.parser.CliSyntax.PREFIX_DONE;
 import static utask.logic.parser.CliSyntax.PREFIX_FREQUENCY;
 import static utask.logic.parser.CliSyntax.PREFIX_TAG;
 import static utask.logic.parser.CliSyntax.PREFIX_TIMESTAMP;
@@ -27,7 +28,7 @@ public class CreateCommandParser {
      */
     public Command parse(String args) {
         ArgumentTokenizer argsTokenizer =
-                new ArgumentTokenizer(PREFIX_DEADLINE, PREFIX_TIMESTAMP, PREFIX_FREQUENCY, PREFIX_TAG);
+                new ArgumentTokenizer(PREFIX_DEADLINE, PREFIX_TIMESTAMP, PREFIX_FREQUENCY, PREFIX_TAG, PREFIX_DONE);
         argsTokenizer.tokenize(args);
 
         try {
@@ -38,20 +39,23 @@ public class CreateCommandParser {
                         argsTokenizer.getValue(PREFIX_DEADLINE).get(),
                         argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
                         argsTokenizer.tryGet(PREFIX_FREQUENCY),
-                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
+                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG)),
+                        argsTokenizer.tryGet(PREFIX_DONE)
                 );
             } else if (argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {
                 return new CreateDeadlineTaskCommand(
                         argsTokenizer.getPreamble().get(),
                         argsTokenizer.getValue(PREFIX_DEADLINE).get(),
                         argsTokenizer.tryGet(PREFIX_FREQUENCY),
-                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
+                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG)),
+                        argsTokenizer.tryGet(PREFIX_DONE)
                 );
             } else {
                 return new CreateFloatingTaskCommand(
                         argsTokenizer.getPreamble().get(),
                         argsTokenizer.tryGet(PREFIX_FREQUENCY),
-                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))
+                        ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG)),
+                        argsTokenizer.tryGet(PREFIX_DONE)
                 );
             }
         } catch (NoSuchElementException nsee) {

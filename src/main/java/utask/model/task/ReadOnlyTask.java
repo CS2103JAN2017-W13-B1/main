@@ -10,15 +10,14 @@ import utask.model.tag.UniqueTagList;
 public interface ReadOnlyTask {
 
     Name getName();
-
     Frequency getFrequency();
+    IsCompleted getIsCompleted();
 
     /*
      * Deadline and Timestamp are optional based on type of task Event has both
      * deadline and timestamp Deadline has only deadline
      */
     Deadline getDeadline();
-
     Timestamp getTimestamp();
 
     /**
@@ -39,7 +38,8 @@ public interface ReadOnlyTask {
                                                                   // onwards
                         && other.getDeadline().equals(this.getDeadline())
                         && other.getTimestamp().equals(this.getTimestamp())
-                        && other.getFrequency().equals(this.getFrequency()));
+                        && other.getFrequency().equals(this.getFrequency())
+                        && other.getIsCompleted().equals(this.getIsCompleted()));
     }
 
     /**
@@ -50,6 +50,7 @@ public interface ReadOnlyTask {
         builder.append(getName()).append(" Deadline: ").append(getDeadline())
                 .append(" Timestamp: ").append(getTimestamp())
                 .append(" Frequency: ").append(getFrequency())
+                .append(" IsCompleted: ").append(getIsCompleted())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
