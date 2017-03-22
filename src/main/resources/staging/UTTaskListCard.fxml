@@ -43,8 +43,8 @@
                </VBox.margin>
             </Label>
             <HBox fx:id="tagPane" prefHeight="100.0">
-			<!--  
-               <children>
+            <!--
+            <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="Important" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                      <HBox.margin>
                         <Insets bottom="5.0" left="0.0" right="5.0" top="5.0" />

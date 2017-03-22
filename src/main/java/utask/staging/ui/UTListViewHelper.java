@@ -7,6 +7,7 @@ import java.util.HashMap;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import utask.commons.core.EventsCenter;
 import utask.model.task.ReadOnlyTask;
@@ -86,15 +87,13 @@ public class UTListViewHelper {
         offsetMap.put(lv, offset);
     }
 
-
-
     /*
      * Normalise the given to index to listview numbering
      *
      * @param index is zero-based
      *
      * */
-    private int getActualIndex(ListView<ReadOnlyTask> listView, int index) {
+    private int getActualIndexOfListView(ListView<ReadOnlyTask> listView, int index) {
         int offset = offsetMap.get(listView);
 
         if (index < offset) { //No need to normalise
@@ -104,13 +103,21 @@ public class UTListViewHelper {
         return index - offset;
     }
 
+    public int getActualIndexFromDisplayIndex(int displayIndex) {
+        ListView<ReadOnlyTask> lw = getActualListViewFromDisplayIndex(displayIndex);
+
+        int actualInt = getActualIndexOfListView(lw, displayIndex);
+
+        return actualInt;
+    }
+
     /*
      * Searches for a listview given by the index
      *
      * @param index is zero-based
      *
      * */
-    private ListView<ReadOnlyTask> getActualListViewFromDisplayIndex(int index) {
+    public ListView<ReadOnlyTask> getActualListViewFromDisplayIndex(int index) {
         int  totalSize = 0;
 
         for (ListView<ReadOnlyTask> lv : listViews) {
@@ -123,6 +130,19 @@ public class UTListViewHelper {
         }
 
         return null;
+    }
+
+    public ObservableList<ReadOnlyTask> getFilteredTaskList(int index) {
+        assert (index >= 0);
+
+        ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
+
+        assert(listView != null);
+
+//        final UnmodifiableObservableList<ReadOnlyTask> finalList =
+//                (UnmodifiableObservableList<ReadOnlyTask>) listView.getItems();
+
+        return listView.getItems();
     }
 
     private void clearSelectionOfAllListViews() {
@@ -143,7 +163,7 @@ public class UTListViewHelper {
 
     private void scrollTo(ListView<ReadOnlyTask> listView, int index) {
         Platform.runLater(() -> {
-            int actualIndex = getActualIndex(listView, index);
+            int actualIndex = getActualIndexOfListView(listView, index);
 
             clearSelectionOfAllListViews();
 
