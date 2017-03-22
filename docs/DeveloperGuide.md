@@ -6,20 +6,44 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 
 ## Table of contents
 
-1. [Setting Up](#setting-up)
-2. [Design](#design)
-3. [Implementation](#implementation)
-4. [Testing](#testing)
-5. [Dev Ops](#dev-ops)
+* [Introduction](#introduction)
+* [Setting Up](#setting-up)
+    * [Prerequisites](#prerequisites)
+    * [Importing the project into Eclipse](#importing-the-project-into-eclipse)
+    * [Configuring Checkstyle](#configuring-checkstyle)
+    * [Troubleshooting](#troubleshooting)
+* [Design](#design)
+    * [Architecture](#architecture)
+    * [Events-Driven nature of the design](#events-driven-nature-of-the-design)
+    * [UI component](#ui-component)
+    * [Logic component](#logic-component)
+    * [Model component](#model-component)
+    * [Storage component](#storage-component)
+    * [Common classes](#common-classes)
+* [Implementation](#implementation)
+    * [Logging](#logging)
+    * [Configuration](#configuration)
+* [Testing](#testing)
+    * [Troubleshooting tests](#troubleshooting-tests)
+* [Dev Ops](#dev-ops)
+    * [Build Automation](#build-automation)
+    * [Continuous Integration](#continuous-integration)
+    * [Publishing Documentation](#publishing-documentation)
+    * [Making a Release](#making-a-release)
+    * [Converting Documentation to PDF format](#converting-documentation-to-pdf-format)
+    * [Managing Dependencies](#managing-dependencies)
 
 * [Appendix A: User Stories](#appendix-a--user-stories)
 * [Appendix B: Use Cases](#appendix-b--use-cases)
 * [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
 * [Appendix D: Glossary](#appendix-d--glossary)
 * [Appendix E : Product Survey](#appendix-e--product-survey)
+    * [Google Calendar](#google-calendar)
+    * [Microsoft Outlook](#microsoft-outlook)
+    * [HiTask](#hitask)
 
 ## Introduction
-
+<!-- @@author A0148096W -->
 uTask is a task manager for advanced users to manage their daily tasks through keyboard commands. It is
 a java desktop application has a GUI implemented with JavaFX.
 
@@ -28,10 +52,12 @@ primarily on setting up, design, implementation, testing and DevOps. It will hel
 how uTask works and how to further improve it. The guide is in top-down manner, so you can look at the
 overall picture of uTask and then breaking down the various components in each sub-section. Each sub-section
 is self-contained, you can easily set up and start contributing by following the guide.
+<br>
+<!-- @@author -->
 
-## 1. Setting up
+## Setting up
 
-### 1.1. Prerequisites
+### Prerequisites
 
 1. **JDK `1.8.0_60`**  or later<br>
 
@@ -45,7 +71,7 @@ is self-contained, you can easily set up and start contributing by following the
 5. **Checkstyle Plug-in** plugin from the Eclipse Marketplace
 
 
-### 1.2. Importing the project into Eclipse
+### Importing the project into Eclipse
 
 1. Fork this repo, and clone the fork to your computer
 2. Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given
@@ -60,7 +86,8 @@ is self-contained, you can easily set up and start contributing by following the
       (This is because Gradle downloads library files from servers during the project set up process)
   > * If Eclipse auto-changed any settings files during the import process, you can discard those changes.
 
-### 1.3. Configuring Checkstyle
+### Configuring Checkstyle
+
 1. Click `Project` -> `Properties` -> `Checkstyle` -> `Local Check Configurations` -> `New...`
 2. Choose `External Configuration File` under `Type`
 3. Enter an arbitrary configuration name e.g. addressbook
@@ -71,23 +98,23 @@ is self-contained, you can easily set up and start contributing by following the
 
 > Note to click on the `files from packages` text after ticking in order to enable the `Change...` button
 
-### 1.4. Troubleshooting project setup
+### Troubleshooting
 
 **Problem: Eclipse reports compile errors after new commits are pulled from Git**
 
-* Reason: Eclipse fails to recognize new files that appeared due to the Git pull.
-* Solution: Refresh the project in Eclipse:<br>
+* **Reason:** Eclipse fails to recognize new files that appeared due to the Git pull.
+* **Solution:** Refresh the project in Eclipse:<br>
   Right click on the project (in Eclipse package explorer), choose `Gradle` -> `Refresh Gradle Project`.
 
 **Problem: Eclipse reports some required libraries missing**
 
-* Reason: Required libraries may not have been downloaded during the project import.
-* Solution: [Run tests using Gradle](UsingGradle.md) once (to refresh the libraries).
+* **Reason:** Required libraries may not have been downloaded during the project import.
+* **Solution:** [Run tests using Gradle](UsingGradle.md) once (to refresh the libraries).
 
 
-## 2. Design
+## Design
 
-### 2.1. Architecture
+### Architecture
 
 <img src="images/Architecture.png" width="600"><br>
 _Figure 2.1.1 : Architecture Diagram_
@@ -149,7 +176,7 @@ _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 The sections below give more details of each component.
 
-### 2.2. UI component
+### UI component
 
 Author: Team-uTask
 
@@ -172,7 +199,8 @@ The `UI` component:
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-### 2.3. Logic component
+<!-- @@author A0148096W -->
+### Logic component
 
 Author: Team-uTask
 
@@ -191,7 +219,19 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 <img src="images/DeleteTaskSdForLogic.png" width="800"><br>
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
-### 2.4. Model component
+**`Logic` Interface**
+
+The `Logic` interface contains two abstract methods which allows you to do any logic-related operation, such as executing commands. This interface can be accessed by any class in any package.
+
+**Notable APIs**
+
+Return type | Method and Description
+----------- | ----------------------
+CommandResult() | `execute(String commandText)`: Executes the command `commandText` and returns the result.
+ObservableList() | `getFilteredTaskList()`: Retrieves the filtered task list from the **`Model`** component.
+<br>
+
+### Model component
 
 Author: Team-uTask
 
@@ -208,7 +248,7 @@ The `Model`:
   so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-### 2.5. Storage component
+### Storage component
 
 Author: Team-uTask
 
@@ -222,13 +262,13 @@ The `Storage` component:
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-### 2.6. Common classes
+### Common classes
 
 Classes used by multiple components are in the `utask.commons` package.
 
-## 3. Implementation
+## Implementation
 
-### 3.1. Logging
+### Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels
 and logging destinations.
@@ -247,13 +287,13 @@ and logging destinations.
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging
   e.g. print the actual list instead of just its size
 
-### 3.2. Configuration
+### Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file
 (default: `config.json`):
 
 
-## 4. Testing
+## Testing
 
 Tests can be found in the `./src/test/java` folder.
 
@@ -290,7 +330,7 @@ Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
  That means the developer can do other things on the Computer while the tests are running.<br>
  See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode.
 
-### 4.1. Troubleshooting tests
+### Troubleshooting tests
 
  **Problem: Tests fail because NullPointException when AssertionError is expected**
 
@@ -300,23 +340,23 @@ Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
    [here](http://stackoverflow.com/questions/2522897/eclipse-junit-ea-vm-option). <br>
    Delete run configurations created when you ran tests earlier.
 
-## 5. Dev Ops
+## Dev Ops
 
-### 5.1. Build Automation
+### Build Automation
 
 See [UsingGradle.md](UsingGradle.md) to learn how to use Gradle for build automation.
 
-### 5.2. Continuous Integration
+### Continuous Integration
 
 We use [Travis CI](https://travis-ci.org/) and [AppVeyor](https://www.appveyor.com/) to perform _Continuous Integration_ on our projects.
 See [UsingTravis.md](UsingTravis.md) and [UsingAppVeyor.md](UsingAppVeyor.md) for more details.
 
-### 5.3. Publishing Documentation
+### Publishing Documentation
 
 See [UsingGithubPages.md](UsingGithubPages.md) to learn how to use GitHub Pages to publish documentation to the
 project site.
 
-### 5.4. Making a Release
+### Making a Release
 
 Here are the steps to create a new release.
 
@@ -325,7 +365,7 @@ Here are the steps to create a new release.
  2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/)
     and upload the JAR file you created.
 
-### 5.5. Converting Documentation to PDF format
+### Converting Documentation to PDF format
 
 We use [Google Chrome](https://www.google.com/chrome/browser/desktop/) for converting documentation to PDF format,
 as Chrome's PDF engine preserves hyperlinks used in webpages.
@@ -342,7 +382,7 @@ Here are the steps to convert the project documentation files to PDF format.
     <img src="images/chrome_save_as_pdf.png" width="300"><br>
     _Figure 5.4.1 : Saving documentation as PDF files in Chrome_
 
-### 5.6. Managing Dependencies
+### Managing Dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the
 [Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these _dependencies_
