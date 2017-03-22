@@ -1,10 +1,12 @@
 package utask.logic.commands;
 
+import java.util.List;
+
 import utask.commons.core.Messages;
-import utask.commons.core.UnmodifiableObservableList;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
+import utask.staging.ui.UTListViewHelper;
 
 /**
  * Deletes a task identified using it's last displayed index from the uTask.
@@ -26,17 +28,27 @@ public class DeleteCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
-
+    //TODO: Cleanup
+    //@@author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
 
-        UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+//        UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+//
+//        if (lastShownList.size() < targetIndex) {
+//            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+//        }
 
-        if (lastShownList.size() < targetIndex) {
+        if (UTListViewHelper.getInstance().getTotalSizeOfAllListViews() < targetIndex) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        ReadOnlyTask taskToDelete = lastShownList.get(targetIndex - 1);
+        //- 1 as helper method is using zero-based indexing
+        List<ReadOnlyTask> lastShownList =
+                UTListViewHelper.getInstance().getFilteredTaskList(targetIndex - 1);
+
+        int actualInt = UTListViewHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
+        ReadOnlyTask taskToDelete = lastShownList.get(actualInt);
 
         try {
             model.deleteTask(taskToDelete);

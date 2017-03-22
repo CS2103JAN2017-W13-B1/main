@@ -497,20 +497,20 @@ public class LogicManagerTest {
         assertIndexNotFoundBehaviorForCommand("select");
     }
 
-    @Test
-    public void execute_select_jumpsToCorrectTask() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        List<Task> threeTasks = helper.generateTaskList(3);
-
-        UTask expectedAB = helper.generateUTask(threeTasks);
-        helper.addToModel(model, threeTasks);
-
-        assertCommandSuccess("select 2",
-                String.format(SelectCommand.MESSAGE_SELECT_TASK_SUCCESS, 2),
-                expectedAB, expectedAB.getTaskList());
-        assertEquals(1, targetedJumpIndex);
-        assertEquals(model.getFilteredTaskList().get(1), threeTasks.get(1));
-    }
+//    @Test
+//    public void execute_select_jumpsToCorrectTask() throws Exception {
+//        TestDataHelper helper = new TestDataHelper();
+//        List<Task> threeTasks = helper.generateTaskList(3);
+//
+//        UTask expectedAB = helper.generateUTask(threeTasks);
+//        helper.addToModel(model, threeTasks);
+//
+//        assertCommandSuccess("select 2",
+//                String.format(SelectCommand.MESSAGE_SELECT_TASK_SUCCESS, 2),
+//                expectedAB, expectedAB.getTaskList());
+//        assertEquals(1, targetedJumpIndex);
+//        assertEquals(model.getFilteredTaskList().get(1), threeTasks.get(1));
+//    }
 
     @Test
     public void executeDeleteInvalidArgsFormatErrorMessageShown()
@@ -526,20 +526,20 @@ public class LogicManagerTest {
         assertIndexNotFoundBehaviorForCommand("delete");
     }
 
-    @Test
-    public void execute_delete_removesCorrectTask() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        List<Task> threePersons = helper.generateTaskList(3);
-
-        UTask expectedAB = helper.generateUTask(threePersons);
-        expectedAB.removeTask(threePersons.get(1));
-        helper.addToModel(model, threePersons);
-
-        assertCommandSuccess("delete 2",
-                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS,
-                        threePersons.get(1)),
-                expectedAB, expectedAB.getTaskList());
-    }
+//    @Test
+//    public void execute_delete_removesCorrectTask() throws Exception {
+//        TestDataHelper helper = new TestDataHelper();
+//        List<Task> threePersons = helper.generateTaskList(3);
+//
+//        UTask expectedAB = helper.generateUTask(threePersons);
+//        expectedAB.removeTask(threePersons.get(1));
+//        helper.addToModel(model, threePersons);
+//
+//        assertCommandSuccess("delete 2",
+//                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS,
+//                        threePersons.get(1)),
+//                expectedAB, expectedAB.getTaskList());
+//    }
 
     // @@author A0138493W
     @Test
