@@ -4,15 +4,21 @@ import utask.model.tag.UniqueTagList;
 
 public class FloatingTask extends Task {
 
-    public FloatingTask(Name name, Frequency frequency, UniqueTagList tags) {
-        super(name, frequency, tags);
+    public FloatingTask(Name name, Frequency frequency, UniqueTagList tags,
+            IsCompleted isCompleted) {
+        super(name, frequency, tags, isCompleted);
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public FloatingTask(ReadOnlyTask source) {
-        this(source.getName(), source.getFrequency(), source.getTags());
+        this(source.getName(), source.getFrequency(), source.getTags(),
+                source.getIsCompleted());
+    }
+
+    public void resetData(ReadOnlyTask replacement) {
+        super.resetData(replacement);
     }
 
     @Override

@@ -5,17 +5,20 @@
         <deadline>200217</deadline>
         <timestamp>1830 to 2000</timestamp>
         <frequency></frequency>
+        <iscompleted>false</iscompleted>
     </tasks>
     <tasks>
         <name>brth from 0000 to 2359</name>
         <deadline></deadline>
         <timestamp></timestamp>
         <frequency></frequency>
+        <iscompleted>false</iscompleted>
     </tasks>
     <tasks>
         <name>char</name>
         <deadline></deadline>
         <timestamp></timestamp>
         <frequency>every mon</frequency>
+        <iscompleted>false</iscompleted>
     </tasks>
 </utask>

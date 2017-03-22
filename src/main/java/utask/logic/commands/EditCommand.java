@@ -12,6 +12,7 @@ import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
+import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
@@ -19,8 +20,9 @@ import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList;
 
 /**
- * Edits the details of an existing task in the address book.
+ * Edits the details of an existing task in the uTask.
  */
+//@@author A0138423J
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "update";
@@ -35,7 +37,7 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the uTask.";
 
     private final int filteredTaskListIndex;
     private final EditTaskDescriptor editTaskDescriptor;
@@ -100,27 +102,27 @@ public class EditCommand extends Command {
                 .orElseGet(taskToEdit::getFrequency);
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
                 .orElseGet(taskToEdit::getTags);
+        IsCompleted updatedIsCompleted = editTaskDescriptor.getIsCompleted()
+                .orElseGet(taskToEdit::getIsCompleted);
 
         // TODO
         Task placeholder = null;
         if (!updatedDeadline.isEmpty() && !updatedTimestamp.isEmpty()) {
             placeholder = new EventTask(updatedName, updatedDeadline,
-                    updatedTimestamp, updatedFrequency, updatedTags);
+                    updatedTimestamp, updatedFrequency, updatedTags, updatedIsCompleted);
         } else if (!updatedDeadline.isEmpty() && updatedTimestamp.isEmpty()) {
             placeholder = new DeadlineTask(updatedName, updatedDeadline,
-                    updatedFrequency, updatedTags);
+                    updatedFrequency, updatedTags, updatedIsCompleted);
         } else if (updatedDeadline.isEmpty() && updatedTimestamp.isEmpty()) {
             placeholder = new FloatingTask(updatedName, updatedFrequency,
-                    updatedTags);
+                    updatedTags, updatedIsCompleted);
         }
         return placeholder;
-        // return new EventTask(updatedName, updatedDeadline, updatedTimestamp,
-        // updatedFrequency, updatedTags);
     }
 
     /**
      * Stores the details to edit the task with. Each non-empty field value
-     * will replace the corresponding field value of the person.
+     * will replace the corresponding field value of the Task.
      */
     public static class EditTaskDescriptor {
         private Optional<Name> name = Optional.empty();
@@ -128,6 +130,7 @@ public class EditCommand extends Command {
         private Optional<Timestamp> timeStamp = Optional.empty();
         private Optional<Frequency> frequency = Optional.empty();
         private Optional<UniqueTagList> tags = Optional.empty();
+        private Optional<IsCompleted> isCompleted = Optional.empty();
 
         public EditTaskDescriptor() {
         }
@@ -138,6 +141,7 @@ public class EditCommand extends Command {
             this.timeStamp = toCopy.getTimeStamp();
             this.frequency = toCopy.getFrequency();
             this.tags = toCopy.getTags();
+            this.isCompleted = toCopy.getIsCompleted();
         }
 
         /**
@@ -145,7 +149,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyPresent(this.name, this.deadLine,
-                    this.timeStamp, this.frequency, this.tags);
+                    this.timeStamp, this.frequency, this.tags, this.isCompleted);
         }
 
         public void setName(Optional<Name> name) {
@@ -191,6 +195,15 @@ public class EditCommand extends Command {
 
         public Optional<UniqueTagList> getTags() {
             return tags;
+        }
+
+        public void setIsCompleted(Optional<IsCompleted> isCompleted) {
+            assert isCompleted != null;
+            this.isCompleted = isCompleted;
+        }
+
+        public Optional<IsCompleted> getIsCompleted() {
+            return isCompleted;
         }
     }
 }

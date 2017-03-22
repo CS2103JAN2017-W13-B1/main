@@ -7,6 +7,7 @@ import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.EventTask;
 import utask.model.task.Frequency;
+import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.Task;
 import utask.model.task.Timestamp;
@@ -18,7 +19,8 @@ public class SampleDataUtil {
             return new Task[] {
                 new EventTask(new Name("My first task"), new Deadline("010117"), new Timestamp("0900 to 1000"),
                 new Frequency("-"),
-                new UniqueTagList("important"))
+                new UniqueTagList("important"),
+                new IsCompleted("no"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
