@@ -27,6 +27,7 @@ import utask.model.task.UniqueTaskList.TaskNotFoundException;
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
+    private String userConfig = null;
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final UTask uTask;
@@ -61,6 +62,8 @@ public class ModelManager extends ComponentManager implements Model {
         tomorrowTasks = getTasksFliteredListByExactDate(tomorrowDate);
         futureTasks = getTasksFliteredListByAfterGivenDate(tomorrowDate);
         floatingTasks = getFloatingTaskFliteredListByEmptyDeadlineAndTimestamp();
+        userConfig = Model.SORT_ORDER_DEFAULT;
+        sortFilteredTaskList(userConfig);
     }
 
     public ModelManager() {
@@ -93,6 +96,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         uTask.addTask(task);
         updateFilteredListToShowAll();
+        sortFilteredTaskList(userConfig);
         indicateUTaskChanged();
     }
 
@@ -192,35 +196,43 @@ public class ModelManager extends ComponentManager implements Model {
         switch(sortingOrder) {
         case "": //default sorting order
             uTask.sortByComparator(new EarliestFirstComparator());
+            setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_EARLIEST_FIRST:
             uTask.sortByComparator(new EarliestFirstComparator());
+            setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_LATEST_FIRST:
             uTask.sortByComparator(new LatestFirstComparator());
+            setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_A_TO_Z:
             uTask.sortByComparator(new AToZComparator());
+            setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_Z_TO_A:
             uTask.sortByComparator(new ZToAComparator());
+            setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_TAG:
             uTask.sortByComparator(new TagComparator());
+            setUserConfig(sortingOrder);
             break;
 
         default:
             logger.warning(Model.SORT_ORDER_ERROR + sortingOrder);
             break;
         }
-        indicateUTaskChanged();
     }
 
+    private void setUserConfig(String userConfig){
+        this.userConfig = userConfig;
+    }
     //@@author
 
     //========== Inner classes/interfaces used for filtering =================================================
