@@ -58,6 +58,9 @@ public interface Model {
     /** Returns the filtered list of future tasks */
     UnmodifiableObservableList<ReadOnlyTask> getFutureFilteredTaskList();
 
+    /** Returns the filtered list of floating tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getFloatingFilteredTaskList();
+
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
 

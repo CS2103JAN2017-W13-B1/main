@@ -36,6 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyTask> todayTasks;
     private final FilteredList<ReadOnlyTask> tomorrowTasks;
     private final FilteredList<ReadOnlyTask> futureTasks;
+    private final FilteredList<ReadOnlyTask> floatingTasks;
 
     /**
      * Initializes a ModelManager with the given UTask and userPrefs.
@@ -55,8 +56,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         dueTasks = getTasksFliteredListByBeforeGivenDate(todayDate);
         todayTasks = getTasksFliteredListByExactDate(todayDate);
-        tomorrowTasks = getTasksFliteredListByAfterGivenDate(tomorrowDate);
+        tomorrowTasks = getTasksFliteredListByExactDate(tomorrowDate);
         futureTasks = getTasksFliteredListByAfterGivenDate(tomorrowDate);
+        floatingTasks = getFloatingTaskFliteredListByEmptyDeadlineAndTimestamp();
     }
 
     public ModelManager() {
@@ -120,6 +122,12 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredList(task, new PredicateExpression(new DateAfterQualifier(date)));
         return task;
     }
+
+    private FilteredList<ReadOnlyTask> getFloatingTaskFliteredListByEmptyDeadlineAndTimestamp() {
+        FilteredList<ReadOnlyTask> task = new FilteredList<>(this.uTask.getTaskList());
+        updateFilteredList(task, new PredicateExpression(new EmptyDeadlineAndTimestampQualifier()));
+        return task;
+    }
     //@@author
 
     //=========== Filtered Task List Accessors =============================================================
@@ -148,6 +156,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFutureFilteredTaskList() {
         return new UnmodifiableObservableList<>(futureTasks);
+    }
+
+    @Override
+    public UnmodifiableObservableList<ReadOnlyTask> getFloatingFilteredTaskList() {
+        return new UnmodifiableObservableList<>(floatingTasks);
     }
     //@@author
 
@@ -275,10 +288,13 @@ public class ModelManager extends ComponentManager implements Model {
 
         @Override
         public boolean run(ReadOnlyTask task) {
-            Date taskDate;
+
+            if (task.getDeadline().isEmpty()) {
+                return false;
+            }
 
             try {
-                taskDate = task.getDeadline().getDate();
+                Date taskDate = task.getDeadline().getDate();
                 return taskDate.getYear() == date.getYear()
                         && taskDate.getMonth() == date.getMonth()
                         && taskDate.getDay() == date.getDay();
@@ -305,6 +321,10 @@ public class ModelManager extends ComponentManager implements Model {
 
         @Override
         public boolean run(ReadOnlyTask task) {
+            if (task.getDeadline().isEmpty()) {
+                return false;
+            }
+
             try {
                 return task.getDeadline().getDate().before(date);
             } catch (ParseException e) {
@@ -329,17 +349,39 @@ public class ModelManager extends ComponentManager implements Model {
 
         @Override
         public boolean run(ReadOnlyTask task) {
+
+            if (task.getDeadline().isEmpty()) {
+                return false;
+            }
+
             try {
                 return task.getDeadline().getDate().after(date);
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
+
             return false;
         }
 
         @Override
         public String toString() {
             return "date=" + date.toString();
+        }
+    }
+
+    private class EmptyDeadlineAndTimestampQualifier implements Qualifier {
+        @Override
+        public boolean run(ReadOnlyTask task) {
+            if (task.getDeadline().isEmpty() && task.getTimestamp().isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "deadline&timestamp=empty";
         }
     }
 }

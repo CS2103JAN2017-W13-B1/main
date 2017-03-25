@@ -13,6 +13,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import utask.commons.core.LogsCenter;
 import utask.commons.util.FxViewUtil;
+import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 
@@ -26,13 +27,13 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
     @FXML
     private JFXListView<ReadOnlyTask> lstTodoTasks;
 
-    public UTTodoListPanel(Pane parent, ObservableList<ReadOnlyTask> tasks) {
+    public UTTodoListPanel(Pane parent, Logic logic) {
         super(FXML);
 
-        assert(parent != null && tasks != null);
+        assert(parent != null && logic != null);
 
         addStylingPropertiesToControls();
-        setConnections(lstTodoTasks, tasks);
+        setConnections(lstTodoTasks, logic.getFloatingFilteredTaskList());
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);

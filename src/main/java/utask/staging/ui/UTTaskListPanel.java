@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import com.jfoenix.controls.JFXListView;
 
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -44,8 +43,8 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         //TODO: Use proper logic methods to populate
         createLabelledListViewControl(container, logic.getDueFilteredTaskList(), "Due");
         createLabelledListViewControl(container, logic.getTodayFilteredTaskList(), "Today");
-        createLabelledListViewControl(container, FXCollections.observableArrayList(), "Tomorrow");
-        createLabelledListViewControl(container, FXCollections.observableArrayList(), "Future");
+        createLabelledListViewControl(container, logic.getTomorrowFilteredTaskList(), "Tomorrow");
+        createLabelledListViewControl(container, logic.getFutureFilteredTaskList(), "Future");
 
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
