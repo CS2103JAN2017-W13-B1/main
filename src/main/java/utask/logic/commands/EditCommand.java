@@ -18,6 +18,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList;
+import utask.staging.ui.UTListViewHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -59,31 +60,45 @@ public class EditCommand extends Command {
         this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
     }
 
+    //@author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
-        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+//        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+//
+//        if (filteredTaskListIndex >= lastShownList.size()) {
+//            throw new CommandException(
+//                    Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+//        }
 
-        if (filteredTaskListIndex >= lastShownList.size()) {
+        if (filteredTaskListIndex >= UTListViewHelper.getInstance().getTotalSizeOfAllListViews()) {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
         // Retrieve task to be edited from save file
-        ReadOnlyTask taskToEdit = lastShownList.get(filteredTaskListIndex);
+        //ReadOnlyTask taskToEdit = lastShownList.get(filteredTaskListIndex);
+
+        List<ReadOnlyTask> lastShownList =
+                UTListViewHelper.getInstance().getUnderlyingListOfListViewByIndex(filteredTaskListIndex);
+
+        int actualInt = UTListViewHelper.getInstance().getActualIndexFromDisplayIndex(filteredTaskListIndex);
+        ReadOnlyTask taskToEdit = lastShownList.get(actualInt);
 
         // create modified task from existing task
         Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
 
         try {
-            model.updateTask(filteredTaskListIndex, editedTask);
+            //model.updateTask(filteredTaskListIndex, editedTask);
+            model.updateTask(taskToEdit, editedTask);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
-        model.updateFilteredListToShowAll();
+        //model.updateFilteredListToShowAll();
         return new CommandResult(
                 String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }
 
+    //@@author A0138423J
     /**
      * Creates and returns a {@code Task} with the details of
      * {@code taskToEdit} edited with {@code editTaskDescriptor}.

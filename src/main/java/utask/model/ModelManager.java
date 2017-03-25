@@ -105,6 +105,17 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author A0139996A
+    @Override
+    public void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
+            throws UniqueTaskList.DuplicateTaskException {
+        assert taskToEdit != null;
+        assert editedTask != null;
+
+        uTask.updateTask(taskToEdit, editedTask);
+        indicateUTaskChanged();
+    }
+    //@author
+
     private FilteredList<ReadOnlyTask> getTasksFliteredListByExactDate(Date date) {
         FilteredList<ReadOnlyTask> task = new FilteredList<>(this.uTask.getTaskList());
         updateFilteredList(task, new PredicateExpression(new ExactDateQualifier(date)));
@@ -164,6 +175,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //TODO: Mark for deletion
     @Override
     public void updateFilteredListToShowAll() {
         filteredTasks.setPredicate(null);

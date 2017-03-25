@@ -51,6 +51,19 @@ public class UniqueTaskList implements Iterable<Task> {
         return internalList;
     }
 
+    //TODO: add header comments
+    //@@author A0139996A
+    public void updateTask(ReadOnlyTask taskToUpdate, ReadOnlyTask editedTask)
+            throws DuplicateTaskException {
+        assert taskToUpdate != null;
+        assert editedTask != null;
+
+        int index = internalList.indexOf(taskToUpdate);
+
+        updateTask(index, editedTask);
+    }
+    //@@author
+
     /**
      * Updates the task in the list at position {@code index} with
      * {@code editedTask}.

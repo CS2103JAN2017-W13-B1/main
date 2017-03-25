@@ -134,6 +134,27 @@ public class UTask implements ReadOnlyUTask {
         tasks.updateTask(index, editedTask);
     }
 
+    //TODO: Clean up
+    //@@author A0139996A
+    public void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedReadOnlyTask)
+            throws UniqueTaskList.DuplicateTaskException {
+        assert editedReadOnlyTask != null;
+
+        //check to see what type of task contains before casting new instance
+        Task editedTask = null;
+        if (editedReadOnlyTask instanceof EventTask) {
+            editedTask = new EventTask(editedReadOnlyTask);
+        } else if (editedReadOnlyTask instanceof DeadlineTask) {
+            editedTask = new DeadlineTask(editedReadOnlyTask);
+        } else if (editedReadOnlyTask instanceof FloatingTask) {
+            editedTask = new FloatingTask(editedReadOnlyTask);
+        }
+
+        syncMasterTagListWith(editedTask);
+        tasks.updateTask(taskToEdit, editedTask);
+    }
+    //@@author
+
     /**
      * Ensures that every tag in this task:
      *  - exists in the master list {@link #tags}
