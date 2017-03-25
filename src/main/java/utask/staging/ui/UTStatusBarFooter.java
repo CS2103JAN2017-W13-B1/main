@@ -45,7 +45,7 @@ public class UTStatusBarFooter extends StagingUiPart<Region> {
     }
 
     @Subscribe
-    public void handleAddressBookChangedEvent(UTaskChangedEvent abce) {
+    public void handleUTaskChangedEvent(UTaskChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);

@@ -5,7 +5,7 @@ import utask.commons.core.EventsCenter;
 import utask.logic.commands.Command;
 import utask.logic.commands.CommandResult;
 import utask.logic.commands.exceptions.CommandException;
-import utask.staging.ui.events.SearchRequestEvent;
+import utask.staging.ui.events.FindRequestEvent;
 
 public class SearchCommand extends Command {
 
@@ -27,7 +27,7 @@ public class SearchCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        EventsCenter.getInstance().post(new SearchRequestEvent(searchKeywords));
+        EventsCenter.getInstance().post(new FindRequestEvent(searchKeywords));
         return new CommandResult(String.format(MESSAGE_SUCCESS, searchKeywords));
     }
 

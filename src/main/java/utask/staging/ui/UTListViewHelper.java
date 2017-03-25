@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import utask.commons.core.EventsCenter;
+import utask.commons.events.model.UTaskChangedEvent;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.TaskListViewCell;
@@ -182,5 +183,10 @@ public class UTListViewHelper {
         clearSelectionOfAllListViews();
         ListView<ReadOnlyTask> sender = e.getSender();
         sender.getSelectionModel().select(e.getNewSelection());
+    }
+
+    @Subscribe
+    public void handleUTaskChangedEvent(UTaskChangedEvent e) {
+        updateListViews();
     }
 }

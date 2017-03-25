@@ -23,8 +23,8 @@ import utask.commons.core.LogsCenter;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.events.FindRequestEvent;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
-import utask.staging.ui.events.SearchRequestEvent;
 
 public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 
@@ -179,9 +179,9 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     }
 
     @Subscribe
-    private void handleSearchRequestEvent(SearchRequestEvent event) {
+    private void handleSearchRequestEvent(FindRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        filterResultsByKeywords(filteredData, event.searchKeywords.trim());
+        filterResultsByKeywords(filteredData, event.findKeywords.trim());
         openIfSearchIsNotShowing();
     }
 

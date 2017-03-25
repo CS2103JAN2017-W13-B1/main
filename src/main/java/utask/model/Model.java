@@ -46,6 +46,18 @@ public interface Model {
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 
+    /** Returns the filtered list of due tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getDueFilteredTaskList();
+
+    /** Returns the filtered list of today tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getTodayFilteredTaskList();
+
+    /** Returns the filtered list of tomorrow tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getTomorrowFilteredTaskList();
+
+    /** Returns the filtered list of future tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getFutureFilteredTaskList();
+
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
 

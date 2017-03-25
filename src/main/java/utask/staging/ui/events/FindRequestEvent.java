@@ -3,12 +3,12 @@ package utask.staging.ui.events;
 
 import utask.commons.events.BaseEvent;
 
-public class SearchRequestEvent extends BaseEvent {
+public class FindRequestEvent extends BaseEvent {
 
-    public final String searchKeywords;
+    public final String findKeywords;
 
-    public SearchRequestEvent(String searchKeywords) {
-        this.searchKeywords = searchKeywords;
+    public FindRequestEvent(String findKeywords) {
+        this.findKeywords = findKeywords;
     }
 
     @Override

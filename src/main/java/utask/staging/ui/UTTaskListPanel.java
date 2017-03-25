@@ -20,7 +20,6 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
-import utask.staging.ui.helper.TypicalTaskBuilder;
 
 public class UTTaskListPanel extends StagingUiPart<Region> {
     private static final String FXML = "UTTaskListPanel.fxml";
@@ -43,8 +42,8 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
 
     private void addControlsToParent(Pane parent, Logic logic) {
         //TODO: Use proper logic methods to populate
-        createLabelledListViewControl(container, TypicalTaskBuilder.due(), "Due");
-        createLabelledListViewControl(container, TypicalTaskBuilder.today(), "Today");
+        createLabelledListViewControl(container, logic.getDueFilteredTaskList(), "Due");
+        createLabelledListViewControl(container, logic.getTodayFilteredTaskList(), "Today");
         createLabelledListViewControl(container, FXCollections.observableArrayList(), "Tomorrow");
         createLabelledListViewControl(container, FXCollections.observableArrayList(), "Future");
 
