@@ -87,6 +87,8 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
 
     private void addStylingPropertiesToListView(JFXListView<ReadOnlyTask> listView) {
         listView.minHeightProperty().bind(Bindings.size(listView.getItems()).multiply(CARD_HEIGHT));
+        listView.visibleProperty().bind(Bindings.size(listView.getItems()).greaterThan(0));
+        listView.managedProperty().bind(listView.visibleProperty());
     }
 
     /**
