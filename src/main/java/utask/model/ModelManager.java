@@ -230,7 +230,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    private void setUserConfig(String userConfig){
+    private void setUserConfig(String userConfig) {
         this.userConfig = userConfig;
     }
     //@@author
