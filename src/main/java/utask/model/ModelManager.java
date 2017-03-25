@@ -51,10 +51,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks = new FilteredList<>(this.uTask.getTaskList());
 
         Date todayDate = new Date();
+        Date yesterdayDate = new Date();
+        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
         Date tomorrowDate = new Date();
         tomorrowDate.setDate(tomorrowDate.getDate() + 1);
 
-        dueTasks = getTasksFliteredListByBeforeGivenDate(todayDate);
+        dueTasks = getTasksFliteredListByBeforeGivenDate(yesterdayDate);
         todayTasks = getTasksFliteredListByExactDate(todayDate);
         tomorrowTasks = getTasksFliteredListByExactDate(tomorrowDate);
         futureTasks = getTasksFliteredListByAfterGivenDate(tomorrowDate);
