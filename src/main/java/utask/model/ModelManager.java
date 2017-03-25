@@ -228,6 +228,7 @@ public class ModelManager extends ComponentManager implements Model {
             logger.warning(Model.SORT_ORDER_ERROR + sortingOrder);
             break;
         }
+        indicateUTaskChanged();
     }
 
     private void setUserConfig(String userConfig) {
