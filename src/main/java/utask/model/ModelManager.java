@@ -21,6 +21,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
+import utask.staging.ui.UTListHelper;
 
 /**
  * Represents the in-memory model of the UTask data.
@@ -62,6 +63,9 @@ public class ModelManager extends ComponentManager implements Model {
         tomorrowTasks = getTasksFliteredListByExactDate(tomorrowDate);
         futureTasks = getTasksFliteredListByAfterGivenDate(tomorrowDate);
         floatingTasks = getFloatingTaskFliteredListByEmptyDeadlineAndTimestamp();
+
+        UTListHelper.getInstance().addListView(dueTasks, todayTasks, tomorrowTasks, futureTasks, floatingTasks);
+
         userConfig = Model.SORT_ORDER_DEFAULT;
         sortFilteredTaskList(userConfig);
     }
@@ -89,12 +93,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         uTask.removeTask(target);
+        UTListHelper.getInstance().refresh();
         indicateUTaskChanged();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         uTask.addTask(task);
+        UTListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
         sortFilteredTaskList(userConfig);
         indicateUTaskChanged();
@@ -107,6 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         int uTaskIndex = filteredTasks.getSourceIndex(filteredTaskListIndex);
         uTask.updateTask(uTaskIndex, editedTask);
+        UTListHelper.getInstance().refresh();
         indicateUTaskChanged();
     }
 
@@ -118,7 +125,14 @@ public class ModelManager extends ComponentManager implements Model {
         assert editedTask != null;
 
         uTask.updateTask(taskToEdit, editedTask);
+        UTListHelper.getInstance().refresh();
         indicateUTaskChanged();
+    }
+
+    /** Gets total size of tasks in underlying lists of listviews*/
+    @Override
+    public int getTotalSizeOfLists() {
+        return UTListHelper.getInstance().getTotalSizeOfAllList();
     }
     //@author
 

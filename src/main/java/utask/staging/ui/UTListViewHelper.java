@@ -7,7 +7,6 @@ import java.util.HashMap;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import utask.commons.core.EventsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
@@ -16,7 +15,8 @@ import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.TaskListViewCell;
 
 /*
- * UTListViewHelper coordinates multiple listview to ensure their index numbers are in running sequence
+ * UTListViewHelper uses facade and singleton pattern
+ * It coordinates multiple listview to ensure their index numbers are in running sequence
  *
  * */
 public class UTListViewHelper {
@@ -66,6 +66,7 @@ public class UTListViewHelper {
         });
     }
 
+
     //TODO: Possible to use lazy rendering to prevent double rendering
     private void addDefaultCellFactory(ListView<ReadOnlyTask> lv) {
         lv.setCellFactory(l -> new TaskListViewCell(0));
@@ -80,15 +81,19 @@ public class UTListViewHelper {
      *
      *  Recalculation is necessary every time
      */
-    public int getTotalSizeOfAllListViews() {
-        int  totalSize = 0;
-
-        for (ListView<ReadOnlyTask> lv : listViews) {
-            totalSize += lv.getItems().size();
-        }
-
-        return totalSize;
-    }
+//    public int getTotalSizeOfAllListViews() {
+//
+//        assert(listViews.size() > 0) :
+//            "UTListViewHelper was used for the first time. Please add ListViews before calling this method";
+//
+//        int  totalSize = 0;
+//
+//        for (ListView<ReadOnlyTask> lv : listViews) {
+//            totalSize += lv.getItems().size();
+//        }
+//
+//        return totalSize;
+//    }
 
     /*
      * Normalise the given to index to actual numbering in listview
@@ -96,13 +101,13 @@ public class UTListViewHelper {
      * @param index is zero-based
      *
      * */
-    public int getActualIndexFromDisplayIndex(int index) {
-        ListView<ReadOnlyTask> lw = getActualListViewFromDisplayIndex(index);
-
-        int actualInt = getActualIndexOfListView(lw, index);
-
-        return actualInt;
-    }
+//    public int getActualIndexFromDisplayIndex(int index) {
+//        ListView<ReadOnlyTask> lw = getActualListViewFromDisplayIndex(index);
+//
+//        int actualInt = getActualIndexOfListView(lw, index);
+//
+//        return actualInt;
+//    }
 
     /*
      * Normalise the given to index to actual numbering in listview
@@ -141,15 +146,15 @@ public class UTListViewHelper {
         return null;
     }
 
-    public ObservableList<ReadOnlyTask> getUnderlyingListOfListViewByIndex(int index) {
-        assert (index >= 0);
-
-        ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
-
-        assert(listView != null);
-
-        return listView.getItems();
-    }
+//    public ObservableList<ReadOnlyTask> getUnderlyingListOfListViewByIndex(int index) {
+//        assert (index >= 0);
+//
+//        ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
+//
+//        assert(listView != null);
+//
+//        return listView.getItems();
+//    }
 
     private void clearSelectionOfAllListViews() {
         for (ListView<ReadOnlyTask> lv : listViews) {

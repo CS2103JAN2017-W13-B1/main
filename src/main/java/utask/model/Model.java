@@ -73,4 +73,7 @@ public interface Model {
     /** Updates the filter of the sorted task list to sort by the given keywords*/
     void sortFilteredTaskList(String keywords);
 
+    /** Gets total size of tasks in underlying lists of listviews*/
+    int getTotalSizeOfLists();
+
 }

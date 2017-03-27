@@ -6,7 +6,7 @@ import utask.commons.core.Messages;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
-import utask.staging.ui.UTListViewHelper;
+import utask.staging.ui.UTListHelper;
 
 /**
  * Deletes a task identified using it's last displayed index from the uTask.
@@ -39,15 +39,15 @@ public class DeleteCommand extends Command {
 //            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 //        }
 
-        if (UTListViewHelper.getInstance().getTotalSizeOfAllListViews() < targetIndex) {
+        if (model.getTotalSizeOfLists() < targetIndex) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
         //- 1 as helper method is using zero-based indexing
         List<ReadOnlyTask> lastShownList =
-                UTListViewHelper.getInstance().getUnderlyingListOfListViewByIndex(targetIndex - 1);
+                UTListHelper.getInstance().getUnderlyingListOfListViewByIndex(targetIndex - 1);
 
-        int actualInt = UTListViewHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
+        int actualInt = UTListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
         ReadOnlyTask taskToDelete = lastShownList.get(actualInt);
 
         try {
