@@ -29,15 +29,10 @@ public class DeleteCommand extends Command {
     }
 
     //TODO: Cleanup
-    //@@author A0139996A A0138493W
+    //@@author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
 
-//        UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-//
-//        if (lastShownList.size() < targetIndex) {
-//            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-//        }
         for (int targetIndex : targetList) {
             if (UTListViewHelper.getInstance().getTotalSizeOfAllListViews() < targetIndex) {
                 throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);

@@ -56,16 +56,30 @@ public class ParserUtil {
      */
     public static Optional<List<Integer>> parseMultiIndex(String command) {
         String[] splittedStringIndexes = command.trim().replace(" ", "").split(",");
-        ArrayList<Integer> intIndexesList = new ArrayList<Integer>();
+        ArrayList<Integer> intIndexList = new ArrayList<Integer>();
         for (String index : splittedStringIndexes) {
-            if (!StringUtil.isUnsignedInteger(index)) {
-                return Optional.empty();
+            if (index.contains("to")) {
+                String[] range = index.split("to");
+                int start = Integer.parseInt(range[0]);
+                int end = Integer.parseInt(range[1]);
+                for (int i = start; i <= end; i++) {
+                    if (!intIndexList.contains(i)) {
+                        intIndexList.add(i);
+                    }
+                }
+            } else {
+                if (!intIndexList.contains(Integer.parseInt(index))) {
+                    intIndexList.add(Integer.parseInt(index));
+                }
             }
-            intIndexesList.add(Integer.parseInt(index));
         }
-        Collections.sort(intIndexesList);
-        Collections.reverse(intIndexesList);
-        return Optional.of(intIndexesList);
+        return Optional.of(getReverseSortedList(intIndexList));
+    }
+
+    private static ArrayList<Integer> getReverseSortedList(ArrayList<Integer> intIndexList) {
+        Collections.sort(intIndexList);
+        Collections.reverse(intIndexList);
+        return intIndexList;
     }
     //author
 
