@@ -1,5 +1,6 @@
 package utask.logic.parser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,6 +48,24 @@ public class ParserUtil {
         return Optional.of(Integer.parseInt(index));
 
     }
+
+    //@@author A0138493W
+    public static List<Integer> parseMultiIndex(String command) {
+        String[] splittedStringIndexes = command.trim().split(",");
+        ArrayList<Integer> intIndexesList = new ArrayList<Integer>();
+        for (String index : splittedStringIndexes) {
+            final Matcher matcher = INDEX_ARGS_FORMAT.matcher(index);
+            if (!matcher.matches()) {
+                //will ignore one single wrong input format if any
+            } else {
+                intIndexesList.add(Integer.parseInt(index));
+            }
+        }
+        Collections.sort(intIndexesList);
+        Collections.reverse(intIndexesList);
+        return intIndexesList;
+    }
+    //author
 
     /**
      * Returns a new Set populated by all elements in the given list of strings
