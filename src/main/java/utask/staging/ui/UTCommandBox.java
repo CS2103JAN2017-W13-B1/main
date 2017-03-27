@@ -3,6 +3,7 @@ package utask.staging.ui;
 
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -45,6 +46,13 @@ public class UTCommandBox extends StagingUiPart<Region> {
         this.logic = logic;
         addEventHandlerToControls();
         addControlsToParent(parent);
+        addCommandBoxBehaviour();
+    }
+
+    private void addCommandBoxBehaviour() {
+        Platform.runLater(() -> {
+            commandTextField.requestFocus();
+        });
     }
 
     private void addControlsToParent(Pane parent) {
