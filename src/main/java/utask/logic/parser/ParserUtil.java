@@ -50,20 +50,22 @@ public class ParserUtil {
     }
 
     //@@author A0138493W
-    public static List<Integer> parseMultiIndex(String command) {
-        String[] splittedStringIndexes = command.trim().split(",");
+    /**
+     * Returns the indexes as a list in the {@code command} if it every index positive
+     * unsigned integer Returns an {@code Optional.empty()} otherwise.
+     */
+    public static Optional<List<Integer>> parseMultiIndex(String command) {
+        String[] splittedStringIndexes = command.trim().replace(" ", "").split(",");
         ArrayList<Integer> intIndexesList = new ArrayList<Integer>();
         for (String index : splittedStringIndexes) {
-            final Matcher matcher = INDEX_ARGS_FORMAT.matcher(index);
-            if (!matcher.matches()) {
-                //will ignore one single wrong input format if any
-            } else {
-                intIndexesList.add(Integer.parseInt(index));
+            if (!StringUtil.isUnsignedInteger(index)) {
+                return Optional.empty();
             }
+            intIndexesList.add(Integer.parseInt(index));
         }
         Collections.sort(intIndexesList);
         Collections.reverse(intIndexesList);
-        return intIndexesList;
+        return Optional.of(intIndexesList);
     }
     //author
 

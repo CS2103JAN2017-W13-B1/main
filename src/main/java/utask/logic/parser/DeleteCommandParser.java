@@ -2,6 +2,7 @@ package utask.logic.parser;
 
 import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.List;
 import java.util.Optional;
 
 import utask.logic.commands.Command;
@@ -19,13 +20,13 @@ public class DeleteCommandParser {
      */
     public Command parse(String args) {
 
-        Optional<Integer> index = ParserUtil.parseIndex(args);
-        if (!index.isPresent()) {
+        Optional<List<Integer>> indexList = ParserUtil.parseMultiIndex(args);
+        if (!indexList.isPresent()) {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
-        return new DeleteCommand(index.get());
+        return new DeleteCommand(indexList.get());
     }
 
 }
