@@ -70,6 +70,9 @@ public interface Model {
     /** Updates the filter of the filtered task list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
 
+    /** Updates the filter of the filtered task list to filter by the given keywords*/
+    void updateFilteredTaskListByKeywords(String keywords);
+
     /** Updates the filter of the sorted task list to sort by the given keywords*/
     void sortFilteredTaskList(String keywords);
 

@@ -156,7 +156,7 @@ public class UTListViewHelper {
 //        return listView.getItems();
 //    }
 
-    private void clearSelectionOfAllListViews() {
+    public void clearSelectionOfAllListViews() {
         for (ListView<ReadOnlyTask> lv : listViews) {
             lv.getSelectionModel().clearSelection();
         }

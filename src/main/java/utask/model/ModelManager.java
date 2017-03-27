@@ -211,6 +211,22 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author A0139996A
+    public void updateFilteredTaskListByKeywords(String keywords) {
+        filteredTasks.setPredicate(task -> {
+            // If filter text is empty, display all persons.
+            if (keywords == null || keywords.isEmpty()) {
+                return true;
+            }
+
+            //Set filter text as lower case, so to be case insensitive
+            String lowerCaseFilter = keywords.toLowerCase();
+
+            //TODO: Build comprehensive search
+            return task.getName().fullName.toLowerCase().contains(lowerCaseFilter) ||
+                   task.getTags().getAllTagNames().toLowerCase().contains(lowerCaseFilter);
+        });
+    }
+
     private void updateFilteredList(FilteredList<ReadOnlyTask> list, Expression expression) {
         list.setPredicate(expression::satisfies);
     }

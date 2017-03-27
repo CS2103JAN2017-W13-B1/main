@@ -2,6 +2,9 @@ package utask.logic.commands;
 
 import java.util.Set;
 
+import utask.commons.core.EventsCenter;
+import utask.staging.ui.events.FindRequestEvent;
+
 /**
  * Finds and lists all tasks in uTask who contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -9,10 +12,11 @@ import java.util.Set;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_FORMAT = "KEYWORD [MORE_KEYWORDS]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks who contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Parameters: " + COMMAND_FORMAT + "\n"
             + "Example: " + COMMAND_WORD + " Monday";
 
     private final Set<String> keywords;
@@ -24,6 +28,7 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredTaskList(keywords);
+        EventsCenter.getInstance().post(new FindRequestEvent(""));
         return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
     }
 

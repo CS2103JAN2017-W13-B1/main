@@ -27,7 +27,8 @@ public class SearchCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        EventsCenter.getInstance().post(new FindRequestEvent(searchKeywords));
+        model.updateFilteredTaskListByKeywords(searchKeywords);
+        EventsCenter.getInstance().post(new FindRequestEvent(""));
         return new CommandResult(String.format(MESSAGE_SUCCESS, searchKeywords));
     }
 
