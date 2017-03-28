@@ -21,7 +21,7 @@ import javafx.scene.text.TextAlignment;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.helper.TaskColorHelper;
+import utask.staging.ui.helper.TagColorHelper;
 
 public class UTTaskListCard extends StagingUiPart<Region> {
 
@@ -29,17 +29,18 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     private static final String FXML = "UTTaskListCard.fxml";
     private static final String LABEL_CSS = "-fx-padding: 1px; -fx-text-fill: WHITE; -fx-background-color: %s;";
 
+    //UI Element use Leszynski naming convention. Prefix is the element type
     @FXML
-    private Label id;
+    private Label lblId;
 
     @FXML
-    private JFXCheckBox done;
+    private JFXCheckBox chkDone;
 
     @FXML
-    private Label name;
+    private Label lblName;
 
     @FXML
-    private HBox tagPane;
+    private HBox hbTagContainer;
 
     @FXML
     private Label lblDate;
@@ -52,8 +53,8 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     }
 
     private void setTaskInfoToControls(ReadOnlyTask task, int displayedIndex) {
-        name.setText(task.getName().fullName);
-        id.setText(displayedIndex + " ");
+        lblName.setText(task.getName().fullName);
+        lblId.setText(displayedIndex + " ");
         String friendlyDate = buildFriendlyDateToDisplay(task);
         lblDate.setText(friendlyDate);
         initTags(task);
@@ -101,7 +102,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
 
         for (Tag tag : tags) {
             Label label = createLabel(tag.tagName);
-            tagPane.getChildren().add(label);
+            hbTagContainer.getChildren().add(label);
         }
     }
 
@@ -116,7 +117,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextOverrun(OverrunStyle.CLIP);
         label.setMinWidth(15.0);
-        label.setStyle(String.format(LABEL_CSS, TaskColorHelper.getARandomColor()));
+        label.setStyle(String.format(LABEL_CSS, TagColorHelper.getARandomColor()));
         HBox.setMargin(label, new Insets(5, 5, 5, 0));
     }
 }

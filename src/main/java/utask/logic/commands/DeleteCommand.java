@@ -6,6 +6,7 @@ import utask.commons.core.Messages;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
+import utask.staging.ui.UTListHelper;
 import utask.staging.ui.UTListViewHelper;
 
 /**
@@ -34,24 +35,31 @@ public class DeleteCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         for (int targetIndex : targetList) {
-            if (UTListViewHelper.getInstance().getTotalSizeOfAllListViews() < targetIndex) {
+            if (model.getTotalSizeOfLists() < targetIndex) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            }
+
+            if (model.getTotalSizeOfLists() < targetIndex) {
                 throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
             }
 
             //- 1 as helper method is using zero-based indexing
             List<ReadOnlyTask> lastShownList =
-                    UTListViewHelper.getInstance().getUnderlyingListOfListViewByIndex(targetIndex - 1);
+                    UTListHelper.getInstance().getUnderlyingListOfListViewByIndex(targetIndex - 1);
 
-            int actualInt = UTListViewHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
+            int actualInt = UTListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
             ReadOnlyTask taskToDelete = lastShownList.get(actualInt);
+
+            //TODO: Find better a elegant solution
+            //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
+            UTListViewHelper.getInstance().clearSelectionOfAllListViews();
 
             try {
                 model.deleteTask(taskToDelete);
             } catch (TaskNotFoundException pnfe) {
                 assert false : "The target task cannot be missing";
             }
+            return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS));
         }
-        return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS));
-    }
 
 }

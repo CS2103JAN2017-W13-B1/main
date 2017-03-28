@@ -181,7 +181,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     @Subscribe
     private void handleSearchRequestEvent(FindRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        filterResultsByKeywords(filteredData, event.findKeywords.trim());
+        //filterResultsByKeywords(filteredData, event.findKeywords.trim());
         openIfSearchIsNotShowing();
     }
 

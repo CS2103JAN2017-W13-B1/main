@@ -54,19 +54,19 @@ public class EditCommandTest extends UTaskGuiTest {
         assertEditSuccess(addressBookIndex, addressBookIndex, detailsToEdit, editedPerson);
     }
 
-    @Test
-    public void edit_findThenEdit_success() throws Exception {
-        commandBox.runCommand("find Free");
-
-        String detailsToEdit = "/name Not Free";
-        int filteredPersonListIndex = 1;
-        int addressBookIndex = 6;
-
-        TestTask personToEdit = expectedPersonsList[addressBookIndex - 1];
-        TestTask editedPerson = new TaskBuilder(personToEdit).withName("Not Free").build();
-
-        assertEditSuccess(filteredPersonListIndex, addressBookIndex, detailsToEdit, editedPerson);
-    }
+//    @Test
+//    public void edit_findThenEdit_success() throws Exception {
+//        commandBox.runCommand("find Free");
+//
+//        String detailsToEdit = "/name Not Free";
+//        int filteredPersonListIndex = 1;
+//        int addressBookIndex = 6;
+//
+//        TestTask personToEdit = expectedPersonsList[addressBookIndex - 1];
+//        TestTask editedPerson = new TaskBuilder(personToEdit).withName("Not Free").build();
+//
+//        assertEditSuccess(filteredPersonListIndex, addressBookIndex, detailsToEdit, editedPerson);
+//    }
 
     @Test
     public void edit_missingPersonIndex_failure() {

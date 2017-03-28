@@ -14,7 +14,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </HBox.margin>
          <children>
-            <Label fx:id="id" alignment="TOP_CENTER" contentDisplay="TOP" minWidth="30.0" text="999" VBox.vgrow="NEVER">
+            <Label fx:id="lblId" alignment="TOP_CENTER" contentDisplay="TOP" minWidth="30.0" text="999" VBox.vgrow="NEVER">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -22,7 +22,7 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <JFXCheckBox fx:id="done" alignment="TOP_CENTER" contentDisplay="CENTER" focusTraversable="false" minWidth="30.0" mnemonicParsing="false" text="" textAlignment="CENTER" VBox.vgrow="NEVER">
+            <JFXCheckBox fx:id="chkDone" alignment="TOP_CENTER" contentDisplay="CENTER" focusTraversable="false" minWidth="30.0" mnemonicParsing="false" text="" textAlignment="CENTER" VBox.vgrow="NEVER">
                <font>
                   <Font size="1.0" />
                </font>
@@ -34,7 +34,7 @@
       </VBox>
       <VBox HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="name" alignment="TOP_CENTER" contentDisplay="TOP" focusTraversable="false" graphicTextGap="0.0" prefHeight="160.0" text="Lorem ipsum dolor sit amet, ipsum harum sed ea, ne posse putent nam, mei et dicit quodsi. Brute eripuit explicari." wrapText="true">
+            <Label fx:id="lblName" alignment="TOP_CENTER" contentDisplay="TOP" focusTraversable="false" graphicTextGap="0.0" prefHeight="160.0" text="Lorem ipsum dolor sit amet, ipsum harum sed ea, ne posse putent nam, mei et dicit quodsi. Brute eripuit explicari." wrapText="true">
                <font>
                   <Font size="16.0" />
                </font>
@@ -42,18 +42,10 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <HBox fx:id="tagPane" prefHeight="100.0">
+            <HBox fx:id="hbTagContainer" prefHeight="100.0">
             <!--
             <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="Important" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="0.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                     </padding>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: GREEN;" text="Daily" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                      <HBox.margin>
                         <Insets bottom="5.0" left="0.0" right="5.0" top="5.0" />
                      </HBox.margin>
