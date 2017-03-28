@@ -203,7 +203,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateFilteredTaskList(Set<String> keywords) {
-        updateFilteredTaskList(new PredicateExpression(new NameQualifier(keywords)));
+        updateFilteredTaskList(new PredicateExpression(new FindQualifier(keywords)));
     }
 
     private void updateFilteredTaskList(Expression expression) {
@@ -309,10 +309,11 @@ public class ModelManager extends ComponentManager implements Model {
         String toString();
     }
 
-    private class NameQualifier implements Qualifier {
+    //@@author A0138493W
+    private class FindQualifier implements Qualifier {
         private Set<String> nameKeyWords;
 
-        NameQualifier(Set<String> nameKeyWords) {
+        FindQualifier(Set<String> nameKeyWords) {
             this.nameKeyWords = nameKeyWords;
         }
 
@@ -323,6 +324,7 @@ public class ModelManager extends ComponentManager implements Model {
                             || StringUtil.containsWordIgnoreCase(task.getDeadline().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getTimestamp().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getFrequency().value, keyword)
+                            || StringUtil.containsWordIgnoreCase(task.getIsCompleted().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getTags().getAllTagNames(), keyword))
                     .findAny()
                     .isPresent();

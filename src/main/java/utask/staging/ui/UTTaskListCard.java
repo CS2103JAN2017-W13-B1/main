@@ -1,5 +1,13 @@
 package utask.staging.ui;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import org.ocpsoft.prettytime.PrettyTime;
+
 import com.jfoenix.controls.JFXCheckBox;
 
 import javafx.fxml.FXML;
@@ -52,7 +60,6 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         initTags(task);
     }
 
-    //TODO: Core model object should have friendly name parser
     private String buildFriendlyDateToDisplay(ReadOnlyTask task) {
         StringBuilder sb = new StringBuilder();
 
@@ -61,7 +68,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         }
 
         if (!task.getDeadline().isEmpty()) {
-            sb.append(task.getDeadline().value);
+            sb.append(getPrettyDate(task));
         }
 
         if (!task.getTimestamp().isEmpty()) {
@@ -70,6 +77,25 @@ public class UTTaskListCard extends StagingUiPart<Region> {
 
         return sb.toString();
     }
+
+    //@@author A0138493W
+    private String getPrettyDate(ReadOnlyTask task) {
+        assert task != null;
+        Date deadline = null;
+        try {
+            deadline = task.getDeadline().getDate();
+        } catch (ParseException e) {
+            assert false : "Should never have parse error, regex should check input";
+        }
+        DateFormat fmt = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        if (fmt.format(deadline).equals(fmt.format(new Date()))) {
+            return fmt.format(deadline) + ", today";
+        }
+        PrettyTime p = new PrettyTime();
+        return fmt.format(deadline) + ", " + p.format(deadline);
+    }
+
+    //@@author
 
     private void initTags(ReadOnlyTask task) {
         UniqueTagList tags = task.getTags();
