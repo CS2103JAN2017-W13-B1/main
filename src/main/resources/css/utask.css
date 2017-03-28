@@ -336,3 +336,7 @@
     -fx-background-color: #0093ff;
     -fx-text-fill: white;
 }*/
+
+.label-text-done .text {
+    -fx-strikethrough: true;
+}
