@@ -30,6 +30,8 @@ public class ParserUtil {
 
     private static final Pattern INDEX_ARGS_FORMAT = Pattern
             .compile("(?<targetIndex>.+)");
+    private static final Pattern MULTI_INDEX_ARGS_FORMAT = Pattern
+            .compile("^((?=[^0])\\d+)*(,*\\s*((?=[^0])\\d+|((?=[^0])(\\d+))\\sto\\s((?=[^0])(\\d+))))*$");
 
     /**
      * Returns the specified index in the {@code command} if it is a positive
@@ -55,6 +57,9 @@ public class ParserUtil {
      * unsigned integer Returns an {@code Optional.empty()} otherwise.
      */
     public static Optional<List<Integer>> parseMultiIndex(String command) {
+        if (!isValidIndex(command.trim())) {
+            return Optional.empty();
+        }
         String[] splittedStringIndexes = command.trim().replace(" ", "").split(",");
         ArrayList<Integer> intIndexList = new ArrayList<Integer>();
         for (String index : splittedStringIndexes) {
@@ -80,6 +85,14 @@ public class ParserUtil {
         Collections.sort(intIndexList);
         Collections.reverse(intIndexList);
         return intIndexList;
+    }
+
+    /**
+     * Returns true if a given string is a valid input string.
+     */
+    private static boolean isValidIndex(String command) {
+        final Matcher matcher = MULTI_INDEX_ARGS_FORMAT.matcher(command.trim());
+        return matcher.matches();
     }
     //author
 
