@@ -59,7 +59,6 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         initTags(task);
     }
 
-    //TODO: Core model object should have friendly name parser
     private String buildFriendlyDateToDisplay(ReadOnlyTask task) throws ParseException {
         StringBuilder sb = new StringBuilder();
 
@@ -83,11 +82,15 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         assert task != null;
         Date deadline = task.getDeadline().getDate();
         DateFormat fmt = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        if (fmt.format(deadline).equals(fmt.format(new Date()))) {
+            return fmt.format(deadline) + ", today";
+        }
         PrettyTime p = new PrettyTime();
-        return fmt.format(deadline) + " " + p.format(deadline);
+        return fmt.format(deadline) + ", " + p.format(deadline);
     }
 
     //@@author
+
     private void initTags(ReadOnlyTask task) {
         UniqueTagList tags = task.getTags();
 
