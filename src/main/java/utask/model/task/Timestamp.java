@@ -13,6 +13,7 @@ public class Timestamp {
             "Timestamps for tasks should be in format from HHMM to HHMM where HHMM is in the range of 0000 to 2359";
     public static final String TIMESTAMP_VALIDATION_REGEX = "^((?:0[0-9]|1[0-9]|2[0-3])(?:[0-5][0-9]))\\sto\\s"
             + "((?:0[0-9]|1[0-9]|2[0-3])(?:[0-5][0-9]))";
+    public static final String TIMESTAMP_REMOVAL_VALIDATION_REGEX = "^[-]$";
 
     public final String value;
 
@@ -46,7 +47,7 @@ public class Timestamp {
      * Returns if a given string is a valid timestamps.
      */
     public static boolean isValidTimestamp(String test) {
-        return test.matches(TIMESTAMP_VALIDATION_REGEX);
+        return (test.matches(TIMESTAMP_VALIDATION_REGEX) || test.matches(TIMESTAMP_REMOVAL_VALIDATION_REGEX));
     }
 
     @Override
