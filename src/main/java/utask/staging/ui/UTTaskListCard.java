@@ -1,5 +1,13 @@
 package utask.staging.ui;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import org.ocpsoft.prettytime.PrettyTime;
+
 import com.jfoenix.controls.JFXCheckBox;
 
 import javafx.fxml.FXML;
@@ -36,14 +44,14 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     @FXML
     private Label lblDate;
 
-    public UTTaskListCard(ReadOnlyTask task, int displayedIndex) {
+    public UTTaskListCard(ReadOnlyTask task, int displayedIndex) throws ParseException {
         super(FXML);
         assert(task != null && displayedIndex > 0);
 
         setTaskInfoToControls(task, displayedIndex);
     }
 
-    private void setTaskInfoToControls(ReadOnlyTask task, int displayedIndex) {
+    private void setTaskInfoToControls(ReadOnlyTask task, int displayedIndex) throws ParseException {
         name.setText(task.getName().fullName);
         id.setText(displayedIndex + " ");
         String friendlyDate = buildFriendlyDateToDisplay(task);
@@ -52,7 +60,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     }
 
     //TODO: Core model object should have friendly name parser
-    private String buildFriendlyDateToDisplay(ReadOnlyTask task) {
+    private String buildFriendlyDateToDisplay(ReadOnlyTask task) throws ParseException {
         StringBuilder sb = new StringBuilder();
 
         if (!task.getFrequency().isEmpty()) {
@@ -60,7 +68,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         }
 
         if (!task.getDeadline().isEmpty()) {
-            sb.append(task.getDeadline().value);
+            sb.append(getPrettyDate(task));
         }
 
         if (!task.getTimestamp().isEmpty()) {
@@ -70,6 +78,16 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         return sb.toString();
     }
 
+    //@@author A0138493W
+    private String getPrettyDate(ReadOnlyTask task) throws ParseException {
+        assert task != null;
+        Date deadline = task.getDeadline().getDate();
+        DateFormat fmt = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        PrettyTime p = new PrettyTime();
+        return fmt.format(deadline) + " " + p.format(deadline);
+    }
+
+    //@@author
     private void initTags(ReadOnlyTask task) {
         UniqueTagList tags = task.getTags();
 
