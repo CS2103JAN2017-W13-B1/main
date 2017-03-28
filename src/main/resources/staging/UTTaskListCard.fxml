@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="120.0" minHeight="120.0" minWidth="120.0" prefHeight="120.0" prefWidth="120.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="75.0" minHeight="75.0" minWidth="120.0" prefHeight="75.0" prefWidth="120.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox HBox.hgrow="NEVER">
          <HBox.margin>
@@ -29,14 +29,14 @@
                   <Font size="1.0" />
                </font>
                <VBox.margin>
-                  <Insets top="3.0" />
+                  <Insets top="5.0" />
                </VBox.margin>
             </JFXCheckBox>
          </children>
       </VBox>
       <VBox HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="lblName" alignment="TOP_CENTER" contentDisplay="TOP" focusTraversable="false" graphicTextGap="0.0" prefHeight="160.0" text="Lorem ipsum dolor sit amet, ipsum harum sed ea, ne posse putent nam, mei et dicit quodsi. Brute eripuit explicari." wrapText="true">
+            <Label fx:id="lblName" alignment="TOP_CENTER" contentDisplay="TOP" focusTraversable="false" graphicTextGap="0.0" text="Lorem ipsum dolor sit amet, ipsum harum sed ea, ne posse putent nam, mei et dicit quodsi. Brute eripuit explicari." wrapText="true">
                <font>
                   <Font size="16.0" />
                </font>
@@ -44,7 +44,7 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <HBox fx:id="hbTagContainer" prefHeight="100.0">
+            <HBox fx:id="hbTagContainer" prefHeight="20.0">
             <!--
             <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="Important" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
@@ -58,7 +58,7 @@
                </children>
               -->
             </HBox>
-            <Label fx:id="lblDate" text="" textFill="#1a00ff" />
+            <Label fx:id="lblDate" prefHeight="20.0" text="" textFill="#1a00ff" />
          </children>
          <HBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

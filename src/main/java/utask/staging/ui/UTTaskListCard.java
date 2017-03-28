@@ -28,9 +28,9 @@ import utask.staging.ui.helper.TagColorHelper;
 
 public class UTTaskListCard extends StagingUiPart<Region> {
 
-    public static final double CARD_HEIGHT = 150.0;
+    public static final double CARD_HEIGHT = 110.0;
     private static final String FXML = "UTTaskListCard.fxml";
-    private static final String LABEL_CSS = "-fx-padding: 1px; -fx-text-fill: WHITE; -fx-background-color: %s;";
+    private static final String LABEL_CSS = "-fx-padding: 1 3 1 3; -fx-text-fill: WHITE; -fx-background-color: %s;";
     private static final String LABEL_STRIKETHROUGH_STYLE = "label-text-done";
 
     //UI Element use Leszynski naming convention. Prefix is the element type
