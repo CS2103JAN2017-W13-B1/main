@@ -17,8 +17,10 @@ import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.ListCommand;
+import utask.logic.commands.RedoCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
+import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.staging.ui.stubs.SearchCommand;
 
@@ -86,6 +88,12 @@ public class Parser {
 
         case SearchCommand.COMMAND_WORD:
             return new SearchCommand(arguments);
+
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommandParser().parse(arguments);
+
+        case RedoCommand.COMMAND_WORD:
+            return new RedoCommandParser().parse(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);

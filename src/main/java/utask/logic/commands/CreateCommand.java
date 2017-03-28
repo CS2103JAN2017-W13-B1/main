@@ -5,16 +5,19 @@ import java.util.Set;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
+import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.Tag;
 import utask.model.task.Frequency;
 import utask.model.task.IsCompleted;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
+import utask.model.task.UniqueTaskList.DuplicateTaskException;
+import utask.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
  * Creates a new task to uTask.
  */
-public abstract class CreateCommand extends Command {
+public abstract class CreateCommand extends Command implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "create";
 
@@ -64,11 +67,19 @@ public abstract class CreateCommand extends Command {
         assert model != null;
         try {
             model.addTask(toAdd);
+            model.addUndoCommand(this);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
-
     }
 
+    //@@author A0139996A
+    public void undo() throws TaskNotFoundException {
+        model.deleteTask(toAdd);
+    }
+
+    public void redo() throws DuplicateTaskException {
+        model.addTask(toAdd);
+    }
 }
