@@ -48,6 +48,9 @@ public class EditCommand extends Command implements ReversibleCommand {
     private final EditTaskDescriptor editTaskDescriptor;
     private final ArrayList<Integer> attributeToRemove;
 
+    private ReadOnlyTask taskToEdit;
+    private Task editedTask;
+
     // @@author A0138423J
     /**
      * @param filteredTaskListIndex
@@ -86,14 +89,15 @@ public class EditCommand extends Command implements ReversibleCommand {
         int actualInt = UTListHelper.getInstance()
                 .getActualIndexFromDisplayIndex(filteredTaskListIndex);
 
-        ReadOnlyTask taskToEdit = lastShownList.get(actualInt);
+        taskToEdit = lastShownList.get(actualInt);
 
         // create modified task from existing task
-        Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor,
+        editedTask = createEditedTask(taskToEdit, editTaskDescriptor,
                 attributeToRemove);
 
         try {
             model.updateTask(taskToEdit, editedTask);
+            model.addUndoCommand(this);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
@@ -327,13 +331,11 @@ public class EditCommand extends Command implements ReversibleCommand {
 
     @Override
     public void undo() throws Exception {
-        // TODO Auto-generated method stub
-        assert false : "TODO after merge";
+        model.updateTask(editedTask, taskToEdit);
     }
 
     @Override
     public void redo() throws Exception {
-        // TODO Auto-generated method stub
-        assert false : "TODO after merge";
+        model.updateTask(taskToEdit, editedTask);
     }
 }

@@ -26,7 +26,7 @@ import utask.ui.HelpWindow;
  */
 public class UTMainWindow extends StagingUiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/utask.png";
     private static final String FXML = "UTMainWindow.fxml";
     private static final int MIN_HEIGHT = 700;
     private static final int MIN_WIDTH = 630;

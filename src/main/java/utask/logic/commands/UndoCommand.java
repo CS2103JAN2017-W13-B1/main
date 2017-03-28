@@ -39,9 +39,6 @@ public class UndoCommand extends Command {
         } catch (Exception e) {
             //TODO: Is it sensible to add it back to the stack?
             //Will it work in the later in time of execution?
-            
-            e.printStackTrace();
-            
             model.addUndoCommand(undoCommand);
             throw new CommandException(Messages.MESSAGE_UNDO_ERROR);
         }

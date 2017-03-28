@@ -25,8 +25,6 @@ public class DeleteCommand extends Command implements ReversibleCommand {
 
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Tasks have been deleted";
 
-
-    public final int targetIndex;
     ReadOnlyTask taskToDelete;
     public final List<Integer> targetList;
 
@@ -53,31 +51,31 @@ public class DeleteCommand extends Command implements ReversibleCommand {
             List<ReadOnlyTask> lastShownList =
                     UTListHelper.getInstance().getUnderlyingListOfListViewByIndex(targetIndex - 1);
 
-
-        int actualInt = UTListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
-        taskToDelete = lastShownList.get(actualInt);
-
-
+            int actualInt = UTListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
+            taskToDelete = lastShownList.get(actualInt);
 
             //TODO: Find better a elegant solution
             //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
             UTListViewHelper.getInstance().clearSelectionOfAllListViews();
 
-
-        try {
-            model.deleteTask(taskToDelete);
-            model.addUndoCommand(this);
-        } catch (TaskNotFoundException pnfe) {
-            assert false : "The target task cannot be missing";
-
+            try {
+                model.deleteTask(taskToDelete);
+                model.addUndoCommand(this);
+            } catch (TaskNotFoundException pnfe) {
+                assert false : "The target task cannot be missing";
+            }
         }
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS));
     }
 
-
     @Override
     public void undo() throws Exception {
         model.addTask((Task) taskToDelete);
+    }
+
+    @Override
+    public void redo() throws Exception {
+        model.deleteTask((Task) taskToDelete);
     }
 
 }
