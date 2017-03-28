@@ -10,15 +10,15 @@ import utask.commons.events.BaseEvent;
 public class FileRelocateEvent extends BaseEvent {
 
     private String path;
-    
+
     public FileRelocateEvent(String path) {
         this.path = path;
     }
-    
+
     public String getPath() {
-        return path; 
+        return path;
     }
-    
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

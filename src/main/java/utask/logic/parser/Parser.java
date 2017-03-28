@@ -95,7 +95,7 @@ public class Parser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommandParser().parse(arguments);
-            
+
         case RelocateCommand.COMMAND_WORD:
             return new RelocateCommandParser().parse(arguments);
 
