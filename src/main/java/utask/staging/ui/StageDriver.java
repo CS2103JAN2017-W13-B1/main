@@ -26,6 +26,7 @@ import utask.model.ReadOnlyUTask;
 import utask.model.UTask;
 import utask.model.UserPrefs;
 import utask.model.util.SampleDataUtil;
+import utask.staging.ui.events.FileRelocateEvent;
 import utask.storage.Storage;
 import utask.storage.StorageManager;
 import utask.ui.Ui;
@@ -183,6 +184,19 @@ public class StageDriver extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
+    }
+
+    // @@author A0138493W
+    @Subscribe
+    private void handleFileRelocateEvent(FileRelocateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        config.setUTaskFilePath(event.getPath() + "/utask.xml");
+        //Update config file in case it was missing to begin with or there are new/unused fields
+        try {
+            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
+        } catch (IOException e) {
+            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
+        }
     }
 
     public static void main(String[] args) {

@@ -18,6 +18,7 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.RedoCommand;
+import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.UndoCommand;
@@ -94,6 +95,9 @@ public class Parser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommandParser().parse(arguments);
+
+        case RelocateCommand.COMMAND_WORD:
+            return new RelocateCommandParser().parse(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);

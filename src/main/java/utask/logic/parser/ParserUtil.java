@@ -33,7 +33,10 @@ public class ParserUtil {
     private static final Pattern MULTI_INDEX_ARGS_FORMAT = Pattern
             .compile("^(((?=[^0])\\d+)|((?=[^0])(\\d+))\\sto\\s((?=[^0])(\\d+)))"
                     + "+(,*\\s*((?=[^0])\\d+|((?=[^0])(\\d+))\\sto\\s((?=[^0])(\\d+))))*$");
-
+    private static final Pattern WIN_PATH_FORMAT =
+            Pattern.compile("([a-zA-Z]:)?(\\\\[a-zA-Z0-9 _.-]+)+\\\\?");
+    private static final Pattern MAC_PATH_FORMAT =
+            Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
     /**
      * Returns the specified index in the {@code command} if it is a positive
      * unsigned integer Returns an {@code Optional.empty()} otherwise.
@@ -96,6 +99,22 @@ public class ParserUtil {
         final Matcher matcher = MULTI_INDEX_ARGS_FORMAT.matcher(command.trim());
         return matcher.matches();
     }
+
+    /**
+     * Returns true if a given string is a valid path.
+     */
+    public static boolean isPathValid(String command) {
+        assert command != null;
+        String os = System.getProperty("os.name");
+        Matcher pathathMatcher = null;
+        if (os.contains("Windows")) {
+            pathathMatcher = WIN_PATH_FORMAT.matcher(command.trim());
+        } else {
+            pathathMatcher = MAC_PATH_FORMAT.matcher(command.trim());
+        }
+        return pathathMatcher.matches();
+    }
+
     //author
 
     /**
