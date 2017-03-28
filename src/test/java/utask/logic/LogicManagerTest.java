@@ -261,7 +261,6 @@ public class LogicManagerTest {
         // execute command and verify result
         assertCommandFailure(helper.generateCreateCommand(toBeAdded),
                 CreateCommand.MESSAGE_DUPLICATE_TASK);
-
     }
 
     // author A0138423J
@@ -420,7 +419,8 @@ public class LogicManagerTest {
         assertCommandFailure("update 1 /name Task 2 /repeat Every 2 /tag tag2 /tag tag3",
                 EditCommand.MESSAGE_DUPLICATE_TASK);
     }
-    // @author A0138423J
+
+    // @@author
 
     @Test
     public void execute_list_showsAllPersons() throws Exception {
@@ -436,6 +436,8 @@ public class LogicManagerTest {
                 expectedList);
 
     }
+
+    // @@author
 
     /**
      * Confirms the 'invalid argument index number behaviour' for the given
@@ -497,36 +499,43 @@ public class LogicManagerTest {
         assertIndexNotFoundBehaviorForCommand("select");
     }
 
+    // @@author A0138493W
     @Test
     public void executeDeleteInvalidArgsFormatErrorMessageShown()
             throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 DeleteCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("delete", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("delete  ", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("delete  , 1", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("delete  a, 1", expectedMessage);
+        assertIncorrectIndexFormatBehaviorForCommand("delete  1 to a", expectedMessage);
     }
 
     @Test
     public void executeDeleteIndexNotFoundErrorMessageShown()
             throws Exception {
-        assertIndexNotFoundBehaviorForCommand("delete");
+        assertIndexNotFoundBehaviorForCommand("delete 1 to 999");
+        assertIndexNotFoundBehaviorForCommand("delete 1, 3");
+        assertIndexNotFoundBehaviorForCommand("delete 1, 2 to 3");
+        assertIndexNotFoundBehaviorForCommand("delete 1 to 2, 3");
     }
 
-//    @Test
-//    public void execute_delete_removesCorrectTask() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        List<Task> threePersons = helper.generateTaskList(3);
-//
-//        UTask expectedAB = helper.generateUTask(threePersons);
-//        expectedAB.removeTask(threePersons.get(1));
-//        helper.addToModel(model, threePersons);
-//
-//        assertCommandSuccess("delete 2",
-//                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS,
-//                        threePersons.get(1)),
-//                expectedAB, expectedAB.getTaskList());
-//    }
+    @Test
+    public void execute_delete_removesCorrectTask() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> threeTasks = helper.generateTaskList(3);
 
-    // @@author A0138493W
+        UTask expectedAB = helper.generateUTask(threeTasks);
+        expectedAB.removeTask(threeTasks.get(1));
+        helper.addToModel(model, threeTasks);
+
+        assertCommandSuccess("delete 2",
+                String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS,
+                        threeTasks.get(1)),
+                expectedAB, expectedAB.getTaskList());
+    }
+
     @Test
     public void execute_sort_default() throws Exception {
         // prepare expectations
