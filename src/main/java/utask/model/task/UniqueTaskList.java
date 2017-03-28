@@ -58,7 +58,12 @@ public class UniqueTaskList implements Iterable<Task> {
         assert taskToUpdate != null;
         assert editedTask != null;
 
+        // index of task to update
         int index = internalList.indexOf(taskToUpdate);
+        System.out.println("task to update: " + taskToUpdate.getAsText());
+        System.out.println("task updated: " + editedTask.getAsText());
+
+
 
         updateTask(index, editedTask);
     }

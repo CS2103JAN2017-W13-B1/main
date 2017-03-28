@@ -58,6 +58,7 @@ public class EditCommand extends Command {
         this.filteredTaskListIndex = filteredTaskListIndex - 1;
 
         this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
+        System.out.println(editTaskDescriptor.getTimeStamp());
     }
 
     //@author A0139996A
@@ -115,10 +116,35 @@ public class EditCommand extends Command {
 
         Name updatedName = editTaskDescriptor.getName()
                 .orElseGet(taskToEdit::getName);
-        Deadline updatedDeadline = editTaskDescriptor.getDeadline()
-                .orElseGet(taskToEdit::getDeadline);
-        Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
-                .orElseGet(taskToEdit::getTimestamp);
+//        Deadline updatedDeadline = editTaskDescriptor.getDeadline()
+//                .orElseGet(taskToEdit::getDeadline);
+
+//        Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
+//                .orElseGet(taskToEdit::getTimestamp);
+
+        Deadline updatedDeadline = null;
+
+        System.out.println(editTaskDescriptor.getDeadline().get().toString());
+        System.out.println(editTaskDescriptor.getDeadline().get().toString().isEmpty());
+
+        if (editTaskDescriptor.getDeadline().get().toString().isEmpty()) {
+            updatedDeadline = Deadline.getEmptyDeadline();
+        } else {
+            updatedDeadline = editTaskDescriptor.getDeadline().get();
+        }
+
+        Timestamp updatedTimestamp = null;
+
+        System.out.println(editTaskDescriptor.getTimeStamp().get().toString());
+        System.out.println(editTaskDescriptor.getTimeStamp().get().toString().isEmpty());
+
+        if (editTaskDescriptor.getTimeStamp().get().toString().isEmpty()) {
+            updatedTimestamp = Timestamp.getEmptyTimestamp();
+        } else {
+            System.out.println("class: " + editTaskDescriptor.getTimeStamp().get().getClass());
+            updatedTimestamp = editTaskDescriptor.getTimeStamp().get();
+        }
+
         Frequency updatedFrequency = editTaskDescriptor.getFrequency()
                 .orElseGet(taskToEdit::getFrequency);
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
@@ -128,13 +154,37 @@ public class EditCommand extends Command {
 
         // TODO
         Task placeholder = null;
-        if (!updatedDeadline.isEmpty() && !updatedTimestamp.isEmpty()) {
+
+        Boolean isDeadlineEmpty = false;
+        if (!updatedDeadline.isEmpty()) {
+            if (updatedDeadline.equals(Deadline.getEmptyDeadline())) {
+                isDeadlineEmpty = true;
+            } else {
+                isDeadlineEmpty = false;
+            }
+        }
+
+
+        Boolean isTimestampEmpty = false;
+        if (!updatedTimestamp.isEmpty()) {
+            if (updatedTimestamp.equals(Timestamp.getEmptyTimestamp())) {
+                isTimestampEmpty = true;
+            } else {
+                isTimestampEmpty = false;
+            }
+        }
+
+        System.out.println(!isDeadlineEmpty && !isTimestampEmpty);
+        System.out.println(!isDeadlineEmpty && isTimestampEmpty);
+        System.out.println(isDeadlineEmpty && isTimestampEmpty);
+
+        if (!isDeadlineEmpty && !isTimestampEmpty) {
             placeholder = new EventTask(updatedName, updatedDeadline,
                     updatedTimestamp, updatedFrequency, updatedTags, updatedIsCompleted);
-        } else if (!updatedDeadline.isEmpty() && updatedTimestamp.isEmpty()) {
+        } else if (!isDeadlineEmpty && isTimestampEmpty) {
             placeholder = new DeadlineTask(updatedName, updatedDeadline,
                     updatedFrequency, updatedTags, updatedIsCompleted);
-        } else if (updatedDeadline.isEmpty() && updatedTimestamp.isEmpty()) {
+        } else if (isDeadlineEmpty && isTimestampEmpty) {
             placeholder = new FloatingTask(updatedName, updatedFrequency,
                     updatedTags, updatedIsCompleted);
         }

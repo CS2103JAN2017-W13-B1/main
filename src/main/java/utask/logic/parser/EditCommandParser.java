@@ -19,6 +19,8 @@ import utask.logic.commands.EditCommand;
 import utask.logic.commands.EditCommand.EditTaskDescriptor;
 import utask.logic.commands.IncorrectCommand;
 import utask.model.tag.UniqueTagList;
+import utask.model.task.Deadline;
+import utask.model.task.Timestamp;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -46,12 +48,30 @@ public class EditCommandParser {
         EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
         try {
             editTaskDescriptor.setName(ParserUtil.parseName(argsTokenizer.getValue(PREFIX_NAME)));
-            editTaskDescriptor.setDeadline(ParserUtil.parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
-            editTaskDescriptor.setTimeStamp(ParserUtil.parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
+
+
+            System.out.println(argsTokenizer.getValue(PREFIX_DEADLINE).toString());
+            System.out.println(!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty());
+
+            if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()) {
+                editTaskDescriptor.setDeadline(ParserUtil.parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
+            } else {
+                editTaskDescriptor.setDeadline(Optional.of(Deadline.getEmptyDeadline()));
+            }
+
+            System.out.println(argsTokenizer.getValue(PREFIX_TIMESTAMP).toString());
+            System.out.println(!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty());
+            if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()) {
+                editTaskDescriptor.setTimeStamp(ParserUtil.parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
+            } else {
+                editTaskDescriptor.setTimeStamp(Optional.of(Timestamp.getEmptyTimestamp()));
+            }
+
             editTaskDescriptor.setFrequency(ParserUtil.parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
             editTaskDescriptor.setTags(parseTagsForEdit(ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
             editTaskDescriptor.setIsCompleted(ParserUtil.parseIsCompleted(argsTokenizer.getValue(PREFIX_DONE)));
         } catch (IllegalValueException ive) {
+            System.out.println(ive.toString());
             return new IncorrectCommand(ive.getMessage());
         }
 

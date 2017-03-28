@@ -139,6 +139,18 @@ public class UTask implements ReadOnlyUTask {
     public void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedReadOnlyTask)
             throws UniqueTaskList.DuplicateTaskException {
         assert editedReadOnlyTask != null;
+        System.out.print("is taskToEdit event? ");
+        System.out.println(taskToEdit instanceof EventTask);
+        System.out.print("is taskToEdit deadline? ");
+        System.out.println(taskToEdit instanceof DeadlineTask);
+        System.out.print("is taskToEdit floating? ");
+        System.out.println(taskToEdit instanceof FloatingTask);
+        System.out.print("is editedReadOnlyTask event? ");
+        System.out.println(editedReadOnlyTask  instanceof EventTask);
+        System.out.print("is editedReadOnlyTask deadline? ");
+        System.out.println(editedReadOnlyTask  instanceof DeadlineTask);
+        System.out.print("is editedReadOnlyTask floating? ");
+        System.out.println(editedReadOnlyTask  instanceof FloatingTask);
 
         //check to see what type of task contains before casting new instance
         Task editedTask = null;
