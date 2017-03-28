@@ -3,7 +3,10 @@
 package utask.logic.commands;
 import java.io.File;
 
+import utask.commons.core.EventsCenter;
 import utask.logic.commands.exceptions.CommandException;
+import utask.staging.ui.events.FileRelocateEvent;
+import utask.staging.ui.events.FindRequestEvent;
 
 public class RelocateCommand extends Command {
     
@@ -35,9 +38,10 @@ public class RelocateCommand extends Command {
     }
     
     @Override
-    public CommandResult execute() throws CommandException {
-        // TODO Auto-generated method stub
-        return null;
+    public CommandResult execute() {
+        assert model != null;
+        EventsCenter.getInstance().post(new FileRelocateEvent(destinationPath));
+        return new CommandResult(String.format(MESSAGE_RELOCATE_TASK_SUCCESS, destinationPath));
     }
 
 }
