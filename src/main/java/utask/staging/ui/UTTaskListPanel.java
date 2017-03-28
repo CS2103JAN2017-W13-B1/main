@@ -59,6 +59,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
 
         Label label = createLabel(labelName);
         JFXListView<ReadOnlyTask> listView = createListView();
+        listView.setId("lst" + labelName);
 
         addLabelledListViewToParent(parent, label, listView);
 
