@@ -44,14 +44,14 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     @FXML
     private Label lblDate;
 
-    public UTTaskListCard(ReadOnlyTask task, int displayedIndex) throws ParseException {
+    public UTTaskListCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         assert(task != null && displayedIndex > 0);
 
         setTaskInfoToControls(task, displayedIndex);
     }
 
-    private void setTaskInfoToControls(ReadOnlyTask task, int displayedIndex) throws ParseException {
+    private void setTaskInfoToControls(ReadOnlyTask task, int displayedIndex) {
         name.setText(task.getName().fullName);
         id.setText(displayedIndex + " ");
         String friendlyDate = buildFriendlyDateToDisplay(task);
@@ -59,7 +59,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         initTags(task);
     }
 
-    private String buildFriendlyDateToDisplay(ReadOnlyTask task) throws ParseException {
+    private String buildFriendlyDateToDisplay(ReadOnlyTask task) {
         StringBuilder sb = new StringBuilder();
 
         if (!task.getFrequency().isEmpty()) {
@@ -78,9 +78,14 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     }
 
     //@@author A0138493W
-    private String getPrettyDate(ReadOnlyTask task) throws ParseException {
+    private String getPrettyDate(ReadOnlyTask task) {
         assert task != null;
-        Date deadline = task.getDeadline().getDate();
+        Date deadline = null;
+        try {
+            deadline = task.getDeadline().getDate();
+        } catch (ParseException e) {
+            assert false : "Should never have parse error, regex should check input";
+        }
         DateFormat fmt = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         if (fmt.format(deadline).equals(fmt.format(new Date()))) {
             return fmt.format(deadline) + ", today";

@@ -1,7 +1,5 @@
 package utask.staging.ui.helper;
 
-import java.text.ParseException;
-
 import com.jfoenix.controls.JFXListCell;
 
 import utask.model.task.ReadOnlyTask;
@@ -27,11 +25,7 @@ public class TaskListViewCell extends JFXListCell<ReadOnlyTask> {
             setGraphic(null);
             setText(null);
         } else {
-            try {
-                setGraphic(new UTTaskListCard(task, getIndex() + offset).getRoot());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            setGraphic(new UTTaskListCard(task, getIndex() + offset).getRoot());
         }
     }
 }
