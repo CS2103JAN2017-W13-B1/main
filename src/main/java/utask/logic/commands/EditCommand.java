@@ -7,6 +7,7 @@ import java.util.Optional;
 import utask.commons.core.Messages;
 import utask.commons.util.CollectionUtil;
 import utask.logic.commands.exceptions.CommandException;
+import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
@@ -24,8 +25,10 @@ import utask.staging.ui.UTListHelper;
 /**
  * Edits the details of an existing task in the uTask.
  */
-// @@author A0138423J
-public class EditCommand extends Command {
+
+//@@author A0138423J
+public class EditCommand extends Command implements ReversibleCommand {
+
 
     public static final String COMMAND_WORD = "update";
 
@@ -320,5 +323,17 @@ public class EditCommand extends Command {
         public Optional<IsCompleted> getIsCompleted() {
             return isCompleted;
         }
+    }
+
+    @Override
+    public void undo() throws Exception {
+        // TODO Auto-generated method stub
+        assert false : "TODO after merge";
+    }
+
+    @Override
+    public void redo() throws Exception {
+        // TODO Auto-generated method stub
+        assert false : "TODO after merge";
     }
 }

@@ -4,7 +4,9 @@ import java.util.List;
 
 import utask.commons.core.Messages;
 import utask.logic.commands.exceptions.CommandException;
+import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
+import utask.model.task.Task;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
 import utask.staging.ui.UTListHelper;
 import utask.staging.ui.UTListViewHelper;
@@ -12,7 +14,7 @@ import utask.staging.ui.UTListViewHelper;
 /**
  * Deletes a task identified using it's last displayed index from the uTask.
  */
-public class DeleteCommand extends Command {
+public class DeleteCommand extends Command implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "delete";
 
@@ -23,7 +25,11 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Tasks have been deleted";
 
+
+    public final int targetIndex;
+    ReadOnlyTask taskToDelete;
     public final List<Integer> targetList;
+
 
     public DeleteCommand(List<Integer> targetList) {
         this.targetList = targetList;
@@ -47,19 +53,31 @@ public class DeleteCommand extends Command {
             List<ReadOnlyTask> lastShownList =
                     UTListHelper.getInstance().getUnderlyingListOfListViewByIndex(targetIndex - 1);
 
-            int actualInt = UTListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
-            ReadOnlyTask taskToDelete = lastShownList.get(actualInt);
+
+        int actualInt = UTListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
+        taskToDelete = lastShownList.get(actualInt);
+
+
 
             //TODO: Find better a elegant solution
             //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
             UTListViewHelper.getInstance().clearSelectionOfAllListViews();
 
-            try {
-                model.deleteTask(taskToDelete);
-            } catch (TaskNotFoundException pnfe) {
-                assert false : "The target task cannot be missing";
-            }
+
+        try {
+            model.deleteTask(taskToDelete);
+            model.addUndoCommand(this);
+        } catch (TaskNotFoundException pnfe) {
+            assert false : "The target task cannot be missing";
+
         }
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS));
     }
+
+
+    @Override
+    public void undo() throws Exception {
+        model.addTask((Task) taskToDelete);
+    }
+
 }

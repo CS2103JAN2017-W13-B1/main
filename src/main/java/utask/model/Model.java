@@ -3,6 +3,7 @@ package utask.model;
 import java.util.Set;
 
 import utask.commons.core.UnmodifiableObservableList;
+import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
@@ -79,4 +80,21 @@ public interface Model {
     /** Gets total size of tasks in underlying lists of listviews*/
     int getTotalSizeOfLists();
 
+    /** Adds last executed command to reversible stack */
+    void addUndoCommand(ReversibleCommand undoCommand);
+
+    /** Adds last executed command to reversible stack */
+    ReversibleCommand getUndoCommand();
+
+    /** Gets size of reversible commands in reversible stack*/
+    int getUndoCommandCount();
+
+    /** Adds last executed command to reversible stack */
+    void addRedoCommand(ReversibleCommand redoCommand);
+
+    /** Adds last executed command to reversible stack */
+    ReversibleCommand getRedoCommand();
+
+    /** Gets size of reversible commands in reversible stack*/
+    int getRedoCommandCount();
 }

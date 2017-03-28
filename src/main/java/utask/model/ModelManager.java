@@ -3,6 +3,7 @@ package utask.model;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Set;
+import java.util.Stack;
 import java.util.logging.Logger;
 
 import javafx.collections.transformation.FilteredList;
@@ -17,6 +18,7 @@ import utask.commons.core.UnmodifiableObservableList;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.util.CollectionUtil;
 import utask.commons.util.StringUtil;
+import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
@@ -40,6 +42,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyTask> futureTasks;
     private final FilteredList<ReadOnlyTask> floatingTasks;
 
+    private final Stack<ReversibleCommand> undoStack;
+    private final Stack<ReversibleCommand> redoStack;
     /**
      * Initializes a ModelManager with the given UTask and userPrefs.
      */
@@ -50,6 +54,8 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with UTask: " + uTask + " and user prefs " + userPrefs);
 
         this.uTask = new UTask(uTask);
+        undoStack = new Stack<ReversibleCommand>();
+        redoStack = new Stack<ReversibleCommand>();
         filteredTasks = new FilteredList<>(this.uTask.getTaskList());
 
         Date todayDate = new Date();
@@ -73,6 +79,38 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager() {
         this(new UTask(), new UserPrefs());
     }
+
+    //@@author A0139996A
+    @Override
+    public void addUndoCommand(ReversibleCommand undoCommand) {
+        undoStack.push(undoCommand);
+    }
+
+    @Override
+    public ReversibleCommand getUndoCommand() {
+        return undoStack.pop();
+    }
+
+    @Override
+    public int getUndoCommandCount() {
+        return undoStack.size();
+    }
+
+    @Override
+    public void addRedoCommand(ReversibleCommand redoCommand) {
+        redoStack.push(redoCommand);
+    }
+
+    @Override
+    public ReversibleCommand getRedoCommand() {
+        return redoStack.pop();
+    }
+
+    @Override
+    public int getRedoCommandCount() {
+        return redoStack.size();
+    }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyUTask newData) {
