@@ -9,12 +9,11 @@ import java.util.Locale;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import com.google.common.eventbus.Subscribe;
-import com.jfoenix.controls.JFXCheckBox;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.HBox;
@@ -39,7 +38,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     private Label lblId;
 
     @FXML
-    private JFXCheckBox chkDone;
+    private CheckBox chkDone;
 
     @FXML
     private Label lblName;
@@ -52,6 +51,8 @@ public class UTTaskListCard extends StagingUiPart<Region> {
 
     //TODO: Upgrade to property for observable binding instead of manually checking for UI events
     private final ReadOnlyTask task;
+
+    private boolean isDone;
 
     public UTTaskListCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
@@ -142,14 +143,15 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         }
     }
 
-    //TODO: Internal lib controls throwing exception
+    /**
+     * JFoenix version 1.2.0 throws NullPointerException
+     * when applying transition effects
+     */
     private void setCheckBoxAsChecked(boolean isCompleted) {
-        Platform.runLater(() -> {
-            try {
-                chkDone.setSelected(isCompleted);
-            } catch (NullPointerException e) {
-            }
-        });
+        try {
+            chkDone.setSelected(isCompleted);
+        } catch (NullPointerException e) {
+        }
     }
 
     @Subscribe

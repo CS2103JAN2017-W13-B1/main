@@ -28,8 +28,8 @@ public class UTMainWindow extends StagingUiPart<Region> {
 
     private static final String ICON = "/images/utask.png";
     private static final String FXML = "UTMainWindow.fxml";
-    private static final int MIN_HEIGHT = 700;
-    private static final int MIN_WIDTH = 630;
+    private static final int MIN_HEIGHT = 650;
+    private static final int MIN_WIDTH = 550;
 
     private Stage primaryStage;
     private Logic logic;
@@ -74,8 +74,9 @@ public class UTMainWindow extends StagingUiPart<Region> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
-        setWindowMinSize();
+
         setWindowDefaultSize(prefs);
+        setWindowMinSize();
 
         Scene scene = createScene();
         setStyleSheets(scene);
