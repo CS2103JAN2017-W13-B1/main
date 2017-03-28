@@ -53,7 +53,7 @@ public class EditCommand extends Command {
      *            details to edit the task with
      * @param attributeToRemove
      *            list <int> of attributes to be removed
-     *            0 : Deadline, 1 : Timestamp
+     *            0 : Deadline, 1 : Timestamp, 2 : Tag, 3 : Frequency
      */
     public EditCommand(int filteredTaskListIndex,
             EditTaskDescriptor editTaskDescriptor,
@@ -114,10 +114,10 @@ public class EditCommand extends Command {
                 editTaskDescriptor, attributeToRemove);
         Timestamp updatedTimestamp = updateOrRemoveTimestamp(taskToEdit,
                 editTaskDescriptor, attributeToRemove);
-        Frequency updatedFrequency = editTaskDescriptor.getFrequency()
-                .orElseGet(taskToEdit::getFrequency);
-        UniqueTagList updatedTags = editTaskDescriptor.getTags()
-                .orElseGet(taskToEdit::getTags);
+        Frequency updatedFrequency = updateOrRemoveFrequency(taskToEdit,
+                editTaskDescriptor, attributeToRemove);
+        UniqueTagList updatedTags = updateOrRemoveUniqueTagList(taskToEdit,
+                editTaskDescriptor, attributeToRemove);
         IsCompleted updatedIsCompleted = editTaskDescriptor.getIsCompleted()
                 .orElseGet(taskToEdit::getIsCompleted);
 
@@ -170,6 +170,40 @@ public class EditCommand extends Command {
             updatedTimestamp = Timestamp.getEmptyTimestamp();
         }
         return updatedTimestamp;
+    }
+
+    // @@author A0138423J
+    /**
+     * Creates and returns a {@code UniqueTagList} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}. Subsequently, checks to see if there
+     * is any need to remove UniqueTagList field based on {@code attributeToRemove}
+     */
+    private static Frequency updateOrRemoveFrequency(ReadOnlyTask taskToEdit,
+            EditTaskDescriptor editTaskDescriptor,
+            ArrayList<Integer> attributeToRemove) {
+        Frequency updatedFrequency = editTaskDescriptor.getFrequency()
+                .orElseGet(taskToEdit::getFrequency);
+        if (attributeToRemove.contains(2)) {
+            updatedFrequency = Frequency.getEmptyFrequency();
+        }
+        return updatedFrequency;
+    }
+
+    // @@author A0138423J
+    /**
+     * Creates and returns a {@code UniqueTagList} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}. Subsequently, checks to see if there
+     * is any need to remove UniqueTagList field based on {@code attributeToRemove}
+     */
+    private static UniqueTagList updateOrRemoveUniqueTagList(ReadOnlyTask taskToEdit,
+            EditTaskDescriptor editTaskDescriptor,
+            ArrayList<Integer> attributeToRemove) {
+        UniqueTagList updatedTags = editTaskDescriptor.getTags()
+                .orElseGet(taskToEdit::getTags);
+        if (attributeToRemove.contains(2)) {
+            updatedTags = new UniqueTagList();
+        }
+        return updatedTags;
     }
 
     // @@author A0138423J

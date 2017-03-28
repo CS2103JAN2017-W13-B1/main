@@ -47,7 +47,7 @@ public class EditCommandParser {
                     MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
         // creates list of int to store to indicate which attribute to remove
-        // 0 : Deadline, 1 : Timestamp
+        // 0 : Deadline, 1 : Timestamp, 2 : Tags, 3 : Frequency
         ArrayList<Integer> attributesToRemove = new ArrayList<Integer>();
 
         EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
@@ -56,8 +56,6 @@ public class EditCommandParser {
                     ParserUtil.parseName(argsTokenizer.getValue(PREFIX_NAME)));
             editTaskDescriptor.setDeadline(ParserUtil
                     .parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
-            // checks whether @param from @PREFIX_DEADLINE is "-"
-            // if so, adds 0 to list of attributesToRemove
             if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_DEADLINE).equals("-")) {
                     attributesToRemove.add(0);
@@ -65,17 +63,25 @@ public class EditCommandParser {
             }
             editTaskDescriptor.setTimeStamp(ParserUtil
                     .parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
-            // checks whether @param from @PREFIX_TIMESTAMP is "-"
-            // if so, adds 1 to list of attributesToRemove
             if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_TIMESTAMP).equals("-")) {
                     attributesToRemove.add(1);
                 }
             }
-            editTaskDescriptor.setFrequency(ParserUtil
-                    .parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
             editTaskDescriptor.setTags(parseTagsForEdit(
                     ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
+            if (!argsTokenizer.tryGet(PREFIX_TAG).isEmpty()) {
+                if (argsTokenizer.tryGet(PREFIX_TAG).equals("-")) {
+                    attributesToRemove.add(2);
+                }
+            }
+            editTaskDescriptor.setFrequency(ParserUtil
+                    .parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
+            if (!argsTokenizer.tryGet(PREFIX_FREQUENCY).isEmpty()) {
+                if (argsTokenizer.tryGet(PREFIX_FREQUENCY).equals("-")) {
+                    attributesToRemove.add(3);
+                }
+            }
             editTaskDescriptor.setIsCompleted(ParserUtil
                     .parseIsCompleted(argsTokenizer.getValue(PREFIX_DONE)));
         } catch (IllegalValueException ive) {
