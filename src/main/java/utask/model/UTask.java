@@ -14,9 +14,6 @@ import javafx.collections.ObservableList;
 import utask.commons.core.UnmodifiableObservableList;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
-import utask.model.task.DeadlineTask;
-import utask.model.task.EventTask;
-import utask.model.task.FloatingTask;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
@@ -104,8 +101,9 @@ public class UTask implements ReadOnlyUTask {
         tasks.add(p);
     }
 
+    //@@author A0138423J
     /**
-     * Updates the task in the list at position {@code index} with {@code editedReadOnlyTask}.
+     * Updates the original task in the list {@code taskToEdit} with {@code editedReadOnlyTask}.
      * {@code UTask}'s tag list will be updated with the tags of {@code editedReadOnlyTask}.
      * @see #syncMasterTagListWith(Task)
      *
@@ -113,45 +111,22 @@ public class UTask implements ReadOnlyUTask {
      *      another existing task in the list.
      * @throws IndexOutOfBoundsException if {@code index} < 0 or >= the size of the list.
      */
-    public void updateTask(int index, ReadOnlyTask editedReadOnlyTask)
-            throws UniqueTaskList.DuplicateTaskException {
-        assert editedReadOnlyTask != null;
-
-        //check to see what type of task contains before casting new instance
-        Task editedTask = null;
-        if (editedReadOnlyTask instanceof EventTask) {
-            editedTask = new EventTask(editedReadOnlyTask);
-        } else if (editedReadOnlyTask instanceof DeadlineTask) {
-            editedTask = new DeadlineTask(editedReadOnlyTask);
-        } else if (editedReadOnlyTask instanceof FloatingTask) {
-            editedTask = new FloatingTask(editedReadOnlyTask);
-        }
-
-        syncMasterTagListWith(editedTask);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any tasks
-        // in the task list.
-        tasks.updateTask(index, editedTask);
-    }
-
-    //TODO: Clean up
-    //@@author A0139996A
     public void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedReadOnlyTask)
             throws UniqueTaskList.DuplicateTaskException {
+        assert taskToEdit != null;
         assert editedReadOnlyTask != null;
 
-        //check to see what type of task contains before casting new instance
-        Task editedTask = null;
-        if (editedReadOnlyTask instanceof EventTask) {
-            editedTask = new EventTask(editedReadOnlyTask);
-        } else if (editedReadOnlyTask instanceof DeadlineTask) {
-            editedTask = new DeadlineTask(editedReadOnlyTask);
-        } else if (editedReadOnlyTask instanceof FloatingTask) {
-            editedTask = new FloatingTask(editedReadOnlyTask);
-        }
+        syncMasterTagListWith((Task) editedReadOnlyTask);
+        tasks.updateTask(taskToEdit, editedReadOnlyTask);
+    }
 
-        syncMasterTagListWith(editedTask);
-        tasks.updateTask(taskToEdit, editedTask);
+    public void updateTask(int taskToEdit, ReadOnlyTask editedReadOnlyTask)
+            throws UniqueTaskList.DuplicateTaskException {
+        assert taskToEdit >= 0;
+        assert editedReadOnlyTask != null;
+
+        syncMasterTagListWith((Task) editedReadOnlyTask);
+        tasks.updateTask(taskToEdit, editedReadOnlyTask);
     }
     //@@author
 
