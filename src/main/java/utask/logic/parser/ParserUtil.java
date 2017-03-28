@@ -31,7 +31,8 @@ public class ParserUtil {
     private static final Pattern INDEX_ARGS_FORMAT = Pattern
             .compile("(?<targetIndex>.+)");
     private static final Pattern MULTI_INDEX_ARGS_FORMAT = Pattern
-            .compile("^((?=[^0])\\d+)*(,*\\s*((?=[^0])\\d+|((?=[^0])(\\d+))\\sto\\s((?=[^0])(\\d+))))*$");
+            .compile("^(((?=[^0])\\d+)|((?=[^0])(\\d+))\\sto\\s((?=[^0])(\\d+)))"
+                    + "+(,*\\s*((?=[^0])\\d+|((?=[^0])(\\d+))\\sto\\s((?=[^0])(\\d+))))*$");
 
     /**
      * Returns the specified index in the {@code command} if it is a positive
@@ -91,6 +92,7 @@ public class ParserUtil {
      * Returns true if a given string is a valid input string.
      */
     private static boolean isValidIndex(String command) {
+        assert command != null;
         final Matcher matcher = MULTI_INDEX_ARGS_FORMAT.matcher(command.trim());
         return matcher.matches();
     }
