@@ -5,6 +5,7 @@ import java.util.List;
 import utask.commons.core.Messages;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
+import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
@@ -16,7 +17,7 @@ import utask.model.task.Task;
  * Edits the details of an existing task in the uTask.
  */
 // @@author A0138423J
-public class DoneCommand extends Command {
+public class DoneCommand extends Command implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "done";
 
@@ -32,6 +33,7 @@ public class DoneCommand extends Command {
     public static final String MESSAGE_INTERNAL_ERROR = "Error updating isCompleted attribute.";
 
     private final int filteredTaskListIndex;
+    private ReadOnlyTask taskToEdit;
 
     /**
      * @param filteredTaskListIndex
@@ -55,7 +57,7 @@ public class DoneCommand extends Command {
         }
 
         // Retrieve task to be edited from save file
-        ReadOnlyTask taskToEdit = lastShownList.get(filteredTaskListIndex);
+        taskToEdit = lastShownList.get(filteredTaskListIndex);
 
         // If value already true, inform the user
         if ("true".equals(taskToEdit.getIsCompleted().toString())) {
@@ -66,6 +68,7 @@ public class DoneCommand extends Command {
         try {
             temp = createEditedTask(taskToEdit, true);
             model.updateTask(filteredTaskListIndex, temp);
+            model.addUndoCommand(this);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
@@ -99,5 +102,16 @@ public class DoneCommand extends Command {
         }
 
         return placeholder;
+    }
+
+    //@@author A0139996A
+    @Override
+    public void undo() throws Exception {
+        createEditedTask(taskToEdit, false);
+    }
+
+    @Override
+    public void redo() throws Exception {
+        createEditedTask(taskToEdit, true);
     }
 }
