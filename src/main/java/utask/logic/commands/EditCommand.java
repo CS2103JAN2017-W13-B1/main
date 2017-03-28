@@ -75,7 +75,7 @@ public class EditCommand extends Command implements ReversibleCommand {
         System.out.println(attributeToRemove.toString());
     }
 
-    // @author A0139996A
+    //@@author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
         if (filteredTaskListIndex >= model.getTotalSizeOfLists()) {
@@ -105,7 +105,7 @@ public class EditCommand extends Command implements ReversibleCommand {
                 String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }
 
-    // @@author A0138423J
+    //@@author A0138423J
     /**
      * Creates and returns a {@code Task} with the details of {@code taskToEdit}
      * edited with {@code editTaskDescriptor}.

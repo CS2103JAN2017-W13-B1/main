@@ -12,6 +12,7 @@ import utask.model.task.FloatingTask;
 import utask.model.task.IsCompleted;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
+import utask.staging.ui.UTListHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -49,15 +50,26 @@ public class UndoneCommand extends Command implements ReversibleCommand {
 
     @Override
     public CommandResult execute() throws CommandException {
-        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
-        if (filteredTaskListIndex >= lastShownList.size()) {
+//        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+//
+//        if (filteredTaskListIndex >= lastShownList.size()) {
+//            throw new CommandException(
+//                    Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+//        }
+        if (filteredTaskListIndex >= model.getTotalSizeOfLists()) {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
+        List<ReadOnlyTask> lastShownList = UTListHelper.getInstance()
+                .getUnderlyingListOfListViewByIndex(filteredTaskListIndex);
+
+        int actualInt = UTListHelper.getInstance()
+                .getActualIndexFromDisplayIndex(filteredTaskListIndex);
+
+
         // Retrieve task to be edited from save file
-        taskToEdit = lastShownList.get(filteredTaskListIndex);
+        taskToEdit = lastShownList.get(actualInt);
 
         // If value already true, inform the user
         if ("false".equals(taskToEdit.getIsCompleted().toString())) {
