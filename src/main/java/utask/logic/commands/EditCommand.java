@@ -1,5 +1,6 @@
 package utask.logic.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ import utask.staging.ui.UTListHelper;
 /**
  * Edits the details of an existing task in the uTask.
  */
-//@@author A0138423J
+// @@author A0138423J
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "update";
@@ -42,109 +43,77 @@ public class EditCommand extends Command {
 
     private final int filteredTaskListIndex;
     private final EditTaskDescriptor editTaskDescriptor;
+    private final ArrayList<Integer> attributeToRemove;
 
+    // @@author A0138423J
     /**
      * @param filteredTaskListIndex
      *            the index of the task in the filtered task list to edit
      * @param editTaskDescriptor
      *            details to edit the task with
+     * @param attributeToRemove
+     *            list <int> of attributes to be removed
+     *            0 : Deadline, 1 : Timestamp
      */
     public EditCommand(int filteredTaskListIndex,
-            EditTaskDescriptor editTaskDescriptor) {
+            EditTaskDescriptor editTaskDescriptor,
+            ArrayList<Integer> attributeToRemove) {
         assert filteredTaskListIndex > 0;
         assert editTaskDescriptor != null;
+        assert attributeToRemove != null;
 
         // converts filteredTaskListIndex from one-based to zero-based.
         this.filteredTaskListIndex = filteredTaskListIndex - 1;
-
         this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
-        System.out.println(editTaskDescriptor.getTimeStamp());
+        this.attributeToRemove = attributeToRemove;
+        System.out.println(attributeToRemove.toString());
     }
 
-    //@author A0139996A
+    // @author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
-//        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-//
-//        if (filteredTaskListIndex >= lastShownList.size()) {
-//            throw new CommandException(
-//                    Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-//        }
-
         if (filteredTaskListIndex >= model.getTotalSizeOfLists()) {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        // Retrieve task to be edited from save file
-        //ReadOnlyTask taskToEdit = lastShownList.get(filteredTaskListIndex);
+        List<ReadOnlyTask> lastShownList = UTListHelper.getInstance()
+                .getUnderlyingListOfListViewByIndex(filteredTaskListIndex);
 
-        List<ReadOnlyTask> lastShownList =
-                UTListHelper.getInstance().getUnderlyingListOfListViewByIndex(filteredTaskListIndex);
-
-        int actualInt = UTListHelper.getInstance().getActualIndexFromDisplayIndex(filteredTaskListIndex);
-
-        System.out.println(model.getTotalSizeOfLists());
-        System.out.println(filteredTaskListIndex);
-        System.out.println(actualInt);
-        System.out.println(lastShownList.size());
+        int actualInt = UTListHelper.getInstance()
+                .getActualIndexFromDisplayIndex(filteredTaskListIndex);
 
         ReadOnlyTask taskToEdit = lastShownList.get(actualInt);
 
         // create modified task from existing task
-        Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+        Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor,
+                attributeToRemove);
 
         try {
-            //model.updateTask(filteredTaskListIndex, editedTask);
             model.updateTask(taskToEdit, editedTask);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
-        //model.updateFilteredListToShowAll();
         return new CommandResult(
                 String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }
 
-    //@@author A0138423J
+    // @@author A0138423J
     /**
-     * Creates and returns a {@code Task} with the details of
-     * {@code taskToEdit} edited with {@code editTaskDescriptor}.
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}.
      */
     private static Task createEditedTask(ReadOnlyTask taskToEdit,
-            EditTaskDescriptor editTaskDescriptor) {
+            EditTaskDescriptor editTaskDescriptor,
+            ArrayList<Integer> attributeToRemove) {
         assert taskToEdit != null;
 
         Name updatedName = editTaskDescriptor.getName()
                 .orElseGet(taskToEdit::getName);
-//        Deadline updatedDeadline = editTaskDescriptor.getDeadline()
-//                .orElseGet(taskToEdit::getDeadline);
-
-//        Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
-//                .orElseGet(taskToEdit::getTimestamp);
-
-        Deadline updatedDeadline = null;
-
-        System.out.println(editTaskDescriptor.getDeadline().get().toString());
-        System.out.println(editTaskDescriptor.getDeadline().get().toString().isEmpty());
-
-        if (editTaskDescriptor.getDeadline().get().toString().isEmpty()) {
-            updatedDeadline = Deadline.getEmptyDeadline();
-        } else {
-            updatedDeadline = editTaskDescriptor.getDeadline().get();
-        }
-
-        Timestamp updatedTimestamp = null;
-
-        System.out.println(editTaskDescriptor.getTimeStamp().get().toString());
-        System.out.println(editTaskDescriptor.getTimeStamp().get().toString().isEmpty());
-
-        if (editTaskDescriptor.getTimeStamp().get().toString().isEmpty()) {
-            updatedTimestamp = Timestamp.getEmptyTimestamp();
-        } else {
-            System.out.println("class: " + editTaskDescriptor.getTimeStamp().get().getClass());
-            updatedTimestamp = editTaskDescriptor.getTimeStamp().get();
-        }
-
+        Deadline updatedDeadline = updateOrRemoveDeadline(taskToEdit,
+                editTaskDescriptor, attributeToRemove);
+        Timestamp updatedTimestamp = updateOrRemoveTimestamp(taskToEdit,
+                editTaskDescriptor, attributeToRemove);
         Frequency updatedFrequency = editTaskDescriptor.getFrequency()
                 .orElseGet(taskToEdit::getFrequency);
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
@@ -152,48 +121,88 @@ public class EditCommand extends Command {
         IsCompleted updatedIsCompleted = editTaskDescriptor.getIsCompleted()
                 .orElseGet(taskToEdit::getIsCompleted);
 
-        // TODO
         Task placeholder = null;
-
-        Boolean isDeadlineEmpty = false;
-        if (!updatedDeadline.isEmpty()) {
-            if (updatedDeadline.equals(Deadline.getEmptyDeadline())) {
-                isDeadlineEmpty = true;
-            } else {
-                isDeadlineEmpty = false;
-            }
-        }
-
-
-        Boolean isTimestampEmpty = false;
-        if (!updatedTimestamp.isEmpty()) {
-            if (updatedTimestamp.equals(Timestamp.getEmptyTimestamp())) {
-                isTimestampEmpty = true;
-            } else {
-                isTimestampEmpty = false;
-            }
-        }
-
-        System.out.println(!isDeadlineEmpty && !isTimestampEmpty);
-        System.out.println(!isDeadlineEmpty && isTimestampEmpty);
-        System.out.println(isDeadlineEmpty && isTimestampEmpty);
-
-        if (!isDeadlineEmpty && !isTimestampEmpty) {
-            placeholder = new EventTask(updatedName, updatedDeadline,
-                    updatedTimestamp, updatedFrequency, updatedTags, updatedIsCompleted);
-        } else if (!isDeadlineEmpty && isTimestampEmpty) {
-            placeholder = new DeadlineTask(updatedName, updatedDeadline,
+        switch (typeOfEditedTask(updatedDeadline, updatedTimestamp)) {
+        case (0):
+            return new FloatingTask(updatedName, updatedFrequency, updatedTags,
+                    updatedIsCompleted);
+        case (1):
+            return new DeadlineTask(updatedName, updatedDeadline,
                     updatedFrequency, updatedTags, updatedIsCompleted);
-        } else if (isDeadlineEmpty && isTimestampEmpty) {
-            placeholder = new FloatingTask(updatedName, updatedFrequency,
-                    updatedTags, updatedIsCompleted);
+        case (2):
+            return new EventTask(updatedName, updatedDeadline, updatedTimestamp,
+                    updatedFrequency, updatedTags, updatedIsCompleted);
+        default:
+            System.out.println("Error checking edited task type!");
         }
         return placeholder;
     }
 
+    // @@author A0138423J
     /**
-     * Stores the details to edit the task with. Each non-empty field value
-     * will replace the corresponding field value of the Task.
+     * Creates and returns a {@code Deadline} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}. Subsequently, checks to see if there
+     * is any need to remove Deadline field based on {@code attributeToRemove}
+     */
+    private static Deadline updateOrRemoveDeadline(ReadOnlyTask taskToEdit,
+            EditTaskDescriptor editTaskDescriptor,
+            ArrayList<Integer> attributeToRemove) {
+        Deadline updatedDeadline = editTaskDescriptor.getDeadline()
+                .orElseGet(taskToEdit::getDeadline);
+        if (attributeToRemove.contains(0)) {
+            updatedDeadline = Deadline.getEmptyDeadline();
+        }
+        return updatedDeadline;
+    }
+
+    // @@author A0138423J
+    /**
+     * Creates and returns a {@code Timestamp} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}. Subsequently, checks to see if there
+     * is any need to remove Timestamp field based on {@code attributeToRemove}
+     */
+    private static Timestamp updateOrRemoveTimestamp(ReadOnlyTask taskToEdit,
+            EditTaskDescriptor editTaskDescriptor,
+            ArrayList<Integer> attributeToRemove) {
+        Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
+                .orElseGet(taskToEdit::getTimestamp);
+        if (attributeToRemove.contains(1)) {
+            updatedTimestamp = Timestamp.getEmptyTimestamp();
+        }
+        return updatedTimestamp;
+    }
+
+    // @@author A0138423J
+    /**
+     * Checks {@code updatedDeadline} and {@code updatedTimestamp} to see whether
+     * both are empty or not. Subsequently, based on the statuses, this method will
+     * determine the type of editedTask. Types are pre-set based on following set:
+     * 2 : Event Task, 1: Deadline Task, 0 : Floating Task
+     */
+    private static int typeOfEditedTask(Deadline updatedDeadline,
+            Timestamp updatedTimestamp) {
+        Boolean isDeadlineEmpty = false;
+        if (updatedDeadline.equals(Deadline.getEmptyDeadline())) {
+            isDeadlineEmpty = true;
+        }
+        Boolean isTimestampEmpty = false;
+        if (updatedTimestamp.equals(Timestamp.getEmptyTimestamp())) {
+            isTimestampEmpty = true;
+        }
+        if (!isDeadlineEmpty && !isTimestampEmpty) {
+            return 2;
+        } else if (!isDeadlineEmpty && isTimestampEmpty) {
+            return 1;
+        } else if (isDeadlineEmpty && isTimestampEmpty) {
+            return 0;
+        }
+        return -1;
+    }
+
+    // @@author A0138423J
+    /**
+     * Stores the details to edit the task with. Each non-empty field value will
+     * replace the corresponding field value of the Task.
      */
     public static class EditTaskDescriptor {
         private Optional<Name> name = Optional.empty();
@@ -220,7 +229,8 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyPresent(this.name, this.deadLine,
-                    this.timeStamp, this.frequency, this.tags, this.isCompleted);
+                    this.timeStamp, this.frequency, this.tags,
+                    this.isCompleted);
         }
 
         public void setName(Optional<Name> name) {
