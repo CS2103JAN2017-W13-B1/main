@@ -82,9 +82,9 @@ public class UTListHelper {
     private int getActualIndexOfListView(FilteredList<ReadOnlyTask> listView, int index) {
         int offset = offsetMap.get(listView);
 
-        if (index < offset) { //No need to normalise
-            return index;
-        }
+//        if (index < offset) { //No need to normalise
+//            return index;
+//        }
 
         return index - offset;
     }
@@ -131,7 +131,7 @@ public class UTListHelper {
     }
 
     public void refresh() {
-        addToOffsetMap(lists.get(0), 1); //First list starts counting from 1
+        addToOffsetMap(lists.get(0), 0); //First list starts counting from 1
 
         if (lists.size() > 1) { //There's no point to refresh one list, otherwise
             int totalSize = 0;

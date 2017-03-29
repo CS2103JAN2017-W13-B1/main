@@ -43,7 +43,7 @@ public class Config {
     }
 
     public String getUTaskFilePath() {
-        if(uTaskFilePath == null) {
+        if (uTaskFilePath == null) {
             return "data/utask.xml";
         }
         return uTaskFilePath;

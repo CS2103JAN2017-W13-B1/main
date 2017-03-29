@@ -28,11 +28,6 @@ public class SelectCommand extends Command {
     //@@author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
-
-        //UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-//      if (lastShownList.size() < targetIndex) {
-//      throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-//       }
         if (model.getTotalSizeOfLists() < targetIndex) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }

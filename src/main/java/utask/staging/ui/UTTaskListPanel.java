@@ -3,18 +3,23 @@ package utask.staging.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
 import com.jfoenix.controls.JFXListView;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
@@ -37,6 +42,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         assert (parent != null && logic != null);
 
         addControlsToParent(parent, logic);
+        EventsCenter.getInstance().registerHandler(this);
     }
 
     private void addControlsToParent(Pane parent, Logic logic) {
@@ -107,7 +113,22 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         setEventHandlerForSelectionChangeEvent(listView);
     }
 
-    //@@author
+    private void ensureVisible(ScrollPane pane, Node listView, int numberOfCards) {
+        Bounds viewport = pane.getViewportBounds();
+        double contentHeight = pane.getContent().getBoundsInLocal().getHeight();
+        double nodeMinY = listView.getBoundsInParent().getMinY();
+        double cardHeight = UTTaskListCard.CARD_HEIGHT;
+
+        double topOfList = (nodeMinY + (numberOfCards * cardHeight)) / (contentHeight - viewport.getHeight());
+        pane.setVvalue(topOfList);
+    }
+
+    private void scrollTo(Node node, int index) {
+        if (container.getChildren().contains(node)) {
+            ensureVisible(rootPane, node, index);
+        }
+    }
+
     private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
         listView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -116,6 +137,12 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
                         raise(new TaskListPanelSelectionChangedEvent(listView, newValue));
                     }
                 });
+    }
+
+    @Subscribe
+    public void handleToTaskListRequestEvent(JumpToTaskListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetNode, event.index);
     }
 }
 
