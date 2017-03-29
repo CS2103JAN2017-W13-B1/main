@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.scene.control.ListView;
 import utask.commons.core.EventsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
+import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.TaskListViewCell;
@@ -45,7 +46,7 @@ public class UTListViewHelper {
 
     public void updateListViews() {
         Platform.runLater(() -> {
-            addToOffsetMap(listViews.get(0), 1); //First list starts counting from 1
+            addToOffsetMap(listViews.get(0), 0); //First list starts counting from 1
 
             if (listViews.size() > 1) { //There's no point to refresh one list, otherwise
                 int totalSize = 0;
@@ -118,9 +119,9 @@ public class UTListViewHelper {
     private int getActualIndexOfListView(ListView<ReadOnlyTask> listView, int index) {
         int offset = offsetMap.get(listView);
 
-        if (index < offset) { //No need to normalise
-            return index;
-        }
+//        if (index < offset) { //No need to normalise
+//            return index;
+//        }
 
         return index - offset;
     }
@@ -169,13 +170,17 @@ public class UTListViewHelper {
 
         assert(listView != null);
 
-        scrollTo(listView, index);
+        int actualIndex = getActualIndexOfListView(listView, index);
+        System.out.println("listView " + listView);
+        System.out.println("ACTUAL INDX " + actualIndex);
+
+        EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(listView, actualIndex));
+
+        scrollTo(listView, actualIndex);
     }
 
-    private void scrollTo(ListView<ReadOnlyTask> listView, int index) {
+    private void scrollTo(ListView<ReadOnlyTask> listView, int actualIndex) {
         Platform.runLater(() -> {
-            int actualIndex = getActualIndexOfListView(listView, index);
-
             clearSelectionOfAllListViews();
 
             listView.scrollTo(actualIndex);
