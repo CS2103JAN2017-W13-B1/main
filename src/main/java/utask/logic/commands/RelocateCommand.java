@@ -23,7 +23,7 @@ public class RelocateCommand extends Command {
      * Relocate Command for relocating back to default location.
      * */
     public RelocateCommand() {
-
+        this.destinationPath = "data";
     }
 
     /**
