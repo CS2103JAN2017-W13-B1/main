@@ -46,7 +46,7 @@ public class EditCommand extends Command implements ReversibleCommand {
 
     private final int filteredTaskListIndex;
     private final EditTaskDescriptor editTaskDescriptor;
-    private final ArrayList<Integer> attributeToRemove;
+    private final ArrayList<String> attributeToRemove;
 
     private ReadOnlyTask taskToEdit;
     private Task editedTask;
@@ -63,7 +63,7 @@ public class EditCommand extends Command implements ReversibleCommand {
      */
     public EditCommand(int filteredTaskListIndex,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Integer> attributeToRemove) {
+            ArrayList<String> attributeToRemove) {
         assert filteredTaskListIndex > 0;
         assert editTaskDescriptor != null;
         assert attributeToRemove != null;
@@ -112,7 +112,7 @@ public class EditCommand extends Command implements ReversibleCommand {
      */
     private static Task createEditedTask(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Integer> attributeToRemove) {
+            ArrayList<String> attributeToRemove) {
         assert taskToEdit != null;
 
         Name updatedName = editTaskDescriptor.getName()
@@ -153,10 +153,10 @@ public class EditCommand extends Command implements ReversibleCommand {
      */
     private static Deadline updateOrRemoveDeadline(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Integer> attributeToRemove) {
+            ArrayList<String> attributeToRemove) {
         Deadline updatedDeadline = editTaskDescriptor.getDeadline()
                 .orElseGet(taskToEdit::getDeadline);
-        if (attributeToRemove.contains(0)) {
+        if (attributeToRemove.contains("deadline")) {
             updatedDeadline = Deadline.getEmptyDeadline();
         }
         return updatedDeadline;
@@ -170,10 +170,10 @@ public class EditCommand extends Command implements ReversibleCommand {
      */
     private static Timestamp updateOrRemoveTimestamp(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Integer> attributeToRemove) {
+            ArrayList<String> attributeToRemove) {
         Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
                 .orElseGet(taskToEdit::getTimestamp);
-        if (attributeToRemove.contains(1)) {
+        if (attributeToRemove.contains("timestamp")) {
             updatedTimestamp = Timestamp.getEmptyTimestamp();
         }
         return updatedTimestamp;
@@ -187,10 +187,10 @@ public class EditCommand extends Command implements ReversibleCommand {
      */
     private static Frequency updateOrRemoveFrequency(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Integer> attributeToRemove) {
+            ArrayList<String> attributeToRemove) {
         Frequency updatedFrequency = editTaskDescriptor.getFrequency()
                 .orElseGet(taskToEdit::getFrequency);
-        if (attributeToRemove.contains(2)) {
+        if (attributeToRemove.contains("frequency")) {
             updatedFrequency = Frequency.getEmptyFrequency();
         }
         return updatedFrequency;
@@ -204,10 +204,10 @@ public class EditCommand extends Command implements ReversibleCommand {
      */
     private static UniqueTagList updateOrRemoveUniqueTagList(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Integer> attributeToRemove) {
+            ArrayList<String> attributeToRemove) {
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
                 .orElseGet(taskToEdit::getTags);
-        if (attributeToRemove.contains(2)) {
+        if (attributeToRemove.contains("tag")) {
             updatedTags = new UniqueTagList();
         }
         return updatedTags;
