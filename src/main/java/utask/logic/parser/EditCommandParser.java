@@ -48,7 +48,7 @@ public class EditCommandParser {
         }
         // creates list of int to store to indicate which attribute to remove
         // 0 : Deadline, 1 : Timestamp, 2 : Tags, 3 : Frequency
-        ArrayList<Integer> attributesToRemove = new ArrayList<Integer>();
+        ArrayList<String> attributesToRemove = new ArrayList<String>();
 
         EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
         try {
@@ -58,28 +58,28 @@ public class EditCommandParser {
                     .parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
             if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_DEADLINE).equals("-")) {
-                    attributesToRemove.add(0);
+                    attributesToRemove.add("deadline");
                 }
             }
             editTaskDescriptor.setTimeStamp(ParserUtil
                     .parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
             if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_TIMESTAMP).equals("-")) {
-                    attributesToRemove.add(1);
+                    attributesToRemove.add("timestamp");
                 }
             }
             editTaskDescriptor.setTags(parseTagsForEdit(
                     ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
             if (!argsTokenizer.tryGet(PREFIX_TAG).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_TAG).equals("-")) {
-                    attributesToRemove.add(2);
+                    attributesToRemove.add("tag");
                 }
             }
             editTaskDescriptor.setFrequency(ParserUtil
                     .parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
             if (!argsTokenizer.tryGet(PREFIX_FREQUENCY).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_FREQUENCY).equals("-")) {
-                    attributesToRemove.add(3);
+                    attributesToRemove.add("frequency");
                 }
             }
             editTaskDescriptor.setIsCompleted(ParserUtil
