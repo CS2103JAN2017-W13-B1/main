@@ -394,7 +394,7 @@ public class ModelManager extends ComponentManager implements Model {
                 Date taskDate = task.getDeadline().getDate();
                 return taskDate.getYear() == date.getYear()
                         && taskDate.getMonth() == date.getMonth()
-                        && taskDate.getDay() == date.getDay();
+                        && taskDate.getDate() == date.getDate();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
