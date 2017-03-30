@@ -88,8 +88,6 @@ public class UTCommandBox extends StagingUiPart<Region> {
         } else {
             lblSuggestion.setText("");
         }
-
-        setStyleToIndicateCommandSuccess();
     }
 
     private void handleSpecialKeyCombination(KeyEvent ke) {
@@ -109,6 +107,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
             commandTextField.setText(lastValidCommandEntry);
             break;
         default:
+            setStyleToIndicateCommandSuccess();
             break;
         }
     }
