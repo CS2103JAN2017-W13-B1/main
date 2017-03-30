@@ -39,12 +39,8 @@ public class DeleteCommand extends Command implements ReversibleCommand {
     //@@author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
-
+        //TODO: Jiahao coded this >>>>>>>>
         for (int targetIndex : targetList) {
-            if (model.getTotalSizeOfLists() < targetIndex) {
-                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-            }
-
             if (model.getTotalSizeOfLists() < targetIndex) {
                 throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
             }
@@ -55,6 +51,8 @@ public class DeleteCommand extends Command implements ReversibleCommand {
 
             int actualInt = UTFliterListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
             taskToDelete = lastShownList.get(actualInt);
+
+            //EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(taskToDelete));
 
             //TODO: Find better a elegant solution
             //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
