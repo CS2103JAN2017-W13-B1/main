@@ -1,8 +1,5 @@
 //@@author A0139996A
-package utask.staging.ui;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+package utask.staging.ui.helper;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -14,7 +11,6 @@ import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
-import utask.staging.ui.helper.TaskListViewCell;
 
 /*
  * UTListViewHelper uses facade and singleton pattern
@@ -22,14 +18,10 @@ import utask.staging.ui.helper.TaskListViewCell;
  * and also provides utility functions for scrolling
  *
  * */
-public class UTListViewHelper {
+public class UTListViewHelper extends UTListHelper<ListView<ReadOnlyTask>> {
     private static UTListViewHelper instance = null;
-    private final ArrayList<ListView<ReadOnlyTask>> listViews;
-    private final HashMap<ListView<ReadOnlyTask>, Integer> offsetMap;
 
     private UTListViewHelper() {
-        listViews = new ArrayList<ListView<ReadOnlyTask>>();
-        offsetMap = new HashMap<ListView<ReadOnlyTask>, Integer>();
         EventsCenter.getInstance().registerHandler(this);
     }
 
@@ -42,21 +34,29 @@ public class UTListViewHelper {
     }
 
     public void addList(ListView<ReadOnlyTask> lv) {
-        listViews.add(lv);
+        super.addList(lv);
         addDefaultCellFactory(lv);
     }
 
+    //TODO: Possible to use lazy rendering to prevent double rendering
+    private void addDefaultCellFactory(ListView<ReadOnlyTask> lv) {
+        final int startIndex = 0;
+        lv.setCellFactory(l -> new TaskListViewCell(startIndex));
+    }
+
+    //TODO: This function may look like updateOffsetMap() in parent but it has different feature
+    //      Requires effort to correctly refractor this
     public void updateListViews() {
         Platform.runLater(() -> {
-            addToOffsetMap(listViews.get(0), 0); //First list starts counting from 1
+            addToOffsetMap(lists.get(0), 0); //First list starts counting from 1
 
-            if (listViews.size() > 1) { //There's no point to refresh one list, otherwise
+            if (lists.size() > 1) { //There's no point to refresh one list, otherwise
                 int totalSize = 0;
 
                 //Traverse and update next listview index based on previous size
-                for (int i = 1; i < listViews.size(); i++) {
-                    ListView<ReadOnlyTask> prevListView = listViews.get(i - 1);
-                    ListView<ReadOnlyTask> currListView = listViews.get(i);
+                for (int i = 1; i < lists.size(); i++) {
+                    ListView<ReadOnlyTask> prevListView = lists.get(i - 1);
+                    ListView<ReadOnlyTask> currListView = lists.get(i);
 
                     totalSize += prevListView.getItems().size();
 
@@ -69,74 +69,14 @@ public class UTListViewHelper {
         });
     }
 
-    private void updateOffsetMap() {
-        addToOffsetMap(listViews.get(0), 0);
-
-        if (listViews.size() > 1) { //There's no point to refresh one list, otherwise
-            int totalSize = 0;
-
-            //Traverse and update next listview index based on previous size
-            for (int i = 1; i < listViews.size(); i++) {
-                ListView<ReadOnlyTask> prevListView = listViews.get(i - 1);
-                ListView<ReadOnlyTask> currListView = listViews.get(i);
-
-                totalSize += prevListView.getItems().size();
-                addToOffsetMap(currListView, totalSize);
-            }
-        }
-    }
-
-
-    //TODO: Possible to use lazy rendering to prevent double rendering
-    private void addDefaultCellFactory(ListView<ReadOnlyTask> lv) {
-        lv.setCellFactory(l -> new TaskListViewCell(0));
-    }
-
-    private void addToOffsetMap(ListView<ReadOnlyTask> lv, int offset) {
-        offsetMap.put(lv, offset);
-    }
-
-    /*
-     * Normalise the given to index to actual numbering in listview
-     *
-     * @param index is zero-based
-     *
-     * */
-    private int getActualIndexOfListView(ListView<ReadOnlyTask> listView, int index) {
-        int offset = offsetMap.get(listView);
-        return index - offset;
-    }
-
-    /*
-     * Searches for a listview given by the index
-     *
-     * @param index is zero-based
-     *
-     * */
-    public ListView<ReadOnlyTask> getActualListViewFromDisplayIndex(int index) {
-        int  totalSize = 0;
-
-        for (ListView<ReadOnlyTask> lv : listViews) {
-
-            totalSize += lv.getItems().size();
-
-            if (index < totalSize) {
-                return lv;
-            }
-        }
-
-        return null;
-    }
-
     private ListView<ReadOnlyTask> getActualListViewFromReadOnlyTask(ReadOnlyTask task) {
-
-        for (ListView<ReadOnlyTask> lv : listViews) {
-
+        for (ListView<ReadOnlyTask> lv : lists) {
             if (lv.getItems().contains(task)) {
                 return lv;
             }
         }
 
+        assert false : "Incorrect usage. ReadOnlyTask does not exists in ListView";
         return null;
     }
 
@@ -157,18 +97,8 @@ public class UTListViewHelper {
         return offset + position;
     }
 
-//    public ObservableList<ReadOnlyTask> getUnderlyingListOfListViewByIndex(int index) {
-//        assert (index >= 0);
-//
-//        ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
-//
-//        assert(listView != null);
-//
-//        return listView.getItems();
-//    }
-
     public void clearSelectionOfAllListViews() {
-        for (ListView<ReadOnlyTask> lv : listViews) {
+        for (ListView<ReadOnlyTask> lv : lists) {
             lv.getSelectionModel().clearSelection();
         }
     }
@@ -176,11 +106,11 @@ public class UTListViewHelper {
     public void scrollTo(int index) {
         Platform.runLater(() -> {
         assert (index >= 0);
-            ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
+            ListView<ReadOnlyTask> listView = getActualListFromDisplayIndex(index);
 
             assert(listView != null);
 
-            int actualIndex = getActualIndexOfListView(listView, index);
+            int actualIndex = getActualIndexOfList(listView, index);
 
             EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(listView, actualIndex));
 

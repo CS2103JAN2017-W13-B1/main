@@ -24,6 +24,7 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
+import utask.staging.ui.helper.UTListViewHelper;
 
 public class UTTaskListPanel extends StagingUiPart<Region> {
     private static final String FXML = "UTTaskListPanel.fxml";
