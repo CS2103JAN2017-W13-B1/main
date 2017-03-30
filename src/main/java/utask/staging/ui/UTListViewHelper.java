@@ -187,17 +187,18 @@ public class UTListViewHelper {
     }
 
     public void scrollTo(int index) {
+        Platform.runLater(() -> {
         assert (index >= 0);
+            ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
 
-        ListView<ReadOnlyTask> listView = getActualListViewFromDisplayIndex(index);
+            assert(listView != null);
 
-        assert(listView != null);
+            int actualIndex = getActualIndexOfListView(listView, index);
 
-        int actualIndex = getActualIndexOfListView(listView, index);
+            EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(listView, actualIndex));
 
-        EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(listView, actualIndex));
-
-        scrollTo(listView, actualIndex);
+            scrollTo(listView, actualIndex);
+        });
     }
 
     private void scrollTo(ListView<ReadOnlyTask> listView, int actualIndex) {
