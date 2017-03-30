@@ -16,6 +16,7 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
+import utask.staging.ui.helper.UTListViewHelper;
 
 public class UTTodoListPanel extends StagingUiPart<Region> {
     private static final String FXML = "UTTodoListPanel.fxml";
@@ -49,7 +50,7 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
         listView.setItems(tasks);
 
         //Add listview to helper for chain counting
-        UTListViewHelper.getInstance().addListView(listView);
+        UTListViewHelper.getInstance().addList(listView);
         setEventHandlerForSelectionChangeEvent(listView);
     }
 

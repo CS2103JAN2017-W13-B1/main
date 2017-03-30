@@ -24,6 +24,7 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
+import utask.staging.ui.helper.UTListViewHelper;
 
 public class UTTaskListPanel extends StagingUiPart<Region> {
     private static final String FXML = "UTTaskListPanel.fxml";
@@ -109,7 +110,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
 
     private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
-        UTListViewHelper.getInstance().addListView(listView);
+        UTListViewHelper.getInstance().addList(listView);
         setEventHandlerForSelectionChangeEvent(listView);
     }
 

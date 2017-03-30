@@ -20,6 +20,7 @@ import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.commons.util.StringUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
+import utask.staging.ui.helper.UTListViewHelper;
 import utask.ui.Ui;
 
 /**
