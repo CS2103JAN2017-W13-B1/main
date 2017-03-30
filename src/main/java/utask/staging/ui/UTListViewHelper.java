@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import utask.commons.core.EventsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToTaskListRequestEvent;
+import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.TaskListViewCell;
@@ -147,6 +148,28 @@ public class UTListViewHelper {
         return null;
     }
 
+    private ListView<ReadOnlyTask> getActualListViewFromReadOnlyTask(ReadOnlyTask task) {
+
+        for (ListView<ReadOnlyTask> lv : listViews) {
+
+            if (lv.getItems().contains(task)) {
+                return lv;
+            }
+        }
+
+        return null;
+    }
+
+    public int getDisplayedIndexFromReadOnlyTask(ReadOnlyTask task) {
+
+        ListView<ReadOnlyTask>  list = getActualListViewFromReadOnlyTask(task);
+
+        int position = list.getItems().indexOf(task);
+        int offset = offsetMap.get(list);
+
+        return offset + position;
+    }
+
 //    public ObservableList<ReadOnlyTask> getUnderlyingListOfListViewByIndex(int index) {
 //        assert (index >= 0);
 //
@@ -171,8 +194,6 @@ public class UTListViewHelper {
         assert(listView != null);
 
         int actualIndex = getActualIndexOfListView(listView, index);
-        System.out.println("listView " + listView);
-        System.out.println("ACTUAL INDX " + actualIndex);
 
         EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(listView, actualIndex));
 
@@ -198,5 +219,11 @@ public class UTListViewHelper {
     @Subscribe
     public void handleUTaskChangedEvent(UTaskChangedEvent e) {
         updateListViews();
+    }
+
+    @Subscribe
+    public void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent e) {
+        int displayIndex = getDisplayedIndexFromReadOnlyTask(e.task);
+        scrollTo(displayIndex);
     }
 }

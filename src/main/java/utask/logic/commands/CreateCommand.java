@@ -3,6 +3,8 @@ package utask.logic.commands;
 import java.util.HashSet;
 import java.util.Set;
 
+import utask.commons.core.EventsCenter;
+import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -68,6 +70,9 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
         try {
             model.addTask(toAdd);
             model.addUndoCommand(this);
+
+            EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(toAdd));
+
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
