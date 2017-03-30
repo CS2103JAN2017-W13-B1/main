@@ -7,9 +7,10 @@ import utask.staging.ui.events.FileRelocateEvent;
 public class RelocateCommand extends Command {
 
     public static final String COMMAND_WORD = "relocate";
+    public static final String COMMAND_FORMAT = "[PATH (if not specify, relocate to \\data\\utask.xml)]";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": change the save file to a new data storage location \n"
-            + "Parameters: [PATH] (Enter empty parameter will relocation to default location) \n"
+            + "Parameters: " + COMMAND_FORMAT + " \n"
             + "Example: \n"
             + "For Windows: " + COMMAND_WORD + "C:\\full\\path\\to\\destination\n"
             + "For Mac: " + COMMAND_WORD + " /Users/your_username/full/path/to/destination";

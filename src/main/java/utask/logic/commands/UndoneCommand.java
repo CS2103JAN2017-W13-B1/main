@@ -22,12 +22,14 @@ import utask.staging.ui.helper.UTListViewHelper;
 public class UndoneCommand extends Command implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "undone";
+    public static final String COMMAND_FORMAT = "[INDEX (must be a positive integer)]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the status to uncompleted of the task specified "
             + "by the index number used in the last task listing. \n"
-            + "Parameters: INDEX (must be a positive integer) " + "Example: "
-            + COMMAND_WORD + " 1";
+            + "Parameters: " + COMMAND_FORMAT
+            + "Example: " + COMMAND_WORD
+            + COMMAND_WORD + " ";
 
     public static final String MESSAGE_UNDONE_TASK_SUCCESS = "Undone task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";

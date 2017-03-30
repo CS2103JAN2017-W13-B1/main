@@ -4,6 +4,7 @@ package utask.logic.commands;
 import java.util.Set;
 
 import utask.commons.core.EventsCenter;
+import utask.commons.core.Messages;
 import utask.staging.ui.events.FindRequestEvent;
 
 /**
@@ -30,8 +31,9 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredTaskList(keywords);
-        EventsCenter.getInstance().post(new FindRequestEvent(""));
-        return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+        EventsCenter.getInstance().post(new FindRequestEvent());
+        return new CommandResult(String.format(Messages.MESSAGE_SEARCH_RESULTS, keywords.toString(),
+                                                model.getFilteredTaskList().size()));
     }
 
 }

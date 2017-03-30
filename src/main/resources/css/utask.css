@@ -215,6 +215,9 @@
 .error-textfield {
     -jfx-focus-color: #ff1744;
 }
+.error-suggestion {
+    -fx-text-fill: #ff1744;
+}
 .hide-empty:empty {
     display: none;
     -fx-opacity: 0;

@@ -31,7 +31,6 @@ import utask.logic.commands.CommandResult;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.DoneCommand;
-import utask.logic.commands.EditCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
@@ -39,6 +38,7 @@ import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.UndoneCommand;
+import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.Model;
 import utask.model.ModelManager;
@@ -266,7 +266,7 @@ public class LogicManagerTest {
     // author A0138423J
     @Test
     public void execute_updateInvalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("update", expectedMessage);
     }
 
@@ -413,11 +413,11 @@ public class LogicManagerTest {
 
         // execute incomplete command without index and verify result
         assertCommandFailure("update ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
 
         // execute incomplete command without parameters and verify result
         assertCommandFailure("update 1 ",
-                EditCommand.MESSAGE_NOT_EDITED);
+                UpdateCommand.MESSAGE_NOT_EDITED);
 
         // execute command and verify result add Task 2
         expectedAB.addTask(toBeAdded2);

@@ -8,6 +8,7 @@ import utask.model.UTask;
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
+    public static final String COMMAND_FORMAT = "";
     public static final String MESSAGE_SUCCESS = "UTask has been cleared!";
 
 

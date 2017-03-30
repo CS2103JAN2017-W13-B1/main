@@ -10,10 +10,11 @@ import utask.logic.commands.exceptions.CommandException;
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_FORMAT = "[SORTING_ORDER]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sort tasks list with filters. "
-            + "Parameters: [SORTING_ORDER]\n"
+            + "Parameters: " + COMMAND_FORMAT + "\n"
             + "Example: " + COMMAND_WORD + " earliest";
 
     public static final String MESSAGE_SUCCESS = "Tasks list has been sorted";
