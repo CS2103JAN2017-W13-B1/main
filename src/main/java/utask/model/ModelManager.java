@@ -70,7 +70,7 @@ public class ModelManager extends ComponentManager implements Model {
         futureTasks = getTasksFliteredListByAfterGivenDate(tomorrowDate);
         floatingTasks = getFloatingTaskFliteredListByEmptyDeadlineAndTimestamp();
 
-        UTListHelper.getInstance().addListView(dueTasks, todayTasks, tomorrowTasks, futureTasks, floatingTasks);
+        UTListHelper.getInstance().addList(dueTasks, todayTasks, tomorrowTasks, futureTasks, floatingTasks);
 
         userConfig = Model.SORT_ORDER_DEFAULT;
         sortFilteredTaskList(userConfig);

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import utask.commons.core.EventsCenter;
 import utask.commons.core.Messages;
+import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.util.CollectionUtil;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -21,6 +23,7 @@ import utask.model.task.Task;
 import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList;
 import utask.staging.ui.UTListHelper;
+import utask.staging.ui.UTListViewHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -95,9 +98,15 @@ public class EditCommand extends Command implements ReversibleCommand {
         editedTask = createEditedTask(taskToEdit, editTaskDescriptor,
                 attributeToRemove);
 
+        //TODO: Find better a elegant solution
+        //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
+        UTListViewHelper.getInstance().clearSelectionOfAllListViews();
+
         try {
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
+
+            EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(editedTask));
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }

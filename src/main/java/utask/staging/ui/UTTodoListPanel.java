@@ -49,7 +49,7 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
         listView.setItems(tasks);
 
         //Add listview to helper for chain counting
-        UTListViewHelper.getInstance().addListView(listView);
+        UTListViewHelper.getInstance().addList(listView);
         setEventHandlerForSelectionChangeEvent(listView);
     }
 

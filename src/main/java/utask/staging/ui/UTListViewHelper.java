@@ -18,7 +18,8 @@ import utask.staging.ui.helper.TaskListViewCell;
 
 /*
  * UTListViewHelper uses facade and singleton pattern
- * It coordinates multiple listview to ensure their index numbers are in running sequence
+ * It coordinates multiple ListViews to ensure their index numbers are in running sequence
+ * and also provides utility functions for scrolling
  *
  * */
 public class UTListViewHelper {
@@ -40,7 +41,7 @@ public class UTListViewHelper {
         return instance;
     }
 
-    public void addListView(ListView<ReadOnlyTask> lv) {
+    public void addList(ListView<ReadOnlyTask> lv) {
         listViews.add(lv);
         addDefaultCellFactory(lv);
     }
@@ -68,6 +69,23 @@ public class UTListViewHelper {
         });
     }
 
+    private void updateOffsetMap() {
+        addToOffsetMap(listViews.get(0), 0);
+
+        if (listViews.size() > 1) { //There's no point to refresh one list, otherwise
+            int totalSize = 0;
+
+            //Traverse and update next listview index based on previous size
+            for (int i = 1; i < listViews.size(); i++) {
+                ListView<ReadOnlyTask> prevListView = listViews.get(i - 1);
+                ListView<ReadOnlyTask> currListView = listViews.get(i);
+
+                totalSize += prevListView.getItems().size();
+                addToOffsetMap(currListView, totalSize);
+            }
+        }
+    }
+
 
     //TODO: Possible to use lazy rendering to prevent double rendering
     private void addDefaultCellFactory(ListView<ReadOnlyTask> lv) {
@@ -78,39 +96,6 @@ public class UTListViewHelper {
         offsetMap.put(lv, offset);
     }
 
-    /**
-     *  Returns total sizes of all listview
-     *
-     *  Recalculation is necessary every time
-     */
-//    public int getTotalSizeOfAllListViews() {
-//
-//        assert(listViews.size() > 0) :
-//            "UTListViewHelper was used for the first time. Please add ListViews before calling this method";
-//
-//        int  totalSize = 0;
-//
-//        for (ListView<ReadOnlyTask> lv : listViews) {
-//            totalSize += lv.getItems().size();
-//        }
-//
-//        return totalSize;
-//    }
-
-    /*
-     * Normalise the given to index to actual numbering in listview
-     *
-     * @param index is zero-based
-     *
-     * */
-//    public int getActualIndexFromDisplayIndex(int index) {
-//        ListView<ReadOnlyTask> lw = getActualListViewFromDisplayIndex(index);
-//
-//        int actualInt = getActualIndexOfListView(lw, index);
-//
-//        return actualInt;
-//    }
-
     /*
      * Normalise the given to index to actual numbering in listview
      *
@@ -119,11 +104,6 @@ public class UTListViewHelper {
      * */
     private int getActualIndexOfListView(ListView<ReadOnlyTask> listView, int index) {
         int offset = offsetMap.get(listView);
-
-//        if (index < offset) { //No need to normalise
-//            return index;
-//        }
-
         return index - offset;
     }
 
@@ -160,11 +140,18 @@ public class UTListViewHelper {
         return null;
     }
 
+    /*
+     * Gets display index of a ReadOnlyTask
+     * */
     public int getDisplayedIndexFromReadOnlyTask(ReadOnlyTask task) {
+        //Ensures the correctness when updating
+        //i.e. Update that move a task from today list down to future list
+        //Therefore, the lists after today list may have outdated offset of size + 1
+        updateOffsetMap();
 
-        ListView<ReadOnlyTask>  list = getActualListViewFromReadOnlyTask(task);
+        ListView<ReadOnlyTask> list = getActualListViewFromReadOnlyTask(task);
 
-        int position = list.getItems().indexOf(task);
+        int position = list.getItems().indexOf(task); //Current position of task in list in zero-based indexing
         int offset = offsetMap.get(list);
 
         return offset + position;

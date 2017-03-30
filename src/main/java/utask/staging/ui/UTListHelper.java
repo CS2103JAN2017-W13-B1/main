@@ -35,16 +35,16 @@ public class UTListHelper {
         return instance;
     }
 
-    public void addListView(FilteredList<ReadOnlyTask>... list) {
+    public void addList(FilteredList<ReadOnlyTask>... list) {
         assert list != null;
 //        assert list[0].get(0) instanceof ReadOnlyTask;
 
         for (int i = 0; i < list.length; i++) {
-            addListView(list[i]);
+            addList(list[i]);
         }
     }
 
-    public void addListView(FilteredList<ReadOnlyTask> list) {
+    public void addList(FilteredList<ReadOnlyTask> list) {
         assert list != null;
         lists.add(list);
     }
@@ -81,11 +81,6 @@ public class UTListHelper {
      * */
     private int getActualIndexOfListView(FilteredList<ReadOnlyTask> listView, int index) {
         int offset = offsetMap.get(listView);
-
-//        if (index < offset) { //No need to normalise
-//            return index;
-//        }
-
         return index - offset;
     }
 

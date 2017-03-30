@@ -6,7 +6,7 @@ import utask.commons.events.BaseEvent;
 import utask.model.task.ReadOnlyTask;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the Task List Panel
  */
 public class TaskListPanelSelectionChangedEvent extends BaseEvent {
 

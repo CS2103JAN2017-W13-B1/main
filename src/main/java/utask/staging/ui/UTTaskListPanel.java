@@ -109,7 +109,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
 
     private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
-        UTListViewHelper.getInstance().addListView(listView);
+        UTListViewHelper.getInstance().addList(listView);
         setEventHandlerForSelectionChangeEvent(listView);
     }
 
