@@ -7,6 +7,6 @@
 <AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<JFXTextArea fx:id="resultDisplay" editable="false"
-		focusTraversable="false" promptText="History">
+		focusTraversable="false" promptText="History" styleClass="results-display">
 	</JFXTextArea>
 </AnchorPane>

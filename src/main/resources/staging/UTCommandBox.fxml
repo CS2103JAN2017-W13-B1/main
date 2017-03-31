@@ -10,15 +10,14 @@
 	<children>
 		<JFXTextField fx:id="commandTextField" labelFloat="true"
 			prefHeight="35.0" promptText="Enter your commands here..."
-			styleClass="subhead">
+			styleClass="command-textfield">
 			<VBox.margin>
 				<Insets top="15.0" />
 			</VBox.margin>
 		</JFXTextField>
-		<Label fx:id="lblSuggestion" minWidth="600.0" prefHeight="27.0"
-			textFill="#3c1aff">
+		<Label fx:id="lblSuggestion" minWidth="600.0" prefHeight="27.0" styleClass="suggestion">
 			<padding>
-				<Insets left="3.0" />
+				<Insets left="1.0" top="5.0"/>
 			</padding>
 		</Label>
 	</children>

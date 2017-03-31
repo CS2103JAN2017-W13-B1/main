@@ -25,8 +25,8 @@ import utask.staging.ui.helper.SuggestionHelper;
 public class UTCommandBox extends StagingUiPart<Region> {
 
     private static final String FXML = "UTCommandBox.fxml";
-    private static final String ERROR_TEXTFIELD_STYLE_CLASS = "error-textfield";
-    private static final String ERROR_SUGGESTION_STYLE_CLASS = "error-suggestion";
+    private static final String ERROR_TEXTFIELD_STYLE_CLASS = "command-textfield-error";
+    private static final String ERROR_SUGGESTION_STYLE_CLASS = "suggestion-error";
 
     private final Logger logger = LogsCenter.getLogger(UTCommandBox.class);
     private final Logic logic;
@@ -81,7 +81,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
     private void handleKeyPressed(KeyEvent ke) {
         String input = commandTextField.getText();
 
-        if (!input.isEmpty()) {
+        if (!input.trim().isEmpty()) {
             input = (input.toLowerCase().split(" "))[0];
             String suggestion = SuggestionHelper.getInputSuggestionOfPreamble(input);
             lblSuggestion.setText(suggestion);

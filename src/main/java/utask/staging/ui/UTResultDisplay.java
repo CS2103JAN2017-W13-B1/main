@@ -34,6 +34,7 @@ public class UTResultDisplay extends StagingUiPart<Region> {
     public UTResultDisplay(Pane parent) {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
+        resultDisplay.disableProperty().bind(resultDisplay.focusedProperty());
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
         registerAsAnEventHandler(this);

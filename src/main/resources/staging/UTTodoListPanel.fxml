@@ -7,7 +7,7 @@
 
 <VBox fx:id="rootPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-      <Label styleClass="list-label" text="To-dos">
+      <Label fx:id="lblTodo" styleClass="list-label" text="To-dos">
          <font>
             <Font size="16.0" />
          </font>
