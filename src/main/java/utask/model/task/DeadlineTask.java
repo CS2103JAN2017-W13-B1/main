@@ -15,7 +15,7 @@ public class DeadlineTask extends Task {
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyTask.
      */
     public DeadlineTask(ReadOnlyTask source) {
         this(source.getName(), source.getDeadline(), source.getFrequency(), source.getTags(), source.getIsCompleted());
@@ -40,10 +40,5 @@ public class DeadlineTask extends Task {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, deadline, frequency, tags, isCompleted);
-    }
-
-    @Override
-    public Timestamp getTimestamp() {
-        return Timestamp.getEmptyTimestamp();
     }
 }

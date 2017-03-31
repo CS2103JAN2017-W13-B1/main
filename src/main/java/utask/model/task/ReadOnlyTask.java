@@ -14,11 +14,18 @@ public interface ReadOnlyTask {
     IsCompleted getIsCompleted();
 
     /*
-     * Deadline and Timestamp are optional based on type of task Event has both
-     * deadline and timestamp Deadline has only deadline
+     * Deadline and Timestamp are optional based on type of task
+     *
+     *  EventTask has both Deadline and Timestamp
+     *  DeadlineTask has only deadline
      */
-    Deadline getDeadline();
-    Timestamp getTimestamp();
+    default Deadline getDeadline() {
+        return Deadline.getEmptyDeadline();
+    }
+
+    default Timestamp getTimestamp() {
+        return Timestamp.getEmptyTimestamp();
+    }
 
     /**
      * The returned TagList is a deep copy of the internal TagList, changes on
