@@ -3,8 +3,6 @@ package utask.staging.ui;
 
 import java.util.logging.Logger;
 
-import com.jfoenix.controls.JFXListView;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -16,6 +14,7 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
+import utask.staging.ui.helper.UTListView;
 import utask.staging.ui.helper.UTListViewHelper;
 
 public class UTTodoListPanel extends StagingUiPart<Region> {
@@ -26,7 +25,7 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
     private VBox rootPane;
 
     @FXML
-    private JFXListView<ReadOnlyTask> lstTodoTasks;
+    private UTListView<ReadOnlyTask> lstTodoTasks;
 
     public UTTodoListPanel(Pane parent, Logic logic) {
         super(FXML);
@@ -46,7 +45,7 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
         lstTodoTasks.setStyle("-jfx-expanded : true;");
     }
 
-    private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
+    private void setConnections(UTListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
 
         //Add listview to helper for chain counting

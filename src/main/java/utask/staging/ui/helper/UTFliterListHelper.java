@@ -11,9 +11,8 @@ import utask.model.task.ReadOnlyTask;
 /*
  * UTListHelper uses facade and singleton pattern
  * It provides an interface to simplify the manage of multiple underlying filterlist.
- *
  * */
-public class UTFliterListHelper extends UTListHelper<FilteredList<ReadOnlyTask>> {
+public class UTFliterListHelper extends UTListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
     private static UTFliterListHelper instance = null;
 
     private UTFliterListHelper() {
@@ -28,13 +27,11 @@ public class UTFliterListHelper extends UTListHelper<FilteredList<ReadOnlyTask>>
         return instance;
     }
 
-    //TODO: Remove if not required
     //Exposes function in a name that does not reveal actual implementation
     public void refresh() {
         updateOffsetMap();
     }
 
-  //TODO: Remove if not required
     //Exposes function in a name that does not reveal actual implementation
     public FilteredList<ReadOnlyTask> getUnderlyingListOfListViewByIndex(int index) {
         return getActualListFromDisplayIndex(index);

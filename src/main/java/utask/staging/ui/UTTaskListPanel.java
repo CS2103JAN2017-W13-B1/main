@@ -24,6 +24,7 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
+import utask.staging.ui.helper.UTListView;
 import utask.staging.ui.helper.UTListViewHelper;
 
 public class UTTaskListPanel extends StagingUiPart<Region> {
@@ -65,7 +66,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         assert(tasks != null);
 
         Label label = createLabel(labelName);
-        JFXListView<ReadOnlyTask> listView = createListView();
+        UTListView<ReadOnlyTask> listView = createListView();
         listView.setId("lst" + labelName);
 
         addLabelledListViewToParent(parent, label, listView);
@@ -81,8 +82,8 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         return label;
     }
 
-    private JFXListView<ReadOnlyTask> createListView() {
-        JFXListView<ReadOnlyTask> list = new JFXListView<ReadOnlyTask>();
+    private UTListView<ReadOnlyTask> createListView() {
+        UTListView<ReadOnlyTask> list = new UTListView<ReadOnlyTask>();
         list.getStyleClass().add("jfx-list-view");
         list.getStyleClass().add("custom-jfx-list-view1");
         return list;
@@ -108,7 +109,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         label.managedProperty().bind(label.visibleProperty());
     }
 
-    private void setConnections(ListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
+    private void setConnections(UTListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
         UTListViewHelper.getInstance().addList(listView);
         setEventHandlerForSelectionChangeEvent(listView);
