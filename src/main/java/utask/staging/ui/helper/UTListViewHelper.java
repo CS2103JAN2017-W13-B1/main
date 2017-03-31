@@ -15,7 +15,7 @@ import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 /*
  * UTListViewHelper uses facade and singleton pattern
  * It coordinates multiple ListViews to ensure their index numbers are in running sequence
- * and also provides utility functions for scrolling
+ * and also provides utility functions for retrieving and scrolling.
  *
  * */
 public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, ReadOnlyTask> {

@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import utask.commons.core.EventsCenter;
 
-/* UTListHelper groups similar method used by UTListHelper and UTListViewHelper
+/* UTListHelper groups similar method used by UTFilterListHelper and UTListViewHelper
  *
  * Due to how different the actual type T is in the concrete classes,
  * it necessary have a common abstraction to get item size.

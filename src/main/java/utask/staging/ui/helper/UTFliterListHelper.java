@@ -10,7 +10,8 @@ import utask.model.task.ReadOnlyTask;
 
 /*
  * UTListHelper uses facade and singleton pattern
- * It provides an interface to simplify the manage of multiple underlying filterlist.
+ * It provides an interface to simplify the manage of multiple underlying FliterList.
+ *
  * */
 public class UTFliterListHelper extends UTListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
     private static UTFliterListHelper instance = null;
