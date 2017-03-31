@@ -16,9 +16,9 @@ import java.util.Optional;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.Command;
-import utask.logic.commands.EditCommand;
-import utask.logic.commands.EditCommand.EditTaskDescriptor;
 import utask.logic.commands.IncorrectCommand;
+import utask.logic.commands.UpdateCommand;
+import utask.logic.commands.UpdateCommand.EditTaskDescriptor;
 import utask.model.tag.UniqueTagList;
 
 /**
@@ -44,7 +44,7 @@ public class EditCommandParser {
                 .flatMap(ParserUtil::parseIndex);
         if (!index.isPresent()) {
             return new IncorrectCommand(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                    MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }
         // creates list of int to store to indicate which attribute to remove
         // 0 : Deadline, 1 : Timestamp, 2 : Tags, 3 : Frequency
@@ -90,10 +90,10 @@ public class EditCommandParser {
         }
 
         if (!editTaskDescriptor.isAnyFieldEdited()) {
-            return new IncorrectCommand(EditCommand.MESSAGE_NOT_EDITED);
+            return new IncorrectCommand(UpdateCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index.get(), editTaskDescriptor,
+        return new UpdateCommand(index.get(), editTaskDescriptor,
                 attributesToRemove);
     }
 

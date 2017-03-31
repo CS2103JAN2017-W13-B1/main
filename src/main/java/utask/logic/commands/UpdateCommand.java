@@ -30,17 +30,18 @@ import utask.staging.ui.helper.UTListViewHelper;
  */
 
 //@@author A0138423J
-public class EditCommand extends Command implements ReversibleCommand {
-
+public class UpdateCommand extends Command implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "update";
+
+    public static final String COMMAND_FORMAT = "INDEX (must be a positive integer) [/name NAME] [/by DEADLINE]"
+            + " [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits the details of the task specified "
             + "by the index number used in the last task listing. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) [/name NAME] [/by DEADLINE] "
-            + "[/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]...\n"
+            + "Parameters: " + COMMAND_FORMAT + "\n"
             + "Example: " + COMMAND_WORD + " 1 /name do homework";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited task: %1$s";
@@ -64,7 +65,7 @@ public class EditCommand extends Command implements ReversibleCommand {
      *            list <int> of attributes to be removed
      *            0 : Deadline, 1 : Timestamp, 2 : Tag, 3 : Frequency
      */
-    public EditCommand(int filteredTaskListIndex,
+    public UpdateCommand(int filteredTaskListIndex,
             EditTaskDescriptor editTaskDescriptor,
             ArrayList<String> attributeToRemove) {
         assert filteredTaskListIndex > 0;

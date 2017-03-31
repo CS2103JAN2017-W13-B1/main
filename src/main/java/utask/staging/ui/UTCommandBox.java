@@ -25,7 +25,8 @@ import utask.staging.ui.helper.SuggestionHelper;
 public class UTCommandBox extends StagingUiPart<Region> {
 
     private static final String FXML = "UTCommandBox.fxml";
-    public static final String ERROR_STYLE_CLASS = "error-textfield";
+    private static final String ERROR_TEXTFIELD_STYLE_CLASS = "error-textfield";
+    private static final String ERROR_SUGGESTION_STYLE_CLASS = "error-suggestion";
 
     private final Logger logger = LogsCenter.getLogger(UTCommandBox.class);
     private final Logic logic;
@@ -63,25 +64,29 @@ public class UTCommandBox extends StagingUiPart<Region> {
     private void addEventHandlerToControls() {
         commandTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
+                handleSpecialKeyCombination(ke);
+            }
+        });
+
+        commandTextField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
                 handleKeyPressed(ke);
             }
         });
     }
 
     /**
-     * Show full suggested command format on recognised command pattern.
+     * Show full suggested command format on recognized command pattern.
      */
     private void handleKeyPressed(KeyEvent ke) {
-        //TODO: If special key handled, dont propagate
-        handleSpecialKeyCombination(ke);
-
-        //TODO: Upgrade to binary tree
         String input = commandTextField.getText();
 
-        if (!"".equals(input)) {
+        if (!input.isEmpty()) {
             input = (input.toLowerCase().split(" "))[0];
             String suggestion = SuggestionHelper.getInputSuggestionOfPreamble(input);
             lblSuggestion.setText(suggestion);
+        } else {
+            lblSuggestion.setText("");
         }
     }
 
@@ -102,6 +107,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
             commandTextField.setText(lastValidCommandEntry);
             break;
         default:
+            setStyleToIndicateCommandSuccess();
             break;
         }
     }
@@ -115,6 +121,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
             setStyleToIndicateCommandSuccess();
             lastValidCommandEntry = commandTextField.getText();
             commandTextField.setText("");
+            lblSuggestion.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 
@@ -130,13 +137,15 @@ public class UTCommandBox extends StagingUiPart<Region> {
      * Sets the command box style to indicate a successful command.
      */
     private void setStyleToIndicateCommandSuccess() {
-        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        commandTextField.getStyleClass().remove(ERROR_TEXTFIELD_STYLE_CLASS);
+        lblSuggestion.getStyleClass().remove(ERROR_SUGGESTION_STYLE_CLASS);
     }
 
     /**
      * Sets the command box style to indicate a failed command.
      */
     private void setStyleToIndicateCommandFailure() {
-        commandTextField.getStyleClass().add(ERROR_STYLE_CLASS);
+        commandTextField.getStyleClass().add(ERROR_TEXTFIELD_STYLE_CLASS);
+        lblSuggestion.getStyleClass().add(ERROR_SUGGESTION_STYLE_CLASS);
     }
 }
