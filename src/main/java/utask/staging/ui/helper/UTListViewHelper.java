@@ -15,10 +15,10 @@ import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 /*
  * UTListViewHelper uses facade and singleton pattern
  * It coordinates multiple ListViews to ensure their index numbers are in running sequence
- * and also provides utility functions for scrolling
+ * and also provides utility functions for retrieving and scrolling.
  *
  * */
-public class UTListViewHelper extends UTListHelper<ListView<ReadOnlyTask>> {
+public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, ReadOnlyTask> {
     private static UTListViewHelper instance = null;
 
     private UTListViewHelper() {
@@ -33,7 +33,7 @@ public class UTListViewHelper extends UTListHelper<ListView<ReadOnlyTask>> {
         return instance;
     }
 
-    public void addList(ListView<ReadOnlyTask> lv) {
+    public void addList(UTListView<ReadOnlyTask> lv) {
         super.addList(lv);
         addDefaultCellFactory(lv);
     }
@@ -55,8 +55,8 @@ public class UTListViewHelper extends UTListHelper<ListView<ReadOnlyTask>> {
 
                 //Traverse and update next listview index based on previous size
                 for (int i = 1; i < lists.size(); i++) {
-                    ListView<ReadOnlyTask> prevListView = lists.get(i - 1);
-                    ListView<ReadOnlyTask> currListView = lists.get(i);
+                    UTListView<ReadOnlyTask> prevListView = lists.get(i - 1);
+                    UTListView<ReadOnlyTask> currListView = lists.get(i);
 
                     totalSize += prevListView.getItems().size();
 
@@ -106,7 +106,7 @@ public class UTListViewHelper extends UTListHelper<ListView<ReadOnlyTask>> {
     public void scrollTo(int index) {
         Platform.runLater(() -> {
         assert (index >= 0);
-            ListView<ReadOnlyTask> listView = getActualListFromDisplayIndex(index);
+            UTListView<ReadOnlyTask> listView = getActualListFromDisplayIndex(index);
 
             assert(listView != null);
 
