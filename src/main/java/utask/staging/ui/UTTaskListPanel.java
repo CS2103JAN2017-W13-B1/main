@@ -112,7 +112,10 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         UTListViewHelper.getInstance().addList(listView);
     }
 
-    private void ensureVisible(ScrollPane pane, Node listView, int numberOfCards) {
+    /*
+     * Calculates the vertical value of the scrollbar of scrollbar to display given task of listview at the top
+     * */
+    private void showCardInScrollPane(ScrollPane pane, Node listView, int numberOfCards) {
         Bounds viewport = pane.getViewportBounds();
         double contentHeight = pane.getContent().getBoundsInLocal().getHeight();
         double nodeMinY = listView.getBoundsInParent().getMinY();
@@ -122,9 +125,20 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         pane.setVvalue(topOfList);
     }
 
+    /**
+     * Checks if given ListView belongs to this class. In other words, on the left side of the UI.
+     *
+     * It is better handled here as the parent does not need to cast to check root of this UI is scrollPane.
+     *
+     * @param node is the a listview
+     * @param index is the position of item in listview
+     */
     private void scrollTo(Node node, int index) {
+        assert node != null;
+        assert index >= 0;
+
         if (container.getChildren().contains(node)) {
-            ensureVisible(rootPane, node, index);
+            showCardInScrollPane(rootPane, node, index);
         }
     }
 

@@ -1,6 +1,8 @@
 // @@author A0139996A
 package utask.staging.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
@@ -40,11 +42,14 @@ public class UTCommandBox extends StagingUiPart<Region> {
     @FXML
     private Label lblSuggestion;
 
-    private String lastValidCommandEntry = "";
+    private List<String> lastValidCommandList;
+    private int currentPositionInLastValidCommandList = -1;
 
     public UTCommandBox(Pane parent, Logic logic) {
         super(FXML);
         this.logic = logic;
+
+        lastValidCommandList = new ArrayList<String>();
         addEventHandlerToControls();
         addControlsToParent(parent);
         addCommandBoxBehaviour();
@@ -96,6 +101,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
         switch (keyPressed) {
         case ENTER :
             handleCommandInputChanged();
+            currentPositionInLastValidCommandList = lastValidCommandList.size() - 1;
             break;
         case ESCAPE :
             raise(new KeyboardEscapeKeyPressedEvent());
@@ -104,12 +110,36 @@ public class UTCommandBox extends StagingUiPart<Region> {
             raise(new ShowHelpRequestEvent());
             break;
         case UP :
-            commandTextField.setText(lastValidCommandEntry);
+            if (currentPositionInLastValidCommandList >= 0) {
+                displayLastValidCommand();
+
+                if (currentPositionInLastValidCommandList > 0) {
+                    currentPositionInLastValidCommandList--;
+                }
+            }
+            break;
+        case DOWN :
+            if (currentPositionInLastValidCommandList >= 0
+                    && currentPositionInLastValidCommandList < lastValidCommandList.size() - 1) {
+
+                if (currentPositionInLastValidCommandList < lastValidCommandList.size() - 1) {
+                    currentPositionInLastValidCommandList++;
+                }
+
+                displayLastValidCommand();
+            }
             break;
         default:
             setStyleToIndicateCommandSuccess();
             break;
         }
+    }
+
+    private void displayLastValidCommand() {
+        commandTextField.setText(lastValidCommandList.get(currentPositionInLastValidCommandList));
+        Platform.runLater(()-> {
+            commandTextField.positionCaret(commandTextField.getLength());
+        });
     }
 
     //@@author
@@ -119,7 +149,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
 
             // process result of the command
             setStyleToIndicateCommandSuccess();
-            lastValidCommandEntry = commandTextField.getText();
+            lastValidCommandList.add(commandTextField.getText());
             commandTextField.setText("");
             lblSuggestion.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);

@@ -89,7 +89,7 @@ public class DoneCommand extends Command implements ReversibleCommand {
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
-        model.updateFilteredListToShowAll();
+        //model.updateFilteredListToShowAll();
         return new CommandResult(
                 String.format(MESSAGE_DONE_TASK_SUCCESS, temp));
     }
