@@ -2,7 +2,9 @@ package utask.logic.commands;
 
 import java.util.List;
 
+import utask.commons.core.EventsCenter;
 import utask.commons.core.Messages;
+import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -13,7 +15,6 @@ import utask.model.task.IsCompleted;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.staging.ui.helper.UTFliterListHelper;
-import utask.staging.ui.helper.UTListViewHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -79,10 +80,7 @@ public class DoneCommand extends Command implements ReversibleCommand {
         }
         Task temp = null;
 
-
-        //TODO: Find better a elegant solution
-        //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
-        UTListViewHelper.getInstance().clearSelectionOfAllListViews();
+        EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(taskToEdit));
 
         try {
             temp = createEditedTask(taskToEdit, true);

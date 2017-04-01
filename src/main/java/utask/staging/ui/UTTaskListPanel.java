@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -23,7 +22,6 @@ import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.UTListView;
 import utask.staging.ui.helper.UTListViewHelper;
 
@@ -112,7 +110,6 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
     private void setConnections(UTListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
         UTListViewHelper.getInstance().addList(listView);
-        setEventHandlerForSelectionChangeEvent(listView);
     }
 
     private void ensureVisible(ScrollPane pane, Node listView, int numberOfCards) {
@@ -129,16 +126,6 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         if (container.getChildren().contains(node)) {
             ensureVisible(rootPane, node, index);
         }
-    }
-
-    private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
-        listView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in task list panel changed to : '" + newValue + "'");
-                        raise(new TaskListPanelSelectionChangedEvent(listView, newValue));
-                    }
-                });
     }
 
     @Subscribe

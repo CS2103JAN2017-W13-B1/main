@@ -1,11 +1,14 @@
 //@@author A0139996A
 package utask.staging.ui.helper;
 
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.scene.control.ListView;
 import utask.commons.core.EventsCenter;
+import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.events.ui.ShowTaskOfInterestEvent;
@@ -20,6 +23,7 @@ import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
  * */
 public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, ReadOnlyTask> {
     private static UTListViewHelper instance = null;
+    private final Logger logger = LogsCenter.getLogger(UTListViewHelper.class);
 
     private UTListViewHelper() {
         EventsCenter.getInstance().registerHandler(this);
@@ -36,6 +40,7 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
     public void addList(UTListView<ReadOnlyTask> lv) {
         super.addList(lv);
         addDefaultCellFactory(lv);
+        setEventHandlerForSelectionChangeEvent(lv);
     }
 
     //TODO: Possible to use lazy rendering to prevent double rendering
@@ -97,7 +102,7 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
         return offset + position;
     }
 
-    public void clearSelectionOfAllListViews() {
+    private void clearSelectionOfAllListViews() {
         for (ListView<ReadOnlyTask> lv : lists) {
             lv.getSelectionModel().clearSelection();
         }
@@ -114,17 +119,27 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
 
             EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(listView, actualIndex));
 
+            //clearSelectionOfAllListViews();
             scrollTo(listView, actualIndex);
         });
     }
 
     private void scrollTo(ListView<ReadOnlyTask> listView, int actualIndex) {
-        Platform.runLater(() -> {
-            clearSelectionOfAllListViews();
+        listView.scrollTo(actualIndex);
+        listView.getSelectionModel().select(actualIndex);
+    }
 
-            listView.scrollTo(actualIndex);
-            listView.getSelectionModel().select(actualIndex);
-        });
+    private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
+        listView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    //oldValue null and newValue !=null limits event propagation to only actual selection
+                    //This prevents TaskListPaneSelectionChangedEvent from triggering during delete, update and done,
+                    //which can go into a loop
+                    if (oldValue == null && newValue != null) {
+                        logger.fine("Selection in listview panel changed to : '" + newValue + "'");
+                        EventsCenter.getInstance().post(new TaskListPanelSelectionChangedEvent(listView, newValue));
+                    }
+                });
     }
 
     @Subscribe
@@ -135,13 +150,13 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
     }
 
     @Subscribe
-    public void handleUTaskChangedEvent(UTaskChangedEvent e) {
+    public void handleUTaskChangedEvent(UTaskChangedEvent event) {
         updateListViews();
     }
 
     @Subscribe
-    public void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent e) {
-        int displayIndex = getDisplayedIndexFromReadOnlyTask(e.task);
+    public void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent event) {
+        int displayIndex = getDisplayedIndexFromReadOnlyTask(event.task);
         scrollTo(displayIndex);
     }
 }

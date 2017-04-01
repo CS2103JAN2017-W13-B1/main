@@ -398,9 +398,11 @@ public class ModelManager extends ComponentManager implements Model {
 
             try {
                 Date taskDate = task.getDeadline().getDate();
+
                 return taskDate.getYear() == date.getYear()
                         && taskDate.getMonth() == date.getMonth()
-                        && taskDate.getDate() == date.getDate();
+                        && taskDate.getDate() == date.getDate()
+                        && !task.getIsCompleted().isCompleted();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -429,7 +431,8 @@ public class ModelManager extends ComponentManager implements Model {
             }
 
             try {
-                return task.getDeadline().getDate().before(date);
+                return task.getDeadline().getDate().before(date)
+                        && !task.getIsCompleted().isCompleted();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -458,7 +461,8 @@ public class ModelManager extends ComponentManager implements Model {
             }
 
             try {
-                return task.getDeadline().getDate().after(date);
+                return task.getDeadline().getDate().after(date)
+                        && !task.getIsCompleted().isCompleted();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -475,7 +479,7 @@ public class ModelManager extends ComponentManager implements Model {
     private class EmptyDeadlineAndTimestampQualifier implements Qualifier {
         @Override
         public boolean run(ReadOnlyTask task) {
-            if (task.getDeadline().isEmpty() && task.getTimestamp().isEmpty()) {
+            if (task.getDeadline().isEmpty() && task.getTimestamp().isEmpty() && !task.getIsCompleted().isCompleted()) {
                 return true;
             } else {
                 return false;
@@ -487,4 +491,16 @@ public class ModelManager extends ComponentManager implements Model {
             return "deadline&timestamp=empty";
         }
     }
+
+//    private class NotCompletedQualifier implements Qualifier {
+//        @Override
+//        public boolean run(ReadOnlyTask task) {
+//            return !task.getIsCompleted().isCompleted();
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "deadline&timestamp=empty";
+//        }
+//    }
 }

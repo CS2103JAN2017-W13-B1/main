@@ -14,7 +14,7 @@ public class TaskListViewCell extends JFXListCell<ReadOnlyTask> {
         updateOffset(offset);
     }
 
-    public void updateOffset(int offset) {
+    private void updateOffset(int offset) {
         this.offset = offset + 1;
     }
 

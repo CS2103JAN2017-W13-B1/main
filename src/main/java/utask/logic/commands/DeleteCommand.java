@@ -11,7 +11,6 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
 import utask.staging.ui.helper.UTFliterListHelper;
-import utask.staging.ui.helper.UTListViewHelper;
 
 /**
  * Deletes a task identified using it's last displayed index from the uTask.
@@ -54,10 +53,6 @@ public class DeleteCommand extends Command implements ReversibleCommand {
             taskToDelete = lastShownList.get(actualInt);
 
             //EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(taskToDelete));
-
-            //TODO: Find better a elegant solution
-            //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
-            UTListViewHelper.getInstance().clearSelectionOfAllListViews();
 
             try {
                 model.deleteTask(taskToDelete);

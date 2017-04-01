@@ -13,7 +13,6 @@ import utask.model.task.IsCompleted;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.staging.ui.helper.UTFliterListHelper;
-import utask.staging.ui.helper.UTListViewHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -79,11 +78,6 @@ public class UndoneCommand extends Command implements ReversibleCommand {
             throw new CommandException(MESSAGE_DUPLICATE_STATUS);
         }
         Task temp = null;
-
-
-        //TODO: Find better a elegant solution
-        //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
-        UTListViewHelper.getInstance().clearSelectionOfAllListViews();
 
         try {
             temp = createEditedTask(taskToEdit, false);

@@ -93,7 +93,7 @@ public abstract class UTListHelper<T extends Collection<E>, E> {
             }
         }
 
-        assert false : "This line is suppose to be unreachable";
+        assert false : "This line is suppose to be unreachable. Display Index provided was " + index;
         return null;
     }
 }
