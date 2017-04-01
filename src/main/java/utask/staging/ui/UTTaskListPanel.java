@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -23,7 +22,6 @@ import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 import utask.staging.ui.helper.UTListView;
 import utask.staging.ui.helper.UTListViewHelper;
 
@@ -112,10 +110,12 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
     private void setConnections(UTListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
         UTListViewHelper.getInstance().addList(listView);
-        setEventHandlerForSelectionChangeEvent(listView);
     }
 
-    private void ensureVisible(ScrollPane pane, Node listView, int numberOfCards) {
+    /*
+     * Calculates the vertical value of the scrollbar of scrollbar to display given task of listview at the top
+     * */
+    private void showCardInScrollPane(ScrollPane pane, Node listView, int numberOfCards) {
         Bounds viewport = pane.getViewportBounds();
         double contentHeight = pane.getContent().getBoundsInLocal().getHeight();
         double nodeMinY = listView.getBoundsInParent().getMinY();
@@ -125,20 +125,21 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         pane.setVvalue(topOfList);
     }
 
+    /**
+     * Checks if given ListView belongs to this class. In other words, on the left side of the UI.
+     *
+     * It is better handled here as the parent does not need to cast to check root of this UI is scrollPane.
+     *
+     * @param node is the a listview
+     * @param index is the position of item in listview
+     */
     private void scrollTo(Node node, int index) {
-        if (container.getChildren().contains(node)) {
-            ensureVisible(rootPane, node, index);
-        }
-    }
+        assert node != null;
+        assert index >= 0;
 
-    private void setEventHandlerForSelectionChangeEvent(ListView<ReadOnlyTask> listView) {
-        listView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in task list panel changed to : '" + newValue + "'");
-                        raise(new TaskListPanelSelectionChangedEvent(listView, newValue));
-                    }
-                });
+        if (container.getChildren().contains(node)) {
+            showCardInScrollPane(rootPane, node, index);
+        }
     }
 
     @Subscribe

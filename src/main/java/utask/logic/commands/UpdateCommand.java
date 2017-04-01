@@ -23,7 +23,6 @@ import utask.model.task.Task;
 import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList;
 import utask.staging.ui.helper.UTFliterListHelper;
-import utask.staging.ui.helper.UTListViewHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -98,10 +97,6 @@ public class UpdateCommand extends Command implements ReversibleCommand {
         // create modified task from existing task
         editedTask = createEditedTask(taskToEdit, editTaskDescriptor,
                 attributeToRemove);
-
-        //TODO: Find better a elegant solution
-        //Needed to prevent TaskListPaneSelectionChangedEvent from triggering, which can go into a loop
-        UTListViewHelper.getInstance().clearSelectionOfAllListViews();
 
         try {
             model.updateTask(taskToEdit, editedTask);

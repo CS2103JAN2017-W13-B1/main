@@ -8,8 +8,6 @@ import java.util.Locale;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,14 +18,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.text.TextAlignment;
 import utask.commons.core.EventsCenter;
-import utask.commons.events.model.UTaskChangedEvent;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.helper.TagColorHelper;
 
 public class UTTaskListCard extends StagingUiPart<Region> {
-
     public static final double CARD_HEIGHT = 102.0;
     private static final String FXML = "UTTaskListCard.fxml";
     private static final String LABEL_CSS = "-fx-padding: 1 3 1 3; -fx-text-fill: WHITE; -fx-background-color: %s;";
@@ -51,8 +47,6 @@ public class UTTaskListCard extends StagingUiPart<Region> {
 
     //TODO: Upgrade to property for observable binding instead of manually checking for UI events
     private final ReadOnlyTask task;
-
-    private boolean isDone;
 
     public UTTaskListCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
@@ -131,31 +125,14 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         HBox.setMargin(label, new Insets(5, 5, 5, 0));
     }
 
-    private void addStylingProperitesOnCompletion() {
-        boolean isCompleted = task.getIsCompleted().isCompleted();
+    public void addStylingProperitesOnCompletion() {
+        boolean isComplete = task.getIsCompleted().isCompleted();
+        chkDone.setSelected(isComplete);
 
-        setCheckBoxAsChecked(isCompleted);
-
-        if (isCompleted) {
+        if (isComplete) {
             lblName.getStyleClass().add(LABEL_STRIKETHROUGH_STYLE);
         } else {
             lblName.getStyleClass().remove(LABEL_STRIKETHROUGH_STYLE);
         }
-    }
-
-    /**
-     * JFoenix version 1.2.0 throws NullPointerException
-     * when applying transition effects
-     */
-    private void setCheckBoxAsChecked(boolean isCompleted) {
-        try {
-            chkDone.setSelected(isCompleted);
-        } catch (NullPointerException e) {
-        }
-    }
-
-    @Subscribe
-    public void handleUTaskChangedEvent(UTaskChangedEvent e) {
-        addStylingProperitesOnCompletion();
     }
 }

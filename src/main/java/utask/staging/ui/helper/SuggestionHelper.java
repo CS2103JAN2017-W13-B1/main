@@ -45,10 +45,12 @@ public class SuggestionHelper {
     }
 
     public static final String getInputSuggestionOfPreamble(String preamble) {
+        assert preamble != "" && preamble != null;
+
         Set<Entry<String, String>> results = filterPrefix(suggestionMap, preamble).entrySet();
 
-        if (results.size() == 0) { //If don't recognise the command then don't show suggestion
-            return "";
+        if (results.size() == 0) { //If don't recognize the command then show all possible commands
+            return showAllSuggetions();
         } else if (results.size() == 1) {
             Entry<String, String> result = results.iterator().next();
 
@@ -74,5 +76,16 @@ public class SuggestionHelper {
             return baseMap.subMap(prefix, end);
         }
         return baseMap;
+    }
+
+    private static String showAllSuggetions() {
+        sb.setLength(0); // clears stringbuilder
+
+        for (Entry<String, String> entry : suggestionMap.entrySet()) {
+            String command = entry.getKey();
+            sb.append(command + "  ");
+        }
+
+        return sb.toString();
     }
 }
