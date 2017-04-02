@@ -147,7 +147,6 @@ public class ModelManager extends ComponentManager implements Model {
         UTFilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
         sortFilteredTaskList(userConfig);
-        indicateUTaskChanged();
     }
 
     @Override
@@ -158,7 +157,7 @@ public class ModelManager extends ComponentManager implements Model {
         int uTaskIndex = filteredTasks.getSourceIndex(filteredTaskListIndex);
         uTask.updateTask(uTaskIndex, editedTask);
         UTFilteredListHelper.getInstance().refresh();
-        indicateUTaskChanged();
+        sortFilteredTaskList(userConfig);
     }
 
     //@@author A0139996A
@@ -170,7 +169,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         uTask.updateTask(taskToEdit, editedTask);
         UTFilteredListHelper.getInstance().refresh();
-        indicateUTaskChanged();
+        sortFilteredTaskList(userConfig);
     }
 
     /** Gets total size of tasks in underlying lists of listviews*/
