@@ -1,7 +1,10 @@
 package utask.model.task;
 //@@author A0138423J
 public enum TaskType {
-    EVENT, DEADLINE, FLOATING, UNKNOWN;
+    EVENT("event"),
+    DEADLINE("deadline"),
+    FLOATING("floating"),
+    UNKNOWN("?");
 
     String key;
 
@@ -12,17 +15,9 @@ public enum TaskType {
     TaskType() {
     }
 
-    TaskType getValue(String attribute) {
-        switch (attribute) {
-        case "event":
-            return EVENT;
-        case "deadline":
-            return DEADLINE;
-        case "floating":
-            return FLOATING;
-        default:
-            return UNKNOWN;
-        }
+    @Override
+    public String toString() {
+        return key;
     }
 
 }

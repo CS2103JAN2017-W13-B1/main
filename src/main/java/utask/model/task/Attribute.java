@@ -1,7 +1,12 @@
 package utask.model.task;
 //@@author A0138423J
 public enum Attribute {
-    DEADLINE, TIMESTAMP, ISCOMPLETED, FREQUENCY, TAG, UNKNOWN;
+    DEADLINE("deadline"),
+    TIMESTAMP("timestamp"),
+    ISCOMPLETED("iscompleted"),
+    FREQUENCY("frequency"),
+    TAG("tag"),
+    UNKNOWN("?");
 
     String key;
 
@@ -12,21 +17,9 @@ public enum Attribute {
     Attribute() {
     }
 
-    Attribute getValue(String attribute) {
-        switch (attribute) {
-        case "deadline":
-            return DEADLINE;
-        case "timestamp":
-            return TIMESTAMP;
-        case "iscompleted":
-            return ISCOMPLETED;
-        case "frequency":
-            return FREQUENCY;
-        case "tag":
-            return TAG;
-        default:
-            return UNKNOWN;
-        }
+    @Override
+    public String toString() {
+        return key;
     }
 
 }
