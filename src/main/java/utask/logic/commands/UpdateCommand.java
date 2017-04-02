@@ -9,7 +9,7 @@ import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.UniqueTagList;
-import utask.model.task.Attributes;
+import utask.model.task.Attribute;
 import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
 import utask.model.task.EditTaskDescriptor;
@@ -50,7 +50,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
 
     private final int filteredTaskListIndex;
     private final EditTaskDescriptor editTaskDescriptor;
-    private final ArrayList<Attributes> attributeToRemove;
+    private final ArrayList<Attribute> attributeToRemove;
 
     private ReadOnlyTask taskToEdit;
     private Task editedTask;
@@ -66,7 +66,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     public UpdateCommand(int filteredTaskListIndex,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Attributes> attributeToRemove) {
+            ArrayList<Attribute> attributeToRemove) {
         assert filteredTaskListIndex > 0;
         assert editTaskDescriptor != null;
         assert attributeToRemove != null;
@@ -116,7 +116,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static Task createEditedTask(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Attributes> attributeToRemove) {
+            ArrayList<Attribute> attributeToRemove) {
         assert taskToEdit != null;
 
         Name updatedName = editTaskDescriptor.getName()
@@ -157,10 +157,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static Deadline updateOrRemoveDeadline(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Attributes> attributeToRemove) {
+            ArrayList<Attribute> attributeToRemove) {
         Deadline updatedDeadline = editTaskDescriptor.getDeadline()
                 .orElseGet(taskToEdit::getDeadline);
-        if (attributeToRemove.contains(Attributes.DEADLINE)) {
+        if (attributeToRemove.contains(Attribute.DEADLINE)) {
             updatedDeadline = Deadline.getEmptyDeadline();
         }
         return updatedDeadline;
@@ -174,10 +174,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static Timestamp updateOrRemoveTimestamp(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Attributes> attributeToRemove) {
+            ArrayList<Attribute> attributeToRemove) {
         Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
                 .orElseGet(taskToEdit::getTimestamp);
-        if (attributeToRemove.contains(Attributes.TIMESTAMP)) {
+        if (attributeToRemove.contains(Attribute.TIMESTAMP)) {
             updatedTimestamp = Timestamp.getEmptyTimestamp();
         }
         return updatedTimestamp;
@@ -191,10 +191,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static Frequency updateOrRemoveFrequency(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Attributes> attributeToRemove) {
+            ArrayList<Attribute> attributeToRemove) {
         Frequency updatedFrequency = editTaskDescriptor.getFrequency()
                 .orElseGet(taskToEdit::getFrequency);
-        if (attributeToRemove.contains(Attributes.FREQUENCY)) {
+        if (attributeToRemove.contains(Attribute.FREQUENCY)) {
             updatedFrequency = Frequency.getEmptyFrequency();
         }
         return updatedFrequency;
@@ -208,10 +208,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static UniqueTagList updateOrRemoveUniqueTagList(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Attributes> attributeToRemove) {
+            ArrayList<Attribute> attributeToRemove) {
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
                 .orElseGet(taskToEdit::getTags);
-        if (attributeToRemove.contains(Attributes.TAG)) {
+        if (attributeToRemove.contains(Attribute.TAG)) {
             updatedTags = new UniqueTagList();
         }
         return updatedTags;

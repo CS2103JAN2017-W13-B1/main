@@ -1,18 +1,18 @@
 package utask.model.task;
 //@@author A0138423J
-public enum Attributes {
+public enum Attribute {
     DEADLINE, TIMESTAMP, ISCOMPLETED, FREQUENCY, TAG, UNKNOWN;
 
     String key;
 
-    Attributes(String key) {
+    Attribute(String key) {
         this.key = key;
     }
 
-    Attributes() {
+    Attribute() {
     }
 
-    Attributes getValue(String attribute) {
+    Attribute getValue(String attribute) {
         switch (attribute) {
         case "deadline":
             return DEADLINE;
