@@ -26,8 +26,8 @@ import utask.model.task.EditTaskDescriptor;
  * Parses input arguments and creates a new EditCommand object
  */
 // @@author A0138423J
-public class EditCommandParser {
-
+public class UpdateCommandParser {
+    final String remove = "-";
     /**
      * Parses the given {@code String} of arguments in the context of the
      * EditCommand and returns an EditCommand object for execution.
@@ -57,28 +57,28 @@ public class EditCommandParser {
             editTaskDescriptor.setDeadline(ParserUtil
                     .parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
             if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_DEADLINE).equals("-")) {
+                if (argsTokenizer.tryGet(PREFIX_DEADLINE).equals(remove)) {
                     attributesToRemove.add(Attribute.DEADLINE);
                 }
             }
             editTaskDescriptor.setTimeStamp(ParserUtil
                     .parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
             if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_TIMESTAMP).equals("-")) {
+                if (argsTokenizer.tryGet(PREFIX_TIMESTAMP).equals(remove)) {
                     attributesToRemove.add(Attribute.TIMESTAMP);
                 }
             }
             editTaskDescriptor.setTags(parseTagsForEdit(
                     ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
             if (!argsTokenizer.tryGet(PREFIX_TAG).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_TAG).equals("-")) {
+                if (argsTokenizer.tryGet(PREFIX_TAG).equals(remove)) {
                     attributesToRemove.add(Attribute.TAG);
                 }
             }
             editTaskDescriptor.setFrequency(ParserUtil
                     .parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
             if (!argsTokenizer.tryGet(PREFIX_FREQUENCY).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_FREQUENCY).equals("-")) {
+                if (argsTokenizer.tryGet(PREFIX_FREQUENCY).equals(remove)) {
                     attributesToRemove.add(Attribute.FREQUENCY);
                 }
             }
