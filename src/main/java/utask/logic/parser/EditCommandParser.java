@@ -19,7 +19,9 @@ import utask.logic.commands.Command;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.model.tag.UniqueTagList;
+import utask.model.task.Attributes;
 import utask.model.task.EditTaskDescriptor;
+import utask.model.task.EnumAttributes;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -47,7 +49,6 @@ public class EditCommandParser {
                     MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }
         // creates list of int to store to indicate which attribute to remove
-        // 0 : Deadline, 1 : Timestamp, 2 : Tags, 3 : Frequency
         ArrayList<String> attributesToRemove = new ArrayList<String>();
 
         EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
@@ -58,28 +59,28 @@ public class EditCommandParser {
                     .parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
             if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_DEADLINE).equals("-")) {
-                    attributesToRemove.add("deadline");
+                    attributesToRemove.add(new EnumAttributes(Attributes.DEADLINE).whichAttribute());
                 }
             }
             editTaskDescriptor.setTimeStamp(ParserUtil
                     .parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
             if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_TIMESTAMP).equals("-")) {
-                    attributesToRemove.add("timestamp");
+                    attributesToRemove.add(new EnumAttributes(Attributes.TIMESTAMP).whichAttribute());
                 }
             }
             editTaskDescriptor.setTags(parseTagsForEdit(
                     ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
             if (!argsTokenizer.tryGet(PREFIX_TAG).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_TAG).equals("-")) {
-                    attributesToRemove.add("tag");
+                    attributesToRemove.add(new EnumAttributes(Attributes.TAG).whichAttribute());
                 }
             }
             editTaskDescriptor.setFrequency(ParserUtil
                     .parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
             if (!argsTokenizer.tryGet(PREFIX_FREQUENCY).isEmpty()) {
                 if (argsTokenizer.tryGet(PREFIX_FREQUENCY).equals("-")) {
-                    attributesToRemove.add("frequency");
+                    attributesToRemove.add(new EnumAttributes(Attributes.FREQUENCY).whichAttribute());
                 }
             }
             editTaskDescriptor.setIsCompleted(ParserUtil

@@ -9,9 +9,11 @@ import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.UniqueTagList;
+import utask.model.task.Attributes;
 import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
 import utask.model.task.EditTaskDescriptor;
+import utask.model.task.EnumAttributes;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
@@ -60,8 +62,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      * @param editTaskDescriptor
      *            details to edit the task with
      * @param attributeToRemove
-     *            list <int> of attributes to be removed
-     *            0 : Deadline, 1 : Timestamp, 2 : Tag, 3 : Frequency
+     *            list <String> of attributes to be removed
      */
     public UpdateCommand(int filteredTaskListIndex,
             EditTaskDescriptor editTaskDescriptor,
@@ -74,7 +75,6 @@ public class UpdateCommand extends Command implements ReversibleCommand {
         this.filteredTaskListIndex = filteredTaskListIndex - 1;
         this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
         this.attributeToRemove = attributeToRemove;
-        System.out.println(attributeToRemove.toString());
     }
 
     //@@author A0138423J
@@ -160,7 +160,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             ArrayList<String> attributeToRemove) {
         Deadline updatedDeadline = editTaskDescriptor.getDeadline()
                 .orElseGet(taskToEdit::getDeadline);
-        if (attributeToRemove.contains("deadline")) {
+        if (attributeToRemove.contains(new EnumAttributes(Attributes.DEADLINE).whichAttribute())) {
             updatedDeadline = Deadline.getEmptyDeadline();
         }
         return updatedDeadline;
@@ -177,7 +177,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             ArrayList<String> attributeToRemove) {
         Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
                 .orElseGet(taskToEdit::getTimestamp);
-        if (attributeToRemove.contains("timestamp")) {
+        if (attributeToRemove.contains(new EnumAttributes(Attributes.TIMESTAMP).whichAttribute())) {
             updatedTimestamp = Timestamp.getEmptyTimestamp();
         }
         return updatedTimestamp;
@@ -194,7 +194,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             ArrayList<String> attributeToRemove) {
         Frequency updatedFrequency = editTaskDescriptor.getFrequency()
                 .orElseGet(taskToEdit::getFrequency);
-        if (attributeToRemove.contains("frequency")) {
+        if (attributeToRemove.contains(new EnumAttributes(Attributes.FREQUENCY).whichAttribute())) {
             updatedFrequency = Frequency.getEmptyFrequency();
         }
         return updatedFrequency;
@@ -211,7 +211,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             ArrayList<String> attributeToRemove) {
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
                 .orElseGet(taskToEdit::getTags);
-        if (attributeToRemove.contains("tag")) {
+        if (attributeToRemove.contains(new EnumAttributes(Attributes.TAG).whichAttribute())) {
             updatedTags = new UniqueTagList();
         }
         return updatedTags;
