@@ -19,7 +19,7 @@ public class EarliestFirstComparator implements Comparator<ReadOnlyTask> {
             try {
                 preTime = (int) (o1.getDeadline().getDate().getTime() / 1000);
             } catch (ParseException e) {
-                assert false: "Should never come to this catch";
+                assert false : "Should never come to this catch";
             }
         }
 
@@ -28,7 +28,7 @@ public class EarliestFirstComparator implements Comparator<ReadOnlyTask> {
             try {
                 nextTime = (int) (o2.getDeadline().getDate().getTime() / 1000);
             } catch (ParseException e) {
-                assert false: "Should never come to this catch";
+                assert false : "Should never come to this catch";
             }
         }
 
