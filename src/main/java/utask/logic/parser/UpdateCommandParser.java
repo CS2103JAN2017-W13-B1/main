@@ -28,7 +28,6 @@ import utask.model.task.EditTaskDescriptor;
  */
 // @@author A0138423J
 public class UpdateCommandParser {
-    final String remove = "-";
 
     /**
      * Parses the given {@code String} of arguments in the context of the
