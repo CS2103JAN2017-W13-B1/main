@@ -1,8 +1,9 @@
+//@@author A0139996A
 package utask.ui.helper;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -23,7 +24,7 @@ public class UTFilteredListHelperTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @After
+    @Before
     public void clearState() {
         UTFilteredListHelper.getInstance().clear();
     }

@@ -1,3 +1,4 @@
+//@@author A0139996A
 package utask.ui.helper;
 
 import org.junit.Rule;
@@ -22,15 +23,13 @@ public class TagColorHelperTest {
     @Test
     public void get_Color_ByIndexAtFirstItem() {
         int validSize = 0;
-
-        String colorValue = TagColorHelper.getColorValueFromIndex(validSize);
+        TagColorHelper.getColorValueFromIndex(validSize);
     }
 
     @Test
     public void get_Color_ByIndexAtBounds() {
         int validSize = TagColorHelper.getSize() - 1;
-
-        String colorValue = TagColorHelper.getColorValueFromIndex(validSize);
+        TagColorHelper.getColorValueFromIndex(validSize);
     }
 
     @Test
@@ -60,7 +59,7 @@ public class TagColorHelperTest {
     @Test
     public void get_InvalidColor_ByNegativeIndex() {
         thrown.expect(AssertionError.class);
-        String colorValue = TagColorHelper.getColorValueFromIndex(-1);
+        TagColorHelper.getColorValueFromIndex(-1);
     }
 
     @Test
@@ -68,12 +67,12 @@ public class TagColorHelperTest {
         int invalidSize = TagColorHelper.getSize();
 
         thrown.expect(AssertionError.class);
-        String colorValue = TagColorHelper.getColorValueFromIndex(invalidSize);
+        TagColorHelper.getColorValueFromIndex(invalidSize);
     }
 
     @Test
     public void get_InvalidColor_WithUnknownName() {
         thrown.expect(IllegalArgumentException.class);
-        String redColorValue = TagColorHelper.getColorValueFromName("GOLD");
+        TagColorHelper.getColorValueFromName("GOLD");
     }
 }
