@@ -55,4 +55,14 @@ public class ParserUtilTest {
         expectedList.add(1);
         assertEquals (expectedList, indexList.get());
     }
+
+    @Test
+    public void is_path_valid() {
+        if (System.getProperty("os.name").contains("Windows")) {
+            assertTrue (ParserUtil.isPathValid("C:\\path\\to\\destination"));
+        } else {
+            assertTrue (ParserUtil.isPathValid("/Users/James/Desktop"));
+        }
+
+    }
 }
