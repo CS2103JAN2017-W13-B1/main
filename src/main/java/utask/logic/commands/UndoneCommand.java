@@ -5,26 +5,30 @@ import java.util.List;
 import utask.commons.core.Messages;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
+import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.IsCompleted;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
+import utask.staging.ui.helper.UTFilteredListHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
  */
 // @@author A0138423J
-public class UndoneCommand extends Command {
+public class UndoneCommand extends Command implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "undone";
+    public static final String COMMAND_FORMAT = "[INDEX (must be a positive integer)]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the status to uncompleted of the task specified "
             + "by the index number used in the last task listing. \n"
-            + "Parameters: INDEX (must be a positive integer) " + "Example: "
-            + COMMAND_WORD + " 1";
+            + "Parameters: " + COMMAND_FORMAT
+            + "Example: " + COMMAND_WORD
+            + COMMAND_WORD + " ";
 
     public static final String MESSAGE_UNDONE_TASK_SUCCESS = "Undone task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";
@@ -32,6 +36,7 @@ public class UndoneCommand extends Command {
     public static final String MESSAGE_INTERNAL_ERROR = "Error updating isCompleted attribute.";
 
     private final int filteredTaskListIndex;
+    private ReadOnlyTask taskToEdit;
 
     /**
      * @param filteredTaskListIndex
@@ -47,15 +52,26 @@ public class UndoneCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
-        if (filteredTaskListIndex >= lastShownList.size()) {
+//        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+//
+//        if (filteredTaskListIndex >= lastShownList.size()) {
+//            throw new CommandException(
+//                    Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+//        }
+        if (filteredTaskListIndex >= model.getTotalSizeOfLists()) {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
+        List<ReadOnlyTask> lastShownList = UTFilteredListHelper.getInstance()
+                .getUnderlyingListByIndex(filteredTaskListIndex);
+
+        int actualInt = UTFilteredListHelper.getInstance()
+                .getActualIndexFromDisplayIndex(filteredTaskListIndex);
+
+
         // Retrieve task to be edited from save file
-        ReadOnlyTask taskToEdit = lastShownList.get(filteredTaskListIndex);
+        taskToEdit = lastShownList.get(actualInt);
 
         // If value already true, inform the user
         if ("false".equals(taskToEdit.getIsCompleted().toString())) {
@@ -66,6 +82,7 @@ public class UndoneCommand extends Command {
         try {
             temp = createEditedTask(taskToEdit, false);
             model.updateTask(filteredTaskListIndex, temp);
+            model.addUndoCommand(this);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
@@ -99,5 +116,16 @@ public class UndoneCommand extends Command {
         }
 
         return placeholder;
+    }
+
+    //@@author A0139996A
+    @Override
+    public void undo() throws Exception {
+        createEditedTask(taskToEdit, true);
+    }
+
+    @Override
+    public void redo() throws Exception {
+        createEditedTask(taskToEdit, false);
     }
 }

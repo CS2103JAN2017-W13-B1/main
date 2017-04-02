@@ -11,15 +11,18 @@ import utask.logic.commands.Command;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.DoneCommand;
-import utask.logic.commands.EditCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.ListCommand;
+import utask.logic.commands.RedoCommand;
+import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
+import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
+import utask.logic.commands.UpdateCommand;
 
 /**
  * Parses user input.
@@ -50,7 +53,7 @@ public class Parser {
         case CreateCommand.COMMAND_WORD:
             return new CreateCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
+        case UpdateCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
         case DoneCommand.COMMAND_WORD:
@@ -82,6 +85,15 @@ public class Parser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommandParser().parse(arguments);
+
+        case RedoCommand.COMMAND_WORD:
+            return new RedoCommandParser().parse(arguments);
+
+        case RelocateCommand.COMMAND_WORD:
+            return new RelocateCommandParser().parse(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);

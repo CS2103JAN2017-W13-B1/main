@@ -3,6 +3,7 @@ package utask.model;
 import java.util.Set;
 
 import utask.commons.core.UnmodifiableObservableList;
+import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
@@ -43,8 +44,26 @@ public interface Model {
     void updateTask(int filteredTaskListIndex, ReadOnlyTask editedTask)
             throws UniqueTaskList.DuplicateTaskException;
 
+    void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
+            throws UniqueTaskList.DuplicateTaskException;
+
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
+
+    /** Returns the filtered list of due tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getDueFilteredTaskList();
+
+    /** Returns the filtered list of today tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getTodayFilteredTaskList();
+
+    /** Returns the filtered list of tomorrow tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getTomorrowFilteredTaskList();
+
+    /** Returns the filtered list of future tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getFutureFilteredTaskList();
+
+    /** Returns the filtered list of floating tasks */
+    UnmodifiableObservableList<ReadOnlyTask> getFloatingFilteredTaskList();
 
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
@@ -52,7 +71,30 @@ public interface Model {
     /** Updates the filter of the filtered task list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
 
+    /** Updates the filter of the filtered task list to filter by the given keywords*/
+    void updateFilteredTaskListByKeywords(String keywords);
+
     /** Updates the filter of the sorted task list to sort by the given keywords*/
     void sortFilteredTaskList(String keywords);
 
+    /** Gets total size of tasks in underlying lists of listviews*/
+    int getTotalSizeOfLists();
+
+    /** Adds last executed command to reversible stack */
+    void addUndoCommand(ReversibleCommand undoCommand);
+
+    /** Adds last executed command to reversible stack */
+    ReversibleCommand getUndoCommand();
+
+    /** Gets size of reversible commands in reversible stack*/
+    int getUndoCommandCount();
+
+    /** Adds last executed command to reversible stack */
+    void addRedoCommand(ReversibleCommand redoCommand);
+
+    /** Adds last executed command to reversible stack */
+    ReversibleCommand getRedoCommand();
+
+    /** Gets size of reversible commands in reversible stack*/
+    int getRedoCommandCount();
 }

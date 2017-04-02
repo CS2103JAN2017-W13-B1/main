@@ -63,6 +63,22 @@ public class IsCompleted {
         return "".equals(value);
     }
 
+    public boolean isCompleted() {
+        if (value.isEmpty()) {
+            return false;
+        }
+
+        boolean isComp = false;
+
+        try {
+            isComp = checkValue(value);
+        } catch (IllegalValueException e) {
+            assert false : "IsCompleted has already been validated. This should not happen";
+        }
+
+        return isComp;
+    }
+
     /**
      * Returns true if a given string is a valid true/false or yes/no.
      */

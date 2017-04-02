@@ -3,12 +3,13 @@ package utask.logic.commands;
 import utask.model.UTask;
 
 /**
- * Clears the address book.
+ * Clears the UTask.
  */
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String COMMAND_FORMAT = "";
+    public static final String MESSAGE_SUCCESS = "UTask has been cleared!";
 
 
     @Override

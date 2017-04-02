@@ -10,7 +10,7 @@ public class FloatingTask extends Task {
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyTask.
      */
     public FloatingTask(ReadOnlyTask source) {
         this(source.getName(), source.getFrequency(), source.getTags(),
@@ -19,15 +19,5 @@ public class FloatingTask extends Task {
 
     public void resetData(ReadOnlyTask replacement) {
         super.resetData(replacement);
-    }
-
-    @Override
-    public Deadline getDeadline() {
-        return Deadline.getEmptyDeadline();
-    }
-
-    @Override
-    public Timestamp getTimestamp() {
-        return Timestamp.getEmptyTimestamp();
     }
 }

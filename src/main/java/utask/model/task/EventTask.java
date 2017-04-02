@@ -17,7 +17,7 @@ public class EventTask extends Task {
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyTask.
      */
     public EventTask(ReadOnlyTask source) {
         this(source.getName(), source.getDeadline(), source.getTimestamp(),
@@ -54,8 +54,7 @@ public class EventTask extends Task {
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing
-        // your own
+        // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, deadline, timestamp, frequency, tags, isCompleted);
     }
 

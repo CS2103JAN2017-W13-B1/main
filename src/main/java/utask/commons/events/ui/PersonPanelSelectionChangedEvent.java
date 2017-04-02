@@ -8,9 +8,9 @@ import utask.model.task.ReadOnlyTask;
  */
 public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
-
     private final ReadOnlyTask newSelection;
 
+    //TODO: MARK FOR DELETION
     public PersonPanelSelectionChangedEvent(ReadOnlyTask newSelection) {
         this.newSelection = newSelection;
     }

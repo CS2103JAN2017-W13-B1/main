@@ -43,7 +43,7 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
     * [HiTask](#hitask)
 
 ## Introduction
-<!-- @@author A0148096W -->
+<!-- @@author A0138493W -->
 uTask is a task manager for advanced users to manage their daily tasks through keyboard commands. It is
 a java desktop application has a GUI implemented with JavaFX.
 
@@ -199,7 +199,6 @@ The `UI` component:
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-<!-- @@author A0148096W -->
 ### Logic component
 
 Author: Team-uTask

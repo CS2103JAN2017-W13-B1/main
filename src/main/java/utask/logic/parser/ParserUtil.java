@@ -1,5 +1,6 @@
 package utask.logic.parser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,7 +30,13 @@ public class ParserUtil {
 
     private static final Pattern INDEX_ARGS_FORMAT = Pattern
             .compile("(?<targetIndex>.+)");
-
+    private static final Pattern MULTI_INDEX_ARGS_FORMAT = Pattern
+            .compile("^(((?=[^0])\\d+)|((?=[^0])(\\d+))\\sto\\s((?=[^0])(\\d+)))"
+                    + "+(,*\\s*((?=[^0])\\d+|((?=[^0])(\\d+))\\sto\\s((?=[^0])(\\d+))))*$");
+    private static final Pattern WIN_PATH_FORMAT =
+            Pattern.compile("([a-zA-Z]:)?(\\\\[a-zA-Z0-9 _.-]+)+\\\\?");
+    private static final Pattern MAC_PATH_FORMAT =
+            Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
     /**
      * Returns the specified index in the {@code command} if it is a positive
      * unsigned integer Returns an {@code Optional.empty()} otherwise.
@@ -47,6 +54,68 @@ public class ParserUtil {
         return Optional.of(Integer.parseInt(index));
 
     }
+
+    //@@author A0138493W
+    /**
+     * Returns the indexes as a list in the {@code command} if it every index positive
+     * unsigned integer Returns an {@code Optional.empty()} otherwise.
+     */
+    public static Optional<List<Integer>> parseMultiIndex(String command) {
+        if (!isValidIndex(command.trim())) {
+            return Optional.empty();
+        }
+        String[] splittedStringIndexes = command.trim().replace(" ", "").split(",");
+        ArrayList<Integer> intIndexList = new ArrayList<Integer>();
+        for (String index : splittedStringIndexes) {
+            if (index.contains("to")) {
+                String[] range = index.split("to");
+                int start = Integer.parseInt(range[0]);
+                int end = Integer.parseInt(range[1]);
+                for (int i = start; i <= end; i++) {
+                    if (!intIndexList.contains(i)) {
+                        intIndexList.add(i);
+                    }
+                }
+            } else {
+                if (!intIndexList.contains(Integer.parseInt(index))) {
+                    intIndexList.add(Integer.parseInt(index));
+                }
+            }
+        }
+        return Optional.of(getReverseSortedList(intIndexList));
+    }
+
+    private static ArrayList<Integer> getReverseSortedList(ArrayList<Integer> intIndexList) {
+        Collections.sort(intIndexList);
+        Collections.reverse(intIndexList);
+        return intIndexList;
+    }
+
+    /**
+     * Returns true if a given string is a valid input string.
+     */
+    private static boolean isValidIndex(String command) {
+        assert command != null;
+        final Matcher matcher = MULTI_INDEX_ARGS_FORMAT.matcher(command.trim());
+        return matcher.matches();
+    }
+
+    /**
+     * Returns true if a given string is a valid path.
+     */
+    public static boolean isPathValid(String command) {
+        assert command != null;
+        String os = System.getProperty("os.name");
+        Matcher pathathMatcher = null;
+        if (os.contains("Windows")) {
+            pathathMatcher = WIN_PATH_FORMAT.matcher(command.trim());
+        } else {
+            pathathMatcher = MAC_PATH_FORMAT.matcher(command.trim());
+        }
+        return pathathMatcher.matches();
+    }
+
+    //author
 
     /**
      * Returns a new Set populated by all elements in the given list of strings

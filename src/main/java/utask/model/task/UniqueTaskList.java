@@ -36,8 +36,8 @@ public class UniqueTaskList implements Iterable<Task> {
      * Adds a task to the list.
      *
      * @throws DuplicateTaskException
-     *             if the task to add is a duplicate of an existing task in
-     *             the list.
+     *             if the task to add is a duplicate of an existing task in the
+     *             list.
      */
     public void add(Task toAdd) throws DuplicateTaskException {
         assert toAdd != null;
@@ -51,8 +51,9 @@ public class UniqueTaskList implements Iterable<Task> {
         return internalList;
     }
 
+    // @@author A0138423J
     /**
-     * Updates the task in the list at position {@code index} with
+     * Updates the task in the list held by {@code taskToUpdate} with
      * {@code editedTask}.
      *
      * @throws DuplicateTaskException
@@ -61,19 +62,29 @@ public class UniqueTaskList implements Iterable<Task> {
      * @throws IndexOutOfBoundsException
      *             if {@code index} < 0 or >= the size of the list.
      */
-    public void updateTask(int index, ReadOnlyTask editedTask)
+    public void updateTask(ReadOnlyTask readOnlyTaskToUpdate, ReadOnlyTask readOnlyEditedTask)
             throws DuplicateTaskException {
-        assert editedTask != null;
+        assert readOnlyTaskToUpdate != null;
+        assert readOnlyEditedTask != null;
 
-        Task taskToUpdate = internalList.get(index);
-        // TODO
-        // System.out.println("taskToUpdate class: " + taskToUpdate.getClass());
-        // System.out.println("editedTask class: " + editedTask.getClass());
+        // fetch index of task to update
+        int index = internalList.indexOf(readOnlyTaskToUpdate);
 
+        // casting ReadOnlyTask to Task
+        Task taskToUpdate = (Task) readOnlyTaskToUpdate;
+        Task editedTask = (Task) readOnlyEditedTask;
+
+        // if not same type of task and editedTask already in internalList
+        // throw DuplicateTaskException()
         if (!taskToUpdate.equals(editedTask)
                 && internalList.contains(editedTask)) {
             throw new DuplicateTaskException();
         }
+
+        // if taskToUpdate and editedTask are same class, then update
+        // taskToUpdate attributes
+        // else update internalList
+        // at index held by taskToUpdate with editedTask
         if (taskToUpdate.getClass().equals(editedTask.getClass())) {
             taskToUpdate.resetData(editedTask);
             internalList.set(index, taskToUpdate);
@@ -87,7 +98,43 @@ public class UniqueTaskList implements Iterable<Task> {
         // class.
         // Then, TaskCard should then bind its text labels to those observable
         // properties.
-        //internalList.set(index, taskToUpdate);
+        // internalList.set(index, taskToUpdate);
+    }
+
+    public void updateTask(int readOnlyTaskToUpdate, ReadOnlyTask readOnlyEditedTask)
+            throws DuplicateTaskException {
+        assert readOnlyTaskToUpdate >= 0;
+        assert readOnlyEditedTask != null;
+
+        // casting ReadOnlyTask to Task
+        Task taskToUpdate = internalList.get(readOnlyTaskToUpdate);
+        Task editedTask = (Task) readOnlyEditedTask;
+
+        // if not same type of task and editedTask already in internalList
+        // throw DuplicateTaskException()
+        if (!taskToUpdate.equals(editedTask)
+                && internalList.contains(editedTask)) {
+            throw new DuplicateTaskException();
+        }
+
+        // if taskToUpdate and editedTask are same class, then update
+        // taskToUpdate attributes
+        // else update internalList
+        // at index held by taskToUpdate with editedTask
+        if (taskToUpdate.getClass().equals(editedTask.getClass())) {
+            taskToUpdate.resetData(editedTask);
+            internalList.set(readOnlyTaskToUpdate, taskToUpdate);
+        } else {
+            internalList.set(readOnlyTaskToUpdate, (Task) editedTask);
+        }
+
+        // TODO: The code below is just a workaround to notify observers of the
+        // updated task.
+        // The right way is to implement observable properties in the Task
+        // class.
+        // Then, TaskCard should then bind its text labels to those observable
+        // properties.
+        // internalList.set(index, taskToUpdate);
     }
 
     /**

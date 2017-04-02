@@ -1,6 +1,11 @@
+//@@author A0138493W
 package utask.logic.commands;
 
 import java.util.Set;
+
+import utask.commons.core.EventsCenter;
+import utask.commons.core.Messages;
+import utask.staging.ui.events.FindRequestEvent;
 
 /**
  * Finds and lists all tasks in uTask who contains any of the argument keywords.
@@ -9,11 +14,13 @@ import java.util.Set;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_FORMAT = "KEYWORD [MORE_KEYWORDS]...";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks who contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks that contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " Monday";
+            + "Parameters: " + COMMAND_FORMAT + "\n"
+            + "Example: " + COMMAND_WORD + " Monday"
+            + "Press [ESC] to return";
 
     private final Set<String> keywords;
 
@@ -24,7 +31,9 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredTaskList(keywords);
-        return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+        EventsCenter.getInstance().post(new FindRequestEvent());
+        return new CommandResult(String.format(Messages.MESSAGE_SEARCH_RESULTS, keywords.toString(),
+                                                model.getFilteredTaskList().size()));
     }
 
 }

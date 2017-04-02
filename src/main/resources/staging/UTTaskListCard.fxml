@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author A0139996A -->
+
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="75.0" minHeight="75.0" minWidth="120.0" prefHeight="75.0" prefWidth="120.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox HBox.hgrow="NEVER">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+         <children>
+            <Label fx:id="lblId" alignment="TOP_CENTER" contentDisplay="TOP" minWidth="30.0" text="999" VBox.vgrow="NEVER">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <JFXCheckBox fx:id="chkDone" alignment="TOP_CENTER" contentDisplay="CENTER" focusTraversable="false" minWidth="30.0" mnemonicParsing="false" text="" textAlignment="CENTER" VBox.vgrow="NEVER">
+               <font>
+                  <Font size="1.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </JFXCheckBox>
+         </children>
+      </VBox>
+      <VBox HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="lblName" alignment="TOP_CENTER" contentDisplay="TOP" focusTraversable="false" graphicTextGap="0.0" text="Lorem ipsum dolor sit amet, ipsum harum sed ea, ne posse putent nam, mei et dicit quodsi. Brute eripuit explicari." wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <HBox fx:id="hbTagContainer" prefHeight="20.0">
+            <!--
+            <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="Important" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="0.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </Label>
+               </children>
+              -->
+            </HBox>
+            <Label fx:id="lblDate" styleClass="date" prefHeight="20.0" text=""/>
+         </children>
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

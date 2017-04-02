@@ -20,4 +20,18 @@ public interface Logic {
     /** Returns the filtered list of tasks */
     ObservableList<ReadOnlyTask> getFilteredTaskList();
 
+    /** Returns the filtered list of due tasks */
+    ObservableList<ReadOnlyTask> getDueFilteredTaskList();
+
+    /** Returns the filtered list of today tasks */
+    ObservableList<ReadOnlyTask> getTodayFilteredTaskList();
+
+    /** Returns the filtered list of due tasks */
+    ObservableList<ReadOnlyTask> getTomorrowFilteredTaskList();
+
+    /** Returns the filtered list of today tasks */
+    ObservableList<ReadOnlyTask> getFutureFilteredTaskList();
+
+    /** Returns the filtered list of today tasks */
+    ObservableList<ReadOnlyTask> getFloatingFilteredTaskList();
 }

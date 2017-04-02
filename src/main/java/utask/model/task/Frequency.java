@@ -17,6 +17,7 @@ public class Frequency {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String FREQUENCY_VALIDATION_REGEX = "[^\\s].*";
+    public static final String FREQUENCY_REMOVAL_VALIDATION_REGEX = "^[-]$";
 
     public final String value;
 

@@ -14,7 +14,7 @@ public class Config {
     private String appTitle = "uTask";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
-    private String uTaskFilePath = "data/utask.xml";
+    private String uTaskFilePath = getUTaskFilePath();
     private String uTaskName = "MyUTask";
 
 
@@ -43,6 +43,9 @@ public class Config {
     }
 
     public String getUTaskFilePath() {
+        if (uTaskFilePath == null) {
+            return "data/utask.xml";
+        }
         return uTaskFilePath;
     }
 
