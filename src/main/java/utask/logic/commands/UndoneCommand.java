@@ -1,18 +1,14 @@
 package utask.logic.commands;
 
-import java.util.List;
-
+import utask.commons.core.EventsCenter;
 import utask.commons.core.Messages;
+import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
+import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
-import utask.model.task.DeadlineTask;
-import utask.model.task.EventTask;
-import utask.model.task.FloatingTask;
-import utask.model.task.IsCompleted;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
-import utask.staging.ui.helper.UTFilteredListHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -37,95 +33,52 @@ public class UndoneCommand extends Command implements ReversibleCommand {
 
     private final int filteredTaskListIndex;
     private ReadOnlyTask taskToEdit;
+    private Task editedTask;
 
+    // @@author A0138423J
     /**
      * @param filteredTaskListIndex
      *            the index of the task in the filtered task list to edit
      */
     public UndoneCommand(int filteredTaskListIndex) {
         assert filteredTaskListIndex > 0;
-
         // converts filteredTaskListIndex from one-based to zero-based.
         this.filteredTaskListIndex = filteredTaskListIndex - 1;
-
     }
 
+    // @@author A0138423J
     @Override
     public CommandResult execute() throws CommandException {
-//        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-//
-//        if (filteredTaskListIndex >= lastShownList.size()) {
-//            throw new CommandException(
-//                    Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-//        }
         if (filteredTaskListIndex >= model.getTotalSizeOfLists()) {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        List<ReadOnlyTask> lastShownList = UTFilteredListHelper.getInstance()
-                .getUnderlyingListByIndex(filteredTaskListIndex);
-
-        int actualInt = UTFilteredListHelper.getInstance()
-                .getActualIndexFromDisplayIndex(filteredTaskListIndex);
-
-
         // Retrieve task to be edited from save file
-        taskToEdit = lastShownList.get(actualInt);
-
-        // If value already true, inform the user
-        if ("false".equals(taskToEdit.getIsCompleted().toString())) {
-            throw new CommandException(MESSAGE_DUPLICATE_STATUS);
-        }
-        Task temp = null;
-
+        taskToEdit = UpdateUtil.fetchTaskToEdit(filteredTaskListIndex);
+        editedTask = null;
         try {
-            temp = createEditedTask(taskToEdit, false);
-            model.updateTask(filteredTaskListIndex, temp);
+            editedTask = UpdateUtil.createEditedTask(taskToEdit, false);
+            model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
-        model.updateFilteredListToShowAll();
         return new CommandResult(
-                String.format(MESSAGE_UNDONE_TASK_SUCCESS, temp));
+                String.format(MESSAGE_UNDONE_TASK_SUCCESS, editedTask));
     }
 
-    /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
-     * edited with {@code editTaskDescriptor}.
-     */
-    private static Task createEditedTask(ReadOnlyTask taskToEdit, Boolean value)
-            throws IllegalValueException {
-        assert taskToEdit != null;
-        assert value != null;
-
-        // TODO
-        Task placeholder = null;
-        if (!taskToEdit.getDeadline().isEmpty() && !taskToEdit.getTimestamp().isEmpty()) {
-            placeholder = new EventTask(taskToEdit.getName(), taskToEdit.getDeadline(),
-                    taskToEdit.getTimestamp(), taskToEdit.getFrequency(), taskToEdit.getTags(),
-                    new IsCompleted(value.toString()));
-        } else if (!taskToEdit.getDeadline().isEmpty() && taskToEdit.getTimestamp().isEmpty()) {
-            placeholder = new DeadlineTask(taskToEdit.getName(), taskToEdit.getDeadline(),
-                    taskToEdit.getFrequency(), taskToEdit.getTags(),
-                    new IsCompleted(value.toString()));
-        } else if (taskToEdit.getDeadline().isEmpty() && taskToEdit.getTimestamp().isEmpty()) {
-            placeholder = new FloatingTask(taskToEdit.getName(), taskToEdit.getFrequency(), taskToEdit.getTags(),
-                    new IsCompleted(value.toString()));
-        }
-
-        return placeholder;
-    }
-
-    //@@author A0139996A
+    // @@author A0138423J
     @Override
     public void undo() throws Exception {
-        createEditedTask(taskToEdit, true);
+        model.updateTask(editedTask, taskToEdit);
     }
 
+    // @@author A0138423J
     @Override
     public void redo() throws Exception {
-        createEditedTask(taskToEdit, false);
+        model.updateTask(taskToEdit, editedTask);
+        EventsCenter.getInstance()
+                .post(new ShowTaskOfInterestEvent(editedTask));
     }
 }

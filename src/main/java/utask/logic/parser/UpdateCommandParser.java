@@ -1,6 +1,7 @@
 package utask.logic.parser;
 
 import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static utask.commons.util.UpdateUtil.TO_BE_REMOVED;
 import static utask.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static utask.logic.parser.CliSyntax.PREFIX_DONE;
 import static utask.logic.parser.CliSyntax.PREFIX_FREQUENCY;
@@ -18,14 +19,15 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.Command;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.UpdateCommand;
-import utask.logic.commands.UpdateCommand.EditTaskDescriptor;
 import utask.model.tag.UniqueTagList;
+import utask.model.task.Attribute;
+import utask.model.task.EditTaskDescriptor;
 
 /**
  * Parses input arguments and creates a new EditCommand object
  */
 // @@author A0138423J
-public class EditCommandParser {
+public class UpdateCommandParser {
 
     /**
      * Parses the given {@code String} of arguments in the context of the
@@ -43,12 +45,13 @@ public class EditCommandParser {
         Optional<Integer> index = preambleFields.get(0)
                 .flatMap(ParserUtil::parseIndex);
         if (!index.isPresent()) {
-            return new IncorrectCommand(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                            UpdateCommand.MESSAGE_USAGE));
         }
-        // creates list of int to store to indicate which attribute to remove
-        // 0 : Deadline, 1 : Timestamp, 2 : Tags, 3 : Frequency
-        ArrayList<String> attributesToRemove = new ArrayList<String>();
+        // creates list of Attributes to store to indicate which attribute to
+        // remove
+        ArrayList<Attribute> attributesToRemove = new ArrayList<Attribute>();
 
         EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
         try {
@@ -56,31 +59,30 @@ public class EditCommandParser {
                     ParserUtil.parseName(argsTokenizer.getValue(PREFIX_NAME)));
             editTaskDescriptor.setDeadline(ParserUtil
                     .parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
-            if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_DEADLINE).equals("-")) {
-                    attributesToRemove.add("deadline");
-                }
+            if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()
+                    && argsTokenizer.tryGet(PREFIX_DEADLINE)
+                            .equals(TO_BE_REMOVED)) {
+                attributesToRemove.add(Attribute.DEADLINE);
             }
             editTaskDescriptor.setTimeStamp(ParserUtil
                     .parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
-            if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_TIMESTAMP).equals("-")) {
-                    attributesToRemove.add("timestamp");
-                }
+            if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()
+                    && argsTokenizer.tryGet(PREFIX_TIMESTAMP)
+                            .equals(TO_BE_REMOVED)) {
+                attributesToRemove.add(Attribute.TIMESTAMP);
             }
             editTaskDescriptor.setTags(parseTagsForEdit(
                     ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
-            if (!argsTokenizer.tryGet(PREFIX_TAG).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_TAG).equals("-")) {
-                    attributesToRemove.add("tag");
-                }
+            if (!argsTokenizer.tryGet(PREFIX_TAG).isEmpty()
+                    && argsTokenizer.tryGet(PREFIX_TAG).equals(TO_BE_REMOVED)) {
+                attributesToRemove.add(Attribute.TAG);
             }
             editTaskDescriptor.setFrequency(ParserUtil
                     .parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
-            if (!argsTokenizer.tryGet(PREFIX_FREQUENCY).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_FREQUENCY).equals("-")) {
-                    attributesToRemove.add("frequency");
-                }
+            if (!argsTokenizer.tryGet(PREFIX_FREQUENCY).isEmpty()
+                    && argsTokenizer.tryGet(PREFIX_FREQUENCY)
+                            .equals(TO_BE_REMOVED)) {
+                attributesToRemove.add(Attribute.FREQUENCY);
             }
             editTaskDescriptor.setIsCompleted(ParserUtil
                     .parseIsCompleted(argsTokenizer.getValue(PREFIX_DONE)));
