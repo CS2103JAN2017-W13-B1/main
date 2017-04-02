@@ -70,7 +70,7 @@ Simply type in your command, and hit <kbd>Enter</kbd> to let μTask to do the he
 
 Double-click the file to start the app. The Graphic User Interface should appear in a few seconds.
    <img src="images/uTask_v0.3.jpg" width="600"><br>
-   
+
 ### 2.3. Using the Interface
 
 Type the command in the command box and press <kbd>Enter</kbd> to execute it. <br>
