@@ -1,4 +1,4 @@
-package utask.ui;
+package utask.ui.helper;
 
 import org.junit.Rule;
 import org.junit.Test;

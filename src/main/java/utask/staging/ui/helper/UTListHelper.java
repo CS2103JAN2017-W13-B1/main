@@ -59,6 +59,8 @@ public abstract class UTListHelper<T extends Collection<E>, E> {
     }
 
     protected void updateOffsetMap() {
+        assert lists.size() > 0 : "Incorrect usage. Add lists first before using methods";
+
         addToOffsetMap(lists.get(0), 0); //First list starts counting from 0
 
         if (lists.size() > 1) { //There's no point to refresh one list, otherwise
@@ -95,5 +97,12 @@ public abstract class UTListHelper<T extends Collection<E>, E> {
 
         assert false : "This line is suppose to be unreachable. Display Index provided was " + index;
         return null;
+    }
+
+    //Exposed for JUnit testing to remove state
+    //TODO: Use reflection to access this
+    public void clear() {
+        lists.clear();
+        offsetMap.clear();
     }
 }

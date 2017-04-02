@@ -12,7 +12,7 @@ import utask.model.task.FloatingTask;
 import utask.model.task.IsCompleted;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
-import utask.staging.ui.helper.UTFliterListHelper;
+import utask.staging.ui.helper.UTFilteredListHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -63,10 +63,10 @@ public class UndoneCommand extends Command implements ReversibleCommand {
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        List<ReadOnlyTask> lastShownList = UTFliterListHelper.getInstance()
-                .getUnderlyingListOfListViewByIndex(filteredTaskListIndex);
+        List<ReadOnlyTask> lastShownList = UTFilteredListHelper.getInstance()
+                .getUnderlyingListByIndex(filteredTaskListIndex);
 
-        int actualInt = UTFliterListHelper.getInstance()
+        int actualInt = UTFilteredListHelper.getInstance()
                 .getActualIndexFromDisplayIndex(filteredTaskListIndex);
 
 

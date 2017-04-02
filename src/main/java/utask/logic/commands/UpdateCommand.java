@@ -22,7 +22,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList;
-import utask.staging.ui.helper.UTFliterListHelper;
+import utask.staging.ui.helper.UTFilteredListHelper;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -86,10 +86,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        List<ReadOnlyTask> lastShownList = UTFliterListHelper.getInstance()
-                .getUnderlyingListOfListViewByIndex(filteredTaskListIndex);
+        List<ReadOnlyTask> lastShownList = UTFilteredListHelper.getInstance()
+                .getUnderlyingListByIndex(filteredTaskListIndex);
 
-        int actualInt = UTFliterListHelper.getInstance()
+        int actualInt = UTFilteredListHelper.getInstance()
                 .getActualIndexFromDisplayIndex(filteredTaskListIndex);
 
         taskToEdit = lastShownList.get(actualInt);

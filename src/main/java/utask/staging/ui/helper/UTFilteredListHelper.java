@@ -13,16 +13,16 @@ import utask.model.task.ReadOnlyTask;
  * It provides an interface to simplify the manage of multiple underlying FliterList.
  *
  * */
-public class UTFliterListHelper extends UTListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
-    private static UTFliterListHelper instance = null;
+public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
+    private static UTFilteredListHelper instance = null;
 
-    private UTFliterListHelper() {
+    private UTFilteredListHelper() {
         EventsCenter.getInstance().registerHandler(this);
     }
 
-    public static UTFliterListHelper getInstance() {
+    public static UTFilteredListHelper getInstance() {
         if (instance == null) {
-            instance = new UTFliterListHelper();
+            instance = new UTFilteredListHelper();
         }
 
         return instance;
@@ -34,7 +34,7 @@ public class UTFliterListHelper extends UTListHelper<FilteredList<ReadOnlyTask>,
     }
 
     //Exposes function in a name that does not reveal actual implementation
-    public FilteredList<ReadOnlyTask> getUnderlyingListOfListViewByIndex(int index) {
+    public FilteredList<ReadOnlyTask> getUnderlyingListByIndex(int index) {
         return getActualListFromDisplayIndex(index);
     }
 
@@ -45,6 +45,7 @@ public class UTFliterListHelper extends UTListHelper<FilteredList<ReadOnlyTask>,
      *
      * */
     public int getActualIndexFromDisplayIndex(int index) {
+        assert index >= 0;
         FilteredList<ReadOnlyTask> lw = getActualListFromDisplayIndex(index);
         int actualInt = getActualIndexOfList(lw, index);
 
