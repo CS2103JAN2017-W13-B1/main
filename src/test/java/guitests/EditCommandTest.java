@@ -6,7 +6,6 @@ import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
-import utask.commons.core.Messages;
 import utask.logic.commands.UpdateCommand;
 import utask.model.tag.Tag;
 import utask.model.task.Deadline;
@@ -74,11 +73,11 @@ public class EditCommandTest extends UTaskGuiTest {
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
     }
 
-    @Test
-    public void edit_invalidPersonIndex_failure() {
-        commandBox.runCommand("update 8 /name Bobby");
-        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-    }
+//    @Test
+//    public void edit_invalidPersonIndex_failure() {
+//        commandBox.runCommand("update 8 /name Bobby");
+//        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+//    }
 
     @Test
     public void edit_noFieldsSpecified_failure() {

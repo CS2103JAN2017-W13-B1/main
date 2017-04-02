@@ -23,7 +23,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
-import utask.staging.ui.helper.UTFliterListHelper;
+import utask.staging.ui.helper.UTFilteredListHelper;
 
 /**
  * Represents the in-memory model of the UTask data.
@@ -70,7 +70,7 @@ public class ModelManager extends ComponentManager implements Model {
         futureTasks = getTasksFliteredListByAfterGivenDate(tomorrowDate);
         floatingTasks = getFloatingTaskFliteredListByEmptyDeadlineAndTimestamp();
 
-        UTFliterListHelper.getInstance().addList(dueTasks, todayTasks, tomorrowTasks, futureTasks, floatingTasks);
+        UTFilteredListHelper.getInstance().addList(dueTasks, todayTasks, tomorrowTasks, futureTasks, floatingTasks);
 
 //        UTFliterListHelper.getInstance().addList(dueTasks);
 //        UTFliterListHelper.getInstance().addList(todayTasks);
@@ -137,14 +137,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         uTask.removeTask(target);
-        UTFliterListHelper.getInstance().refresh();
+        UTFilteredListHelper.getInstance().refresh();
         indicateUTaskChanged();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         uTask.addTask(task);
-        UTFliterListHelper.getInstance().refresh();
+        UTFilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
         sortFilteredTaskList(userConfig);
         indicateUTaskChanged();
@@ -157,7 +157,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         int uTaskIndex = filteredTasks.getSourceIndex(filteredTaskListIndex);
         uTask.updateTask(uTaskIndex, editedTask);
-        UTFliterListHelper.getInstance().refresh();
+        UTFilteredListHelper.getInstance().refresh();
         indicateUTaskChanged();
     }
 
@@ -169,14 +169,14 @@ public class ModelManager extends ComponentManager implements Model {
         assert editedTask != null;
 
         uTask.updateTask(taskToEdit, editedTask);
-        UTFliterListHelper.getInstance().refresh();
+        UTFilteredListHelper.getInstance().refresh();
         indicateUTaskChanged();
     }
 
     /** Gets total size of tasks in underlying lists of listviews*/
     @Override
     public int getTotalSizeOfLists() {
-        return UTFliterListHelper.getInstance().getTotalSizeOfAllList();
+        return UTFilteredListHelper.getInstance().getTotalSizeOfAllList();
     }
     //@author
 

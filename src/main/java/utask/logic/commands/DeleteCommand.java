@@ -10,7 +10,7 @@ import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
-import utask.staging.ui.helper.UTFliterListHelper;
+import utask.staging.ui.helper.UTFilteredListHelper;
 
 /**
  * Deletes a task identified using it's last displayed index from the uTask.
@@ -47,9 +47,9 @@ public class DeleteCommand extends Command implements ReversibleCommand {
 
             //- 1 as helper method is using zero-based indexing
             List<ReadOnlyTask> lastShownList =
-                    UTFliterListHelper.getInstance().getUnderlyingListOfListViewByIndex(targetIndex - 1);
+                    UTFilteredListHelper.getInstance().getUnderlyingListByIndex(targetIndex - 1);
 
-            int actualInt = UTFliterListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
+            int actualInt = UTFilteredListHelper.getInstance().getActualIndexFromDisplayIndex(targetIndex - 1);
             taskToDelete = lastShownList.get(actualInt);
 
             //EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(taskToDelete));
