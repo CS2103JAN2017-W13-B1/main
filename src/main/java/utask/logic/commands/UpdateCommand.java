@@ -18,7 +18,7 @@ import utask.model.task.UniqueTaskList;
  * Edits the details of an existing task in the uTask.
  */
 
-//@@author A0138423J
+// @@author A0138423J
 public class UpdateCommand extends Command implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "update";
@@ -30,8 +30,8 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             + ": Edits the details of the task specified "
             + "by the index number used in the last task listing. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: " + COMMAND_FORMAT + "\n"
-            + "Example: " + COMMAND_WORD + " 1 /name do homework";
+            + "Parameters: " + COMMAND_FORMAT + "\n" + "Example: "
+            + COMMAND_WORD + " 1 /name do homework";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -66,7 +66,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
         this.attributeToRemove = attributeToRemove;
     }
 
-    //@@author A0138423J
+    // @@author A0138423J
     @Override
     public CommandResult execute() throws CommandException {
         if (filteredTaskListIndex >= model.getTotalSizeOfLists()) {
@@ -84,7 +84,8 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
 
-            EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(editedTask));
+            EventsCenter.getInstance()
+                    .post(new ShowTaskOfInterestEvent(editedTask));
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
@@ -96,11 +97,15 @@ public class UpdateCommand extends Command implements ReversibleCommand {
     @Override
     public void undo() throws Exception {
         model.updateTask(editedTask, taskToEdit);
+        EventsCenter.getInstance()
+                .post(new ShowTaskOfInterestEvent(taskToEdit));
     }
 
     // @@author A0138423J
     @Override
     public void redo() throws Exception {
         model.updateTask(taskToEdit, editedTask);
+        EventsCenter.getInstance()
+                .post(new ShowTaskOfInterestEvent(editedTask));
     }
 }
