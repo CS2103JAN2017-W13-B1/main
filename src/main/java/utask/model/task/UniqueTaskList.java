@@ -62,8 +62,8 @@ public class UniqueTaskList implements Iterable<Task> {
      * @throws IndexOutOfBoundsException
      *             if {@code index} < 0 or >= the size of the list.
      */
-    public void updateTask(ReadOnlyTask readOnlyTaskToUpdate, ReadOnlyTask readOnlyEditedTask)
-            throws DuplicateTaskException {
+    public void updateTask(ReadOnlyTask readOnlyTaskToUpdate,
+            ReadOnlyTask readOnlyEditedTask) throws DuplicateTaskException {
         assert readOnlyTaskToUpdate != null;
         assert readOnlyEditedTask != null;
 
@@ -81,16 +81,8 @@ public class UniqueTaskList implements Iterable<Task> {
             throw new DuplicateTaskException();
         }
 
-        // if taskToUpdate and editedTask are same class, then update
-        // taskToUpdate attributes
-        // else update internalList
-        // at index held by taskToUpdate with editedTask
-        if (taskToUpdate.getClass().equals(editedTask.getClass())) {
-            taskToUpdate.resetData(editedTask);
-            internalList.set(index, taskToUpdate);
-        } else {
-            internalList.set(index, (Task) editedTask);
-        }
+        // replace original task with modified task
+        internalList.set(index, (Task) editedTask);
 
         // TODO: The code below is just a workaround to notify observers of the
         // updated task.
@@ -101,8 +93,8 @@ public class UniqueTaskList implements Iterable<Task> {
         // internalList.set(index, taskToUpdate);
     }
 
-    public void updateTask(int readOnlyTaskToUpdate, ReadOnlyTask readOnlyEditedTask)
-            throws DuplicateTaskException {
+    public void updateTask(int readOnlyTaskToUpdate,
+            ReadOnlyTask readOnlyEditedTask) throws DuplicateTaskException {
         assert readOnlyTaskToUpdate >= 0;
         assert readOnlyEditedTask != null;
 
