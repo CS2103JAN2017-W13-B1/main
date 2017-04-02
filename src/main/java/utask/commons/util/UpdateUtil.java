@@ -24,6 +24,7 @@ import utask.staging.ui.helper.UTFilteredListHelper;
 public class UpdateUtil {
 
     public static final String TO_BE_REMOVED = "-";
+
     // @@author A0138423J
     public static ReadOnlyTask fetchTaskToEdit(int index) {
         List<ReadOnlyTask> lastShownList = UTFilteredListHelper.getInstance()
@@ -36,10 +37,10 @@ public class UpdateUtil {
 
     // @@author A0138423J
     /**
-     * Checks {@code updatedDeadline} and {@code updatedTimestamp} to see whether
-     * both are empty or not. Subsequently, based on the statuses, this method will
-     * determine the type of editedTask. Types are pre-set based on following set:
-     * 2 : Event Task, 1: Deadline Task, 0 : Floating Task
+     * Checks {@code updatedDeadline} and {@code updatedTimestamp} to see
+     * whether both are empty or not. Subsequently, based on the statuses, this
+     * method will determine the type of editedTask. Types are pre-set based on
+     * following set: 2 : Event Task, 1: Deadline Task, 0 : Floating Task
      */
     public static TaskType typeOfEditedTask(Deadline updatedDeadline,
             Timestamp updatedTimestamp) {
@@ -97,7 +98,7 @@ public class UpdateUtil {
         return placeholder;
     }
 
-    //@@author A0138423J
+    // @@author A0138423J
     /**
      * Creates and returns a {@code Task} with the details of {@code taskToEdit}
      * edited with {@code editTaskDescriptor}.
@@ -123,16 +124,17 @@ public class UpdateUtil {
         Task placeholder = null;
         switch (typeOfEditedTask(updatedDeadline, updatedTimestamp)) {
         case FLOATING:
-            placeholder = new FloatingTask(updatedName, updatedFrequency, updatedTags,
-                    updatedIsCompleted);
+            placeholder = new FloatingTask(updatedName, updatedFrequency,
+                    updatedTags, updatedIsCompleted);
             break;
         case DEADLINE:
-            placeholder =  new DeadlineTask(updatedName, updatedDeadline,
+            placeholder = new DeadlineTask(updatedName, updatedDeadline,
                     updatedFrequency, updatedTags, updatedIsCompleted);
             break;
         case EVENT:
-            placeholder = new EventTask(updatedName, updatedDeadline, updatedTimestamp,
-                    updatedFrequency, updatedTags, updatedIsCompleted);
+            placeholder = new EventTask(updatedName, updatedDeadline,
+                    updatedTimestamp, updatedFrequency, updatedTags,
+                    updatedIsCompleted);
             break;
         default:
             System.out.println("Error checking edited task type!");
@@ -142,9 +144,10 @@ public class UpdateUtil {
 
     // @@author A0138423J
     /**
-     * Creates and returns a {@code Deadline} with the details of {@code taskToEdit}
-     * edited with {@code editTaskDescriptor}. Subsequently, checks to see if there
-     * is any need to remove Deadline field based on {@code attributeToRemove}
+     * Creates and returns a {@code Deadline} with the details of
+     * {@code taskToEdit} edited with {@code editTaskDescriptor}. Subsequently,
+     * checks to see if there is any need to remove Deadline field based on
+     * {@code attributeToRemove}
      */
     private static Deadline updateOrRemoveDeadline(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
@@ -159,9 +162,10 @@ public class UpdateUtil {
 
     // @@author A0138423J
     /**
-     * Creates and returns a {@code Timestamp} with the details of {@code taskToEdit}
-     * edited with {@code editTaskDescriptor}. Subsequently, checks to see if there
-     * is any need to remove Timestamp field based on {@code attributeToRemove}
+     * Creates and returns a {@code Timestamp} with the details of
+     * {@code taskToEdit} edited with {@code editTaskDescriptor}. Subsequently,
+     * checks to see if there is any need to remove Timestamp field based on
+     * {@code attributeToRemove}
      */
     private static Timestamp updateOrRemoveTimestamp(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
@@ -176,9 +180,10 @@ public class UpdateUtil {
 
     // @@author A0138423J
     /**
-     * Creates and returns a {@code UniqueTagList} with the details of {@code taskToEdit}
-     * edited with {@code editTaskDescriptor}. Subsequently, checks to see if there
-     * is any need to remove UniqueTagList field based on {@code attributeToRemove}
+     * Creates and returns a {@code UniqueTagList} with the details of
+     * {@code taskToEdit} edited with {@code editTaskDescriptor}. Subsequently,
+     * checks to see if there is any need to remove UniqueTagList field based on
+     * {@code attributeToRemove}
      */
     private static Frequency updateOrRemoveFrequency(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
@@ -193,12 +198,13 @@ public class UpdateUtil {
 
     // @@author A0138423J
     /**
-     * Creates and returns a {@code UniqueTagList} with the details of {@code taskToEdit}
-     * edited with {@code editTaskDescriptor}. Subsequently, checks to see if there
-     * is any need to remove UniqueTagList field based on {@code attributeToRemove}
+     * Creates and returns a {@code UniqueTagList} with the details of
+     * {@code taskToEdit} edited with {@code editTaskDescriptor}. Subsequently,
+     * checks to see if there is any need to remove UniqueTagList field based on
+     * {@code attributeToRemove}
      */
-    private static UniqueTagList updateOrRemoveUniqueTagList(ReadOnlyTask taskToEdit,
-            EditTaskDescriptor editTaskDescriptor,
+    private static UniqueTagList updateOrRemoveUniqueTagList(
+            ReadOnlyTask taskToEdit, EditTaskDescriptor editTaskDescriptor,
             ArrayList<Attribute> attributeToRemove) {
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
                 .orElseGet(taskToEdit::getTags);
