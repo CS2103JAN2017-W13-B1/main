@@ -18,8 +18,8 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.Command;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.UpdateCommand;
-import utask.logic.commands.UpdateCommand.EditTaskDescriptor;
 import utask.model.tag.UniqueTagList;
+import utask.model.task.EditTaskDescriptor;
 
 /**
  * Parses input arguments and creates a new EditCommand object
