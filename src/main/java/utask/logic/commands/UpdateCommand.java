@@ -13,7 +13,6 @@ import utask.model.task.Attributes;
 import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
 import utask.model.task.EditTaskDescriptor;
-import utask.model.task.EnumAttributes;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
@@ -21,6 +20,7 @@ import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
+import utask.model.task.TaskType;
 import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList;
 import utask.staging.ui.helper.UTFilteredListHelper;
@@ -50,7 +50,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
 
     private final int filteredTaskListIndex;
     private final EditTaskDescriptor editTaskDescriptor;
-    private final ArrayList<String> attributeToRemove;
+    private final ArrayList<Attributes> attributeToRemove;
 
     private ReadOnlyTask taskToEdit;
     private Task editedTask;
@@ -66,7 +66,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     public UpdateCommand(int filteredTaskListIndex,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<String> attributeToRemove) {
+            ArrayList<Attributes> attributeToRemove) {
         assert filteredTaskListIndex > 0;
         assert editTaskDescriptor != null;
         assert attributeToRemove != null;
@@ -116,7 +116,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static Task createEditedTask(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<String> attributeToRemove) {
+            ArrayList<Attributes> attributeToRemove) {
         assert taskToEdit != null;
 
         Name updatedName = editTaskDescriptor.getName()
@@ -134,13 +134,13 @@ public class UpdateCommand extends Command implements ReversibleCommand {
 
         Task placeholder = null;
         switch (typeOfEditedTask(updatedDeadline, updatedTimestamp)) {
-        case (0):
+        case FLOATING:
             return new FloatingTask(updatedName, updatedFrequency, updatedTags,
                     updatedIsCompleted);
-        case (1):
+        case DEADLINE:
             return new DeadlineTask(updatedName, updatedDeadline,
                     updatedFrequency, updatedTags, updatedIsCompleted);
-        case (2):
+        case EVENT:
             return new EventTask(updatedName, updatedDeadline, updatedTimestamp,
                     updatedFrequency, updatedTags, updatedIsCompleted);
         default:
@@ -157,10 +157,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static Deadline updateOrRemoveDeadline(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<String> attributeToRemove) {
+            ArrayList<Attributes> attributeToRemove) {
         Deadline updatedDeadline = editTaskDescriptor.getDeadline()
                 .orElseGet(taskToEdit::getDeadline);
-        if (attributeToRemove.contains(new EnumAttributes(Attributes.DEADLINE).whichAttribute())) {
+        if (attributeToRemove.contains(Attributes.DEADLINE)) {
             updatedDeadline = Deadline.getEmptyDeadline();
         }
         return updatedDeadline;
@@ -174,10 +174,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static Timestamp updateOrRemoveTimestamp(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<String> attributeToRemove) {
+            ArrayList<Attributes> attributeToRemove) {
         Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
                 .orElseGet(taskToEdit::getTimestamp);
-        if (attributeToRemove.contains(new EnumAttributes(Attributes.TIMESTAMP).whichAttribute())) {
+        if (attributeToRemove.contains(Attributes.TIMESTAMP)) {
             updatedTimestamp = Timestamp.getEmptyTimestamp();
         }
         return updatedTimestamp;
@@ -191,10 +191,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static Frequency updateOrRemoveFrequency(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<String> attributeToRemove) {
+            ArrayList<Attributes> attributeToRemove) {
         Frequency updatedFrequency = editTaskDescriptor.getFrequency()
                 .orElseGet(taskToEdit::getFrequency);
-        if (attributeToRemove.contains(new EnumAttributes(Attributes.FREQUENCY).whichAttribute())) {
+        if (attributeToRemove.contains(Attributes.FREQUENCY)) {
             updatedFrequency = Frequency.getEmptyFrequency();
         }
         return updatedFrequency;
@@ -208,10 +208,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      */
     private static UniqueTagList updateOrRemoveUniqueTagList(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<String> attributeToRemove) {
+            ArrayList<Attributes> attributeToRemove) {
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
                 .orElseGet(taskToEdit::getTags);
-        if (attributeToRemove.contains(new EnumAttributes(Attributes.TAG).whichAttribute())) {
+        if (attributeToRemove.contains(Attributes.TAG)) {
             updatedTags = new UniqueTagList();
         }
         return updatedTags;
@@ -224,7 +224,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
      * determine the type of editedTask. Types are pre-set based on following set:
      * 2 : Event Task, 1: Deadline Task, 0 : Floating Task
      */
-    private static int typeOfEditedTask(Deadline updatedDeadline,
+    private static TaskType typeOfEditedTask(Deadline updatedDeadline,
             Timestamp updatedTimestamp) {
         Boolean isDeadlineEmpty = false;
         if (updatedDeadline.equals(Deadline.getEmptyDeadline())) {
@@ -235,13 +235,13 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             isTimestampEmpty = true;
         }
         if (!isDeadlineEmpty && !isTimestampEmpty) {
-            return 2;
+            return TaskType.EVENT;
         } else if (!isDeadlineEmpty && isTimestampEmpty) {
-            return 1;
+            return TaskType.DEADLINE;
         } else if (isDeadlineEmpty && isTimestampEmpty) {
-            return 0;
+            return TaskType.FLOATING;
         }
-        return -1;
+        return TaskType.UNKNOWN;
     }
 
     @Override
