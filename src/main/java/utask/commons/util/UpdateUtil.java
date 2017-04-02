@@ -22,6 +22,8 @@ import utask.staging.ui.helper.UTFilteredListHelper;
 
 // @@author A0138423J
 public class UpdateUtil {
+
+    public static final String TO_BE_REMOVED = "-";
     // @@author A0138423J
     public static ReadOnlyTask fetchTaskToEdit(int index) {
         List<ReadOnlyTask> lastShownList = UTFilteredListHelper.getInstance()
@@ -69,23 +71,25 @@ public class UpdateUtil {
         assert taskToEdit != null;
         assert value != null;
 
-        // TODO
         Task placeholder = null;
         switch (typeOfEditedTask(taskToEdit.getDeadline(),
                 taskToEdit.getTimestamp())) {
         case FLOATING:
-            return new FloatingTask(taskToEdit.getName(),
+            placeholder = new FloatingTask(taskToEdit.getName(),
                     taskToEdit.getFrequency(), taskToEdit.getTags(),
                     new IsCompleted(value.toString()));
+            break;
         case DEADLINE:
-            return new DeadlineTask(taskToEdit.getName(),
+            placeholder = new DeadlineTask(taskToEdit.getName(),
                     taskToEdit.getDeadline(), taskToEdit.getFrequency(),
                     taskToEdit.getTags(), new IsCompleted(value.toString()));
+            break;
         case EVENT:
-            return new EventTask(taskToEdit.getName(),
+            placeholder = new EventTask(taskToEdit.getName(),
                     taskToEdit.getDeadline(), taskToEdit.getTimestamp(),
                     taskToEdit.getFrequency(), taskToEdit.getTags(),
                     new IsCompleted(value.toString()));
+            break;
         default:
             System.out.println("Error checking edited task type!");
         }
@@ -119,14 +123,17 @@ public class UpdateUtil {
         Task placeholder = null;
         switch (typeOfEditedTask(updatedDeadline, updatedTimestamp)) {
         case FLOATING:
-            return new FloatingTask(updatedName, updatedFrequency, updatedTags,
+            placeholder = new FloatingTask(updatedName, updatedFrequency, updatedTags,
                     updatedIsCompleted);
+            break;
         case DEADLINE:
-            return new DeadlineTask(updatedName, updatedDeadline,
+            placeholder =  new DeadlineTask(updatedName, updatedDeadline,
                     updatedFrequency, updatedTags, updatedIsCompleted);
+            break;
         case EVENT:
-            return new EventTask(updatedName, updatedDeadline, updatedTimestamp,
+            placeholder = new EventTask(updatedName, updatedDeadline, updatedTimestamp,
                     updatedFrequency, updatedTags, updatedIsCompleted);
+            break;
         default:
             System.out.println("Error checking edited task type!");
         }

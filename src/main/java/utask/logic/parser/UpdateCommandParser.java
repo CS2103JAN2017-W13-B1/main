@@ -1,6 +1,7 @@
 package utask.logic.parser;
 
 import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static utask.commons.util.UpdateUtil.TO_BE_REMOVED;
 import static utask.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static utask.logic.parser.CliSyntax.PREFIX_DONE;
 import static utask.logic.parser.CliSyntax.PREFIX_FREQUENCY;
@@ -28,6 +29,7 @@ import utask.model.task.EditTaskDescriptor;
 // @@author A0138423J
 public class UpdateCommandParser {
     final String remove = "-";
+
     /**
      * Parses the given {@code String} of arguments in the context of the
      * EditCommand and returns an EditCommand object for execution.
@@ -44,10 +46,12 @@ public class UpdateCommandParser {
         Optional<Integer> index = preambleFields.get(0)
                 .flatMap(ParserUtil::parseIndex);
         if (!index.isPresent()) {
-            return new IncorrectCommand(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                            UpdateCommand.MESSAGE_USAGE));
         }
-        // creates list of Attributes to store to indicate which attribute to remove
+        // creates list of Attributes to store to indicate which attribute to
+        // remove
         ArrayList<Attribute> attributesToRemove = new ArrayList<Attribute>();
 
         EditTaskDescriptor editTaskDescriptor = new EditTaskDescriptor();
@@ -56,31 +60,30 @@ public class UpdateCommandParser {
                     ParserUtil.parseName(argsTokenizer.getValue(PREFIX_NAME)));
             editTaskDescriptor.setDeadline(ParserUtil
                     .parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
-            if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_DEADLINE).equals(remove)) {
-                    attributesToRemove.add(Attribute.DEADLINE);
-                }
+            if (!argsTokenizer.tryGet(PREFIX_DEADLINE).isEmpty()
+                    && argsTokenizer.tryGet(PREFIX_DEADLINE)
+                            .equals(TO_BE_REMOVED)) {
+                attributesToRemove.add(Attribute.DEADLINE);
             }
             editTaskDescriptor.setTimeStamp(ParserUtil
                     .parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
-            if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_TIMESTAMP).equals(remove)) {
-                    attributesToRemove.add(Attribute.TIMESTAMP);
-                }
+            if (!argsTokenizer.tryGet(PREFIX_TIMESTAMP).isEmpty()
+                    && argsTokenizer.tryGet(PREFIX_TIMESTAMP)
+                            .equals(TO_BE_REMOVED)) {
+                attributesToRemove.add(Attribute.TIMESTAMP);
             }
             editTaskDescriptor.setTags(parseTagsForEdit(
                     ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
-            if (!argsTokenizer.tryGet(PREFIX_TAG).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_TAG).equals(remove)) {
-                    attributesToRemove.add(Attribute.TAG);
-                }
+            if (!argsTokenizer.tryGet(PREFIX_TAG).isEmpty()
+                    && argsTokenizer.tryGet(PREFIX_TAG).equals(TO_BE_REMOVED)) {
+                attributesToRemove.add(Attribute.TAG);
             }
             editTaskDescriptor.setFrequency(ParserUtil
                     .parseFrequency(argsTokenizer.getValue(PREFIX_FREQUENCY)));
-            if (!argsTokenizer.tryGet(PREFIX_FREQUENCY).isEmpty()) {
-                if (argsTokenizer.tryGet(PREFIX_FREQUENCY).equals(remove)) {
-                    attributesToRemove.add(Attribute.FREQUENCY);
-                }
+            if (!argsTokenizer.tryGet(PREFIX_FREQUENCY).isEmpty()
+                    && argsTokenizer.tryGet(PREFIX_FREQUENCY)
+                            .equals(TO_BE_REMOVED)) {
+                attributesToRemove.add(Attribute.FREQUENCY);
             }
             editTaskDescriptor.setIsCompleted(ParserUtil
                     .parseIsCompleted(argsTokenizer.getValue(PREFIX_DONE)));
