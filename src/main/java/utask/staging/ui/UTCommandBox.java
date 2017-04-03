@@ -88,7 +88,7 @@ public class UTCommandBox extends StagingUiPart<Region> {
 
         if (!input.trim().isEmpty()) {
             input = (input.toLowerCase().split(" "))[0];
-            String suggestion = SuggestionHelper.getInputSuggestionOfPreamble(input);
+            String suggestion = SuggestionHelper.getInstance().getInputSuggestionOfPreamble(input);
             lblSuggestion.setText(suggestion);
         } else {
             lblSuggestion.setText("");

@@ -79,7 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
 //        UTFliterListHelper.getInstance().addList(futureTasks);
 //        UTFliterListHelper.getInstance().addList(floatingTasks);
 
-        UTFilteredListHelper.getInstance().addList(filteredTasks);
+        UTFilteredListHelper.getInstance().addFindFilteredList(filteredTasks);
 
         userConfig = Model.SORT_ORDER_DEFAULT;
         sortFilteredTaskList(userConfig);

@@ -1,6 +1,7 @@
 //@@author A0139996A
 package utask.staging.ui.helper;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -10,7 +11,6 @@ import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.UTFindTaskOverlay;
 
 /*
  * UTListHelper uses facade and singleton pattern
@@ -18,11 +18,15 @@ import utask.staging.ui.UTFindTaskOverlay;
  *
  * */
 public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
+    private static final Logger logger = LogsCenter.getLogger(UTFilteredListHelper.class);
+    private static final String NAMED_LIST_FIND_FILTERED_LIST = "FindFilteredList";
+
     private static UTFilteredListHelper instance = null;
     private boolean isFindOverlayShowing = false;
-    private static final Logger logger = LogsCenter.getLogger(UTFilteredListHelper.class);
+    private final HashMap<String, FilteredList<ReadOnlyTask>> namedList;
 
     private UTFilteredListHelper() {
+        namedList = new HashMap<String, FilteredList<ReadOnlyTask>>();
         EventsCenter.getInstance().registerHandler(this);
     }
 
@@ -34,6 +38,27 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
         return instance;
     }
 
+    /*
+     * Currently unused publicly, so use private access modifier
+     * Uses Multiton pattern idea to retrieve named instance
+     *
+     * Named instance will not be chain processed with other lists
+     * */
+    private void addNamedList(String name, FilteredList<ReadOnlyTask> list) {
+        assert name != "" && !name.isEmpty() : "Name provided for NamedList is invalid";
+        assert list != null : "NamedList cannot be null";
+
+        namedList.put(name, list);
+    }
+
+    public void addFindFilteredList(FilteredList<ReadOnlyTask> list) {
+        addNamedList(NAMED_LIST_FIND_FILTERED_LIST, list);
+    }
+
+    private FilteredList<ReadOnlyTask> getFindFilteredList() {
+        return namedList.get(NAMED_LIST_FIND_FILTERED_LIST);
+    }
+
     //Exposes function in a name that does not reveal actual implementation
     public void refresh() {
         updateOffsetMap();
@@ -42,9 +67,8 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
     //Exposes function in a name that does not reveal actual implementation
     public FilteredList<ReadOnlyTask> getUnderlyingListByIndex(int index) {
         if (isFindOverlayShowing) {
-            //TODO: Use Multiton
             logger.info("FindOverlay is showing");
-            return lists.get(lists.size() - 1);
+            return getFindFilteredList();
         }
         return getActualListFromDisplayIndex(index);
     }
@@ -59,6 +83,7 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
         assert index >= 0;
 
         if (isFindOverlayShowing) {
+            logger.info("FindOverlay is showing");
             return index; //WYSIWYG
         }
 
@@ -80,7 +105,8 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
 
         if (isFindOverlayShowing) {
             //TODO: Use Multiton
-            return lists.get(lists.size() - 1).size();
+            FilteredList<ReadOnlyTask> list = getFindFilteredList();
+            return list.size();
         }
 
         int totalSize = 0;
