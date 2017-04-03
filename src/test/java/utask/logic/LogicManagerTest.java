@@ -562,7 +562,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_sort_AToZ_order() throws Exception {
+    public void execute_sort_ascendingAlphabeticalOrder() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task second = helper.generateTaskWithName("beta");
@@ -582,7 +582,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_sort_ZToA_order() throws Exception {
+    public void execute_sort_descendingAlphabeticalOrder() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task second = helper.generateTaskWithName("beta");
@@ -602,7 +602,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_sort_earliest_first_order() throws Exception {
+    public void execute_sort_earliestDeadlineOrder() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task second = helper.generateDeadlineTask("task 1", "160317");
@@ -622,7 +622,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_sort_latest_first_order() throws Exception {
+    public void execute_sort_latestDeadlineOrder() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task second = helper.generateDeadlineTask("task 1", "160317");
@@ -642,7 +642,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_sort_tag_order() throws Exception {
+    public void execute_sort_tagOrder() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task second = helper.generateTaskwithTags("task 1",
