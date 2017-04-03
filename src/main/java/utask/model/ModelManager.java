@@ -7,11 +7,11 @@ import java.util.Stack;
 import java.util.logging.Logger;
 
 import javafx.collections.transformation.FilteredList;
-import utask.commons.comparators.AToZComparator;
-import utask.commons.comparators.EarliestFirstComparator;
-import utask.commons.comparators.LatestFirstComparator;
-import utask.commons.comparators.TagComparator;
-import utask.commons.comparators.ZToAComparator;
+import utask.commons.comparators.AscendingAlphabeticalComparator;
+import utask.commons.comparators.DescendingAlphabeticalComparator;
+import utask.commons.comparators.EarliestDeadlineComparator;
+import utask.commons.comparators.LatestDeadlineComparator;
+import utask.commons.comparators.TagsNameComparator;
 import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.UnmodifiableObservableList;
@@ -280,32 +280,32 @@ public class ModelManager extends ComponentManager implements Model {
         assert sortingOrder != null;
         switch(sortingOrder) {
         case "": //default sorting order
-            uTask.sortByComparator(new EarliestFirstComparator());
+            uTask.sortByComparator(new EarliestDeadlineComparator());
             setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_EARLIEST_FIRST:
-            uTask.sortByComparator(new EarliestFirstComparator());
+            uTask.sortByComparator(new EarliestDeadlineComparator());
             setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_LATEST_FIRST:
-            uTask.sortByComparator(new LatestFirstComparator());
+            uTask.sortByComparator(new LatestDeadlineComparator());
             setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_A_TO_Z:
-            uTask.sortByComparator(new AToZComparator());
+            uTask.sortByComparator(new AscendingAlphabeticalComparator());
             setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_Z_TO_A:
-            uTask.sortByComparator(new ZToAComparator());
+            uTask.sortByComparator(new DescendingAlphabeticalComparator());
             setUserConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_TAG:
-            uTask.sortByComparator(new TagComparator());
+            uTask.sortByComparator(new TagsNameComparator());
             setUserConfig(sortingOrder);
             break;
 
