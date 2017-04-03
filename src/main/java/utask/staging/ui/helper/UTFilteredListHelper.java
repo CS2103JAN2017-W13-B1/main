@@ -15,6 +15,7 @@ import utask.model.task.ReadOnlyTask;
  * */
 public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
     private static UTFilteredListHelper instance = null;
+    private boolean isFindOverlayShowing = false;
 
     private UTFilteredListHelper() {
         EventsCenter.getInstance().registerHandler(this);
@@ -35,6 +36,10 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
 
     //Exposes function in a name that does not reveal actual implementation
     public FilteredList<ReadOnlyTask> getUnderlyingListByIndex(int index) {
+        if (isFindOverlayShowing) {
+            //TODO: Use Multiton
+            return lists.get(lists.size() - 1);
+        }
         return getActualListFromDisplayIndex(index);
     }
 
@@ -46,6 +51,11 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
      * */
     public int getActualIndexFromDisplayIndex(int index) {
         assert index >= 0;
+
+        if (isFindOverlayShowing) {
+            return index; //WYSIWYG
+        }
+
         FilteredList<ReadOnlyTask> lw = getActualListFromDisplayIndex(index);
         int actualInt = getActualIndexOfList(lw, index);
 
@@ -62,6 +72,11 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
         assert(lists.size() > 0) :
             this.getClass() + " was used for the first time. Please add a ListView before calling this method";
 
+        if (isFindOverlayShowing) {
+            //TODO: Use Multiton
+            return lists.get(lists.size() - 1).size();
+        }
+
         int totalSize = 0;
 
         for (FilteredList<ReadOnlyTask> lv : lists) {
@@ -69,6 +84,10 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
         }
 
         return totalSize;
+    }
+
+    public void setIfFindOverlayShowing(boolean isShowing) {
+        isFindOverlayShowing = isShowing;
     }
 
     @Subscribe

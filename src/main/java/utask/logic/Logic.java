@@ -34,4 +34,6 @@ public interface Logic {
 
     /** Returns the filtered list of today tasks */
     ObservableList<ReadOnlyTask> getFloatingFilteredTaskList();
+
+    void setIfFindOverlayShowing(boolean isShowing);
 }

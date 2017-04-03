@@ -175,6 +175,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
             closeTransitionEffect.setToX(SEARCHPANE_HIDDEN_X_POS);
             closeTransitionEffect.play();
             isSearchOverlayShown = false;
+            logic.setIfFindOverlayShowing(false);
         }
     }
 

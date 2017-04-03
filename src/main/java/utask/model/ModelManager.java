@@ -2,6 +2,7 @@ package utask.model;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Logger;
@@ -77,6 +78,8 @@ public class ModelManager extends ComponentManager implements Model {
 //        UTFliterListHelper.getInstance().addList(tomorrowTasks);
 //        UTFliterListHelper.getInstance().addList(futureTasks);
 //        UTFliterListHelper.getInstance().addList(floatingTasks);
+
+        UTFilteredListHelper.getInstance().addList(filteredTasks);
 
         userConfig = Model.SORT_ORDER_DEFAULT;
         sortFilteredTaskList(userConfig);
@@ -177,6 +180,22 @@ public class ModelManager extends ComponentManager implements Model {
     public int getTotalSizeOfLists() {
         return UTFilteredListHelper.getInstance().getTotalSizeOfAllList();
     }
+
+    @Override
+    public void setIfFindOverlayShowing(boolean isShowing) {
+        UTFilteredListHelper.getInstance().setIfFindOverlayShowing(isShowing);
+    }
+
+    //TODO: refractor
+    @Override
+    public List<ReadOnlyTask> getUnderlyingListByIndex(int displayIndex) {
+        return UTFilteredListHelper.getInstance().getUnderlyingListByIndex(displayIndex);
+    }
+
+    @Override
+    public int getActualIndexFromDisplayIndex(int displayIndex) {
+        return UTFilteredListHelper.getInstance().getActualIndexFromDisplayIndex(displayIndex);
+    }
     //@author
 
     private FilteredList<ReadOnlyTask> getTasksFliteredListByExactDate(Date date) {
@@ -253,6 +272,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(expression::satisfies);
     }
 
+    //TODO: Mark for deletion
     //@@author A0139996A
     public void updateFilteredTaskListByKeywords(String keywords) {
         filteredTasks.setPredicate(task -> {
