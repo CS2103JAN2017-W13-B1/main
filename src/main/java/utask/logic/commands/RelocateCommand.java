@@ -4,6 +4,9 @@ package utask.logic.commands;
 import utask.commons.core.EventsCenter;
 import utask.staging.ui.events.FileRelocateEvent;
 
+/**
+ * Relocate the data file by the given location from user input
+ */
 public class RelocateCommand extends Command {
 
     public static final String COMMAND_WORD = "relocate";
@@ -31,7 +34,11 @@ public class RelocateCommand extends Command {
      * Relocate Command for relocating back to default location.
      * */
     public RelocateCommand(String path, boolean isValidPath) {
-        this.destinationPath = path;
+        if (isValidPath) {
+            this.destinationPath = path;
+        } else {
+            this.destinationPath = "data";
+        }
     }
 
     @Override
