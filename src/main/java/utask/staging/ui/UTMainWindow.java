@@ -141,7 +141,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTResultDisplay(resultDisplayPlaceholder);
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
-        new UTSearchTaskOverlay(topPlaceholder, logic);
+        new UTFindTaskOverlay(topPlaceholder, logic);
     }
 
     public UTTodoListPanel getTodoListPanel() {

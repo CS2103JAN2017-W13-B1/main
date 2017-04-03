@@ -45,14 +45,27 @@ public class DeleteCommand extends Command implements ReversibleCommand {
             }
 
             //- 1 as helper method is using zero-based indexing
-            List<ReadOnlyTask> lastShownList = model.getUnderlyingListByIndex(targetIndex - 1);
+            List<ReadOnlyTask> list = model.getUnderlyingListByIndex(targetIndex - 1);
 
             int actualInt = model.getActualIndexFromDisplayIndex(targetIndex - 1);
-            taskToDelete = lastShownList.get(actualInt);
+            taskToDelete = list.get(actualInt);
 
-            //EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(taskToDelete));
-
-            System.out.println(taskToDelete);
+//            EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(taskToDelete));
+//
+//            Timeline timeline = new Timeline(new KeyFrame(
+//                    Duration.millis(250),
+//
+//                (e) -> {
+//                    try {
+//                        model.deleteTask(taskToDelete);
+//                        model.addUndoCommand(this);
+//                    } catch (TaskNotFoundException pnfe) {
+//                        assert false : "The target task cannot be missing";
+//                    }
+//                }
+//            ));
+//
+//            timeline.play();
 
             try {
                 model.deleteTask(taskToDelete);

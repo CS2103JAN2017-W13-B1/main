@@ -1,12 +1,16 @@
 //@@author A0139996A
 package utask.staging.ui.helper;
 
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.transformation.FilteredList;
 import utask.commons.core.EventsCenter;
+import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.model.task.ReadOnlyTask;
+import utask.staging.ui.UTFindTaskOverlay;
 
 /*
  * UTListHelper uses facade and singleton pattern
@@ -16,6 +20,7 @@ import utask.model.task.ReadOnlyTask;
 public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
     private static UTFilteredListHelper instance = null;
     private boolean isFindOverlayShowing = false;
+    private static final Logger logger = LogsCenter.getLogger(UTFilteredListHelper.class);
 
     private UTFilteredListHelper() {
         EventsCenter.getInstance().registerHandler(this);
@@ -38,6 +43,7 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
     public FilteredList<ReadOnlyTask> getUnderlyingListByIndex(int index) {
         if (isFindOverlayShowing) {
             //TODO: Use Multiton
+            logger.info("FindOverlay is showing");
             return lists.get(lists.size() - 1);
         }
         return getActualListFromDisplayIndex(index);

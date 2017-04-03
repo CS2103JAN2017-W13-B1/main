@@ -20,16 +20,17 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.FindRequestEvent;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 
-public class UTSearchTaskOverlay extends StagingUiPart<Region> {
+public class UTFindTaskOverlay extends StagingUiPart<Region> {
 
-    private static final Logger logger = LogsCenter.getLogger(UTSearchTaskOverlay.class);
-    private static final String FXML = "UTSearchTaskOverlay.fxml";
+    private static final Logger logger = LogsCenter.getLogger(UTFindTaskOverlay.class);
+    private static final String FXML = "UTFindTaskOverlay.fxml";
 
     private static final int SEARCHPANE_HIDDEN_X_POS = -3000;
     private final TranslateTransition openTransitionEffect = new TranslateTransition(new Duration(350), getRoot());
@@ -70,7 +71,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     private FilteredList<ReadOnlyTask> filteredData;
     private Logic logic;
 
-    public UTSearchTaskOverlay(Pane parent, Logic logic) {
+    public UTFindTaskOverlay(Pane parent, Logic logic) {
         super(FXML);
 
         assert(parent != null && logic != null);
@@ -153,14 +154,14 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
         });
     }
 
-    public void delete() {
-        ReadOnlyTask remove = searchTable.getSelectionModel().getSelectedItem();
-
-        if (remove != null) {
-            masterData.remove(remove);
-            //TODO: Do actual remove
-        }
-    }
+//    public void delete() {
+//        ReadOnlyTask remove = searchTable.getSelectionModel().getSelectedItem();
+//
+//        if (remove != null) {
+//            masterData.remove(remove);
+//            //TODO: Do actual remove
+//        }
+//    }
 
     public void openIfSearchIsNotShowing() {
         if (!isSearchOverlayShown) {
@@ -190,5 +191,12 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     private void handleKeyboardEscapeKeyPressedEvent(KeyboardEscapeKeyPressedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         closeIfSearchIsShowing();
+    }
+
+    @Subscribe
+    public void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent event) {
+        if (isSearchOverlayShown) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        }
     }
 }

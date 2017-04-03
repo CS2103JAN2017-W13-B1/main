@@ -12,6 +12,7 @@ import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.events.ui.ShowTaskOfInterestEvent;
+import utask.commons.events.ui.UIClearListSelectionEvent;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 
@@ -143,20 +144,29 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
     }
 
     @Subscribe
-    public void handleTaskListPanelSelectionChangedEvent(TaskListPanelSelectionChangedEvent e) {
+    public void handleTaskListPanelSelectionChangedEvent(TaskListPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         clearSelectionOfAllListViews();
-        ListView<ReadOnlyTask> sender = e.getSender();
-        sender.getSelectionModel().select(e.getNewSelection());
+        ListView<ReadOnlyTask> sender = event.getSender();
+        sender.getSelectionModel().select(event.getNewSelection());
     }
 
     @Subscribe
     public void handleUTaskChangedEvent(UTaskChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updateListViews();
     }
 
     @Subscribe
     public void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         int displayIndex = getDisplayedIndexFromReadOnlyTask(event.task);
         scrollTo(displayIndex);
+    }
+
+    @Subscribe
+    public void handleUIClearListSelectionEvent(UIClearListSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearSelectionOfAllListViews();
     }
 }
