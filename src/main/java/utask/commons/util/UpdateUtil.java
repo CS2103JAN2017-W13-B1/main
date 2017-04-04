@@ -27,6 +27,7 @@ public class UpdateUtil {
 
     // @@author A0138423J
     public static ReadOnlyTask fetchTaskToEdit(int index) {
+        assert index >= 0;
         List<ReadOnlyTask> lastShownList = UTFilteredListHelper.getInstance()
                 .getUnderlyingListByIndex(index);
         int actualInt = UTFilteredListHelper.getInstance()
@@ -40,10 +41,13 @@ public class UpdateUtil {
      * Checks {@code updatedDeadline} and {@code updatedTimestamp} to see
      * whether both are empty or not. Subsequently, based on the statuses, this
      * method will determine the type of editedTask. Types are pre-set based on
-     * following set: 2 : Event Task, 1: Deadline Task, 0 : Floating Task
+     * Enum {@code TaskType}
      */
     public static TaskType typeOfEditedTask(Deadline updatedDeadline,
             Timestamp updatedTimestamp) {
+        assert updatedDeadline != null;
+        assert updatedTimestamp != null;
+
         Boolean isDeadlineEmpty = false;
         if (updatedDeadline.equals(Deadline.getEmptyDeadline())) {
             isDeadlineEmpty = true;
@@ -92,9 +96,8 @@ public class UpdateUtil {
                     new Status(value.toString()));
             break;
         default:
-            System.out.println("Error checking edited task type!");
+            assert false : "Should never come to this default";
         }
-
         return placeholder;
     }
 
@@ -107,9 +110,13 @@ public class UpdateUtil {
             EditTaskDescriptor editTaskDescriptor,
             ArrayList<Attribute> attributeToRemove) {
         assert taskToEdit != null;
+        assert editTaskDescriptor != null;
+        assert attributeToRemove != null;
 
         Name updatedName = editTaskDescriptor.getName()
                 .orElseGet(taskToEdit::getName);
+        Status updatedIsCompleted = editTaskDescriptor.getStatus()
+                .orElseGet(taskToEdit::getStatus);
         Deadline updatedDeadline = updateOrRemoveDeadline(taskToEdit,
                 editTaskDescriptor, attributeToRemove);
         Timestamp updatedTimestamp = updateOrRemoveTimestamp(taskToEdit,
@@ -118,8 +125,6 @@ public class UpdateUtil {
                 editTaskDescriptor, attributeToRemove);
         UniqueTagList updatedTags = updateOrRemoveUniqueTagList(taskToEdit,
                 editTaskDescriptor, attributeToRemove);
-        Status updatedIsCompleted = editTaskDescriptor.getStatus()
-                .orElseGet(taskToEdit::getStatus);
 
         Task placeholder = null;
         switch (typeOfEditedTask(updatedDeadline, updatedTimestamp)) {
@@ -137,7 +142,7 @@ public class UpdateUtil {
                     updatedIsCompleted);
             break;
         default:
-            System.out.println("Error checking edited task type!");
+            assert false : "Should never come to this default";
         }
         return placeholder;
     }
@@ -152,6 +157,10 @@ public class UpdateUtil {
     private static Deadline updateOrRemoveDeadline(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
             ArrayList<Attribute> attributeToRemove) {
+        assert taskToEdit != null;
+        assert editTaskDescriptor != null;
+        assert attributeToRemove != null;
+
         Deadline updatedDeadline = editTaskDescriptor.getDeadline()
                 .orElseGet(taskToEdit::getDeadline);
         if (attributeToRemove.contains(Attribute.DEADLINE)) {
@@ -170,6 +179,10 @@ public class UpdateUtil {
     private static Timestamp updateOrRemoveTimestamp(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
             ArrayList<Attribute> attributeToRemove) {
+        assert taskToEdit != null;
+        assert editTaskDescriptor != null;
+        assert attributeToRemove != null;
+
         Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
                 .orElseGet(taskToEdit::getTimestamp);
         if (attributeToRemove.contains(Attribute.TIMESTAMP)) {
@@ -188,6 +201,10 @@ public class UpdateUtil {
     private static Frequency updateOrRemoveFrequency(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
             ArrayList<Attribute> attributeToRemove) {
+        assert taskToEdit != null;
+        assert editTaskDescriptor != null;
+        assert attributeToRemove != null;
+
         Frequency updatedFrequency = editTaskDescriptor.getFrequency()
                 .orElseGet(taskToEdit::getFrequency);
         if (attributeToRemove.contains(Attribute.FREQUENCY)) {
@@ -206,6 +223,10 @@ public class UpdateUtil {
     private static UniqueTagList updateOrRemoveUniqueTagList(
             ReadOnlyTask taskToEdit, EditTaskDescriptor editTaskDescriptor,
             ArrayList<Attribute> attributeToRemove) {
+        assert taskToEdit != null;
+        assert editTaskDescriptor != null;
+        assert attributeToRemove != null;
+
         UniqueTagList updatedTags = editTaskDescriptor.getTags()
                 .orElseGet(taskToEdit::getTags);
         if (attributeToRemove.contains(Attribute.TAG)) {
