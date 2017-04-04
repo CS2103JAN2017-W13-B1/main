@@ -573,11 +573,11 @@ public class LogicManagerTest {
                 third);
         List<Task> expectedList = helper.generateTaskList(first, second, third,
                 fourth);
-        UTask expectedAB = helper.generateUTask(expectedList);
+        UTask expectedUT = helper.generateUTask(expectedList);
 
         // prepare task list state
         helper.addToModel(model, fourTasks);
-        assertCommandSuccess("sort az", SortCommand.MESSAGE_SUCCESS, expectedAB,
+        assertCommandSuccess("sort az", SortCommand.MESSAGE_SUCCESS, expectedUT,
                 expectedList);
     }
 
@@ -593,11 +593,11 @@ public class LogicManagerTest {
                 third);
         List<Task> expectedList = helper.generateTaskList(fourth, third, second,
                 first);
-        UTask expectedAB = helper.generateUTask(expectedList);
+        UTask expectedUT = helper.generateUTask(expectedList);
 
         // prepare task list state
         helper.addToModel(model, fourTasks);
-        assertCommandSuccess("sort za", SortCommand.MESSAGE_SUCCESS, expectedAB,
+        assertCommandSuccess("sort za", SortCommand.MESSAGE_SUCCESS, expectedUT,
                 expectedList);
     }
 
@@ -613,11 +613,11 @@ public class LogicManagerTest {
                 third);
         List<Task> expectedList = helper.generateTaskList(first, second, third,
                 fourth);
-        UTask expectedAB = helper.generateUTask(expectedList);
+        UTask expectedUT = helper.generateUTask(expectedList);
 
         // prepare task list state
         helper.addToModel(model, fourTasks);
-        assertCommandSuccess("sort", SortCommand.MESSAGE_SUCCESS, expectedAB,
+        assertCommandSuccess("sort", SortCommand.MESSAGE_SUCCESS, expectedUT,
                 expectedList);
     }
 
@@ -633,12 +633,12 @@ public class LogicManagerTest {
                 third);
         List<Task> expectedList = helper.generateTaskList(fourth, third, second,
                 first);
-        UTask expectedAB = helper.generateUTask(expectedList);
+        UTask expectedUT = helper.generateUTask(expectedList);
 
         // prepare task list state
         helper.addToModel(model, fourTasks);
         assertCommandSuccess("sort latest", SortCommand.MESSAGE_SUCCESS,
-                expectedAB, expectedList);
+                expectedUT, expectedList);
     }
 
     @Test
@@ -657,12 +657,12 @@ public class LogicManagerTest {
                 third);
         List<Task> expectedList = helper.generateTaskList(first, second, third,
                 fourth);
-        UTask expectedAB = helper.generateUTask(expectedList);
+        UTask expectedUT = helper.generateUTask(expectedList);
 
         // prepare task list state
         helper.addToModel(model, fourTasks);
         assertCommandSuccess("sort tag", SortCommand.MESSAGE_SUCCESS,
-                expectedAB, expectedList);
+                expectedUT, expectedList);
     }
 
     /**
@@ -694,7 +694,7 @@ public class LogicManagerTest {
 
         List<Task> fourPersons = helper.generateTaskList(p1, pTarget1, p2,
                 pTarget2);
-        UTask expectedAB = helper.generateUTask(fourPersons);
+        UTask expectedUT = helper.generateUTask(fourPersons);
         List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2);
         helper.addToModel(model, fourPersons);
 
@@ -703,7 +703,7 @@ public class LogicManagerTest {
         assertCommandSuccess("find " + keyword,
                 String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
                         expectedList.size()),
-                expectedAB, expectedList);
+                expectedUT, expectedList);
     }
 
     @Test
@@ -715,7 +715,7 @@ public class LogicManagerTest {
         Task p4 = helper.generateTaskWithName("KEy sduauo");
 
         List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
-        UTask expectedAB = helper.generateUTask(fourPersons);
+        UTask expectedUT = helper.generateUTask(fourPersons);
         List<Task> expectedList = fourPersons;
         helper.addToModel(model, fourPersons);
 
@@ -724,7 +724,7 @@ public class LogicManagerTest {
         assertCommandSuccess("find " + keyword,
                 String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
                         expectedList.size()),
-                expectedAB, expectedList);
+                expectedUT, expectedList);
     }
 
     @Test
@@ -737,7 +737,7 @@ public class LogicManagerTest {
 
         List<Task> fourTasks = helper.generateTaskList(pTarget1, p1, pTarget2,
                 pTarget3);
-        UTask expectedAB = helper.generateUTask(fourTasks);
+        UTask expectedUT = helper.generateUTask(fourTasks);
         List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2,
                 pTarget3);
         helper.addToModel(model, fourTasks);
@@ -747,7 +747,7 @@ public class LogicManagerTest {
         assertCommandSuccess("find " + keyword,
                 String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
                         expectedList.size()),
-                expectedAB, expectedList);
+                expectedUT, expectedList);
     }
 
     // @@author
