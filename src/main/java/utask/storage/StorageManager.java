@@ -98,7 +98,7 @@ public class StorageManager extends ComponentManager implements Storage {
      * Exception will be thrown if cannot move the file
      */
     @Override
-    public void moveUTask(String prePath, String newPath) {
+    public void moveSaveFile(String prePath, String newPath) {
         assert prePath != null;
         assert newPath != null;
         try {

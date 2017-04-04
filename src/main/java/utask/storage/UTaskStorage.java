@@ -46,6 +46,6 @@ public interface UTaskStorage {
     /*
      * Move the storage data file to new path
      */
-    void moveUTask(String prePath, String newPath);
+    void moveSaveFile(String prePath, String newPath);
 
 }

@@ -73,8 +73,8 @@ public class XmlUTaskStorage implements UTaskStorage {
     }
 
     @Override
-    public void moveUTask(String prePath, String newPath) {
-        // TODO Auto-generated method stub
+    public void moveSaveFile(String prePath, String newPath) {
+        assert false : "This method is not impmented for xml";
     }
 
     @Override
