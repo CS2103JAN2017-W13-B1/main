@@ -10,7 +10,7 @@ import utask.model.task.ReadOnlyTask;
 /**
  * Compares the ReadOnlyTask in descending dates.
  */
-public class LatestFirstComparator implements Comparator<ReadOnlyTask> {
+public class LatestDeadlineComparator implements Comparator<ReadOnlyTask> {
 
     @Override
     public int compare(ReadOnlyTask o1, ReadOnlyTask o2) {

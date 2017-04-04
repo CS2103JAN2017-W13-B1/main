@@ -9,7 +9,7 @@ import utask.model.task.ReadOnlyTask;
 /**
  * Compares the ReadOnlyTask in ascending lexicographical order.
  */
-public class AToZComparator implements Comparator<ReadOnlyTask> {
+public class AscendingAlphabeticalComparator implements Comparator<ReadOnlyTask> {
 
     @Override
     public int compare(ReadOnlyTask o1, ReadOnlyTask o2) {

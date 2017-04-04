@@ -9,7 +9,7 @@ import utask.model.task.ReadOnlyTask;
 /**
  * Compares the ReadOnlyTask in ascending lexicographical Tag order.
  */
-public class TagComparator implements Comparator<ReadOnlyTask> {
+public class TagsNameComparator implements Comparator<ReadOnlyTask> {
 
     @Override
     public int compare(ReadOnlyTask o1, ReadOnlyTask o2) {
