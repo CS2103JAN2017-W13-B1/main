@@ -122,6 +122,10 @@ public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask
         isFindOverlayShowing = isShowing;
     }
 
+    public boolean isFindOverlayShowing() {
+        return isFindOverlayShowing;
+    }
+
     @Subscribe
     public void handleUTaskChangedEvent(UTaskChangedEvent e) {
         updateOffsetMap();

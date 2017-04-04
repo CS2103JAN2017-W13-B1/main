@@ -20,7 +20,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import utask.commons.core.LogsCenter;
-import utask.commons.events.ui.ShowTaskOfInterestEvent;
+import utask.commons.events.ui.UIJumpToListInFindOverlayEvent;
+import utask.commons.events.ui.UIShowTaskOfInterestInFindOverlayEvent;
 import utask.commons.events.ui.UIUpdateSortInFindOverlayEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
@@ -205,10 +206,12 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
     }
 
     @Subscribe
-    private void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent event) {
-        if (isSearchOverlayShown) {
-            logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        }
+    private void handleUIShowTaskOfInterestInFindOverlayEvent(UIShowTaskOfInterestInFindOverlayEvent event) {
+        assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
+
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        int index = searchTable.getItems().indexOf(event.task);
+        scrollTo(index);
     }
 
     @Subscribe
@@ -217,5 +220,18 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
 
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         sort(event.columnAlphabet, event.orderBy);
+    }
+
+    //TODO: Refractor
+    @Subscribe
+    private void handleUIJumpToListInFindOverlayEvent(UIJumpToListInFindOverlayEvent event) {
+        assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    private void scrollTo(int index) {
+        searchTable.scrollTo(index);
+        searchTable.getSelectionModel().select(index);
     }
 }

@@ -3,6 +3,7 @@ package utask.logic.commands;
 import utask.commons.core.EventsCenter;
 import utask.commons.core.Messages;
 import utask.commons.events.ui.JumpToListRequestEvent;
+import utask.commons.events.ui.UIJumpToListInFindOverlayEvent;
 import utask.logic.commands.exceptions.CommandException;
 
 /**
@@ -33,9 +34,13 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
-        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex));
+        if (model.isFindOverlayShowing()) {
+            EventsCenter.getInstance().post(new UIJumpToListInFindOverlayEvent(targetIndex - 1));
+        } else {
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
+        }
 
+        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex));
     }
 
 }

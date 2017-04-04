@@ -3,8 +3,6 @@ package utask.logic.commands;
 import java.util.HashSet;
 import java.util.Set;
 
-import utask.commons.core.EventsCenter;
-import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -15,6 +13,7 @@ import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.DuplicateTaskException;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
+import utask.staging.ui.helper.DelayedExecution;
 
 /**
  * Creates a new task to uTask.
@@ -71,7 +70,7 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
             model.addTask(toAdd);
             model.addUndoCommand(this);
 
-            EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(toAdd));
+            notifyUI(toAdd);
 
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniqueTaskList.DuplicateTaskException e) {
@@ -79,12 +78,23 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
         }
     }
 
-    //@@author A0139996A
-    public void undo() throws TaskNotFoundException {
-        model.deleteTask(toAdd);
+    public void undo() throws Exception {
+        notifyUI(toAdd);
+        //model.deleteTask(toAdd);
+
+        //Access to deleteTask() must be delayed to prevent race condition with notifyUI
+        new DelayedExecution((e)-> {
+            try {
+                model.deleteTask(toAdd);
+            } catch (TaskNotFoundException pnfe) {
+                //TODO: Display error using another async channel
+                assert false : "The target task cannot be missing";
+            }
+        }).run();
     }
 
     public void redo() throws DuplicateTaskException {
+        notifyUI(toAdd);
         model.addTask(toAdd);
     }
 }

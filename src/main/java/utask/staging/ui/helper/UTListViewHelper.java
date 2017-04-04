@@ -11,8 +11,8 @@ import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToTaskListRequestEvent;
-import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.events.ui.UIClearListSelectionEvent;
+import utask.commons.events.ui.UIShowTaskOfInterestInMainWindowEvent;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 
@@ -109,8 +109,10 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
         }
     }
 
+    //TODO: Cleanup abit confusing?
     public void scrollTo(int index) {
         Platform.runLater(() -> {
+
         assert (index >= 0);
             UTListView<ReadOnlyTask> listView = getActualListFromDisplayIndex(index);
 
@@ -119,8 +121,6 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
             int actualIndex = getActualIndexOfList(listView, index);
 
             EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(listView, actualIndex));
-
-            //clearSelectionOfAllListViews();
             scrollTo(listView, actualIndex);
         });
     }
@@ -158,7 +158,7 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
     }
 
     @Subscribe
-    public void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent event) {
+    public void handleUIShowTaskOfInterestInMainWindowEvent(UIShowTaskOfInterestInMainWindowEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         int displayIndex = getDisplayedIndexFromReadOnlyTask(event.task);
         scrollTo(displayIndex);

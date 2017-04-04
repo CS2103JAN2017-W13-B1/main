@@ -106,5 +106,7 @@ public interface Model {
     /** Gets index with respect to list of interest from display index */
     int getActualIndexFromDisplayIndex(int displayIndex);
 
+    /* Exposes isfindOverlay to Command through Model*/
     void setIfFindOverlayShowing(boolean isShowing);
+    boolean isFindOverlayShowing();
 }

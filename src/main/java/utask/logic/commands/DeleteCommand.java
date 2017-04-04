@@ -10,6 +10,7 @@ import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
+import utask.staging.ui.helper.DelayedExecution;
 
 /**
  * Deletes a task identified using it's last displayed index from the uTask.
@@ -50,41 +51,42 @@ public class DeleteCommand extends Command implements ReversibleCommand {
             int actualInt = model.getActualIndexFromDisplayIndex(targetIndex - 1);
             taskToDelete = list.get(actualInt);
 
-//            EventsCenter.getInstance().post(new ShowTaskOfInterestEvent(taskToDelete));
-//
-//            Timeline timeline = new Timeline(new KeyFrame(
-//                    Duration.millis(250),
-//
-//                (e) -> {
-//                    try {
-//                        model.deleteTask(taskToDelete);
-//                        model.addUndoCommand(this);
-//                    } catch (TaskNotFoundException pnfe) {
-//                        assert false : "The target task cannot be missing";
-//                    }
-//                }
-//            ));
-//
-//            timeline.play();
+            notifyUI(taskToDelete);
 
-            try {
-                model.deleteTask(taskToDelete);
-                model.addUndoCommand(this);
-            } catch (TaskNotFoundException pnfe) {
-                assert false : "The target task cannot be missing";
-            }
+            //Access to deleteTask() must be delayed to prevent race condition with notifyUI
+            new DelayedExecution((e)-> {
+                try {
+                    model.deleteTask(taskToDelete);
+                    model.addUndoCommand(this);
+                } catch (TaskNotFoundException pnfe) {
+                    assert false : "The target task cannot be missing";
+                }
+            }).run();
         }
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS));
     }
 
+    //@@author -- - - -
     @Override
     public void undo() throws Exception {
+        notifyUI(taskToDelete);
         model.addTask((Task) taskToDelete);
     }
 
     @Override
     public void redo() throws Exception {
-        model.deleteTask((Task) taskToDelete);
+        notifyUI(taskToDelete);
+        //model.deleteTask((Task) taskToDelete);
+
+        //Access to deleteTask() must be delayed to prevent race condition with notifyUI
+        new DelayedExecution((e)-> {
+            try {
+                model.deleteTask(taskToDelete);
+            } catch (TaskNotFoundException pnfe) {
+                //TODO: Display error using another async channel
+                assert false : "The target task cannot be missing";
+            }
+        }).run();
     }
 
 }
