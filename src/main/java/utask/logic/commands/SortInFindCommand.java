@@ -1,7 +1,8 @@
 //@@author A0139996A
-
 package utask.logic.commands;
 
+import utask.commons.core.EventsCenter;
+import utask.commons.events.ui.UIUpdateSortInFindOverlayEvent;
 import utask.logic.commands.exceptions.CommandException;
 
 /**
@@ -19,14 +20,19 @@ public class SortInFindCommand extends Command {
             + ": Sort tasks. "
             + "Parameters: " + COMMAND_FORMAT + "\n";
 
-    private final String keywords;
+    private final String column;
+    private final String orderBy;
 
-    public SortInFindCommand(String keywords) {
-        this.keywords = keywords;
+    public SortInFindCommand(String column, String orderBy) {
+        this.column = column;
+        this.orderBy = orderBy;
+
+        System.out.println(column + "  " + orderBy);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
+        EventsCenter.getInstance().post(new UIUpdateSortInFindOverlayEvent(column, orderBy));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

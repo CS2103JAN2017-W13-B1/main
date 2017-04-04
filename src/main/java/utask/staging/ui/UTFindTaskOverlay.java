@@ -21,6 +21,7 @@ import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.ShowTaskOfInterestEvent;
+import utask.commons.events.ui.UIUpdateSortInFindOverlayEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
@@ -120,8 +121,44 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
         columnIndex.setSortable(false);
     }
 
-    private void sort(TableColumn<ReadOnlyTask, String> column) {
-        sort(column, SortType.ASCENDING);
+    //TODO MAGIC
+    private void sort(String columnAlphabet, String orderBy) {
+        TableColumn<ReadOnlyTask, String> column = null;
+
+        switch (columnAlphabet) {
+        case "a" :
+            column = columnName;
+            break;
+        case "b" :
+            column = columnComplete;
+            break;
+        case "c" :
+            column = columnDeadline;
+            break;
+        case "d" :
+            column = columnTimestamp;
+            break;
+        case "e" :
+            column = columnFrequency;
+            break;
+        case "f" :
+            column = columnTag;
+            break;
+        }
+
+        SortType sortType;
+
+        switch (orderBy) {
+        case "dsc" :
+            sortType = SortType.DESCENDING;
+            break;
+        case "asc" :
+        default:
+            sortType = SortType.ASCENDING;
+            break;
+        }
+
+        sort(column, sortType);
     }
 
     private void sort(TableColumn<ReadOnlyTask, String> column, SortType sortOrder) {
@@ -194,9 +231,18 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
     }
 
     @Subscribe
-    public void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent event) {
+    private void handleShowTaskOfInterestEvent(ShowTaskOfInterestEvent event) {
         if (isSearchOverlayShown) {
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
         }
+    }
+
+    @Subscribe
+    private void handleUIUpdateSortInFindOverlayEvent(UIUpdateSortInFindOverlayEvent event) {
+
+        assert isSearchOverlayShown;
+
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        sort(event.columnAlphabet, event.orderBy);
     }
 }
