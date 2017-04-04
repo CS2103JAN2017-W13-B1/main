@@ -1,6 +1,9 @@
 package utask.storage;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -11,6 +14,7 @@ import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.storage.DataSavingExceptionEvent;
 import utask.commons.exceptions.DataConversionException;
+import utask.commons.util.StringUtil;
 import utask.model.ReadOnlyUTask;
 import utask.model.UserPrefs;
 
@@ -86,6 +90,34 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+    // @@author A0138493W
+    /*
+     * This method is used to move the data file from old path to new path which is entered by relocate command
+     * Exception will be thrown if cannot move the file
+     */
+    @Override
+    public void moveSaveFile(String prePath, String newPath) {
+        assert prePath != null;
+        assert newPath != null;
+        try {
+            File oldFile = new File(prePath);
+            if (oldFile.exists() && !oldFile.isDirectory()) {
+                File newFile = new File(newPath);
+                newFile.getParentFile().mkdirs();
+                Files.move(oldFile.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                logger.fine("The file has been moved to new location: " + newPath);
+            }
+        } catch (IOException e) {
+            logger.info("Failed to move the data file: " + StringUtil.getDetails(e));
+        }
+    }
+
+    // @@author
+    @Override
+    public void setFilePath(String path) {
+        uTaskStorage.setFilePath(path);
     }
 
 }

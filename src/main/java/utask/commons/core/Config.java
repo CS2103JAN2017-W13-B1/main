@@ -9,6 +9,7 @@ import java.util.logging.Level;
 public class Config {
 
     public static final String DEFAULT_CONFIG_FILE = "config.json";
+    //public static String relocatedFile = "";
 
     // Config values customizable through config file
     private String appTitle = "uTask";
