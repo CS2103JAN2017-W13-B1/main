@@ -156,7 +156,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateTask(int filteredTaskListIndex, ReadOnlyTask editedTask)
+    public synchronized void updateTask(int filteredTaskListIndex, ReadOnlyTask editedTask)
             throws UniqueTaskList.DuplicateTaskException {
         assert editedTask != null;
 
@@ -171,7 +171,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author A0139996A
     @Override
-    public void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
+    public synchronized void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
             throws UniqueTaskList.DuplicateTaskException {
         assert taskToEdit != null;
         assert editedTask != null;

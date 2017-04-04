@@ -6,7 +6,9 @@ import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
-import utask.model.task.Task;;
+import utask.model.task.Task;
+import utask.model.task.UniqueTaskList.DuplicateTaskException;
+import utask.staging.ui.helper.DelayedExecution;;
 
 /**
  * Edits the details of an existing task in the uTask.
@@ -56,10 +58,18 @@ public class DoneCommand extends Command implements ReversibleCommand {
         editedTask = null;
         try {
             editedTask = UpdateUtil.createEditedTask(taskToEdit, true);
-            notifyUI(editedTask);
-            model.updateTask(taskToEdit, editedTask);
-            model.addUndoCommand(this);
+            notifyUI(taskToEdit);
 
+            //BAD CODE -- BAD CODE -- BAD CODE
+            new DelayedExecution((e)-> {
+                try {
+                    model.updateTask(taskToEdit, editedTask);
+                    model.addUndoCommand(this);
+                } catch (DuplicateTaskException e1) {
+                    assert false : "Should never happen?";
+                }
+            }).run();
+//            EventsCenter.getInstance().post(new UIClearListSelectionEvent());
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
