@@ -3,10 +3,8 @@ package utask.logic.commands;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
-import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -87,8 +85,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
 
-            EventsCenter.getInstance()
-                    .post(new ShowTaskOfInterestEvent(editedTask));
+            notifyUI(editedTask);
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
@@ -101,15 +98,13 @@ public class UpdateCommand extends Command implements ReversibleCommand {
     @Override
     public void undo() throws Exception {
         model.updateTask(editedTask, taskToEdit);
-        EventsCenter.getInstance()
-                .post(new ShowTaskOfInterestEvent(taskToEdit));
+        notifyUI(taskToEdit);
     }
 
     // @@author A0138423J
     @Override
     public void redo() throws Exception {
         model.updateTask(taskToEdit, editedTask);
-        EventsCenter.getInstance()
-                .post(new ShowTaskOfInterestEvent(editedTask));
+        notifyUI(editedTask);
     }
 }

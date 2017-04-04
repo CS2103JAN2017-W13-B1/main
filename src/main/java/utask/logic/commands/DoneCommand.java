@@ -2,16 +2,16 @@ package utask.logic.commands;
 
 import java.util.logging.Logger;
 
-import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
-import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
-import utask.model.task.Task;;
+import utask.model.task.Task;
+import utask.model.task.UniqueTaskList.DuplicateTaskException;
+import utask.staging.ui.helper.DelayedExecution;;
 
 //@@author A0138423J
 /**
@@ -66,8 +66,18 @@ public class DoneCommand extends Command implements ReversibleCommand {
         editedTask = null;
         try {
             editedTask = UpdateUtil.createEditedTask(taskToEdit, true);
-            model.updateTask(taskToEdit, editedTask);
-            model.addUndoCommand(this);
+            notifyUI(taskToEdit);
+
+            //BAD CODE -- BAD CODE -- BAD CODE
+            new DelayedExecution((e)-> {
+                try {
+                    model.updateTask(taskToEdit, editedTask);
+                    model.addUndoCommand(this);
+                } catch (DuplicateTaskException e1) {
+                    assert false : "Should never happen?";
+                }
+            }).run();
+//            EventsCenter.getInstance().post(new UIClearListSelectionEvent());
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
@@ -80,13 +90,13 @@ public class DoneCommand extends Command implements ReversibleCommand {
     @Override
     public void undo() throws Exception {
         model.updateTask(editedTask, taskToEdit);
-        EventsCenter.getInstance()
-                .post(new ShowTaskOfInterestEvent(taskToEdit));
+        notifyUI(taskToEdit);
     }
 
     // @@author A0138423J
     @Override
     public void redo() throws Exception {
         model.updateTask(taskToEdit, editedTask);
+        notifyUI(editedTask);
     }
 }

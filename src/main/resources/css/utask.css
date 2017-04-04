@@ -351,3 +351,34 @@
     -fx-font-size: 16.0;
     -fx-pref-height: 25;
 }
+
+.jfx-dialog-layout {
+    -fx-padding: 24.0px 24.0px 16.0px 24.0px;
+    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
+}
+.jfx-layout-heading {
+    -fx-font-size: 20.0px;
+    -fx-font-weight: BOLD;
+    -fx-alignment: center-left;
+    -fx-padding: 5.0 0.0 5.0 0.0;
+}
+
+.jfx-layout-body .label {
+    -fx-font-size: 14.0px;
+    -fx-pref-width: 400.0px;
+    -fx-wrap-text: true;
+}
+
+.jfx-layout-actions {
+    -fx-padding: 10.0px 0.0 0.0 0.0 ;
+    -fx-alignment: center-right ;
+}
+
+
+/* Make sure that vertical scrollbar does not appear*/
+.inner-list-view .scroll-bar:vertical .increment-arrow,
+.inner-list-view .scroll-bar:vertical .decrement-arrow,
+.inner-list-view .scroll-bar:vertical .increment-button,
+.inner-list-view .scroll-bar:vertical .decrement-button {
+    -fx-padding:0;
+}
