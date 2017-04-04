@@ -11,7 +11,7 @@ public interface ReadOnlyTask {
 
     Name getName();
     Frequency getFrequency();
-    IsCompleted getIsCompleted();
+    Status getStatus();
 
     /*
      * Deadline and Timestamp are optional based on type of task
@@ -46,7 +46,7 @@ public interface ReadOnlyTask {
                         && other.getDeadline().equals(this.getDeadline())
                         && other.getTimestamp().equals(this.getTimestamp())
                         && other.getFrequency().equals(this.getFrequency())
-                        && other.getIsCompleted().equals(this.getIsCompleted()));
+                        && other.getStatus().equals(this.getStatus()));
     }
 
     /**
@@ -57,7 +57,7 @@ public interface ReadOnlyTask {
         builder.append(getName()).append(" Deadline: ").append(getDeadline())
                 .append(" Timestamp: ").append(getTimestamp())
                 .append(" Frequency: ").append(getFrequency())
-                .append(" IsCompleted: ").append(getIsCompleted())
+                .append(" Status: ").append(getStatus().toString())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

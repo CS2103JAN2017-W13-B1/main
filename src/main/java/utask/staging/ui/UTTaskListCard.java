@@ -126,7 +126,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     }
 
     public void addStylingProperitesOnCompletion() {
-        boolean isComplete = task.getIsCompleted().isCompleted();
+        boolean isComplete = task.getStatus().isStatusComplete();
         chkDone.setSelected(isComplete);
 
         if (isComplete) {

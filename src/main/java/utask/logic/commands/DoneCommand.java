@@ -1,6 +1,9 @@
 package utask.logic.commands;
 
+import java.util.logging.Logger;
+
 import utask.commons.core.EventsCenter;
+import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
 import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
@@ -10,25 +13,26 @@ import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;;
 
+//@@author A0138423J
 /**
- * Edits the details of an existing task in the uTask.
+ * Edits the Status of an existing task in the uTask.
  */
-// @@author A0138423J
 public class DoneCommand extends Command implements ReversibleCommand {
+    private final Logger logger = LogsCenter.getLogger(DoneCommand.class);
 
     public static final String COMMAND_WORD = "done";
     public static final String COMMAND_FORMAT = "[INDEX (must be a positive integer)]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Updates the status to completed of the task specified "
+            + ": Updates the status to Complete of the task specified "
             + "by the index number used in the last task listing. \n"
             + "Parameters: " + COMMAND_FORMAT + "\n" + "Example: "
-            + COMMAND_WORD + COMMAND_WORD + " 1";
+            + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DONE_TASK_SUCCESS = "Done task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";
     public static final String MESSAGE_DUPLICATE_STATUS = "This task is already completed in uTask.";
-    public static final String MESSAGE_INTERNAL_ERROR = "Error updating isCompleted attribute.";
+    public static final String MESSAGE_INTERNAL_ERROR = "Error updating Status.";
 
     private final int filteredTaskListIndex;
     private ReadOnlyTask taskToEdit;
@@ -52,6 +56,10 @@ public class DoneCommand extends Command implements ReversibleCommand {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
+        // If value already completed, inform the user
+        if (taskToEdit.getStatus().isStatusComplete()) {
+            throw new CommandException(MESSAGE_DUPLICATE_STATUS);
+        }
 
         // Retrieve task to be edited from save file
         taskToEdit = UpdateUtil.fetchTaskToEdit(filteredTaskListIndex);
@@ -63,6 +71,7 @@ public class DoneCommand extends Command implements ReversibleCommand {
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
+        logger.fine(String.format(MESSAGE_DONE_TASK_SUCCESS, editedTask));
         return new CommandResult(
                 String.format(MESSAGE_DONE_TASK_SUCCESS, editedTask));
     }

@@ -10,7 +10,7 @@ import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.Tag;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
+import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.DuplicateTaskException;
@@ -37,14 +37,14 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
     protected Task toAdd;
     protected final Frequency frequency;
     protected final Set<Tag> tagSet;
-    protected final IsCompleted isCompleted;
+    protected final Status status;
 
     /**
      * Creates an CreateCommand using raw values.
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public CreateCommand(String frequency, Set<String> tags, String iscompleted)
+    public CreateCommand(String frequency, Set<String> tags, String status)
             throws IllegalValueException {
         tagSet = new HashSet<>();
         for (String tagName : tags) {
@@ -57,10 +57,10 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
         } else {
             this.frequency = new Frequency(frequency);
         }
-        if ("".equals(iscompleted)) {
-            this.isCompleted = IsCompleted.getEmptyIsCompleted();
+        if ("".equals(status)) {
+            this.status = Status.getEmptyStatus();
         } else {
-            this.isCompleted = new IsCompleted(iscompleted);
+            this.status = new Status(status);
         }
     }
 

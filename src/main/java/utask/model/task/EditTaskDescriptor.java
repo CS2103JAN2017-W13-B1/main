@@ -11,7 +11,7 @@ public class EditTaskDescriptor {
     private Optional<Timestamp> timeStamp = Optional.empty();
     private Optional<Frequency> frequency = Optional.empty();
     private Optional<UniqueTagList> tags = Optional.empty();
-    private Optional<IsCompleted> isCompleted = Optional.empty();
+    private Optional<Status> status = Optional.empty();
 
     public EditTaskDescriptor() {
     }
@@ -22,7 +22,7 @@ public class EditTaskDescriptor {
         this.timeStamp = toCopy.getTimeStamp();
         this.frequency = toCopy.getFrequency();
         this.tags = toCopy.getTags();
-        this.isCompleted = toCopy.getIsCompleted();
+        this.status = toCopy.getStatus();
     }
 
     /**
@@ -31,7 +31,7 @@ public class EditTaskDescriptor {
     public boolean isAnyFieldEdited() {
         return CollectionUtil.isAnyPresent(this.name, this.deadLine,
                 this.timeStamp, this.frequency, this.tags,
-                this.isCompleted);
+                this.status);
     }
 
     public void setName(Optional<Name> name) {
@@ -79,13 +79,13 @@ public class EditTaskDescriptor {
         return tags;
     }
 
-    public void setIsCompleted(Optional<IsCompleted> isCompleted) {
-        assert isCompleted != null;
-        this.isCompleted = isCompleted;
+    public void setIsCompleted(Optional<Status> status) {
+        assert status != null;
+        this.status = status;
     }
 
-    public Optional<IsCompleted> getIsCompleted() {
-        return isCompleted;
+    public Optional<Status> getStatus() {
+        return status;
     }
 
 }

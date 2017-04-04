@@ -18,8 +18,8 @@ import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
+import utask.model.task.Status;
 import utask.model.task.Timestamp;
 
 /**
@@ -138,6 +138,7 @@ public class ParserUtil {
         return new HashSet<>(elements);
     }
 
+    //@@author A0138423J
     /**
      * Splits a preamble string into ordered fields.
      *
@@ -212,16 +213,15 @@ public class ParserUtil {
         return new UniqueTagList(tagSet);
     }
 
-    //@@author A0138423J
     /**
-     * Parses a {@code Optional<String> iscompleted} into an
-     * {@code Optional<IsCompleted>} if {@code iscompleted} is present.
+     * Parses a {@code Optional<String> status} into an
+     * {@code Optional<Status>} if {@code status} is present.
      */
-    public static Optional<IsCompleted> parseIsCompleted(
-            Optional<String> iscompleted) throws IllegalValueException {
-        assert iscompleted != null;
-        return iscompleted.isPresent()
-                ? Optional.of(new IsCompleted(iscompleted.get()))
+    public static Optional<Status> parseStatus(
+            Optional<String> status) throws IllegalValueException {
+        assert status != null;
+        return status.isPresent()
+                ? Optional.of(new Status(status.get()))
                 : Optional.empty();
     }
 }

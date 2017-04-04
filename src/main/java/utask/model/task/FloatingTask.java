@@ -5,8 +5,8 @@ import utask.model.tag.UniqueTagList;
 public class FloatingTask extends Task {
 
     public FloatingTask(Name name, Frequency frequency, UniqueTagList tags,
-            IsCompleted isCompleted) {
-        super(name, frequency, tags, isCompleted);
+            Status status) {
+        super(name, frequency, tags, status);
     }
 
     /**
@@ -14,7 +14,7 @@ public class FloatingTask extends Task {
      */
     public FloatingTask(ReadOnlyTask source) {
         this(source.getName(), source.getFrequency(), source.getTags(),
-                source.getIsCompleted());
+                source.getStatus());
     }
 
     public void resetData(ReadOnlyTask replacement) {
