@@ -1,5 +1,4 @@
 //@@author A0138493W
-
 package utask.logic.commands;
 
 import java.util.List;
@@ -35,38 +34,50 @@ public class DeleteCommand extends Command implements ReversibleCommand {
         this.targetList = targetList;
     }
 
-    //TODO: Cleanup
-    //@@author A0139996A
     @Override
     public CommandResult execute() throws CommandException {
-        //TODO: Jiahao coded this >>>>>>>>
+
         for (int targetIndex : targetList) {
-            if (model.getTotalSizeOfLists() < targetIndex) {
-                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            checkIfGivenIndexIsValid(targetIndex);
+            taskToDelete = getTaskToDelete(targetIndex);
+
+            //Do selection effect for 1 task only. It will cause race condition when doing multiple effect in a loop
+            if (targetList.size() == 1) {
+                notifyUI(taskToDelete);
+                new DelayedExecution((e)-> {
+                    deleteTask(taskToDelete);
+                }).run();
+            } else {
+                deleteTask(taskToDelete);
             }
-
-            //- 1 as helper method is using zero-based indexing
-            List<ReadOnlyTask> list = model.getUnderlyingListByIndex(targetIndex - 1);
-
-            int actualInt = model.getActualIndexFromDisplayIndex(targetIndex - 1);
-            taskToDelete = list.get(actualInt);
-
-            notifyUI(taskToDelete);
-
-            //Access to deleteTask() must be delayed to prevent race condition with notifyUI
-            new DelayedExecution((e)-> {
-                try {
-                    model.deleteTask(taskToDelete);
-                    model.addUndoCommand(this);
-                } catch (TaskNotFoundException pnfe) {
-                    assert false : "The target task cannot be missing";
-                }
-            }).run();
         }
+
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS));
     }
 
-    //@@author -- - - -
+    private void checkIfGivenIndexIsValid(int targetIndex) throws CommandException {
+        if (model.getTotalSizeOfLists() < targetIndex) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+    }
+
+    private void deleteTask(ReadOnlyTask taskToDelete) {
+        try {
+            model.deleteTask(taskToDelete);
+            model.addUndoCommand(this);
+        } catch (TaskNotFoundException pnfe) {
+            assert false : "The target task cannot be missing";
+        }
+    }
+
+    private ReadOnlyTask getTaskToDelete(int targetIndex) {
+        //- 1 as helper method is using zero-based indexing
+        List<ReadOnlyTask> list = model.getUnderlyingListByIndex(targetIndex - 1);
+
+        int actualInt = model.getActualIndexFromDisplayIndex(targetIndex - 1);
+        return list.get(actualInt);
+    }
+
     @Override
     public void undo() throws Exception {
         model.addTask((Task) taskToDelete);
@@ -76,14 +87,13 @@ public class DeleteCommand extends Command implements ReversibleCommand {
     @Override
     public void redo() throws Exception {
         notifyUI(taskToDelete);
-        //model.deleteTask((Task) taskToDelete);
 
         //Access to deleteTask() must be delayed to prevent race condition with notifyUI
         new DelayedExecution((e)-> {
             try {
                 model.deleteTask(taskToDelete);
             } catch (TaskNotFoundException pnfe) {
-                //TODO: Display error using another async channel
+                //This exception is handled as it is not possible to hit this exception with normal usage
                 assert false : "The target task cannot be missing";
             }
         }).run();

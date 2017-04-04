@@ -56,10 +56,10 @@ public class DoneCommand extends Command implements ReversibleCommand {
         editedTask = null;
         try {
             editedTask = UpdateUtil.createEditedTask(taskToEdit, true);
+            notifyUI(editedTask);
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
 
-            notifyUI(editedTask);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }

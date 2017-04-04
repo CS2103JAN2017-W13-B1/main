@@ -10,7 +10,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import utask.commons.core.Config;
 import utask.commons.core.GuiSettings;
@@ -29,7 +29,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
     private static final String ICON = "/images/utask.png";
     private static final String FXML = "UTMainWindow.fxml";
     private static final int MIN_HEIGHT = 650;
-    private static final int MIN_WIDTH = 550;
+    private static final int MIN_WIDTH = 620;
 
     private Stage primaryStage;
     private Logic logic;
@@ -39,7 +39,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
 
     //Independent Ui parts residing in this Ui container
     @FXML
-    private VBox rootPane;
+    private StackPane rootPane;
 
     @FXML
     private Pane topPlaceholder;
@@ -142,6 +142,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
         new UTFindTaskOverlay(topPlaceholder, logic);
+        new UTDialog(rootPane);
     }
 
     public UTTodoListPanel getTodoListPanel() {
