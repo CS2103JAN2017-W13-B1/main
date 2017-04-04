@@ -9,6 +9,8 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.Tag;
+import utask.model.tag.TagColorIndex;
+import utask.model.tag.TagName;
 import utask.model.task.Frequency;
 import utask.model.task.Status;
 import utask.model.task.Task;
@@ -48,7 +50,7 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
             throws IllegalValueException {
         tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+            tagSet.add(new Tag(new TagName(tagName), new TagColorIndex("")));
         }
 
         //TODO: Cleanup

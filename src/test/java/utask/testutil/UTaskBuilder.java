@@ -3,6 +3,8 @@ package utask.testutil;
 import utask.commons.exceptions.IllegalValueException;
 import utask.model.UTask;
 import utask.model.tag.Tag;
+import utask.model.tag.TagColorIndex;
+import utask.model.tag.TagName;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 
@@ -25,7 +27,7 @@ public class UTaskBuilder {
     }
 
     public UTaskBuilder withTag(String tagName) throws IllegalValueException {
-        uTask.addTag(new Tag(tagName));
+        uTask.addTag(new Tag(new TagName(tagName), new TagColorIndex("2")));
         return this;
     }
 

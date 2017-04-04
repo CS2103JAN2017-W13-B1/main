@@ -1,58 +1,84 @@
 package utask.model.tag;
 
+import java.util.Objects;
 
-import utask.commons.exceptions.IllegalValueException;
+import utask.commons.util.CollectionUtil;
 
 /**
- * Represents a Tag in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
+ * Represents a Tag in the address book. Guarantees: immutable; name is valid as
+ * declared in {@link #isValidTagName(String)}
  */
 public class Tag {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
-    public static final String TAG_REMOVAL_VALIDATION_REGEX = "^[-]$";
-
-    public final String tagName;
+    protected TagName tagname;
+    protected TagColorIndex tagcolorindex;
+    protected Integer tagCount;
 
     /**
-     * Validates given tag name.
-     *
-     * @throws IllegalValueException if the given tag name string is invalid.
+     * Every field must be present and not null.
      */
-    public Tag(String name) throws IllegalValueException {
-        assert name != null;
-        String trimmedName = name.trim();
-        if (!isValidTagName(trimmedName)) {
-            throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
-        }
-        this.tagName = trimmedName;
+    public Tag(TagName tagName, TagColorIndex tagColorIndex) {
+        assert !CollectionUtil.isAnyNull(tagName, tagColorIndex);
+
+        this.tagname = tagName;
+        this.tagcolorindex = tagColorIndex;
+        tagCount = 0;
     }
 
-    /**
-     * Returns true if a given string is a valid tag name.
-     */
-    public static boolean isValidTagName(String test) {
-        return (test.matches(TAG_VALIDATION_REGEX) || test.matches(TAG_REMOVAL_VALIDATION_REGEX));
+    public Tag(Tag tag) {
+        assert tag != null;
+
+        this.tagname = tag.getTagname();
+        this.tagcolorindex = tag.getTagcolorindex();
+        tagCount = 0;
+    }
+
+    public TagName getTagname() {
+        return tagname;
+    }
+
+    public void setTagname(TagName tagname) {
+        this.tagname = tagname;
+    }
+
+    public TagColorIndex getTagcolorindex() {
+        return tagcolorindex;
+    }
+
+    public void setTagcolorindex(TagColorIndex tagcolorindex) {
+        this.tagcolorindex = tagcolorindex;
+    }
+
+    public Integer getTagCount() {
+        return tagCount;
+    }
+
+    public void setTagCount(Integer tagCount) {
+        this.tagCount = tagCount;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Tag // instanceof handles nulls
-                && this.tagName.equals(((Tag) other).tagName)); // state check
+                && this.isSameStateAs((Tag) other));
+    }
+
+    private boolean isSameStateAs(Tag other) {
+        return other.getTagname().equals(this.getTagname())
+                        && other.getTagcolorindex().equals(this.getTagcolorindex());
     }
 
     @Override
     public int hashCode() {
-        return tagName.hashCode();
+        return Objects.hash(tagname, tagcolorindex);
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + tagName + ']';
+        return '[' + tagname.toString() + ']' + '[' + tagcolorindex.toString() + ']';
     }
 
 }

@@ -31,6 +31,8 @@ import utask.commons.util.FileUtil;
 import utask.commons.util.XmlUtil;
 import utask.model.UTask;
 import utask.model.tag.Tag;
+import utask.model.tag.TagColorIndex;
+import utask.model.tag.TagName;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.EventTask;
@@ -99,8 +101,8 @@ public class TestUtil {
     private static Tag[] getSampleTagData() {
         try {
             return new Tag[]{
-                new Tag("relatives"),
-                new Tag("friends")
+                new Tag(new TagName("relatives"), new TagColorIndex("2")),
+                new Tag(new TagName("friends"), new TagColorIndex("8"))
             };
         } catch (IllegalValueException e) {
             assert false;
@@ -348,7 +350,7 @@ public class TestUtil {
 
         final List<Tag> collect = Arrays.asList(split).stream().map(e -> {
             try {
-                return new Tag(e.replaceFirst("Tag: ", ""));
+                return new Tag(new TagName(e.replaceFirst("Tag: ", "")), new TagColorIndex("2"));
             } catch (IllegalValueException e1) {
                 //not possible
                 assert false;

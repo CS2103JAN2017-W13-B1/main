@@ -39,7 +39,7 @@ public class UniqueTagList implements Iterable<Tag> {
     public UniqueTagList(String... tags) throws DuplicateTagException, IllegalValueException {
         final List<Tag> tagList = new ArrayList<Tag>();
         for (String tag : tags) {
-            tagList.add(new Tag(tag));
+            tagList.add(new Tag(new TagName(tag), new TagColorIndex("2")));
         }
         setTags(tagList);
     }
@@ -94,7 +94,7 @@ public class UniqueTagList implements Iterable<Tag> {
     public String getAllTagNames() {
         String allTagNames = "";
         for (Tag tag:internalList) {
-            allTagNames += tag.tagName + " ";
+            allTagNames += tag.tagname + " ";
         }
         return allTagNames;
     }

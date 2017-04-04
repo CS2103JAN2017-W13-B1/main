@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
 import utask.logic.commands.UpdateCommand;
-import utask.model.tag.Tag;
+import utask.model.tag.TagName;
 import utask.model.task.Deadline;
 import utask.model.task.Name;
 import utask.testutil.TaskBuilder;
@@ -100,7 +100,7 @@ public class EditCommandTest extends UTaskGuiTest {
 //        assertResultMessage(Frequency.MESSAGE_FREQUENCY_CONSTRAINTS);
 
         commandBox.runCommand("update 1 /tag *&");
-        assertResultMessage(Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertResultMessage(TagName.MESSAGE_TAG_CONSTRAINTS);
     }
 
 //    @Test

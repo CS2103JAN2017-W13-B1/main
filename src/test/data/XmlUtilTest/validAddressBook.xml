@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <utask>
-    <tasks>
+    <task>
         <name>alice</name>
         <deadline>200217</deadline>
         <timestamp>1830 to 2000</timestamp>
         <frequency></frequency>
-        <status>false</status>
-    </tasks>
-    <tasks>
+        <status>Incomplete</status>
+    </task>
+    <task>
         <name>brth from 0000 to 2359</name>
         <deadline></deadline>
         <timestamp></timestamp>
         <frequency></frequency>
-        <status>false</status>
-    </tasks>
-    <tasks>
+        <status>Incomplete</status>
+    </task>
+    <task>
         <name>char</name>
         <deadline></deadline>
         <timestamp></timestamp>
         <frequency>every mon</frequency>
-        <status>false</status>
-    </tasks>
+        <status>Incomplete</status>
+    </task>
 </utask>

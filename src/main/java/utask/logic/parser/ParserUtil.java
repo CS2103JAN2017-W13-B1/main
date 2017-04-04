@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.StringUtil;
 import utask.model.tag.Tag;
+import utask.model.tag.TagColorIndex;
+import utask.model.tag.TagName;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.Frequency;
@@ -208,7 +210,7 @@ public class ParserUtil {
         assert tags != null;
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+            tagSet.add(new Tag(new TagName(tagName), new TagColorIndex("2")));
         }
         return new UniqueTagList(tagSet);
     }
@@ -224,4 +226,5 @@ public class ParserUtil {
                 ? Optional.of(new Status(status.get()))
                 : Optional.empty();
     }
+    //@@author
 }
