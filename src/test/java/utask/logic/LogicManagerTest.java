@@ -51,9 +51,9 @@ import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
+import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.Timestamp;
 import utask.storage.StorageManager;
@@ -762,7 +762,7 @@ public class LogicManagerTest {
             Deadline deadline = new Deadline("010117");
             Timestamp timestamp = new Timestamp("1830 to 2030");
             Frequency frequency = new Frequency("Every Monday");
-            IsCompleted iscompleted = new IsCompleted("no");
+            Status iscompleted = new Status("no");
             Tag tag1 = new Tag("urgent");
             Tag tag2 = new Tag("assignment");
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
@@ -785,7 +785,7 @@ public class LogicManagerTest {
                     new Frequency("Every " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)),
                             new Tag("tag" + Math.abs(seed + 1))),
-                    new IsCompleted("no"));
+                    new Status("no"));
         }
 
         private Task generateDeadlineTaskWithSeed(int seed) throws Exception {
@@ -794,7 +794,7 @@ public class LogicManagerTest {
                     new Frequency("Every " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)),
                             new Tag("tag" + Math.abs(seed + 1))),
-                    new IsCompleted("no"));
+                    new Status("no"));
         }
 
         private Task generateFloatingTaskWithSeed(int seed) throws Exception {
@@ -802,7 +802,7 @@ public class LogicManagerTest {
                     new Frequency("Every " + seed),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)),
                             new Tag("tag" + Math.abs(seed + 1))),
-                    new IsCompleted("no"));
+                    new Status("no"));
         }
 
         /** Generates the correct add command based on the task given */
@@ -821,8 +821,8 @@ public class LogicManagerTest {
             if (!p.getFrequency().isEmpty()) {
                 cmd.append(" /repeat ").append(p.getFrequency());
             }
-            if (!p.getIsCompleted().isEmpty()) {
-                cmd.append(" /done ").append(p.getIsCompleted());
+            if (!p.getStatus().isEmpty()) {
+                cmd.append(" /done ").append(p.getStatus());
             }
             UniqueTagList tags = p.getTags();
             for (Tag t : tags) {
@@ -914,7 +914,7 @@ public class LogicManagerTest {
         private Task generateTaskWithName(String name) throws Exception {
             return new EventTask(new Name(name), new Deadline("010117"),
                     new Timestamp("0000 to 1300"), new Frequency("-"),
-                    new UniqueTagList(new Tag("tag")), new IsCompleted("no"));
+                    new UniqueTagList(new Tag("tag")), new Status("no"));
         }
 
         // @@author A0138493W
@@ -926,7 +926,7 @@ public class LogicManagerTest {
                 throws Exception {
             return new EventTask(new Name(name), new Deadline(deadline),
                     new Timestamp("0000 to 1300"), new Frequency("-"),
-                    new UniqueTagList(new Tag("tag")), new IsCompleted("no"));
+                    new UniqueTagList(new Tag("tag")), new Status("no"));
         }
 
         /**
@@ -937,7 +937,7 @@ public class LogicManagerTest {
                 throws Exception {
             return new EventTask(new Name(name), new Deadline("150317"),
                     new Timestamp("0000 to 1300"), new Frequency("-"), tags,
-                    new IsCompleted("no"));
+                    new Status("no"));
         }
     }
 }

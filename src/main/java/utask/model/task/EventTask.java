@@ -10,8 +10,8 @@ public class EventTask extends Task {
     private Timestamp timestamp;
 
     public EventTask(Name name, Deadline deadline, Timestamp timestamp,
-            Frequency frequency, UniqueTagList tags, IsCompleted isCompleted) {
-        super(name, frequency, tags, isCompleted);
+            Frequency frequency, UniqueTagList tags, Status status) {
+        super(name, frequency, tags, status);
         this.deadline = deadline;
         this.timestamp = timestamp;
     }
@@ -22,7 +22,7 @@ public class EventTask extends Task {
     public EventTask(ReadOnlyTask source) {
         this(source.getName(), source.getDeadline(), source.getTimestamp(),
                 source.getFrequency(), source.getTags(),
-                source.getIsCompleted());
+                source.getStatus());
     }
 
     public void setDeadline(Deadline deadline) {
@@ -55,7 +55,7 @@ public class EventTask extends Task {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, deadline, timestamp, frequency, tags, isCompleted);
+        return Objects.hash(name, deadline, timestamp, frequency, tags, status);
     }
 
 }

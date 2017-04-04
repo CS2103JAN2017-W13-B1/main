@@ -29,7 +29,7 @@ public class UndoneCommand extends Command implements ReversibleCommand {
     public static final String MESSAGE_UNDONE_TASK_SUCCESS = "Undone task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";
     public static final String MESSAGE_DUPLICATE_STATUS = "This task is already uncompleted in uTask.";
-    public static final String MESSAGE_INTERNAL_ERROR = "Error updating isCompleted attribute.";
+    public static final String MESSAGE_INTERNAL_ERROR = "Error updating Status.";
 
     private final int filteredTaskListIndex;
     private ReadOnlyTask taskToEdit;

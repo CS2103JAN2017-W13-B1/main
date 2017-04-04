@@ -12,9 +12,9 @@ import utask.model.task.EditTaskDescriptor;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
+import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.TaskType;
 import utask.model.task.Timestamp;
@@ -78,18 +78,18 @@ public class UpdateUtil {
         case FLOATING:
             placeholder = new FloatingTask(taskToEdit.getName(),
                     taskToEdit.getFrequency(), taskToEdit.getTags(),
-                    new IsCompleted(value.toString()));
+                    new Status(value.toString()));
             break;
         case DEADLINE:
             placeholder = new DeadlineTask(taskToEdit.getName(),
                     taskToEdit.getDeadline(), taskToEdit.getFrequency(),
-                    taskToEdit.getTags(), new IsCompleted(value.toString()));
+                    taskToEdit.getTags(), new Status(value.toString()));
             break;
         case EVENT:
             placeholder = new EventTask(taskToEdit.getName(),
                     taskToEdit.getDeadline(), taskToEdit.getTimestamp(),
                     taskToEdit.getFrequency(), taskToEdit.getTags(),
-                    new IsCompleted(value.toString()));
+                    new Status(value.toString()));
             break;
         default:
             System.out.println("Error checking edited task type!");
@@ -118,8 +118,8 @@ public class UpdateUtil {
                 editTaskDescriptor, attributeToRemove);
         UniqueTagList updatedTags = updateOrRemoveUniqueTagList(taskToEdit,
                 editTaskDescriptor, attributeToRemove);
-        IsCompleted updatedIsCompleted = editTaskDescriptor.getIsCompleted()
-                .orElseGet(taskToEdit::getIsCompleted);
+        Status updatedIsCompleted = editTaskDescriptor.getStatus()
+                .orElseGet(taskToEdit::getStatus);
 
         Task placeholder = null;
         switch (typeOfEditedTask(updatedDeadline, updatedTimestamp)) {

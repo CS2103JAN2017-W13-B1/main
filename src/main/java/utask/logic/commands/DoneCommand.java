@@ -28,7 +28,7 @@ public class DoneCommand extends Command implements ReversibleCommand {
     public static final String MESSAGE_DONE_TASK_SUCCESS = "Done task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";
     public static final String MESSAGE_DUPLICATE_STATUS = "This task is already completed in uTask.";
-    public static final String MESSAGE_INTERNAL_ERROR = "Error updating isCompleted attribute.";
+    public static final String MESSAGE_INTERNAL_ERROR = "Error updating Status.";
 
     private final int filteredTaskListIndex;
     private ReadOnlyTask taskToEdit;

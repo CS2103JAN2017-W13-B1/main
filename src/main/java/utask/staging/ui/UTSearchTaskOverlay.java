@@ -111,7 +111,7 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
         columnIndex.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(
                                     searchTable.getItems().indexOf(cellData.getValue()) + 1));
         columnName.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getName().fullName));
-        columnComplete.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getIsCompleted().value));
+        columnComplete.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getStatus().toString()));
         columnDeadline.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getDeadline().value));
         columnTimestamp.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getTimestamp().value));
         columnFrequency.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getFrequency().value));
