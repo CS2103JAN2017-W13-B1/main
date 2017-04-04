@@ -27,7 +27,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
     public static final String COMMAND_WORD = "update";
 
     public static final String COMMAND_FORMAT = "INDEX (must be a positive integer) [/name NAME] [/by DEADLINE]"
-            + " [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]...";
+            + " [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/status COMPLETE|INCOMPLETE]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits the details of the task specified "

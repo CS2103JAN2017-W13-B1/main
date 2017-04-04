@@ -18,16 +18,16 @@ import utask.model.task.Task;;
  * Edits the Status of an existing task in the uTask.
  */
 public class DoneCommand extends Command implements ReversibleCommand {
-    private final Logger logger = LogsCenter.getLogger(UpdateCommand.class);
+    private final Logger logger = LogsCenter.getLogger(DoneCommand.class);
 
     public static final String COMMAND_WORD = "done";
     public static final String COMMAND_FORMAT = "[INDEX (must be a positive integer)]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Updates the status to completed of the task specified "
+            + ": Updates the status to Complete of the task specified "
             + "by the index number used in the last task listing. \n"
             + "Parameters: " + COMMAND_FORMAT + "\n" + "Example: "
-            + COMMAND_WORD + COMMAND_WORD + " 1";
+            + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DONE_TASK_SUCCESS = "Done task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";

@@ -18,17 +18,16 @@ import utask.model.task.Task;
  * Edits the details of an existing task in the uTask.
  */
 public class UndoneCommand extends Command implements ReversibleCommand {
-    private final Logger logger = LogsCenter.getLogger(UpdateCommand.class);
+    private final Logger logger = LogsCenter.getLogger(UndoneCommand.class);
 
     public static final String COMMAND_WORD = "undone";
     public static final String COMMAND_FORMAT = "[INDEX (must be a positive integer)]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Updates the status to uncompleted of the task specified "
+            + ": Updates the status to Incomplete of the task specified "
             + "by the index number used in the last task listing. \n"
-            + "Parameters: " + COMMAND_FORMAT
-            + "Example: " + COMMAND_WORD
-            + COMMAND_WORD + " ";
+            + "Parameters: " + COMMAND_FORMAT + "\n" + "Example: "
+            + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_UNDONE_TASK_SUCCESS = "Undone task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";

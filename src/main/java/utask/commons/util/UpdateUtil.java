@@ -76,28 +76,8 @@ public class UpdateUtil {
         assert taskToEdit != null;
         assert value != null;
 
-        Task placeholder = null;
-        switch (typeOfEditedTask(taskToEdit.getDeadline(),
-                taskToEdit.getTimestamp())) {
-        case FLOATING:
-            placeholder = new FloatingTask(taskToEdit.getName(),
-                    taskToEdit.getFrequency(), taskToEdit.getTags(),
-                    new Status(value.toString()));
-            break;
-        case DEADLINE:
-            placeholder = new DeadlineTask(taskToEdit.getName(),
-                    taskToEdit.getDeadline(), taskToEdit.getFrequency(),
-                    taskToEdit.getTags(), new Status(value.toString()));
-            break;
-        case EVENT:
-            placeholder = new EventTask(taskToEdit.getName(),
-                    taskToEdit.getDeadline(), taskToEdit.getTimestamp(),
-                    taskToEdit.getFrequency(), taskToEdit.getTags(),
-                    new Status(value.toString()));
-            break;
-        default:
-            assert false : "Should never come to this default";
-        }
+        Task placeholder = (Task) taskToEdit;
+        placeholder.setStatus(new Status(value.toString()));
         return placeholder;
     }
 

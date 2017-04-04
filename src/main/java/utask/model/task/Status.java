@@ -9,8 +9,8 @@ import utask.commons.exceptions.IllegalValueException;
  */
 // @@author A0138423J
 public class Status {
-    public static final String MESSAGE_STATUS_CONSTRAINTS = "Task status should be true/false or "
-            + "yes/no case insensitive, and it should not be blank";
+    public static final String MESSAGE_STATUS_CONSTRAINTS = "Task status should be complete/incomplete"
+            + " case insensitive, and it should not be blank";
     public static final String STATUS_COMPLETE = "Complete";
     public static final String STATUS_INCOMPLETE = "Incomplete";
 
@@ -18,8 +18,8 @@ public class Status {
      * The first character of the status must not be a whitespace, otherwise " "
      * (a blank string) becomes a valid input.
      */
-    public static final String STATUS_VALIDATION_REGEX = "^(YES|yes|Y|y|TRUE|true|T|t|"
-            + "NO|no|N|n|FALSE|false|F|f|Complete|Incomplete)$";
+    public static final String STATUS_VALIDATION_REGEX = "^(COMPLETE|complete|Complete|INCOMPLETE|"
+            + "incomplete|Incomplete)$";
 
     public final Boolean value;
 

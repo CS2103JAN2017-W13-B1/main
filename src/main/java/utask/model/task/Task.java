@@ -48,7 +48,7 @@ public abstract class Task implements ReadOnlyTask {
     }
 
     //@@author A0138423J
-    public void setCompleted(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -77,7 +77,7 @@ public abstract class Task implements ReadOnlyTask {
 
         this.setName(replacement.getName());
         this.setFrequency(replacement.getFrequency());
-        this.setCompleted(replacement.getStatus());
+        this.setStatus(replacement.getStatus());
         this.setTags(replacement.getTags());
     }
 

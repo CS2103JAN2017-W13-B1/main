@@ -56,8 +56,8 @@ public class TaskBuilder {
     }
 
     //author A0138423J
-    public TaskBuilder withIsCompleted(String status) throws IllegalValueException {
-        this.task.setIsCompleted(new Status(status));
+    public TaskBuilder withStatus(String status) throws IllegalValueException {
+        this.task.setStatus(new Status(status));
         return this;
     }
 

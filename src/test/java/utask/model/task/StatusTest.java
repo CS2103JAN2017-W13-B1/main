@@ -15,9 +15,9 @@ public class StatusTest {
         assertFalse(Status.isValidBoolean(" ")); // spaces only
 
         // missing parts
-        assertFalse(Status.isValidBoolean("TRU")); // Upper case with incomplete
+        assertFalse(Status.isValidBoolean("COMPLE")); // Upper case with incomplete
                                                    // spelling
-        assertFalse(Status.isValidBoolean("complet")); // Lower case with
+        assertFalse(Status.isValidBoolean("incompl")); // Lower case with
                                                        // incomplete spelling
 
         // invalid parts
@@ -27,10 +27,6 @@ public class StatusTest {
         assertFalse(Status.isValidBoolean("accomplished")); // strings
 
         // valid timestamp
-        assertTrue(Status.isValidBoolean("TRUE"));
-        assertTrue(Status.isValidBoolean("false"));
-        assertTrue(Status.isValidBoolean("YES"));
-        assertTrue(Status.isValidBoolean("no"));
         assertTrue(Status.isValidBoolean("Complete"));
         assertTrue(Status.isValidBoolean("Incomplete"));
     }
