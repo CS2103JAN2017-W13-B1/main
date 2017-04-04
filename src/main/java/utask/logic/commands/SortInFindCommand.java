@@ -10,8 +10,7 @@ import utask.logic.commands.exceptions.CommandException;
  */
 public class SortInFindCommand extends Command {
 
-    //TODO
-    //Similar w jiahao
+    //TODO: Very similar with Jiahao general sort
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SUCCESS = "Tasks list has been sorted";
 

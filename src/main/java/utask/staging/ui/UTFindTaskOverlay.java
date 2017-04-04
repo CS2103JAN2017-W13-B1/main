@@ -66,7 +66,6 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
 
     private ObservableList<ReadOnlyTask> masterData;
 
-    private Pane parent;
     private boolean isSearchOverlayShown = false;
 
     private FilteredList<ReadOnlyTask> filteredData;
@@ -76,7 +75,6 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
         super(FXML);
 
         assert(parent != null && logic != null);
-        this.parent = parent;
         this.logic = logic;
 
         masterData = logic.getFilteredTaskList();
@@ -106,10 +104,6 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
     }
 
     private void addCellFactoriesToColumn() {
-
-        //TODO: Try bean property
-        //columnName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-
         columnIndex.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(
                                     searchTable.getItems().indexOf(cellData.getValue()) + 1));
         columnName.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getName().fullName));
@@ -121,31 +115,52 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
         columnIndex.setSortable(false);
     }
 
-    //TODO MAGIC
     private void sort(String columnAlphabet, String orderBy) {
-        TableColumn<ReadOnlyTask, String> column = null;
+        TableColumn<ReadOnlyTask, String> column = getColumnToSortFromStringColumnAlphabet(columnAlphabet);
+        SortType sortType = getSortTypeFromStringOrderBy(orderBy);
+        sort(column, sortType);
+    }
 
-        switch (columnAlphabet) {
-        case "a" :
-            column = columnName;
-            break;
-        case "b" :
-            column = columnComplete;
-            break;
-        case "c" :
-            column = columnDeadline;
-            break;
-        case "d" :
-            column = columnTimestamp;
-            break;
-        case "e" :
-            column = columnFrequency;
-            break;
-        case "f" :
-            column = columnTag;
-            break;
+    private void sort(TableColumn<ReadOnlyTask, String> column, SortType sortOrder) {
+        searchTable.getSortOrder().clear();
+        column.setSortType(sortOrder);
+        searchTable.getSortOrder().add(column);
+    }
+
+    /*
+     * Gets the first alphabet letter in the TableView column which is in the FXML file
+     * This prevent the use of magic numbers or constants
+     * */
+    private String getColumnAlphabetOfTableColumn(TableColumn<ReadOnlyTask, String> column) {
+        String columnName = column.getText();
+        assert !columnName.isEmpty();
+
+        return column.getText().substring(0, 1);
+    }
+
+    private TableColumn<ReadOnlyTask, String> getColumnToSortFromStringColumnAlphabet(String columnAlphabet) {
+
+        if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnName))) {
+            return columnName;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnComplete))) {
+            return columnComplete;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnDeadline))) {
+            return columnDeadline;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnDeadline))) {
+            return columnDeadline;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnTimestamp))) {
+            return columnTimestamp;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnFrequency))) {
+            return columnFrequency;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnTag))) {
+            return columnTag;
         }
 
+        assert false : "Incorrect Usage. Column alphabet provided should be shown in the UI";
+        return null;
+    }
+
+    private SortType getSortTypeFromStringOrderBy(String orderBy) {
         SortType sortType;
 
         switch (orderBy) {
@@ -157,48 +172,8 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
             sortType = SortType.ASCENDING;
             break;
         }
-
-        sort(column, sortType);
+        return sortType;
     }
-
-    private void sort(TableColumn<ReadOnlyTask, String> column, SortType sortOrder) {
-        searchTable.getSortOrder().clear();
-        columnName.setSortType(sortOrder);
-        searchTable.getSortOrder().addAll(column);
-    }
-
-    public void filterResultsByKeywords(FilteredList<ReadOnlyTask> filteredData, String keywords) {
-        filteredData.setPredicate(task -> {
-            // If filter text is empty, display all persons.
-            if (keywords == null || keywords.isEmpty()) {
-                return true;
-            }
-
-            // Compare first name and last name of every person with filter text.
-            String lowerCaseFilter = keywords.toLowerCase();
-
-//            if (task.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
-//                return true; // Filter matches first name.
-//            } else if (task.getLastName().toLowerCase().contains(lowerCaseFilter)) {
-//                return true; // Filter matches last name.
-//            }
-
-            //TODO: Build comprehensive search
-            return task.getName().fullName.toLowerCase().contains(lowerCaseFilter) ||
-            task.getTags().getAllTagNames().toLowerCase().contains(lowerCaseFilter);
-
-            //return false; // Does not match.
-        });
-    }
-
-//    public void delete() {
-//        ReadOnlyTask remove = searchTable.getSelectionModel().getSelectedItem();
-//
-//        if (remove != null) {
-//            masterData.remove(remove);
-//            //TODO: Do actual remove
-//        }
-//    }
 
     public void openIfSearchIsNotShowing() {
         if (!isSearchOverlayShown) {
@@ -220,7 +195,6 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
     @Subscribe
     private void handleFindRequestEvent(FindRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //filterResultsByKeywords(filteredData, event.findKeywords.trim());
         openIfSearchIsNotShowing();
     }
 
@@ -239,8 +213,7 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
 
     @Subscribe
     private void handleUIUpdateSortInFindOverlayEvent(UIUpdateSortInFindOverlayEvent event) {
-
-        assert isSearchOverlayShown;
+        assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
 
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         sort(event.columnAlphabet, event.orderBy);
