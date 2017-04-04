@@ -69,8 +69,8 @@ public class DeleteCommand extends Command implements ReversibleCommand {
     //@@author -- - - -
     @Override
     public void undo() throws Exception {
-        notifyUI(taskToDelete);
         model.addTask((Task) taskToDelete);
+        notifyUI(taskToDelete);
     }
 
     @Override

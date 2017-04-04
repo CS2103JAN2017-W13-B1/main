@@ -94,7 +94,7 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
     }
 
     public void redo() throws DuplicateTaskException {
-        notifyUI(toAdd);
         model.addTask(toAdd);
+        notifyUI(toAdd);
     }
 }
