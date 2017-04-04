@@ -8,11 +8,11 @@ import java.util.Stack;
 import java.util.logging.Logger;
 
 import javafx.collections.transformation.FilteredList;
-import utask.commons.comparators.AToZComparator;
-import utask.commons.comparators.EarliestFirstComparator;
-import utask.commons.comparators.LatestFirstComparator;
-import utask.commons.comparators.TagComparator;
-import utask.commons.comparators.ZToAComparator;
+import utask.commons.comparators.AscendingAlphabeticalComparator;
+import utask.commons.comparators.DescendingAlphabeticalComparator;
+import utask.commons.comparators.EarliestDeadlineComparator;
+import utask.commons.comparators.LatestDeadlineComparator;
+import utask.commons.comparators.TagsNameComparator;
 import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.UnmodifiableObservableList;
@@ -31,7 +31,7 @@ import utask.staging.ui.helper.UTFilteredListHelper;
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
-    private String userConfig = null;
+    private String sortingConfig = null;
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final UTask uTask;
@@ -80,9 +80,8 @@ public class ModelManager extends ComponentManager implements Model {
 //        UTFliterListHelper.getInstance().addList(floatingTasks);
 
         UTFilteredListHelper.getInstance().addFindFilteredList(filteredFindTasks);
-
-        userConfig = Model.SORT_ORDER_DEFAULT;
-        sortFilteredTaskList(userConfig);
+        sortingConfig = Model.SORT_ORDER_DEFAULT;
+        sortFilteredTaskList(sortingConfig);
     }
 
     public ModelManager() {
@@ -152,7 +151,7 @@ public class ModelManager extends ComponentManager implements Model {
         //TODO: DUPLICATES
         UTFilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
-        sortFilteredTaskList(userConfig);
+        sortFilteredTaskList(sortingConfig);
     }
 
     @Override
@@ -166,7 +165,7 @@ public class ModelManager extends ComponentManager implements Model {
         //TODO: DUPLICATES
         UTFilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
-        sortFilteredTaskList(userConfig);
+        sortFilteredTaskList(sortingConfig);
     }
 
     //@@author A0139996A
@@ -181,7 +180,7 @@ public class ModelManager extends ComponentManager implements Model {
         //TODO: DUPLICATES
         UTFilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
-        sortFilteredTaskList(userConfig);
+        sortFilteredTaskList(sortingConfig);
     }
 
     /** Gets total size of tasks in underlying lists of listviews*/
@@ -314,33 +313,33 @@ public class ModelManager extends ComponentManager implements Model {
         assert sortingOrder != null;
         switch(sortingOrder) {
         case "": //default sorting order
-            uTask.sortByComparator(new EarliestFirstComparator());
-            setUserConfig(sortingOrder);
+            uTask.sortByComparator(new EarliestDeadlineComparator());
+            setSortingConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_EARLIEST_FIRST:
-            uTask.sortByComparator(new EarliestFirstComparator());
-            setUserConfig(sortingOrder);
+            uTask.sortByComparator(new EarliestDeadlineComparator());
+            setSortingConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_LATEST_FIRST:
-            uTask.sortByComparator(new LatestFirstComparator());
-            setUserConfig(sortingOrder);
+            uTask.sortByComparator(new LatestDeadlineComparator());
+            setSortingConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_A_TO_Z:
-            uTask.sortByComparator(new AToZComparator());
-            setUserConfig(sortingOrder);
+            uTask.sortByComparator(new AscendingAlphabeticalComparator());
+            setSortingConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_Z_TO_A:
-            uTask.sortByComparator(new ZToAComparator());
-            setUserConfig(sortingOrder);
+            uTask.sortByComparator(new DescendingAlphabeticalComparator());
+            setSortingConfig(sortingOrder);
             break;
 
         case Model.SORT_ORDER_BY_TAG:
-            uTask.sortByComparator(new TagComparator());
-            setUserConfig(sortingOrder);
+            uTask.sortByComparator(new TagsNameComparator());
+            setSortingConfig(sortingOrder);
             break;
 
         default:
@@ -350,8 +349,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateUTaskChanged();
     }
 
-    private void setUserConfig(String userConfig) {
-        this.userConfig = userConfig;
+    /*
+     * This method is used to set user sorting configuration
+     */
+    private void setSortingConfig(String userConfig) {
+        assert userConfig != null;
+        logger.fine("The sorting order is set as " + userConfig);
+        this.sortingConfig = userConfig;
     }
     //@@author
 

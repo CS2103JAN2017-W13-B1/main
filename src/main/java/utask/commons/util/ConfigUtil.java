@@ -19,4 +19,9 @@ public class ConfigUtil {
         JsonUtil.saveJsonFile(config, configFilePath);
     }
 
+    // @@author A0138493W
+    public static String getConfigPath() throws IOException {
+        return Config.DEFAULT_CONFIG_FILE;
+    }
+
 }

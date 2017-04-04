@@ -67,6 +67,14 @@ public class ParserUtil {
         if (!isValidIndex(command.trim())) {
             return Optional.empty();
         }
+        ArrayList<Integer> intIndexList = extractNumberFromInput(command);
+        return Optional.of(getReversedSortedList(intIndexList));
+    }
+
+    /**
+     * Returns ArrayList which contains not repeated input numbers
+     */
+    private static ArrayList<Integer> extractNumberFromInput(String command) {
         String[] splittedStringIndexes = command.trim().replace(" ", "").split(",");
         ArrayList<Integer> intIndexList = new ArrayList<Integer>();
         for (String index : splittedStringIndexes) {
@@ -85,10 +93,13 @@ public class ParserUtil {
                 }
             }
         }
-        return Optional.of(getReverseSortedList(intIndexList));
+        return intIndexList;
     }
 
-    private static ArrayList<Integer> getReverseSortedList(ArrayList<Integer> intIndexList) {
+    /**
+     * Returns a sorted reversed ArrayList
+     */
+    private static ArrayList<Integer> getReversedSortedList(ArrayList<Integer> intIndexList) {
         Collections.sort(intIndexList);
         Collections.reverse(intIndexList);
         return intIndexList;

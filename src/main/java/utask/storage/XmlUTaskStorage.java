@@ -72,4 +72,14 @@ public class XmlUTaskStorage implements UTaskStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableUTask(uTask));
     }
 
+    @Override
+    public void moveSaveFile(String prePath, String newPath) {
+        assert false : "This method is not impmented for xml";
+    }
+
+    @Override
+    public void setFilePath(String path) {
+        this.filePath = path;
+    }
+
 }
