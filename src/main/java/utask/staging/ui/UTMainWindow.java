@@ -19,6 +19,7 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
 import utask.ui.HelpWindow;
+import utask.ui.dialogs.UTTagColorDialog;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
@@ -142,7 +143,7 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
         new UTFindTaskOverlay(topPlaceholder, logic);
-        new UTDialog(rootPane);
+        new UTTagColorDialog(rootPane).show();
     }
 
     public UTTodoListPanel getTodoListPanel() {
