@@ -26,8 +26,6 @@ public class SortInFindCommand extends Command {
     public SortInFindCommand(String column, String orderBy) {
         this.column = column;
         this.orderBy = orderBy;
-
-        System.out.println(column + "  " + orderBy);
     }
 
     @Override

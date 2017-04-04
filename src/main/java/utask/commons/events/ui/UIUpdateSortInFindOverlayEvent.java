@@ -1,7 +1,6 @@
 package utask.commons.events.ui;
 
 import utask.commons.events.BaseEvent;
-import utask.model.task.ReadOnlyTask;
 
 /*
  * This event is used to notify UTListViewHelper

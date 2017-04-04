@@ -18,9 +18,10 @@ public class SortInFindCommandParser {
     public Command parse(String args) {
         String input = args.trim().toLowerCase();
         String column = ParserUtil.parseColumnAlphabetOfSortInFind(input);
-        String orderBy = ParserUtil.parseColumnAlphabetOfSortInFind(input);
+        String orderBy = ParserUtil.parseOrderByOfSortInFind(input);
 
         if (!column.isEmpty()) {
+            System.out.println(orderBy);
             return new SortInFindCommand(column, orderBy);
         }
 

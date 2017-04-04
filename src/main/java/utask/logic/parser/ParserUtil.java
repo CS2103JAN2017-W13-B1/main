@@ -38,7 +38,7 @@ public class ParserUtil {
     private static final Pattern MAC_PATH_FORMAT =
             Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
     private static final Pattern SORT_IN_FIND_FORMAT =
-            Pattern.compile("(?<columnAlphabet>[a-f])\\s*(?<orderBy>(asc|dsc){0,1})");
+            Pattern.compile("(?<columnAlphabet>[a-f])\\s*(?<orderBy>(asc|dsc))?");
 
     /**
      * Returns the specified index in the {@code command} if it is a positive
@@ -227,11 +227,14 @@ public class ParserUtil {
 
         if (matcher.matches()) {
             column = matcher.group("columnAlphabet");
+        } else {
+            //throw ex
         }
 
         return column;
     }
 
+    //TODO: Clean up
     public static String parseOrderByOfSortInFind(String command) {
         assert command != null && !command.isEmpty();
 
@@ -241,6 +244,13 @@ public class ParserUtil {
 
         if (matcher.matches()) {
             orderBy = matcher.group("orderBy");
+        } else {
+            //throw ex
+        }
+
+        //Since orderBy is optional, matcher group may return a null
+        if (orderBy == null) {
+            orderBy = "";
         }
 
         return orderBy;
