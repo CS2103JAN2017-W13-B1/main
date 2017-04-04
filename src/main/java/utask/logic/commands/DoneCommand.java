@@ -52,6 +52,10 @@ public class DoneCommand extends Command implements ReversibleCommand {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
+        // If value already completed, inform the user
+        if (taskToEdit.getStatus().isStatusComplete()) {
+            throw new CommandException(MESSAGE_DUPLICATE_STATUS);
+        }
 
         // Retrieve task to be edited from save file
         taskToEdit = UpdateUtil.fetchTaskToEdit(filteredTaskListIndex);
