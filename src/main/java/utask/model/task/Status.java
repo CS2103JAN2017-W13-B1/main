@@ -11,6 +11,8 @@ import utask.commons.exceptions.IllegalValueException;
 public class Status {
     public static final String MESSAGE_STATUS_CONSTRAINTS = "Task status should be true/false or "
             + "yes/no case insensitive, and it should not be blank";
+    public static final String STATUS_COMPLETE = "Complete";
+    public static final String STATUS_INCOMPLETE = "Incomplete";
 
     /*
      * The first character of the status must not be a whitespace, otherwise " "
@@ -18,7 +20,7 @@ public class Status {
      */
     public static final String STATUS_VALIDATION_REGEX = "^(YES|yes|Y|y|TRUE|true|T|t|"
             + "NO|no|N|n|FALSE|false|F|f|Complete|Incomplete)$";
-    //
+
     public final Boolean value;
 
     /**
@@ -83,9 +85,9 @@ public class Status {
     @Override
     public String toString() {
         if (value) {
-            return StatusAsString.TRUE.toString();
+            return STATUS_COMPLETE;
         } else {
-            return StatusAsString.FALSE.toString();
+            return STATUS_INCOMPLETE;
         }
     }
 
@@ -100,20 +102,5 @@ public class Status {
     @Override
     public int hashCode() {
         return value.hashCode();
-    }
-
-    public enum StatusAsString {
-        TRUE("Complete"), FALSE("Incomplete");
-
-        private final String text;
-
-        private StatusAsString(final String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return text;
-        }
     }
 }
