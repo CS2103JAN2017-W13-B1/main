@@ -227,15 +227,11 @@ public class ParserUtil {
 
         if (matcher.matches()) {
             column = matcher.group("columnAlphabet");
-        } else {
-            //throw ex
-            //throw new IllegalValueException("Column alphabet is not in correct range");
         }
 
         return column;
     }
 
-    //TODO: Clean up
     public static String parseOrderByOfSortInFind(String command) throws IllegalValueException {
         assert command != null && !command.isEmpty();
 
@@ -246,7 +242,7 @@ public class ParserUtil {
         if (matcher.matches()) {
             orderBy = matcher.group("orderBy");
 
-            //Since orderBy is optional, matcher group may return a null
+            //Since orderBy is optional, matcher::group may return a null ptr.
             if (orderBy == null) {
                 orderBy = "";
             }
