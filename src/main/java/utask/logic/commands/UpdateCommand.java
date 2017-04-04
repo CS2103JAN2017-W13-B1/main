@@ -1,8 +1,10 @@
 package utask.logic.commands;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import utask.commons.core.EventsCenter;
+import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
 import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.util.UpdateUtil;
@@ -20,6 +22,7 @@ import utask.model.task.UniqueTaskList;
 
 // @@author A0138423J
 public class UpdateCommand extends Command implements ReversibleCommand {
+    private final Logger logger = LogsCenter.getLogger(UpdateCommand.class);
 
     public static final String COMMAND_WORD = "update";
 
@@ -89,6 +92,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
+        logger.fine(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
         return new CommandResult(
                 String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }

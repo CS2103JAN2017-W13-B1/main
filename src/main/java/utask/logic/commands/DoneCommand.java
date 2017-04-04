@@ -1,6 +1,9 @@
 package utask.logic.commands;
 
+import java.util.logging.Logger;
+
 import utask.commons.core.EventsCenter;
+import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
 import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
@@ -15,6 +18,7 @@ import utask.model.task.Task;;
  * Edits the Status of an existing task in the uTask.
  */
 public class DoneCommand extends Command implements ReversibleCommand {
+    private final Logger logger = LogsCenter.getLogger(UpdateCommand.class);
 
     public static final String COMMAND_WORD = "done";
     public static final String COMMAND_FORMAT = "[INDEX (must be a positive integer)]";
@@ -67,6 +71,7 @@ public class DoneCommand extends Command implements ReversibleCommand {
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
+        logger.fine(String.format(MESSAGE_DONE_TASK_SUCCESS, editedTask));
         return new CommandResult(
                 String.format(MESSAGE_DONE_TASK_SUCCESS, editedTask));
     }
