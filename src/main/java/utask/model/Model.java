@@ -97,4 +97,7 @@ public interface Model {
 
     /** Gets size of reversible commands in reversible stack*/
     int getRedoCommandCount();
+
+    /** Gets default commands as a String Set*/
+    Set<String> getDefaultCommandsSet();
 }

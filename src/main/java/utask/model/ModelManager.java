@@ -34,6 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final UTask uTask;
+    private final AliasMap aliasMap;
     private final FilteredList<ReadOnlyTask> filteredTasks;
 
     private final FilteredList<ReadOnlyTask> dueTasks;
@@ -54,6 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with UTask: " + uTask + " and user prefs " + userPrefs);
 
         this.uTask = new UTask(uTask);
+        this.aliasMap = new AliasMap();
         undoStack = new Stack<ReversibleCommand>();
         redoStack = new Stack<ReversibleCommand>();
         filteredTasks = new FilteredList<>(this.uTask.getTaskList());
@@ -496,15 +498,9 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-//    private class NotCompletedQualifier implements Qualifier {
-//        @Override
-//        public boolean run(ReadOnlyTask task) {
-//            return !task.getIsCompleted().isCompleted();
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return "deadline&timestamp=empty";
-//        }
-//    }
+    //@@author A0138493W
+    @Override
+    public Set<String> getDefaultCommandsSet() {
+        return aliasMap.getDefaultCommandsSet();
+    }
 }

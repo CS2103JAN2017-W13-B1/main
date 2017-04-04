@@ -51,7 +51,7 @@ public class AliasMap {
     /*
      * Return all the default commands as a String Set
      */
-    public Set<String> getDefaultCommands() {
+    public Set<String> getDefaultCommandsSet() {
         return getDefaultAliasMapping().keySet();
     }
 }

@@ -27,8 +27,11 @@ public class AliasCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        // TODO Auto-generated method stub
-        return null;
+        if (!model.getDefaultCommandsSet().contains(defaultCommandWord)) {
+            throw new CommandException(String.format(MESSAGE_COMMAND_WORD_NOT_EXIST, defaultCommandWord));
+        }
+
+        return new CommandResult(String.format(MESSAGE_CREATE_ALIAS_SUCCESS, alias, defaultCommandWord));
     }
 
 }
