@@ -22,12 +22,13 @@ public class RelocateCommand extends Command {
     public static final String MESSAGE_INVALID_PATH = "The path entered is invalid";
 
     public static String destinationPath;
+    private static final String DEFAULT_FOLDER_NAME = "data";
 
     /**
      * Relocate Command for relocating back to default location.
      * */
     public RelocateCommand() {
-        this.destinationPath = "data";
+        this.destinationPath = DEFAULT_FOLDER_NAME;
     }
 
     /**
@@ -37,7 +38,7 @@ public class RelocateCommand extends Command {
         if (isValidPath) {
             this.destinationPath = path;
         } else {
-            this.destinationPath = "data";
+            this.destinationPath = DEFAULT_FOLDER_NAME;
         }
     }
 

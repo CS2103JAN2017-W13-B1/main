@@ -190,10 +190,13 @@ public class StageDriver extends Application {
     @Subscribe
     private void handleFileRelocateEvent(FileRelocateEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String prePath = config.getUTaskFilePath();
         config.setUTaskFilePath(event.getPath() + "/utask.xml");
+        storage.setFilePath(event.getPath() + "/utask.xml");
         //Update config file in case it was missing to begin with or there are new/unused fields
         try {
-            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
+            ConfigUtil.saveConfig(config, ConfigUtil.getConfigPath());
+            storage.moveUTask(prePath, event.getPath() + "/utask.xml");
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
         }

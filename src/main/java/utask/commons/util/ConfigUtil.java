@@ -17,6 +17,16 @@ public class ConfigUtil {
 
     public static void saveConfig(Config config, String configFilePath) throws IOException {
         JsonUtil.saveJsonFile(config, configFilePath);
+        Config.relocatedFile = configFilePath;
+    }
+
+    // @@author A0138493W
+    public static String getConfigPath() throws IOException {
+        if (Config.relocatedFile != "") {
+            return Config.relocatedFile;
+        } else {
+            return Config.DEFAULT_CONFIG_FILE;
+        }
     }
 
 }

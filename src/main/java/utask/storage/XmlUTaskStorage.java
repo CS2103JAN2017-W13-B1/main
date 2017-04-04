@@ -72,4 +72,14 @@ public class XmlUTaskStorage implements UTaskStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableUTask(uTask));
     }
 
+    @Override
+    public void moveUTask(String prePath, String newPath) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void setFilePath(String path) {
+        this.filePath = path;
+    }
+
 }
