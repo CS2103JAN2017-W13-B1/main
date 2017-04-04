@@ -22,7 +22,7 @@ public class ConfigUtil {
 
     // @@author A0138493W
     public static String getConfigPath() throws IOException {
-        if (Config.relocatedFile != "") {
+        if (!Config.relocatedFile.isEmpty()) {
             return Config.relocatedFile;
         } else {
             return Config.DEFAULT_CONFIG_FILE;
