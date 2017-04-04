@@ -71,13 +71,33 @@ public class UpdateUtil {
      * Creates and returns a {@code Task} with the details of {@code taskToEdit}
      * edited with {@code editTaskDescriptor}.
      */
-    public static Task createEditedTask(ReadOnlyTask taskToEdit, Boolean value)
+    public static Task createEditedTask(ReadOnlyTask taskToEdit, String value)
             throws IllegalValueException {
         assert taskToEdit != null;
         assert value != null;
 
-        Task placeholder = (Task) taskToEdit;
-        placeholder.setStatus(new Status(value.toString()));
+        Task placeholder = null;
+        switch (typeOfEditedTask(taskToEdit.getDeadline(),
+                taskToEdit.getTimestamp())) {
+        case FLOATING:
+            placeholder = new FloatingTask(taskToEdit.getName(),
+                    taskToEdit.getFrequency(), taskToEdit.getTags(),
+                    new Status(value.toString()));
+            break;
+        case DEADLINE:
+            placeholder = new DeadlineTask(taskToEdit.getName(),
+                    taskToEdit.getDeadline(), taskToEdit.getFrequency(),
+                    taskToEdit.getTags(), new Status(value));
+            break;
+        case EVENT:
+            placeholder = new EventTask(taskToEdit.getName(),
+                    taskToEdit.getDeadline(), taskToEdit.getTimestamp(),
+                    taskToEdit.getFrequency(), taskToEdit.getTags(),
+                    new Status(value.toString()));
+            break;
+        default:
+            assert false : "Should never come to this default";
+        }
         return placeholder;
     }
 
