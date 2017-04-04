@@ -1,7 +1,9 @@
 package utask.logic.commands;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
+import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
 import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
@@ -18,11 +20,12 @@ import utask.model.task.UniqueTaskList;
 
 // @@author A0138423J
 public class UpdateCommand extends Command implements ReversibleCommand {
+    private final Logger logger = LogsCenter.getLogger(UpdateCommand.class);
 
     public static final String COMMAND_WORD = "update";
 
     public static final String COMMAND_FORMAT = "INDEX (must be a positive integer) [/name NAME] [/by DEADLINE]"
-            + " [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]...";
+            + " [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/status COMPLETE|INCOMPLETE]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Edits the details of the task specified "
@@ -86,6 +89,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
+        logger.fine(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
         return new CommandResult(
                 String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }

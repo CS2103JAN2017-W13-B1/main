@@ -35,9 +35,9 @@ import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.EventTask;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
+import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.Timestamp;
 import utask.storage.XmlSerializableUTask;
@@ -77,15 +77,15 @@ public class TestUtil {
         try {
             //CHECKSTYLE.OFF: LineLength
             return new Task[]{
-                new EventTask(new Name("Sample Task A"), new Deadline("010117"), new Timestamp("0000 to 2359"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no")),
-                new EventTask(new Name("Sample Task B"), new Deadline("010217"), new Timestamp("0800 to 1200"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no")),
-                new EventTask(new Name("Sample Task C"), new Deadline("010317"), new Timestamp("1200 to 1300"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no")),
-                new EventTask(new Name("Sample Task D"), new Deadline("010417"), new Timestamp("1600 to 1800"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no")),
-                new EventTask(new Name("Sample Task E"), new Deadline("010517"), new Timestamp("1800 to 1830"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no")),
-                new EventTask(new Name("Sample Task F"), new Deadline("010617"), new Timestamp("1800 to 1815"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no")),
-                new EventTask(new Name("Sample Task G"), new Deadline("010717"), new Timestamp("2000 to 2300"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no")),
-                new EventTask(new Name("Sample Task H"), new Deadline("010817"), new Timestamp("1500 to 1530"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no")),
-                new EventTask(new Name("Sample Task I"), new Deadline("010917"), new Timestamp("0600 to 0800"), new Frequency("-"), new UniqueTagList(), new IsCompleted("no"))
+                new EventTask(new Name("Sample Task A"), new Deadline("010117"), new Timestamp("0000 to 2359"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task B"), new Deadline("010217"), new Timestamp("0800 to 1200"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task C"), new Deadline("010317"), new Timestamp("1200 to 1300"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task D"), new Deadline("010417"), new Timestamp("1600 to 1800"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task E"), new Deadline("010517"), new Timestamp("1800 to 1830"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task F"), new Deadline("010617"), new Timestamp("1800 to 1815"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task G"), new Deadline("010717"), new Timestamp("2000 to 2300"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task H"), new Deadline("010817"), new Timestamp("1500 to 1530"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task I"), new Deadline("010917"), new Timestamp("0600 to 0800"), new Frequency("-"), new UniqueTagList(), new Status("incomplete"))
             };
             //CHECKSTYLE.ON: LineLength
         } catch (IllegalValueException e) {

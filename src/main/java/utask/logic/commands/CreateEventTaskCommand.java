@@ -13,12 +13,12 @@ public class CreateEventTaskCommand extends CreateCommand {
 
     public CreateEventTaskCommand(String name, String deadline,
             String timestamp, String frequency, Set<String> tags,
-            String isCompleted) throws IllegalValueException {
-        super(frequency, tags, isCompleted);
+            String status) throws IllegalValueException {
+        super(frequency, tags, status);
 
         this.toAdd = new EventTask(new Name(name), new Deadline(deadline),
                 new Timestamp(timestamp), this.frequency,
-                new UniqueTagList(tagSet), this.isCompleted);
+                new UniqueTagList(tagSet), this.status);
     }
 
 }

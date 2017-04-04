@@ -8,9 +8,9 @@ import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
+import utask.model.task.Status;
 import utask.model.task.Timestamp;
 
 //DEMO CLASS
@@ -20,7 +20,7 @@ public class TypicalTaskBuilder {
         ObservableList<ReadOnlyTask> tasks = FXCollections.observableArrayList();
 
         try {
-            DeadlineTask f = new DeadlineTask(new Name("Update John on project specs"), new Deadline("010317"), Frequency.getEmptyFrequency(), new UniqueTagList("Work", "Urgent"), new IsCompleted("y"));
+            DeadlineTask f = new DeadlineTask(new Name("Update John on project specs"), new Deadline("010317"), Frequency.getEmptyFrequency(), new UniqueTagList("Work", "Urgent"), new Status("complete"));
             tasks.add(f);
         } catch (IllegalValueException e) {
             e.printStackTrace();
@@ -32,8 +32,8 @@ public class TypicalTaskBuilder {
         ObservableList<ReadOnlyTask> tasks = FXCollections.observableArrayList();
 
         try {
-            DeadlineTask f = new DeadlineTask(new Name("Help Alice with MSWord"), new Deadline("010417"), Frequency.getEmptyFrequency(), new UniqueTagList("Asap"), new IsCompleted("y"));
-            EventTask e = new EventTask(new Name("Dinner with friends"), new Deadline("010417"), new Timestamp("1730 to 2200"), new Frequency("Every Monday"), new UniqueTagList("Life", "NonWork"), new IsCompleted("y"));
+            DeadlineTask f = new DeadlineTask(new Name("Help Alice with MSWord"), new Deadline("010417"), Frequency.getEmptyFrequency(), new UniqueTagList("Asap"), new Status("complete"));
+            EventTask e = new EventTask(new Name("Dinner with friends"), new Deadline("010417"), new Timestamp("1730 to 2200"), new Frequency("Every Monday"), new UniqueTagList("Life", "NonWork"), new Status("complete"));
             tasks.add(f);
             tasks.add(e);
         } catch (IllegalValueException e) {

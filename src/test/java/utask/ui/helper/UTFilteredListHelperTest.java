@@ -15,9 +15,9 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
+import utask.model.task.Status;
 import utask.staging.ui.helper.UTFilteredListHelper;
 
 public class UTFilteredListHelperTest {
@@ -79,7 +79,7 @@ public class UTFilteredListHelperTest {
         //TODO: Create common test data helper
         try {
             ReadOnlyTask task = new FloatingTask(new Name("Test"),
-                    Frequency.getEmptyFrequency(), new UniqueTagList(), IsCompleted.getEmptyIsCompleted());
+                    Frequency.getEmptyFrequency(), new UniqueTagList(), Status.getEmptyStatus());
             list.add(task);
         } catch (IllegalValueException e) {
         }

@@ -405,7 +405,7 @@ public class ModelManager extends ComponentManager implements Model {
                             || StringUtil.containsWordIgnoreCase(task.getDeadline().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getTimestamp().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getFrequency().value, keyword)
-                            || StringUtil.containsWordIgnoreCase(task.getIsCompleted().value, keyword)
+                            || StringUtil.containsWordIgnoreCase(task.getStatus().toString(), keyword)
                             || StringUtil.containsWordIgnoreCase(task.getTags().getAllTagNames(), keyword))
                     .findAny()
                     .isPresent();
@@ -439,7 +439,7 @@ public class ModelManager extends ComponentManager implements Model {
                 return taskDate.getYear() == date.getYear()
                         && taskDate.getMonth() == date.getMonth()
                         && taskDate.getDate() == date.getDate()
-                        && !task.getIsCompleted().isCompleted();
+                        && !task.getStatus().isStatusComplete();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -469,7 +469,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             try {
                 return task.getDeadline().getDate().before(date)
-                        && !task.getIsCompleted().isCompleted();
+                        && !task.getStatus().isStatusComplete();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -499,7 +499,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             try {
                 return task.getDeadline().getDate().after(date)
-                        && !task.getIsCompleted().isCompleted();
+                        && !task.getStatus().isStatusComplete();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -516,7 +516,7 @@ public class ModelManager extends ComponentManager implements Model {
     private class EmptyDeadlineAndTimestampQualifier implements Qualifier {
         @Override
         public boolean run(ReadOnlyTask task) {
-            if (task.getDeadline().isEmpty() && task.getTimestamp().isEmpty() && !task.getIsCompleted().isCompleted()) {
+            if (task.getDeadline().isEmpty() && task.getTimestamp().isEmpty() && !task.getStatus().isStatusComplete()) {
                 return true;
             } else {
                 return false;

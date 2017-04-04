@@ -3,7 +3,7 @@ package utask.model.task;
 public enum Attribute {
     DEADLINE("deadline"),
     TIMESTAMP("timestamp"),
-    ISCOMPLETED("iscompleted"),
+    STATUS("status"),
     FREQUENCY("frequency"),
     TAG("tag"),
     UNKNOWN("?");

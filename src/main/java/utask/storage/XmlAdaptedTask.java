@@ -14,9 +14,9 @@ import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
+import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.Timestamp;
 
@@ -34,7 +34,7 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String frequency;
     @XmlElement(required = true)
-    private String iscompleted;
+    private String status;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -56,7 +56,7 @@ public class XmlAdaptedTask {
         deadline = source.getDeadline().value;
         timestamp = source.getTimestamp().value;
         frequency = source.getFrequency().value;
-        iscompleted = source.getIsCompleted().value;
+        status = source.getStatus().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -85,7 +85,7 @@ public class XmlAdaptedTask {
         final Timestamp timestamp;
         final Frequency frequency;
         final UniqueTagList tags = new UniqueTagList(taskTags);
-        final IsCompleted iscompleted;
+        final Status status;
 
         //TODO: Do a helper/factory to spawn necessary objects
         if ("".equals(this.deadline)) {
@@ -106,18 +106,18 @@ public class XmlAdaptedTask {
             frequency = new Frequency(this.frequency);
         }
 
-        if ("".equals(this.iscompleted)) {
-            iscompleted = IsCompleted.getEmptyIsCompleted();
+        if ("".equals(this.status)) {
+            status = Status.getEmptyStatus();
         } else {
-            iscompleted = new IsCompleted(this.iscompleted);
+            status = new Status(this.status);
         }
 
         if (!"".equals(this.deadline) && !"".equals(this.timestamp)) {
-            return new EventTask(name, deadline, timestamp, frequency, tags, iscompleted);
+            return new EventTask(name, deadline, timestamp, frequency, tags, status);
         } else if ("".equals(this.timestamp)) {
-            return new DeadlineTask(name, deadline, frequency, tags, iscompleted);
+            return new DeadlineTask(name, deadline, frequency, tags, status);
         } else {
-            return new FloatingTask(name, frequency, tags, iscompleted);
+            return new FloatingTask(name, frequency, tags, status);
         }
     }
 }

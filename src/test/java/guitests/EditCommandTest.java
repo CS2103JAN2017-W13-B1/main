@@ -1,7 +1,7 @@
 package guitests;
 
 import static org.junit.Assert.assertTrue;
-import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static utask.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 
 import org.junit.Test;
 
@@ -70,7 +70,7 @@ public class EditCommandTest extends UTaskGuiTest {
     @Test
     public void edit_missingPersonIndex_failure() {
         commandBox.runCommand("update Bobby");
-        assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
+        assertResultMessage(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
 //    @Test

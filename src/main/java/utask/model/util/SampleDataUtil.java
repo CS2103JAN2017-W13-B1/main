@@ -19,8 +19,8 @@ import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
 import utask.model.task.FloatingTask;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
+import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.Timestamp;
 import utask.model.task.UniqueTaskList.DuplicateTaskException;
@@ -81,7 +81,7 @@ public class SampleDataUtil {
                 new Frequency("Every " + randomFrequency()),
                 new UniqueTagList(new Tag("tag" + Math.abs(seed)),
                         new Tag("tag" + Math.abs(seed + 1))),
-                new IsCompleted("no"));
+                new Status("no"));
     }
 
     /*
@@ -93,7 +93,7 @@ public class SampleDataUtil {
                 new Frequency("Every " + randomFrequency()),
                 new UniqueTagList(new Tag("tag" + Math.abs(seed)),
                         new Tag("tag" + Math.abs(seed + 1))),
-                new IsCompleted("no"));
+                new Status("no"));
     }
 
     /*
@@ -104,7 +104,7 @@ public class SampleDataUtil {
                 new Frequency("Every " + randomFrequency()),
                 new UniqueTagList(new Tag("tag" + Math.abs(seed)),
                         new Tag("tag" + Math.abs(seed + 1))),
-                new IsCompleted("no"));
+                new Status("no"));
     }
 
     /*
