@@ -17,7 +17,9 @@ import utask.commons.core.LogsCenter;
 import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CreateCommand;
+import utask.logic.commands.CreateTagCommand;
 import utask.logic.commands.DeleteCommand;
+import utask.logic.commands.DeleteTagCommand;
 import utask.logic.commands.DoneCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
@@ -32,6 +34,7 @@ import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
+import utask.logic.commands.UpdateTagCommand;
 import utask.staging.ui.events.FindRequestEvent;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 
@@ -64,6 +67,12 @@ public class SuggestionHelper {
         suggestionMap.put(UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD + " " + UndoCommand.COMMAND_FORMAT);
         suggestionMap.put(UnaliasCommand.COMMAND_WORD, UnaliasCommand.COMMAND_WORD
                 + " " + UnaliasCommand.COMMAND_FORMAT);
+        
+        suggestionMap.put(CreateTagCommand.COMMAND_WORD, CreateTagCommand.COMMAND_WORD + " " + CreateTagCommand.COMMAND_FORMAT);
+        suggestionMap.put(DeleteTagCommand.COMMAND_WORD, DeleteTagCommand.COMMAND_WORD + " " + DeleteTagCommand.COMMAND_FORMAT);
+        suggestionMap.put(UpdateTagCommand.COMMAND_WORD, UpdateTagCommand.COMMAND_WORD + " " + UpdateTagCommand.COMMAND_FORMAT);
+        suggestionMap.put(CreateTagCommand.COMMAND_WORD, CreateTagCommand.COMMAND_WORD + " " + CreateTagCommand.COMMAND_FORMAT);
+        
         //Dynamic Suggested
         suggestionMap.put(SortCommand.COMMAND_WORD, SortCommand.COMMAND_WORD + " " + SortCommand.COMMAND_FORMAT);
     }
