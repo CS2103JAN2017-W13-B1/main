@@ -29,6 +29,7 @@ import utask.logic.commands.RedoCommand;
 import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
+import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
@@ -87,6 +88,9 @@ public class Parser {
 
         case AliasCommand.COMMAND_WORD:
             return new AliasCommandParser().parse(aliasMap, arguments);
+
+        case UnaliasCommand.COMMAND_WORD:
+            return new UnaliasCommandParser().parse(aliasMap, arguments);
 
         case UpdateCommand.COMMAND_WORD:
             return new UpdateCommandParser().parse(arguments);

@@ -13,12 +13,12 @@ import utask.staging.ui.helper.SuggestionHelper;
  * Stores a HashMap of command maps aliases
  */
 public class AliasCommandMap {
-    private HashMap<String, String> commandToAliases;
+    private HashMap<String, String> aliasesToCommand;
     private final ArrayList<String> defaultCommands;
 
     public AliasCommandMap () {
         defaultCommands = (ArrayList<String>) SuggestionHelper.getInstance().getDefaultCommands();
-        commandToAliases = new HashMap<String, String>();
+        aliasesToCommand = new HashMap<String, String>();
     }
 
     /**
@@ -33,7 +33,7 @@ public class AliasCommandMap {
         if (!defaultCommands.contains(command)) {
             throw new IllegalValueException("Command is not recognized");
         }
-        commandToAliases.put(alias, command);
+        aliasesToCommand.put(alias, command);
     }
 
     public List<String> getDefaultCommands() {
@@ -41,10 +41,16 @@ public class AliasCommandMap {
     }
 
     public boolean isAliasExist (String alias) {
-        return commandToAliases.containsKey(alias);
+        return aliasesToCommand.containsKey(alias);
     }
 
     public String getMappedCommand (String alias) {
-        return commandToAliases.get(alias);
+        return aliasesToCommand.get(alias);
+    }
+
+    public void removeAlias (String alias) {
+        assert alias != null && !alias.isEmpty();
+        assert aliasesToCommand.containsKey(alias);
+        aliasesToCommand.remove(alias);
     }
 }

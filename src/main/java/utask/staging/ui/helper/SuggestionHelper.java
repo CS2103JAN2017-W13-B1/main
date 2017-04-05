@@ -28,6 +28,7 @@ import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.SortInFindCommand;
+import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
@@ -61,6 +62,8 @@ public class SuggestionHelper {
         suggestionMap.put(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_FORMAT);
         suggestionMap.put(UndoneCommand.COMMAND_WORD, UndoneCommand.COMMAND_WORD + " " + UndoneCommand.COMMAND_FORMAT);
         suggestionMap.put(UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD + " " + UndoCommand.COMMAND_FORMAT);
+        suggestionMap.put(UnaliasCommand.COMMAND_WORD, UnaliasCommand.COMMAND_WORD
+                + " " + UnaliasCommand.COMMAND_FORMAT);
         //Dynamic Suggested
         suggestionMap.put(SortCommand.COMMAND_WORD, SortCommand.COMMAND_WORD + " " + SortCommand.COMMAND_FORMAT);
     }
