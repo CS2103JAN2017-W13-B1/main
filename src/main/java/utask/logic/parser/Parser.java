@@ -8,11 +8,11 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import utask.logic.commands.AliasCommand;
 import com.google.common.eventbus.Subscribe;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
+import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.CreateCommand;
@@ -48,7 +48,7 @@ public class Parser {
     private Model model;
     private final Logger logger = LogsCenter.getLogger(SuggestionHelper.class);
     private boolean showExpandedSort = false;
-    
+
     public Parser(Model model) {
         this.model = model;
         EventsCenter.getInstance().registerHandler(this);
