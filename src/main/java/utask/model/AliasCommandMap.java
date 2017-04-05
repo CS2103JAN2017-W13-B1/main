@@ -15,10 +15,22 @@ import utask.staging.ui.helper.SuggestionHelper;
 public class AliasCommandMap {
     private HashMap<String, String> aliasesToCommand;
     private final ArrayList<String> defaultCommands;
+    private static AliasCommandMap instance;
 
-    public AliasCommandMap () {
+    private AliasCommandMap () {
         defaultCommands = (ArrayList<String>) SuggestionHelper.getInstance().getDefaultCommands();
         aliasesToCommand = new HashMap<String, String>();
+    }
+
+    public static AliasCommandMap getInstance() {
+        if (instance == null) {
+            instance = new AliasCommandMap();
+        }
+        return instance;
+    }
+
+    public void setAliasCommandMap(HashMap<String, String> aliasesToCommand) {
+        this.aliasesToCommand = aliasesToCommand;
     }
 
     /**
@@ -27,6 +39,7 @@ public class AliasCommandMap {
      */
     public void setAlias(String alias, String command) throws IllegalValueException {
         assert alias != null && !alias.isEmpty();
+        assert aliasesToCommand != null;
         if (defaultCommands.contains(alias)) {
             throw new IllegalValueException("Alias cannot be a default command");
         }
@@ -40,17 +53,25 @@ public class AliasCommandMap {
         return defaultCommands;
     }
 
-    public boolean isAliasExist (String alias) {
+    public boolean isAliasExist(String alias) {
+        assert aliasesToCommand != null;
         return aliasesToCommand.containsKey(alias);
     }
 
-    public String getMappedCommand (String alias) {
+    public String getMappedCommand(String alias) {
+        assert aliasesToCommand != null;
         return aliasesToCommand.get(alias);
     }
 
-    public void removeAlias (String alias) {
+    public void removeAlias(String alias) {
         assert alias != null && !alias.isEmpty();
+        assert aliasesToCommand != null;
         assert aliasesToCommand.containsKey(alias);
         aliasesToCommand.remove(alias);
+    }
+
+    public HashMap<String, String> getAliasMap() {
+        assert aliasesToCommand != null;
+        return aliasesToCommand;
     }
 }

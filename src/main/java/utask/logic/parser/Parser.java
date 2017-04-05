@@ -53,7 +53,6 @@ public class Parser {
     private AliasCommandMap aliasMap;
 
     public Parser() {
-        aliasMap = new AliasCommandMap();
         EventsCenter.getInstance().registerHandler(this);
     }
 
@@ -72,7 +71,7 @@ public class Parser {
 
         String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-
+        aliasMap = AliasCommandMap.getInstance();
         if (!isDefaultCommand(commandWord)) {
             try {
                 commandWord = getDefaultCommand(commandWord);

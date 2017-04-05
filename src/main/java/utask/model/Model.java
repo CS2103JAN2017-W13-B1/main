@@ -114,6 +114,9 @@ public interface Model {
 
     /* Exposes isfindOverlay to Command through Model*/
     void setIfFindOverlayShowing(boolean isShowing);
+
     boolean isFindOverlayShowing();
+
+    UserPrefs getUserPrefs();
 
 }

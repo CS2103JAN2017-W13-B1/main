@@ -1,5 +1,6 @@
 package utask.model;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import utask.commons.core.GuiSettings;
@@ -10,9 +11,14 @@ import utask.commons.core.GuiSettings;
 public class UserPrefs {
 
     public GuiSettings guiSettings;
+    public HashMap<String, String> aliasMap;
 
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
+    }
+
+    public HashMap<String, String> getAliasMap() {
+        return aliasMap == null ? new HashMap<String, String>() : aliasMap;
     }
 
     public void updateLastUsedGuiSetting(GuiSettings guiSettings) {
