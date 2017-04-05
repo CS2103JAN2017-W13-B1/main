@@ -2,13 +2,14 @@ package utask.testutil;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.model.tag.Tag;
+import utask.model.tag.TagColorIndex;
+import utask.model.tag.TagName;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.Frequency;
 import utask.model.task.Name;
 import utask.model.task.Status;
 import utask.model.task.Timestamp;
-
 /**
  *
  */
@@ -35,7 +36,7 @@ public class TaskBuilder {
     public TaskBuilder withTags(String ... tags) throws IllegalValueException {
         task.setTags(new UniqueTagList());
         for (String tag: tags) {
-            task.getTags().add(new Tag(tag));
+            task.getTags().add(new Tag(new TagName(tag), new TagColorIndex("2")));
         }
         return this;
     }

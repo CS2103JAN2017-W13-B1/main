@@ -20,6 +20,7 @@ public class UndoneCommand extends Command implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "undone";
     public static final String COMMAND_FORMAT = "[INDEX (must be a positive integer)]";
+    public static final String STATUS_TO = "INCOMPLETE";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Updates the status to Incomplete of the task specified "
@@ -54,16 +55,15 @@ public class UndoneCommand extends Command implements ReversibleCommand {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
+        // Retrieve task to be edited from save file
+        taskToEdit = UpdateUtil.fetchTaskToEdit(filteredTaskListIndex);
         // If value already incomplete, inform the user
         if (!taskToEdit.getStatus().isStatusComplete()) {
             throw new CommandException(MESSAGE_DUPLICATE_STATUS);
         }
-
-        // Retrieve task to be edited from save file
-        taskToEdit = UpdateUtil.fetchTaskToEdit(filteredTaskListIndex);
         editedTask = null;
         try {
-            editedTask = UpdateUtil.createEditedTask(taskToEdit, false);
+            editedTask = UpdateUtil.createEditedTask(taskToEdit, STATUS_TO);
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
 

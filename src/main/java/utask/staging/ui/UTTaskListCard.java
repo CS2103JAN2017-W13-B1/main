@@ -29,7 +29,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     private static final String LABEL_CSS = "-fx-padding: 1 3 1 3; -fx-text-fill: WHITE; -fx-background-color: %s;";
     private static final String LABEL_STRIKETHROUGH_STYLE = "label-text-done";
 
-    //UI Element use Leszynski naming convention. Prefix is the element type
+    // UI Element use Leszynski naming convention. Prefix is the element type
     @FXML
     private Label lblId;
 
@@ -45,12 +45,13 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     @FXML
     private Label lblDate;
 
-    //TODO: Upgrade to property for observable binding instead of manually checking for UI events
+    // TODO: Upgrade to property for observable binding instead of manually
+    // checking for UI events
     private final ReadOnlyTask task;
 
     public UTTaskListCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
-        assert(task != null && displayedIndex > 0);
+        assert (task != null && displayedIndex > 0);
         this.task = task;
         setTaskInfoToControls(task, displayedIndex);
         addStylingProperitesOnCompletion();
@@ -62,7 +63,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         lblId.setText(displayedIndex + " ");
         String friendlyDate = buildFriendlyDateToDisplay(task);
         lblDate.setText(friendlyDate);
-        initTags(task);
+        createTags(task);
     }
 
     private String buildFriendlyDateToDisplay(ReadOnlyTask task) {
@@ -83,7 +84,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         return sb.toString();
     }
 
-    //@@author A0138493W
+    // @@author A0138493W
     private String getPrettyDate(ReadOnlyTask task) {
         assert task != null;
         Date deadline = null;
@@ -99,31 +100,35 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         PrettyTime p = new PrettyTime();
         return fmt.format(deadline) + ", " + p.format(deadline);
     }
-    //@@author
+    // @@author
 
-    private void initTags(ReadOnlyTask task) {
+    // @@author A0138423J
+    private void createTags(ReadOnlyTask task) {
         UniqueTagList tags = task.getTags();
-
         for (Tag tag : tags) {
-            Label label = createLabel(tag.tagName);
+            Label label = createLabel(tag.getTagname().toString(),
+                    tag.getTagcolorindex().getTagColorIndexAsInt());
             hbTagContainer.getChildren().add(label);
         }
     }
 
-    private Label createLabel(String name) {
+    private Label createLabel(String name, int colorIndex) {
         Label label = new Label(name);
-        addStylingPropertiesToLabel(label);
+        addStylingPropertiesToLabel(label, colorIndex);
         return label;
     }
 
-    private void addStylingPropertiesToLabel(Label label) {
-        label.setAlignment(Pos.CENTER);;
+    private void addStylingPropertiesToLabel(Label label, int colorIndex) {
+        label.setAlignment(Pos.CENTER);
+        ;
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextOverrun(OverrunStyle.CLIP);
         label.setMinWidth(15.0);
-        label.setStyle(String.format(LABEL_CSS, TagColorHelper.getARandomColor()));
+        label.setStyle(String.format(LABEL_CSS,
+                TagColorHelper.getColorValueFromIndex(colorIndex)));
         HBox.setMargin(label, new Insets(5, 5, 5, 0));
     }
+    // @@author
 
     public void addStylingProperitesOnCompletion() {
         boolean isComplete = task.getStatus().isStatusComplete();

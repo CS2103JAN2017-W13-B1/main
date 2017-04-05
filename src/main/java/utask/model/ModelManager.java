@@ -20,6 +20,8 @@ import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.util.CollectionUtil;
 import utask.commons.util.StringUtil;
 import utask.logic.commands.inteface.ReversibleCommand;
+import utask.model.tag.Tag;
+import utask.model.tag.UniqueTagList.DuplicateTagException;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
@@ -171,7 +173,7 @@ public class ModelManager extends ComponentManager implements Model {
         sortFilteredTaskList(sortingConfig);
     }
 
-    //@@author A0139996A
+    //@@author A0138423J
     @Override
     public synchronized void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
             throws UniqueTaskList.DuplicateTaskException {
@@ -186,6 +188,17 @@ public class ModelManager extends ComponentManager implements Model {
         sortFilteredTaskList(sortingConfig);
     }
 
+    @Override
+    public void addTag(Tag tag) throws DuplicateTagException {
+        assert tag != null;
+        uTask.addTag(tag);
+//        indicateUTaskChanged();
+        UTFilteredListHelper.getInstance().refresh();
+        sortFilteredTaskList(sortingConfig);
+    }
+    //@@author A0138423J
+
+    //@@author A0139996A
     /** Gets total size of tasks in underlying lists of listviews*/
     @Override
     public int getTotalSizeOfLists() {

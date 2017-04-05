@@ -1,5 +1,7 @@
 package utask.logic.commands;
 
+import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -84,8 +86,10 @@ public class UpdateCommand extends Command implements ReversibleCommand {
         try {
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
-
             notifyUI(editedTask);
+        } catch (IllegalArgumentException ive) {
+            throw new CommandException(String
+                    .format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }

@@ -23,17 +23,17 @@ import utask.model.task.Task;
 public class XmlSerializableUTask implements ReadOnlyUTask {
 
     @XmlElement
-    private List<XmlAdaptedTask> tasks;
+    private List<XmlAdaptedTask> task;
     @XmlElement
-    private List<XmlAdaptedTag> tags;
+    private List<XmlAdaptedTag> tag;
 
     /**
      * Creates an empty XmlSerializableUTask.
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableUTask() {
-        tasks = new ArrayList<>();
-        tags = new ArrayList<>();
+        task = new ArrayList<>();
+        tag = new ArrayList<>();
     }
 
     /**
@@ -41,13 +41,13 @@ public class XmlSerializableUTask implements ReadOnlyUTask {
      */
     public XmlSerializableUTask(ReadOnlyUTask src) {
         this();
-        tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
-        tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        task.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
+        tag.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
     @Override
     public ObservableList<ReadOnlyTask> getTaskList() {
-        final ObservableList<Task> tasks = this.tasks.stream().map(p -> {
+        final ObservableList<Task> tasks = this.task.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
@@ -61,7 +61,7 @@ public class XmlSerializableUTask implements ReadOnlyUTask {
 
     @Override
     public ObservableList<Tag> getTagList() {
-        final ObservableList<Tag> tags = this.tags.stream().map(t -> {
+        final ObservableList<Tag> tags = this.tag.stream().map(t -> {
             try {
                 return t.toModelType();
             } catch (IllegalValueException e) {

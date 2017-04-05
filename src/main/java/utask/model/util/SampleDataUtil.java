@@ -13,6 +13,8 @@ import java.util.Random;
 import utask.model.ReadOnlyUTask;
 import utask.model.UTask;
 import utask.model.tag.Tag;
+import utask.model.tag.TagColorIndex;
+import utask.model.tag.TagName;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
@@ -79,8 +81,11 @@ public class SampleDataUtil {
         return new EventTask(new Name("Event Task " + seed),
                 new Deadline(generateDeadline(seed)), new Timestamp("0000 to 2359"),
                 new Frequency("Every " + randomFrequency()),
-                new UniqueTagList(new Tag("tag" + Math.abs(seed)),
-                        new Tag("tag" + Math.abs(seed + 1))),
+                new UniqueTagList(new Tag(
+                        new TagName("tag" + Math.abs(seed)),
+                        new TagColorIndex("2")),
+                        new Tag(new TagName("tag" + Math.abs(seed + 1)),
+                        new TagColorIndex("8"))),
                 new Status("no"));
     }
 
@@ -91,8 +96,11 @@ public class SampleDataUtil {
         return new DeadlineTask(new Name("Deadline Task " + seed),
                 new Deadline(generateDeadline(seed)),
                 new Frequency("Every " + randomFrequency()),
-                new UniqueTagList(new Tag("tag" + Math.abs(seed)),
-                        new Tag("tag" + Math.abs(seed + 1))),
+                new UniqueTagList(new Tag(
+                        new TagName("tag" + Math.abs(seed)),
+                        new TagColorIndex("2")),
+                        new Tag(new TagName("tag" + Math.abs(seed + 1)),
+                        new TagColorIndex("8"))),
                 new Status("no"));
     }
 
@@ -102,8 +110,11 @@ public class SampleDataUtil {
     private static Task generateFloatingTaskWithSeed(int seed) throws Exception {
         return new FloatingTask(new Name("Floating Task " + seed),
                 new Frequency("Every " + randomFrequency()),
-                new UniqueTagList(new Tag("tag" + Math.abs(seed)),
-                        new Tag("tag" + Math.abs(seed + 1))),
+                new UniqueTagList(new Tag(
+                        new TagName("tag" + Math.abs(seed)),
+                        new TagColorIndex("2")),
+                        new Tag(new TagName("tag" + Math.abs(seed + 1)),
+                        new TagColorIndex("8"))),
                 new Status("no"));
     }
 

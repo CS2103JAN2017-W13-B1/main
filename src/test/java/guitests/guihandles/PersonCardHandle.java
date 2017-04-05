@@ -64,7 +64,7 @@ public class PersonCardHandle extends GuiHandle {
         return tags
                 .asObservableList()
                 .stream()
-                .map(tag -> tag.tagName)
+                .map(tag -> tag.getTagname().toString())
                 .collect(Collectors.toList());
     }
 

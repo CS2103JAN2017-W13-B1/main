@@ -16,6 +16,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_FREQUENCY = new Prefix("/repeat");
     public static final Prefix PREFIX_DONE = new Prefix("/status");
     public static final Prefix PREFIX_TAG = new Prefix("/tag");
+    public static final Prefix PREFIX_TAGCOLOR = new Prefix("/color");
     public static final Prefix PREFIX_ALIAS = new Prefix("/as");
 
     /* Patterns definitions */

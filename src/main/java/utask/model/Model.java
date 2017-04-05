@@ -5,6 +5,8 @@ import java.util.Set;
 
 import utask.commons.core.UnmodifiableObservableList;
 import utask.logic.commands.inteface.ReversibleCommand;
+import utask.model.tag.Tag;
+import utask.model.tag.UniqueTagList;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
@@ -35,6 +37,7 @@ public interface Model {
     /** Adds the given task */
     void addTask(Task task) throws UniqueTaskList.DuplicateTaskException;
 
+    //@@author A0138423J
     /**
      * Updates the task located at {@code filteredTaskListIndex} with {@code editedTask}.
      *
@@ -47,6 +50,9 @@ public interface Model {
 
     void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
             throws UniqueTaskList.DuplicateTaskException;
+
+    void addTag(Tag tag) throws UniqueTagList.DuplicateTagException;
+    //@@author
 
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();

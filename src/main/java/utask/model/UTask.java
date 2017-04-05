@@ -11,7 +11,9 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import utask.commons.core.EventsCenter;
 import utask.commons.core.UnmodifiableObservableList;
+import utask.commons.events.ui.UIShowTagColorDialogEvent;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.ReadOnlyTask;
@@ -172,6 +174,7 @@ public class UTask implements ReadOnlyUTask {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+        EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(tags.getAsListTag()));
     }
 
 //// util methods
