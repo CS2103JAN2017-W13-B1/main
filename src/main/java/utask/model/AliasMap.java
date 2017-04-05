@@ -35,6 +35,7 @@ public class AliasMap {
         HashMap<String, ArrayList<String>> defaultAliasMap = new HashMap<String, ArrayList<String>>();
         defaultAliasMap.put("alias", new ArrayList<String>());
         defaultAliasMap.put("clear", new ArrayList<String>());
+        defaultAliasMap.put("create", new ArrayList<String>());
         defaultAliasMap.put("delete", new ArrayList<String>());
         defaultAliasMap.put("done", new ArrayList<String>());
         defaultAliasMap.put("exit", new ArrayList<String>());
@@ -53,5 +54,16 @@ public class AliasMap {
      */
     public Set<String> getDefaultCommandsSet() {
         return getDefaultAliasMapping().keySet();
+    }
+
+    /**
+     * set a alias for a default command
+     */
+    public void setAlias(String alias, String command) {
+        assert alias != null;
+        assert(commandToAliases.get(command) != null);
+        ArrayList<String> aliases = commandToAliases.get(command);
+        aliases.add(alias);
+        commandToAliases.replace(command, aliases);
     }
 }

@@ -37,6 +37,8 @@ public class ParserUtil {
             Pattern.compile("([a-zA-Z]:)?(\\\\[a-zA-Z0-9 _.-]+)+\\\\?");
     private static final Pattern MAC_PATH_FORMAT =
             Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
+    private static final Pattern ALIAS_ARGS_FORMAT = Pattern
+            .compile("[a-zA-Z0-9]+");
     /**
      * Returns the specified index in the {@code command} if it is a positive
      * unsigned integer Returns an {@code Optional.empty()} otherwise.
@@ -126,6 +128,18 @@ public class ParserUtil {
         return pathathMatcher.matches();
     }
 
+    /**
+     * Parse alias if it is a valid alias
+     */
+    public static Optional<String> parseAlias(String alias) {
+        assert alias != null;
+        final Matcher matcher = ALIAS_ARGS_FORMAT.matcher(alias.trim());
+        if (!matcher.matches()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(alias);
+    }
     //author
 
     /**

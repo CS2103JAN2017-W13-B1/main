@@ -503,4 +503,9 @@ public class ModelManager extends ComponentManager implements Model {
     public Set<String> getDefaultCommandsSet() {
         return aliasMap.getDefaultCommandsSet();
     }
+
+    @Override
+    public void setAlias(String alias, String command) {
+        aliasMap.setAlias(alias, command);
+    }
 }

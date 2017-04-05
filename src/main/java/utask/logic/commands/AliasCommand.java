@@ -4,6 +4,9 @@ package utask.logic.commands;
 
 import utask.logic.commands.exceptions.CommandException;
 
+/*
+ * Create an alias for a default command
+ */
 public class AliasCommand extends Command {
 
     public static final String COMMAND_WORD = "alias";
@@ -30,7 +33,7 @@ public class AliasCommand extends Command {
         if (!model.getDefaultCommandsSet().contains(defaultCommandWord)) {
             throw new CommandException(String.format(MESSAGE_COMMAND_WORD_NOT_EXIST, defaultCommandWord));
         }
-
+        model.setAlias(alias, defaultCommandWord);
         return new CommandResult(String.format(MESSAGE_CREATE_ALIAS_SUCCESS, alias, defaultCommandWord));
     }
 

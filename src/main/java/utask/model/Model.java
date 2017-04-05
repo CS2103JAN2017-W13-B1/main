@@ -100,4 +100,7 @@ public interface Model {
 
     /** Gets default commands as a String Set*/
     Set<String> getDefaultCommandsSet();
+
+    /** set a alias for a default command*/
+    void setAlias(String alias, String command);
 }

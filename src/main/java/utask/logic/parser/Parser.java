@@ -6,6 +6,7 @@ import static utask.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.CreateCommand;
@@ -53,6 +54,9 @@ public class Parser {
         case CreateCommand.COMMAND_WORD:
             return new CreateCommandParser().parse(arguments);
 
+        case AliasCommand.COMMAND_WORD:
+            return new AliasCommandParser().parse(arguments);
+
         case UpdateCommand.COMMAND_WORD:
             return new UpdateCommandParser().parse(arguments);
 
@@ -98,6 +102,8 @@ public class Parser {
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
         }
+
+
     }
 
 }
