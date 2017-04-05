@@ -32,6 +32,7 @@ import utask.logic.commands.SortCommand;
 import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
+import utask.logic.commands.UpdateTagCommand;
 import utask.model.Model;
 import utask.staging.ui.events.FindRequestEvent;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
@@ -133,6 +134,9 @@ public class Parser {
 
         case DeleteTagCommand.COMMAND_WORD:
             return new DeleteTagCommandParser().parse(arguments);
+
+        case UpdateTagCommand.COMMAND_WORD:
+            return new UpdateTagCommandParser().parse(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);

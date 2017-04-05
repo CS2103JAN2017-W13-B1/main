@@ -1,5 +1,8 @@
 package utask.logic.commands;
 
+import java.util.logging.Logger;
+
+import utask.commons.core.LogsCenter;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -8,14 +11,15 @@ import utask.model.tag.TagColorIndex;
 import utask.model.tag.TagName;
 // @@ author A0138423J
 public class DeleteTagCommand extends Command implements ReversibleCommand {
-
+    private final Logger logger = LogsCenter.getLogger(DeleteTagCommand.class);
     public static final String COMMAND_WORD = "deletetag";
 
     public static final String COMMAND_FORMAT = "NAME";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes an existing tag in uTask. " + "Parameters: "
-            + COMMAND_FORMAT + "\n" + "Example: " + COMMAND_WORD;
+            + COMMAND_FORMAT + "\n" + "Example: " + COMMAND_WORD
+            + " Urgent";
 
     public static final String MESSAGE_SUCCESS = "Tag deleted: %1$s";
     public static final String MESSAGE_MISSING_TAG = "This tag doesn't exist in uTask";
@@ -43,21 +47,23 @@ public class DeleteTagCommand extends Command implements ReversibleCommand {
         try {
             model.deleteTag(toRemove);
             model.addUndoCommand(this);
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toRemove));
         } catch (Exception e) {
             throw new CommandException(MESSAGE_MISSING_TAG);
         }
+        logger.fine(String.format(MESSAGE_SUCCESS, toRemove));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toRemove));
     }
 
     @Override
     public void undo() throws Exception {
-        // TODO Add after deleteTag Command is done
+        assert model != null;
+        model.addTag(toRemove);
     }
 
     @Override
     public void redo() throws Exception {
-        // TODO Auto-generated method stub
+        assert model != null;
+        model.deleteTag(toRemove);
     }
 
 }

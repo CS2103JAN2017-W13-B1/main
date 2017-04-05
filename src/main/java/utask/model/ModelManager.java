@@ -197,9 +197,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag tag) throws DuplicateTagException {
+    public void deleteTag(Tag tag) {
         assert tag != null;
         uTask.deleteTag(tag);
+        UTFilteredListHelper.getInstance().refresh();
+        sortFilteredTaskList(sortingConfig);
+    }
+
+    @Override
+    public void updateTag(Tag tagToReplace, Tag updatedTag) throws DuplicateTagException {
+        assert tagToReplace != null;
+        assert updatedTag != null;
+        uTask.updateTag(tagToReplace, updatedTag);
         UTFilteredListHelper.getInstance().refresh();
         sortFilteredTaskList(sortingConfig);
     }

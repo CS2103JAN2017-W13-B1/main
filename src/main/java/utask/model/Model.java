@@ -53,7 +53,9 @@ public interface Model {
 
     void addTag(Tag tag) throws UniqueTagList.DuplicateTagException;
 
-    void deleteTag(Tag tag) throws UniqueTagList.DuplicateTagException;
+    void deleteTag(Tag tag);
+
+    void updateTag(Tag tagToReplace, Tag updatedTag) throws UniqueTagList.DuplicateTagException;
     //@@author
 
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */

@@ -1,5 +1,9 @@
 package utask.logic.commands;
 
+import java.util.logging.Logger;
+
+import utask.commons.core.LogsCenter;
+
 //import utask.commons.core.EventsCenter;
 //import utask.commons.events.ui.ShowTaskOfInterestEvent;
 
@@ -12,7 +16,7 @@ import utask.model.tag.TagColorIndex;
 import utask.model.tag.TagName;
 // @@ author A0138423J
 public class CreateTagCommand extends Command  implements ReversibleCommand {
-
+    private final Logger logger = LogsCenter.getLogger(CreateTagCommand.class);
     public static final String COMMAND_WORD = "createtag";
 
     public static final String COMMAND_FORMAT = "NAME [/color COLOR]";
@@ -20,7 +24,7 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a custom tag in uTask. "
             + "Parameters: " + COMMAND_FORMAT + "\n"
             + "Example: " + COMMAND_WORD
-            + "Urgent /colour blue";
+            + " Urgent /colour blue";
 
     public static final String MESSAGE_SUCCESS = "New tag created: %1$s";
     public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in uTask";
@@ -29,7 +33,7 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
     protected TagName tagName;
     protected TagColorIndex tagColorIndex;
     /**
-     * Creates an CreateCommand using raw values.
+     * Creates an CreateTagCommand using raw values.
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
@@ -47,21 +51,23 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
         try {
             model.addTag(toAdd);
             model.addUndoCommand(this);
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (Exception e) {
             throw new CommandException(MESSAGE_DUPLICATE_TAG);
         }
+        logger.fine(String.format(MESSAGE_SUCCESS, toAdd));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
     @Override
     public void undo() throws Exception {
-        // TODO Add after deleteTag Command is done
+        assert model != null;
+        model.deleteTag(toAdd);
     }
 
     @Override
     public void redo() throws Exception {
-        // TODO Auto-generated method stub
+        assert model != null;
+        model.addTag(toAdd);
     }
 
 }

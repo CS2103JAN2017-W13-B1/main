@@ -182,6 +182,11 @@ public class UTask implements ReadOnlyUTask {
         EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(tags.getAsListTag()));
     }
 
+    public void updateTag(Tag tagToReplace, Tag updatedTag) {
+        tags.update(tagToReplace, updatedTag);
+        EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(tags.getAsListTag()));
+    }
+
     // @@ author
 
 //// util methods

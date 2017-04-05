@@ -20,7 +20,6 @@ public class CreateTagCommandParser {
         ArgumentTokenizer argsTokenizer = new ArgumentTokenizer(
                 PREFIX_TAGCOLOR);
         argsTokenizer.tokenize(args);
-
         try {
             return new CreateTagCommand(argsTokenizer.getPreamble().get(),
                     argsTokenizer.getValue(PREFIX_TAGCOLOR).get());
