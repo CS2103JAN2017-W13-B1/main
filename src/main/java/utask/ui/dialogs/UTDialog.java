@@ -26,7 +26,6 @@ public abstract class UTDialog {
         dialog = new JFXDialog();
         contentLayout = new JFXDialogLayout();
         initialize(parent);
-        initialize();
         EventsCenter.getInstance().registerHandler(this);
     }
 
@@ -43,8 +42,6 @@ public abstract class UTDialog {
 
         contentLayout.setActions(closeButton);
     }
-
-    protected abstract void initialize();
 
     protected void show() {
         logger.fine("Showing dialog window for detailed view of alias, tag colors or message.");

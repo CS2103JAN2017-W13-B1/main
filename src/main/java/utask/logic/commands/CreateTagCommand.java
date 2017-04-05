@@ -48,8 +48,6 @@ public class CreateTagCommand  extends Command  implements ReversibleCommand {
             model.addTag(toAdd);
             model.addUndoCommand(this);
 
-//            EventsCenter.getInstance().post(new UIShowTagColorDialogEvent());
-
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (Exception e) {
             throw new CommandException(MESSAGE_DUPLICATE_TAG);

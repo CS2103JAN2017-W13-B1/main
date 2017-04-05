@@ -27,19 +27,19 @@ public class UTTagColorDialog extends UTDialog {
         super(parent);
     }
 
-    @Override
-    protected void initialize() {
-        List<Node> labels = new ArrayList<Node>();
+    private void initialize(List<Tag> tags) {
+        List<Node> displayTags = new ArrayList<Node>();
 
+        for (Tag tag : tags) {
+            Label label = createLabel(tag.getTagname().toString(),
+                    tag.getTagcolorindex().getTagColorIndexAsInt());
+            Node displayTag = setLabelSizingForDialogDisplay(label);
+            displayTags.add(displayTag);
+        }
 
-        labels.add(setLabelSizingForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizingForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizingForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizingForDialogDisplay(createLabel("Friends")));
-
-        if (labels.size() > 0) {
+        if (displayTags.size() > 0) {
             FlowPane pane = new FlowPane();
-            pane.getChildren().addAll(labels);
+            pane.getChildren().addAll(displayTags);
             contentLayout.setHeading(new Label(HAS_TAGS_HEADING));
             contentLayout.setBody(pane);
         } else {
@@ -63,22 +63,24 @@ public class UTTagColorDialog extends UTDialog {
     }
 
     public void show(List<Tag> tags) {
+        initialize(tags);
         super.show();
     }
 
+
     //TODO: COPYPASTA FROM UTTASKLISTCARD REUSEABLE CODE!!!
-    private Label createLabel(String name) {
+    private Label createLabel(String name, int colorIndex) {
         Label label = new Label(name);
-        addStylingPropertiesToLabel(label);
+        addStylingPropertiesToLabel(label, colorIndex);
         return label;
     }
 
-    private void addStylingPropertiesToLabel(Label label) {
+    private void addStylingPropertiesToLabel(Label label, int colorIndex) {
         label.setAlignment(Pos.CENTER);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextOverrun(OverrunStyle.CLIP);
         label.setMinWidth(15.0);
-        label.setStyle(String.format(LABEL_CSS, TagColorHelper.getARandomColor()));
+        label.setStyle(String.format(LABEL_CSS, TagColorHelper.getColorValueFromIndex(colorIndex)));
         HBox.setMargin(label, new Insets(5, 5, 5, 0));
     }
 }
