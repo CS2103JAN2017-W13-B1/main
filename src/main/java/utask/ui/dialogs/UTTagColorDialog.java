@@ -78,7 +78,7 @@ public class UTTagColorDialog extends UTDialog {
     }
 
     private void addStylingPropertiesToLabel(Label label) {
-        label.setAlignment(Pos.CENTER);;
+        label.setAlignment(Pos.CENTER);
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextOverrun(OverrunStyle.CLIP);
         label.setMinWidth(15.0);
