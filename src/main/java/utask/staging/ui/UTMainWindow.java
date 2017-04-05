@@ -153,8 +153,6 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
         new UTFindTaskOverlay(topPlaceholder, logic);
-
-        raise(new UIShowTagColorDialogEvent(null));
     }
 
     public UTTodoListPanel getTodoListPanel() {

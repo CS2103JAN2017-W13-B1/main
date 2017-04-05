@@ -140,6 +140,7 @@ public class UniqueTagList implements Iterable<Tag> {
         return internalList.contains(toCheck);
     }
 
+    // @ author A0138423J
     /**
      * Adds a Tag to the list.
      *
@@ -153,6 +154,28 @@ public class UniqueTagList implements Iterable<Tag> {
         internalList.add(toAdd);
     }
 
+    public void delete(Tag toAdd) {
+        assert toAdd != null;
+        if (contains(toAdd)) {
+            internalList.remove(internalList.indexOf(toAdd));
+        } else {
+            // TODO
+            // throw error that tag not found/
+        }
+    }
+
+    public void update(Tag tagToReplace, Tag updatedTag) {
+        assert tagToReplace != null;
+        assert updatedTag != null;
+        if (contains(tagToReplace)) {
+            internalList.set(internalList.indexOf(tagToReplace), updatedTag);
+        } else {
+            // TODO
+            // throw error that tag not found/
+        }
+    }
+
+    // @@ author
     @Override
     public Iterator<Tag> iterator() {
         return internalList.iterator();
