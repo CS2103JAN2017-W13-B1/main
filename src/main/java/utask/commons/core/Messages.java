@@ -13,5 +13,5 @@ public class Messages {
     public static final String MESSAGE_INVALID_REDO_RANGE = "Unable to redo this many times";
     public static final String MESSAGE_UNDO_ERROR = "An error has occurred while undo-ing";
     public static final String MESSAGE_REDO_ERROR = "An error has occurred while redo-ing";
-    public static final String MESSAGE_SEARCH_RESULTS = "Searching for %s\nFound %d\nPress [ESC] to return";
+    public static final String MESSAGE_SEARCH_RESULTS = "Searching for %s\nFound %d task(s)\nPress [ESC] to return";
 }

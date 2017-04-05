@@ -20,16 +20,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.UIJumpToListInFindOverlayEvent;
+import utask.commons.events.ui.UIShowTaskOfInterestInFindOverlayEvent;
+import utask.commons.events.ui.UIUpdateSortInFindOverlayEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.events.FindRequestEvent;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 
-public class UTSearchTaskOverlay extends StagingUiPart<Region> {
+public class UTFindTaskOverlay extends StagingUiPart<Region> {
 
-    private static final Logger logger = LogsCenter.getLogger(UTSearchTaskOverlay.class);
-    private static final String FXML = "UTSearchTaskOverlay.fxml";
+    private static final Logger logger = LogsCenter.getLogger(UTFindTaskOverlay.class);
+    private static final String FXML = "UTFindTaskOverlay.fxml";
 
     private static final int SEARCHPANE_HIDDEN_X_POS = -3000;
     private final TranslateTransition openTransitionEffect = new TranslateTransition(new Duration(350), getRoot());
@@ -64,17 +67,15 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
 
     private ObservableList<ReadOnlyTask> masterData;
 
-    private Pane parent;
     private boolean isSearchOverlayShown = false;
 
     private FilteredList<ReadOnlyTask> filteredData;
     private Logic logic;
 
-    public UTSearchTaskOverlay(Pane parent, Logic logic) {
+    public UTFindTaskOverlay(Pane parent, Logic logic) {
         super(FXML);
 
         assert(parent != null && logic != null);
-        this.parent = parent;
         this.logic = logic;
 
         masterData = logic.getFilteredTaskList();
@@ -104,10 +105,6 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     }
 
     private void addCellFactoriesToColumn() {
-
-        //TODO: Try bean property
-        //columnName.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-
         columnIndex.setCellValueFactory(cellData-> new ReadOnlyObjectWrapper<Number>(
                                     searchTable.getItems().indexOf(cellData.getValue()) + 1));
         columnName.setCellValueFactory(t -> new ReadOnlyStringWrapper(t.getValue().getName().fullName));
@@ -119,47 +116,64 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
         columnIndex.setSortable(false);
     }
 
-    private void sort(TableColumn<ReadOnlyTask, String> column) {
-        sort(column, SortType.ASCENDING);
+    private void sort(String columnAlphabet, String orderBy) {
+        TableColumn<ReadOnlyTask, String> column = getColumnToSortFromStringColumnAlphabet(columnAlphabet);
+        SortType sortType = getSortTypeFromStringOrderBy(orderBy);
+        sort(column, sortType);
     }
 
     private void sort(TableColumn<ReadOnlyTask, String> column, SortType sortOrder) {
         searchTable.getSortOrder().clear();
-        columnName.setSortType(sortOrder);
-        searchTable.getSortOrder().addAll(column);
+        column.setSortType(sortOrder);
+        searchTable.getSortOrder().add(column);
     }
 
-    public void filterResultsByKeywords(FilteredList<ReadOnlyTask> filteredData, String keywords) {
-        filteredData.setPredicate(task -> {
-            // If filter text is empty, display all persons.
-            if (keywords == null || keywords.isEmpty()) {
-                return true;
-            }
+    /*
+     * Gets the first alphabet letter in the TableView column which is in the FXML file
+     * This prevent the use of magic numbers or constants
+     * */
+    private String getColumnAlphabetOfTableColumn(TableColumn<ReadOnlyTask, String> column) {
+        String columnName = column.getText();
+        assert !columnName.isEmpty();
 
-            // Compare first name and last name of every person with filter text.
-            String lowerCaseFilter = keywords.toLowerCase();
-
-//            if (task.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
-//                return true; // Filter matches first name.
-//            } else if (task.getLastName().toLowerCase().contains(lowerCaseFilter)) {
-//                return true; // Filter matches last name.
-//            }
-
-            //TODO: Build comprehensive search
-            return task.getName().fullName.toLowerCase().contains(lowerCaseFilter) ||
-            task.getTags().getAllTagNames().toLowerCase().contains(lowerCaseFilter);
-
-            //return false; // Does not match.
-        });
+        return column.getText().substring(0, 1);
     }
 
-    public void delete() {
-        ReadOnlyTask remove = searchTable.getSelectionModel().getSelectedItem();
+    private TableColumn<ReadOnlyTask, String> getColumnToSortFromStringColumnAlphabet(String columnAlphabet) {
 
-        if (remove != null) {
-            masterData.remove(remove);
-            //TODO: Do actual remove
+        if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnName))) {
+            return columnName;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnComplete))) {
+            return columnComplete;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnDeadline))) {
+            return columnDeadline;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnDeadline))) {
+            return columnDeadline;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnTimestamp))) {
+            return columnTimestamp;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnFrequency))) {
+            return columnFrequency;
+        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnTag))) {
+            return columnTag;
         }
+
+        assert false : "Incorrect Usage. Column alphabet provided should be shown in the UI";
+        return null;
+    }
+
+    private SortType getSortTypeFromStringOrderBy(String orderBy) {
+        SortType sortType;
+
+        switch (orderBy) {
+        case "dsc" :
+            sortType = SortType.DESCENDING;
+            break;
+        case "asc" :
+        default:
+            sortType = SortType.ASCENDING;
+            break;
+        }
+        return sortType;
     }
 
     public void openIfSearchIsNotShowing() {
@@ -175,13 +189,13 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
             closeTransitionEffect.setToX(SEARCHPANE_HIDDEN_X_POS);
             closeTransitionEffect.play();
             isSearchOverlayShown = false;
+            logic.setIfFindOverlayShowing(false);
         }
     }
 
     @Subscribe
-    private void handleSearchRequestEvent(FindRequestEvent event) {
+    private void handleFindRequestEvent(FindRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //filterResultsByKeywords(filteredData, event.findKeywords.trim());
         openIfSearchIsNotShowing();
     }
 
@@ -189,5 +203,35 @@ public class UTSearchTaskOverlay extends StagingUiPart<Region> {
     private void handleKeyboardEscapeKeyPressedEvent(KeyboardEscapeKeyPressedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         closeIfSearchIsShowing();
+    }
+
+    @Subscribe
+    private void handleUIShowTaskOfInterestInFindOverlayEvent(UIShowTaskOfInterestInFindOverlayEvent event) {
+        assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
+
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        int index = searchTable.getItems().indexOf(event.task);
+        scrollTo(index);
+    }
+
+    @Subscribe
+    private void handleUIUpdateSortInFindOverlayEvent(UIUpdateSortInFindOverlayEvent event) {
+        assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
+
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        sort(event.columnAlphabet, event.orderBy);
+    }
+
+    //TODO: Refractor
+    @Subscribe
+    private void handleUIJumpToListInFindOverlayEvent(UIJumpToListInFindOverlayEvent event) {
+        assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    private void scrollTo(int index) {
+        searchTable.scrollTo(index);
+        searchTable.getSelectionModel().select(index);
     }
 }

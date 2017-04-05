@@ -5,10 +5,8 @@ import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
-import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -88,9 +86,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
         try {
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
-
-            EventsCenter.getInstance()
-                    .post(new ShowTaskOfInterestEvent(editedTask));
+            notifyUI(editedTask);
         } catch (IllegalArgumentException ive) {
             throw new CommandException(String
                     .format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
@@ -106,15 +102,13 @@ public class UpdateCommand extends Command implements ReversibleCommand {
     @Override
     public void undo() throws Exception {
         model.updateTask(editedTask, taskToEdit);
-        EventsCenter.getInstance()
-                .post(new ShowTaskOfInterestEvent(taskToEdit));
+        notifyUI(taskToEdit);
     }
 
     // @@author A0138423J
     @Override
     public void redo() throws Exception {
         model.updateTask(taskToEdit, editedTask);
-        EventsCenter.getInstance()
-                .post(new ShowTaskOfInterestEvent(editedTask));
+        notifyUI(editedTask);
     }
 }

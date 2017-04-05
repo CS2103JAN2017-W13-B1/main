@@ -39,6 +39,9 @@ public class ParserUtil {
             Pattern.compile("([a-zA-Z]:)?(\\\\[a-zA-Z0-9 _.-]+)+\\\\?");
     private static final Pattern MAC_PATH_FORMAT =
             Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
+    private static final Pattern SORT_IN_FIND_FORMAT =
+            Pattern.compile("(?<columnAlphabet>[a-f])\\s*(?<orderBy>(asc|dsc))?");
+
     /**
      * Returns the specified index in the {@code command} if it is a positive
      * unsigned integer Returns an {@code Optional.empty()} otherwise.
@@ -227,4 +230,41 @@ public class ParserUtil {
                 : Optional.empty();
     }
     //@@author
+
+
+    //@@author A0139996A
+    public static String parseColumnAlphabetOfSortInFind(String command) {
+        assert command != null && !command.isEmpty();
+
+        Matcher matcher = SORT_IN_FIND_FORMAT.matcher(command);
+
+        String column = "";
+
+        if (matcher.matches()) {
+            column = matcher.group("columnAlphabet");
+        }
+
+        return column;
+    }
+
+    public static String parseOrderByOfSortInFind(String command) throws IllegalValueException {
+        assert command != null && !command.isEmpty();
+
+        Matcher matcher = SORT_IN_FIND_FORMAT.matcher(command);
+
+        String orderBy = "";
+
+        if (matcher.matches()) {
+            orderBy = matcher.group("orderBy");
+
+            //Since orderBy is optional, matcher::group may return a null ptr.
+            if (orderBy == null) {
+                orderBy = "";
+            }
+        } else {
+            throw new IllegalValueException("Sort order must be ASC or DSC");
+        }
+
+        return orderBy;
+    }
 }

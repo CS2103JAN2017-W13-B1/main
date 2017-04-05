@@ -2,10 +2,8 @@ package utask.logic.commands;
 
 import java.util.logging.Logger;
 
-import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
-import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
@@ -68,6 +66,8 @@ public class UndoneCommand extends Command implements ReversibleCommand {
             editedTask = UpdateUtil.createEditedTask(taskToEdit, STATUS_TO);
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
+
+            notifyUI(editedTask);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
@@ -80,13 +80,13 @@ public class UndoneCommand extends Command implements ReversibleCommand {
     @Override
     public void undo() throws Exception {
         model.updateTask(editedTask, taskToEdit);
+        notifyUI(taskToEdit);
     }
 
     // @@author A0138423J
     @Override
     public void redo() throws Exception {
         model.updateTask(taskToEdit, editedTask);
-        EventsCenter.getInstance()
-                .post(new ShowTaskOfInterestEvent(editedTask));
+        notifyUI(editedTask);
     }
 }

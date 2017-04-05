@@ -1,5 +1,6 @@
 package utask.model;
 
+import java.util.List;
 import java.util.Set;
 
 import utask.commons.core.UnmodifiableObservableList;
@@ -103,4 +104,15 @@ public interface Model {
 
     /** Gets size of reversible commands in reversible stack*/
     int getRedoCommandCount();
+
+    //TODO: Refractor
+    /** Gets list of interest from display index */
+    List<ReadOnlyTask> getUnderlyingListByIndex(int displayIndex);
+
+    /** Gets index with respect to list of interest from display index */
+    int getActualIndexFromDisplayIndex(int displayIndex);
+
+    /* Exposes isfindOverlay to Command through Model*/
+    void setIfFindOverlayShowing(boolean isShowing);
+    boolean isFindOverlayShowing();
 }
