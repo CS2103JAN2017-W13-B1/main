@@ -13,7 +13,7 @@ import utask.model.UserPrefs;
 public class AliasCommand extends Command {
 
     public static final String COMMAND_WORD = "alias";
-    public static final String COMMAND_FORMAT = "c /as create";
+    public static final String COMMAND_FORMAT = "ALIAS /as COMMAND";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Create an alias for a command\n"

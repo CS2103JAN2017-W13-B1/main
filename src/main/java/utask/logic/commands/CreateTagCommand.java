@@ -21,7 +21,8 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
     private final Logger logger = LogsCenter.getLogger(CreateTagCommand.class);
     public static final String COMMAND_WORD = "createtag";
 
-    public static final String COMMAND_FORMAT = "NAME [/color COLOR]";
+    //TODO: YH EDITED THIS TO CONFORM TO ACTUAL BEHAVIOUR
+    public static final String COMMAND_FORMAT = "NAME /color COLOR";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a custom tag in uTask. "
             + "Parameters: " + COMMAND_FORMAT + "\n"

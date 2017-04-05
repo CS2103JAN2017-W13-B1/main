@@ -114,6 +114,10 @@ public class SuggestionHelper {
             Entry<String, String> result = results.iterator().next();
 
             return result.getValue();
+        } else if (suggestionMap.containsKey(preamble)) {
+            //Lazy search; Give command format as soon as we have a match
+            //e.g. create and createtag. Give create command format when it matches
+            return suggestionMap.get(preamble);
         } else { //results.size() > 2
             sb.setLength(0); // clears stringbuilder
 

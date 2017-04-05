@@ -8,7 +8,7 @@ import utask.model.AliasCommandMap;
 public class UnaliasCommand extends Command {
 
     public static final String COMMAND_WORD = "unalias";
-    public static final String COMMAND_FORMAT = "c";
+    public static final String COMMAND_FORMAT = "ALIAS";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Remove an alias\n"
