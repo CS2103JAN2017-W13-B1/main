@@ -24,7 +24,9 @@ import utask.logic.commands.DoneCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
+import utask.logic.commands.ListAliasCommand;
 import utask.logic.commands.ListCommand;
+import utask.logic.commands.ListTagCommand;
 import utask.logic.commands.RedoCommand;
 import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
@@ -50,29 +52,45 @@ public class SuggestionHelper {
         EventsCenter.getInstance().registerHandler(this);
         sb = new StringBuilder();
         suggestionMap.put(AliasCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD + " " + AliasCommand.COMMAND_FORMAT);
+        suggestionMap.put(UnaliasCommand.COMMAND_WORD, UnaliasCommand.COMMAND_WORD + " "
+                + UnaliasCommand.COMMAND_FORMAT);
+
         suggestionMap.put(CreateCommand.COMMAND_WORD, CreateCommand.COMMAND_WORD + " " + CreateCommand.COMMAND_FORMAT);
-        suggestionMap.put(ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD + " " + ClearCommand.COMMAND_FORMAT);
-        suggestionMap.put(FindCommand.COMMAND_WORD, FindCommand.COMMAND_WORD + " " + FindCommand.COMMAND_FORMAT);
-        suggestionMap.put(DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD + " " + DeleteCommand.COMMAND_FORMAT);
-        suggestionMap.put(DoneCommand.COMMAND_WORD, DoneCommand.COMMAND_WORD + " " + DoneCommand.COMMAND_FORMAT);
+        suggestionMap.put(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_FORMAT);
         suggestionMap.put(UpdateCommand.COMMAND_WORD, UpdateCommand.COMMAND_WORD + " " + UpdateCommand.COMMAND_FORMAT);
+        suggestionMap.put(DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD + " " + DeleteCommand.COMMAND_FORMAT);
+
+        suggestionMap.put(FindCommand.COMMAND_WORD, FindCommand.COMMAND_WORD + " " + FindCommand.COMMAND_FORMAT);
+        suggestionMap.put(ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD + " " + ClearCommand.COMMAND_FORMAT);
+
+        suggestionMap.put(DoneCommand.COMMAND_WORD, DoneCommand.COMMAND_WORD + " " + DoneCommand.COMMAND_FORMAT);
+        suggestionMap.put(UndoneCommand.COMMAND_WORD, UndoneCommand.COMMAND_WORD + " " + UndoneCommand.COMMAND_FORMAT);
+
         suggestionMap.put(ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD + " " + ExitCommand.COMMAND_FORMAT);
         suggestionMap.put(HelpCommand.COMMAND_WORD, HelpCommand.COMMAND_WORD + " " + HelpCommand.COMMAND_FORMAT);
+
         suggestionMap.put(ListCommand.COMMAND_WORD, ListCommand.COMMAND_WORD + " " + ListCommand.COMMAND_FORMAT);
-        suggestionMap.put(RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD + " " + RedoCommand.COMMAND_FORMAT);
+        suggestionMap.put(ListTagCommand.COMMAND_WORD, ListTagCommand.COMMAND_WORD + " "
+                + ListTagCommand.COMMAND_FORMAT);
+        suggestionMap.put(ListAliasCommand.COMMAND_WORD, ListAliasCommand.COMMAND_WORD + " "
+                + ListAliasCommand.COMMAND_FORMAT);
+
         suggestionMap.put(RelocateCommand.COMMAND_WORD, RelocateCommand.COMMAND_WORD
                           + " " + RelocateCommand.COMMAND_FORMAT);
-        suggestionMap.put(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_FORMAT);
-        suggestionMap.put(UndoneCommand.COMMAND_WORD, UndoneCommand.COMMAND_WORD + " " + UndoneCommand.COMMAND_FORMAT);
+
+        suggestionMap.put(RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD + " " + RedoCommand.COMMAND_FORMAT);
         suggestionMap.put(UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD + " " + UndoCommand.COMMAND_FORMAT);
-        suggestionMap.put(UnaliasCommand.COMMAND_WORD, UnaliasCommand.COMMAND_WORD
-                + " " + UnaliasCommand.COMMAND_FORMAT);
-        
-        suggestionMap.put(CreateTagCommand.COMMAND_WORD, CreateTagCommand.COMMAND_WORD + " " + CreateTagCommand.COMMAND_FORMAT);
-        suggestionMap.put(DeleteTagCommand.COMMAND_WORD, DeleteTagCommand.COMMAND_WORD + " " + DeleteTagCommand.COMMAND_FORMAT);
-        suggestionMap.put(UpdateTagCommand.COMMAND_WORD, UpdateTagCommand.COMMAND_WORD + " " + UpdateTagCommand.COMMAND_FORMAT);
-        suggestionMap.put(CreateTagCommand.COMMAND_WORD, CreateTagCommand.COMMAND_WORD + " " + CreateTagCommand.COMMAND_FORMAT);
-        
+
+        suggestionMap.put(CreateTagCommand.COMMAND_WORD, CreateTagCommand.COMMAND_WORD + " "
+                + CreateTagCommand.COMMAND_FORMAT);
+
+        suggestionMap.put(DeleteTagCommand.COMMAND_WORD, DeleteTagCommand.COMMAND_WORD + " "
+                + DeleteTagCommand.COMMAND_FORMAT);
+        suggestionMap.put(UpdateTagCommand.COMMAND_WORD, UpdateTagCommand.COMMAND_WORD + " "
+                + UpdateTagCommand.COMMAND_FORMAT);
+        suggestionMap.put(CreateTagCommand.COMMAND_WORD, CreateTagCommand.COMMAND_WORD + " "
+                + CreateTagCommand.COMMAND_FORMAT);
+
         //Dynamic Suggested
         suggestionMap.put(SortCommand.COMMAND_WORD, SortCommand.COMMAND_WORD + " " + SortCommand.COMMAND_FORMAT);
     }
@@ -130,8 +148,9 @@ public class SuggestionHelper {
         return sb.toString();
     }
 
+    //TODO JIAHAO CODE
     public List<String> getDefaultCommands() {
-        ArrayList<String> defaultCommands = new ArrayList<String>();
+        List<String> defaultCommands = new ArrayList<String>();
         for (Entry<String, String> entry : suggestionMap.entrySet()) {
             String command = entry.getKey();
             defaultCommands.add(command);

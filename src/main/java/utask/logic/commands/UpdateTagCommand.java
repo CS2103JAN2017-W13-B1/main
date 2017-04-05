@@ -4,7 +4,9 @@ import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.logging.Logger;
 
+import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.UIShowTagColorDialogEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.CollectionUtil;
 import utask.logic.commands.exceptions.CommandException;
@@ -45,6 +47,7 @@ public class UpdateTagCommand  extends Command implements ReversibleCommand {
         try {
             model.updateTag(toBeEdited, editedTag);
             model.addUndoCommand(this);
+            EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(model.getTags()));
         } catch (IllegalArgumentException ive) {
             throw new CommandException(String
                     .format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
