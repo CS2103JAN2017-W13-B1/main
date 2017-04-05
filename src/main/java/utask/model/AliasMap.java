@@ -39,6 +39,7 @@ public class AliasMap {
         defaultAliasMap.put("delete", new ArrayList<String>());
         defaultAliasMap.put("done", new ArrayList<String>());
         defaultAliasMap.put("exit", new ArrayList<String>());
+        defaultAliasMap.put("find", new ArrayList<String>());
         defaultAliasMap.put("help", new ArrayList<String>());
         defaultAliasMap.put("redo", new ArrayList<String>());
         defaultAliasMap.put("relocate", new ArrayList<String>());
@@ -65,5 +66,12 @@ public class AliasMap {
         ArrayList<String> aliases = commandToAliases.get(command);
         aliases.add(alias);
         commandToAliases.replace(command, aliases);
+    }
+
+    /*
+     * Return true if the input alias exists for the given defaultCommandWord
+     */
+    public boolean isAliasForDefaultCommandWord(String alias, String defaultCommandWord) {
+        return commandToAliases.get(defaultCommandWord).contains(alias);
     }
 }

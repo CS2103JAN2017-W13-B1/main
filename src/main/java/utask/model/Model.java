@@ -103,4 +103,7 @@ public interface Model {
 
     /** set a alias for a default command*/
     void setAlias(String alias, String command);
+
+    /** Get default command word that matches alias*/
+    boolean isAliasForDefaultCommandWord(String alias, String defaultCommandWord);
 }

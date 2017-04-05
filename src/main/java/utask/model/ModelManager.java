@@ -508,4 +508,9 @@ public class ModelManager extends ComponentManager implements Model {
     public void setAlias(String alias, String command) {
         aliasMap.setAlias(alias, command);
     }
+
+    @Override
+    public boolean isAliasForDefaultCommandWord(String alias, String defaultCommandWord) {
+        return aliasMap.isAliasForDefaultCommandWord(alias, defaultCommandWord);
+    }
 }
