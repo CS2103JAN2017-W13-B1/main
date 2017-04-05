@@ -22,6 +22,7 @@ public class UTTagColorDialog extends UTDialog {
     private static final String NO_TAGS_HEADING = ":( No tags";
     private static final String LABEL_CSS = "-fx-padding: 1 3 1 3; -fx-text-fill: WHITE; -fx-background-color: %s;";
 
+
     public UTTagColorDialog(StackPane parent) {
         super(parent);
     }
@@ -29,6 +30,7 @@ public class UTTagColorDialog extends UTDialog {
     @Override
     protected void initialize() {
         List<Node> labels = new ArrayList<Node>();
+
 
         labels.add(setLabelSizingForDialogDisplay(createLabel("Important")));
         labels.add(setLabelSizingForDialogDisplay(createLabel("Urgent")));
