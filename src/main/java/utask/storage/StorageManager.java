@@ -50,7 +50,6 @@ public class StorageManager extends ComponentManager implements Storage {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
 
-
     // ================ UTask methods ==============================
 
     @Override

@@ -9,6 +9,7 @@ import utask.logic.commands.Command;
 import utask.logic.commands.CommandResult;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.parser.Parser;
+import utask.model.AliasCommandMap;
 import utask.model.Model;
 import utask.model.task.ReadOnlyTask;
 import utask.storage.Storage;
@@ -24,7 +25,8 @@ public class LogicManager extends ComponentManager implements Logic {
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
-        this.parser = new Parser(model);
+        AliasCommandMap.getInstance().setAliasCommandMap(model.getUserPrefs().getAliasMap());
+        this.parser = new Parser();
     }
 
     @Override

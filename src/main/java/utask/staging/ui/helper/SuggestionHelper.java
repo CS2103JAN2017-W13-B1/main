@@ -1,6 +1,8 @@
 //@@author A0139996A
 package utask.staging.ui.helper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -12,6 +14,7 @@ import com.google.common.eventbus.Subscribe;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
+import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
@@ -25,6 +28,9 @@ import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.SortInFindCommand;
+import utask.logic.commands.UnaliasCommand;
+import utask.logic.commands.UndoCommand;
+import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.staging.ui.events.FindRequestEvent;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
@@ -40,6 +46,7 @@ public class SuggestionHelper {
     private SuggestionHelper() {
         EventsCenter.getInstance().registerHandler(this);
         sb = new StringBuilder();
+        suggestionMap.put(AliasCommand.COMMAND_WORD, AliasCommand.COMMAND_WORD + " " + AliasCommand.COMMAND_FORMAT);
         suggestionMap.put(CreateCommand.COMMAND_WORD, CreateCommand.COMMAND_WORD + " " + CreateCommand.COMMAND_FORMAT);
         suggestionMap.put(ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD + " " + ClearCommand.COMMAND_FORMAT);
         suggestionMap.put(FindCommand.COMMAND_WORD, FindCommand.COMMAND_WORD + " " + FindCommand.COMMAND_FORMAT);
@@ -53,7 +60,10 @@ public class SuggestionHelper {
         suggestionMap.put(RelocateCommand.COMMAND_WORD, RelocateCommand.COMMAND_WORD
                           + " " + RelocateCommand.COMMAND_FORMAT);
         suggestionMap.put(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_FORMAT);
-
+        suggestionMap.put(UndoneCommand.COMMAND_WORD, UndoneCommand.COMMAND_WORD + " " + UndoneCommand.COMMAND_FORMAT);
+        suggestionMap.put(UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD + " " + UndoCommand.COMMAND_FORMAT);
+        suggestionMap.put(UnaliasCommand.COMMAND_WORD, UnaliasCommand.COMMAND_WORD
+                + " " + UnaliasCommand.COMMAND_FORMAT);
         //Dynamic Suggested
         suggestionMap.put(SortCommand.COMMAND_WORD, SortCommand.COMMAND_WORD + " " + SortCommand.COMMAND_FORMAT);
     }
@@ -109,6 +119,15 @@ public class SuggestionHelper {
         }
 
         return sb.toString();
+    }
+
+    public List<String> getDefaultCommands() {
+        ArrayList<String> defaultCommands = new ArrayList<String>();
+        for (Entry<String, String> entry : suggestionMap.entrySet()) {
+            String command = entry.getKey();
+            defaultCommands.add(command);
+        }
+        return defaultCommands;
     }
 
     @Subscribe

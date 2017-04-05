@@ -109,15 +109,6 @@ public interface Model {
     /** Gets size of reversible commands in reversible stack*/
     int getRedoCommandCount();
 
-    /** Gets default commands as a String Set*/
-    Set<String> getDefaultCommandsSet();
-
-    /** set a alias for a default command*/
-    void setAlias(String alias, String command);
-
-    /** Get default command word that matches alias*/
-    boolean isAliasForDefaultCommandWord(String alias, String defaultCommandWord);
-
     //TODO: Refractor
     /** Gets list of interest from display index */
     List<ReadOnlyTask> getUnderlyingListByIndex(int displayIndex);
@@ -127,6 +118,9 @@ public interface Model {
 
     /* Exposes isfindOverlay to Command through Model*/
     void setIfFindOverlayShowing(boolean isShowing);
+
     boolean isFindOverlayShowing();
+
+    UserPrefs getUserPrefs();
 
 }

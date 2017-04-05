@@ -37,7 +37,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final UTask uTask;
-
+    private final UserPrefs userPrefs;
     private final AliasMap aliasMap;
     private final FilteredList<ReadOnlyTask> filteredFindTasks;
 
@@ -60,6 +60,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.uTask = new UTask(uTask);
         this.aliasMap = new AliasMap();
+        this.userPrefs = userPrefs;
         undoStack = new Stack<ReversibleCommand>();
         redoStack = new Stack<ReversibleCommand>();
         filteredFindTasks = new FilteredList<>(this.uTask.getTaskList());
@@ -561,19 +562,8 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    //@@author A0138493W
     @Override
-    public Set<String> getDefaultCommandsSet() {
-        return aliasMap.getDefaultCommandsSet();
-    }
-
-    @Override
-    public void setAlias(String alias, String command) {
-        aliasMap.setAlias(alias, command);
-    }
-
-    @Override
-    public boolean isAliasForDefaultCommandWord(String alias, String defaultCommandWord) {
-        return aliasMap.isAliasForDefaultCommandWord(alias, defaultCommandWord);
+    public UserPrefs getUserPrefs() {
+        return userPrefs;
     }
 }
