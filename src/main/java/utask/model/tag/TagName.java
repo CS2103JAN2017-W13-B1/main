@@ -5,7 +5,7 @@ import utask.commons.exceptions.IllegalValueException;
 public class TagName {
 
     public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAGNAME_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String TAGNAME_VALIDATION_REGEX = "^\\w+$";
 
     public final String tagName;
 

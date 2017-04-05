@@ -178,6 +178,9 @@ public class ModelManager extends ComponentManager implements Model {
     public void addTag(Tag tag) throws DuplicateTagException {
         assert tag != null;
         uTask.addTag(tag);
+//        indicateUTaskChanged();
+        UTFilteredListHelper.getInstance().refresh();
+        sortFilteredTaskList(sortingConfig);
     }
     //@@author A0138423J
 

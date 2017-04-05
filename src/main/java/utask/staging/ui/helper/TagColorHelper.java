@@ -1,7 +1,7 @@
 //@@author A0139996A
 package utask.staging.ui.helper;
 
-import java.util.Random;
+import java.util.Random;;
 
 public class TagColorHelper {
 

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.CreateCommand;
+import utask.logic.commands.CreateTagCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.DoneCommand;
 import utask.logic.commands.ExitCommand;
@@ -94,6 +95,9 @@ public class Parser {
 
         case RelocateCommand.COMMAND_WORD:
             return new RelocateCommandParser().parse(arguments);
+
+        case CreateTagCommand.COMMAND_WORD:
+            return new CreateTagCommandParser().parse(arguments);
 
         default:
             return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);

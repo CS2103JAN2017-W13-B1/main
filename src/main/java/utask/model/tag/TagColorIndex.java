@@ -7,8 +7,12 @@ import utask.staging.ui.helper.TagColorHelper.ColorType;
 
 public class TagColorIndex {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAGCOLORINDEX_VALIDATION_REGEX = "($|\\d)";
+    public static final String MESSAGE_TAG_INDEX_CONSTRAINTS = "Tags Color Index"
+            + " should be based on the provided colors.";
+    public static final String MESSAGE_TAG_WRONG_COLOR = "Sorry! Selected color is not available. Please try again";
+    public static final String TAGCOLORINDEX_VALIDATION_REGEX = "($|[0-8]{1})";
+    public static final String TAGCOLORINDEX_ENUM_REGEX = "(BLACK)|(BLUE)|(CYAN)|(GREEN)|(ORANGE)|(PINK)|(PURPLE)|"
+            + "(RED)|(YELLOW)";
 
     public final Integer tagColorIndex;
 
@@ -23,7 +27,7 @@ public class TagColorIndex {
         String trimmedValue = value.trim();
         int colorIndex = -1;
         if (!isValidColorIndex(trimmedValue)) {
-            throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_TAG_INDEX_CONSTRAINTS);
         }
 
         if ("".equals(trimmedValue)) {
@@ -31,7 +35,8 @@ public class TagColorIndex {
         } else if (1 == trimmedValue.length()) {
             colorIndex = Integer.parseInt(value);
         } else {
-            colorIndex = ColorType.valueOf(trimmedValue).ordinal();
+            colorIndex = ColorType.valueOf(trimmedValue.toUpperCase())
+                    .ordinal();
         }
         this.tagColorIndex = colorIndex;
     }
@@ -45,7 +50,8 @@ public class TagColorIndex {
      * Returns true if a given string is a valid task name.
      */
     public static boolean isValidColorIndex(String test) {
-        return test.matches(TAGCOLORINDEX_VALIDATION_REGEX);
+        return (test.matches(TAGCOLORINDEX_VALIDATION_REGEX)
+                || test.toUpperCase().matches(TAGCOLORINDEX_ENUM_REGEX));
     }
 
     public Integer getTagColorIndexAsInt() {
@@ -61,8 +67,9 @@ public class TagColorIndex {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TagColorIndex // instanceof handles nulls
-                        && this.tagColorIndex.equals(((TagColorIndex) other).tagColorIndex)); // state
-                                                                           // check
+                        && this.tagColorIndex
+                                .equals(((TagColorIndex) other).tagColorIndex)); // state
+        // check
     }
 
     @Override
