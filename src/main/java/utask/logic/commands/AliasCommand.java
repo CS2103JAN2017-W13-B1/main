@@ -2,6 +2,7 @@
 
 package utask.logic.commands;
 
+import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
 
 /*
@@ -19,6 +20,7 @@ public class AliasCommand extends Command {
 
     public static final String MESSAGE_CREATE_ALIAS_SUCCESS = "New alias %1$s added to command %2$s";
     public static final String MESSAGE_COMMAND_WORD_NOT_EXIST = "Command word %1$s is not exist";
+    public static final String MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND = "Alias %1$s cannot be default command";
 
     private final String alias;
     private final String defaultCommandWord;
@@ -33,7 +35,11 @@ public class AliasCommand extends Command {
         if (!model.getDefaultCommandsSet().contains(defaultCommandWord)) {
             throw new CommandException(String.format(MESSAGE_COMMAND_WORD_NOT_EXIST, defaultCommandWord));
         }
-        model.setAlias(alias, defaultCommandWord);
+        try {
+            model.setAlias(alias, defaultCommandWord);
+        } catch (IllegalValueException e) {
+            throw new CommandException(String.format(MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND, defaultCommandWord));
+        }
         return new CommandResult(String.format(MESSAGE_CREATE_ALIAS_SUCCESS, alias, defaultCommandWord));
     }
 

@@ -1,6 +1,8 @@
 //@@author A0139996A
 package utask.staging.ui.helper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -109,6 +111,15 @@ public class SuggestionHelper {
         }
 
         return sb.toString();
+    }
+    
+    public List<String> getDefaultCommands() {
+        ArrayList<String> defaultCommands = new ArrayList<String>();
+        for (Entry<String, String> entry : suggestionMap.entrySet()) {
+            String command = entry.getKey();
+            defaultCommands.add(command);
+        }
+        return defaultCommands;
     }
 
     @Subscribe

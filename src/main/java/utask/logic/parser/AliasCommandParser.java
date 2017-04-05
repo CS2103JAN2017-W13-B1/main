@@ -5,6 +5,8 @@ import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static utask.logic.parser.CliSyntax.PREFIX_ALIAS;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import utask.logic.commands.AliasCommand;
 import utask.logic.commands.Command;
@@ -18,17 +20,20 @@ public class AliasCommandParser {
      * and returns an AliasCommand object for execution.
      */
     private static final String SPLITER_FOR_ALIAS = " /as";
+    private static final Pattern ALIAS_REGEX = Pattern
+            .compile("[\\w]+\\s/as\\s[a-z]+");
 
     public Command parse(String args) {
+        final Matcher matcher = ALIAS_REGEX.matcher(args.trim());
+        if (matcher.matches()) {
+            ArgumentTokenizer argsTokenizer = new ArgumentTokenizer(PREFIX_ALIAS);
+            argsTokenizer.tokenize(args);
 
-        ArgumentTokenizer argsTokenizer = new ArgumentTokenizer(PREFIX_ALIAS);
-        argsTokenizer.tokenize(args);
-
-        Optional<String> alias = ParserUtil.parseAlias(args.trim().split(SPLITER_FOR_ALIAS)[0]);
-        if (alias.isPresent()) {
-            return new AliasCommand(alias.get(), argsTokenizer.getValue(PREFIX_ALIAS).get());
+            Optional<String> alias = ParserUtil.parseAlias(args.trim().split(SPLITER_FOR_ALIAS)[0]);
+            if (alias.isPresent()) {
+                return new AliasCommand(alias.get(), argsTokenizer.getValue(PREFIX_ALIAS).get());
+            }
         }
-
         return new IncorrectCommand(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
     }

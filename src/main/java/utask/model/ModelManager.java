@@ -17,6 +17,7 @@ import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.UnmodifiableObservableList;
 import utask.commons.events.model.UTaskChangedEvent;
+import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.CollectionUtil;
 import utask.commons.util.StringUtil;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -552,7 +553,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setAlias(String alias, String command) {
+    public void setAlias(String alias, String command) throws IllegalValueException {
         aliasMap.setAlias(alias, command);
     }
 

@@ -70,9 +70,10 @@ public class Parser {
         String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        if (!isDeafultCommand(commandWord)) {
+        if (!isDefaultCommand(commandWord)) {
             commandWord = getDefaultCommand(commandWord);
         }
+
         switch (commandWord) {
 
         case CreateCommand.COMMAND_WORD:
@@ -139,7 +140,7 @@ public class Parser {
     /*
      * This method is used to detect if the command is default command
      */
-    private boolean isDeafultCommand (String command) {
+    private boolean isDefaultCommand (String command) {
         return model.getDefaultCommandsSet().contains(command);
     }
 

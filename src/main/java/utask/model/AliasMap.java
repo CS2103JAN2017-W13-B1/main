@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import utask.commons.exceptions.IllegalValueException;
+
 /*
  * Stores a HashMap of command maps aliases
  */
@@ -59,10 +61,14 @@ public class AliasMap {
 
     /**
      * set a alias for a default command
+     * @throws IllegalValueException 
      */
-    public void setAlias(String alias, String command) {
-        assert alias != null;
+    public void setAlias(String alias, String command) throws IllegalValueException {
+        assert alias != null && !alias.isEmpty();
         assert(commandToAliases.get(command) != null);
+        if (getDefaultCommandsSet().contains(alias)) {
+            throw new IllegalValueException("Alias cannot be default command word");
+        }
         ArrayList<String> aliases = commandToAliases.get(command);
         aliases.add(alias);
         commandToAliases.replace(command, aliases);
