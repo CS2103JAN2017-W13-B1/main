@@ -25,7 +25,7 @@ public class UpdateTagCommand  extends Command implements ReversibleCommand {
             + "Example: " + COMMAND_WORD
             + " Urgent /name VIP /colour blue";
 
-    public static final String MESSAGE_SUCCESS = "Tag created: %1$s";
+    public static final String MESSAGE_SUCCESS = "Tag updated: %1$s";
     public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in uTask";
 
     protected Tag toBeEdited, editedTag;

@@ -164,14 +164,16 @@ public class UniqueTagList implements Iterable<Tag> {
         }
     }
 
-    public void update(Tag tagToReplace, Tag updatedTag) {
+    public boolean update(Tag tagToReplace, Tag updatedTag) {
         assert tagToReplace != null;
         assert updatedTag != null;
         if (contains(tagToReplace)) {
             internalList.set(internalList.indexOf(tagToReplace), updatedTag);
+            return true;
         } else {
             // TODO
             // throw error that tag not found/
+            return false;
         }
     }
 

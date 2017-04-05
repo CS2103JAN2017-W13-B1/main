@@ -179,7 +179,9 @@ public class UTask implements ReadOnlyUTask {
     }
 
     public void updateTag(Tag tagToReplace, Tag updatedTag) {
-        tags.update(tagToReplace, updatedTag);
+        if (tags.update(tagToReplace, updatedTag)) {
+            tasks.updateTaskWithUpdatedTag(tagToReplace, updatedTag);
+        }
     }
 
     // @@ author

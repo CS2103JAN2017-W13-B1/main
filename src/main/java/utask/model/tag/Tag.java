@@ -3,6 +3,8 @@ package utask.model.tag;
 import java.util.Objects;
 
 import utask.commons.util.CollectionUtil;
+import utask.staging.ui.helper.TagColorHelper;
+
 // @@author A0138423J
 /**
  * Represents a Tag in the address book. Guarantees: immutable; name is valid as
@@ -57,16 +59,22 @@ public class Tag {
         this.tagCount = tagCount;
     }
 
+    public void setTag(Tag updatedTag) {
+        this.tagname = updatedTag.tagname;
+        this.tagcolorindex = updatedTag.tagcolorindex;
+        this.tagCount = updatedTag.tagCount;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Tag // instanceof handles nulls
-                && this.isSameStateAs((Tag) other));
+                        && this.isSameStateAs((Tag) other));
     }
 
     private boolean isSameStateAs(Tag other) {
         return other.getTagname().equals(this.getTagname());
-//                        && other.getTagcolorindex().equals(this.getTagcolorindex());
+        // && other.getTagcolorindex().equals(this.getTagcolorindex());
     }
 
     @Override
@@ -78,7 +86,9 @@ public class Tag {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + tagname.toString() + ']' + '[' + tagcolorindex.toString() + ']';
+        return '[' + tagname.toString() + ']' + '[' + TagColorHelper
+                .getColorValueFromIndex(tagcolorindex.getTagColorIndexAsInt())
+                + ']';
     }
 
 }

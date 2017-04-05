@@ -24,18 +24,10 @@ public class UpdateTagCommandParser {
         String oldTaskKey = argsTokenizer.getPreamble().get();
         Tag toBeEdited, editedTag = null;
 
-        System.out.println("".equals(oldTaskKey));
-        System.out.println(oldTaskKey == null);
-
         if ("".equals(oldTaskKey) || oldTaskKey == null) {
             return new IncorrectCommand(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
         try {
-            System.out.println();
-            System.out.println(oldTaskKey);
-            System.out.println(argsTokenizer.tryGet(PREFIX_NAME));
-            System.out.println(argsTokenizer.tryGet(PREFIX_TAGCOLOR));
-
             toBeEdited = new Tag(new TagName(oldTaskKey),
                     new TagColorIndex(""));
             editedTag = new Tag(

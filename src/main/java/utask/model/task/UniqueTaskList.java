@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import utask.commons.core.UnmodifiableObservableList;
 import utask.commons.exceptions.DuplicateDataException;
 import utask.commons.util.CollectionUtil;
+import utask.model.tag.Tag;
 
 /**
  * A list of tasks that enforces uniqueness between its elements and does not
@@ -128,6 +129,17 @@ public class UniqueTaskList implements Iterable<Task> {
         // properties.
         // internalList.set(index, taskToUpdate);
     }
+
+    public void updateTaskWithUpdatedTag (Tag tagToReplace, Tag updatedTag) {
+        for (Task x : internalList) {
+            for (Tag t : x.getTags()) {
+                if (t.equals(tagToReplace)) {
+                    t.setTag(updatedTag);
+                }
+            }
+        }
+    }
+    // @@author
 
     /**
      * Removes the equivalent task from the list.
