@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import utask.logic.commands.AliasCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.IncorrectCommand;
+import utask.model.AliasCommandMap;
 /**
  * Parses input arguments and creates a new AliasCommand object
  */
@@ -23,7 +24,7 @@ public class AliasCommandParser {
     private static final Pattern ALIAS_REGEX = Pattern
             .compile("[\\w]+\\s/as\\s[a-z]+");
 
-    public Command parse(String args) {
+    public Command parse(AliasCommandMap aliasMap, String args) {
         final Matcher matcher = ALIAS_REGEX.matcher(args.trim());
         if (matcher.matches()) {
             ArgumentTokenizer argsTokenizer = new ArgumentTokenizer(PREFIX_ALIAS);
@@ -31,7 +32,7 @@ public class AliasCommandParser {
 
             Optional<String> alias = ParserUtil.parseAlias(args.trim().split(SPLITER_FOR_ALIAS)[0]);
             if (alias.isPresent()) {
-                return new AliasCommand(alias.get(), argsTokenizer.getValue(PREFIX_ALIAS).get());
+                return new AliasCommand(aliasMap, alias.get(), argsTokenizer.getValue(PREFIX_ALIAS).get());
             }
         }
         return new IncorrectCommand(

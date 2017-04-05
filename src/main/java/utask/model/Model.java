@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import utask.commons.core.UnmodifiableObservableList;
-import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
@@ -105,16 +104,6 @@ public interface Model {
 
     /** Gets size of reversible commands in reversible stack*/
     int getRedoCommandCount();
-
-    /** Gets default commands as a String Set*/
-    Set<String> getDefaultCommandsSet();
-
-    /** set a alias for a default command
-     * @throws IllegalValueException */
-    void setAlias(String alias, String command) throws IllegalValueException;
-
-    /** Get default command word that matches alias*/
-    boolean isAliasForDefaultCommandWord(String alias, String defaultCommandWord);
 
     //TODO: Refractor
     /** Gets list of interest from display index */

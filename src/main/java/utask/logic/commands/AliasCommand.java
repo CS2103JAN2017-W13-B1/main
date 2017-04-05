@@ -4,6 +4,7 @@ package utask.logic.commands;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
+import utask.model.AliasCommandMap;
 
 /*
  * Create an alias for a default command
@@ -24,19 +25,21 @@ public class AliasCommand extends Command {
 
     private final String alias;
     private final String defaultCommandWord;
+    private AliasCommandMap aliasMap;
 
-    public AliasCommand(String alias, String defaultCommandWord) {
+    public AliasCommand(AliasCommandMap aliasMap, String alias, String defaultCommandWord) {
+        this.aliasMap = aliasMap;
         this.defaultCommandWord = defaultCommandWord;
         this.alias = alias;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (!model.getDefaultCommandsSet().contains(defaultCommandWord)) {
+        if (!aliasMap.getDefaultCommands().contains(defaultCommandWord)) {
             throw new CommandException(String.format(MESSAGE_COMMAND_WORD_NOT_EXIST, defaultCommandWord));
         }
         try {
-            model.setAlias(alias, defaultCommandWord);
+            aliasMap.setAlias(alias, defaultCommandWord);
         } catch (IllegalValueException e) {
             throw new CommandException(String.format(MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND, defaultCommandWord));
         }

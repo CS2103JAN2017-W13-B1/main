@@ -4,6 +4,7 @@ package utask.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.staging.ui.helper.SuggestionHelper;
@@ -14,9 +15,10 @@ import utask.staging.ui.helper.SuggestionHelper;
 public class AliasCommandMap {
     private HashMap<String, String> commandToAliases;
     private final ArrayList<String> defaultCommands;
-    
+
     public AliasCommandMap () {
         defaultCommands = (ArrayList<String>) SuggestionHelper.getInstance().getDefaultCommands();
+        commandToAliases = new HashMap<String, String>();
     }
 
     /**
@@ -32,5 +34,17 @@ public class AliasCommandMap {
             throw new IllegalValueException("Command is not recognized");
         }
         commandToAliases.put(alias, command);
+    }
+
+    public List<String> getDefaultCommands() {
+        return defaultCommands;
+    }
+
+    public boolean isAliasExist (String alias) {
+        return commandToAliases.containsKey(alias);
+    }
+
+    public String getMappedCommand (String alias) {
+        return commandToAliases.get(alias);
     }
 }

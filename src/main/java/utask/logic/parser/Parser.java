@@ -12,6 +12,7 @@ import com.google.common.eventbus.Subscribe;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
+import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.Command;
@@ -31,7 +32,7 @@ import utask.logic.commands.SortCommand;
 import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
-import utask.model.Model;
+import utask.model.AliasCommandMap;
 import utask.staging.ui.events.FindRequestEvent;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 import utask.staging.ui.helper.SuggestionHelper;
@@ -46,12 +47,12 @@ public class Parser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private Model model;
     private final Logger logger = LogsCenter.getLogger(SuggestionHelper.class);
     private boolean showExpandedSort = false;
+    private AliasCommandMap aliasMap;
 
-    public Parser(Model model) {
-        this.model = model;
+    public Parser() {
+        aliasMap = new AliasCommandMap();
         EventsCenter.getInstance().registerHandler(this);
     }
 
@@ -60,6 +61,7 @@ public class Parser {
      *
      * @param userInput full user input string
      * @return the command based on the user input
+     * @throws IllegalValueException
      */
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -71,7 +73,11 @@ public class Parser {
         final String arguments = matcher.group("arguments");
 
         if (!isDefaultCommand(commandWord)) {
-            commandWord = getDefaultCommand(commandWord);
+            try {
+                commandWord = getDefaultCommand(commandWord);
+            } catch (IllegalValueException e) {
+                return new IncorrectCommand(e.getMessage());
+            }
         }
 
         switch (commandWord) {
@@ -80,7 +86,7 @@ public class Parser {
             return new CreateCommandParser().parse(arguments);
 
         case AliasCommand.COMMAND_WORD:
-            return new AliasCommandParser().parse(arguments);
+            return new AliasCommandParser().parse(aliasMap, arguments);
 
         case UpdateCommand.COMMAND_WORD:
             return new UpdateCommandParser().parse(arguments);
@@ -141,43 +147,18 @@ public class Parser {
      * This method is used to detect if the command is default command
      */
     private boolean isDefaultCommand (String command) {
-        return model.getDefaultCommandsSet().contains(command);
+        return aliasMap.getDefaultCommands().contains(command);
     }
 
     /*
      * This method is used to get default command if the command input is alias
      */
-    private String getDefaultCommand (String command) {
-        if (model.isAliasForDefaultCommandWord(command, CreateCommand.COMMAND_WORD)) {
-            return CreateCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, AliasCommand.COMMAND_WORD)) {
-            return AliasCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, UpdateCommand.COMMAND_WORD)) {
-            return UpdateCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, DoneCommand.COMMAND_WORD)) {
-            return DoneCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, UndoneCommand.COMMAND_WORD)) {
-            return UndoneCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, SortCommand.COMMAND_WORD)) {
-            return SortCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, DeleteCommand.COMMAND_WORD)) {
-            return DeleteCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, ClearCommand.COMMAND_WORD)) {
-            return ClearCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, FindCommand.COMMAND_WORD)) {
-            return FindCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, ExitCommand.COMMAND_WORD)) {
-            return ExitCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, HelpCommand.COMMAND_WORD)) {
-            return HelpCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, UndoCommand.COMMAND_WORD)) {
-            return UndoCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, RedoCommand.COMMAND_WORD)) {
-            return RedoCommand.COMMAND_WORD;
-        } else if (model.isAliasForDefaultCommandWord(command, RelocateCommand.COMMAND_WORD)) {
-            return RelocateCommand.COMMAND_WORD;
+    private String getDefaultCommand (String alias) throws IllegalValueException {
+        assert alias != null && !alias.isEmpty();
+        if (!aliasMap.isAliasExist(alias)) {
+            throw new IllegalValueException("The entered alias does not exist");
         }
-        return command;
+        return aliasMap.getMappedCommand(alias);
     }
 
     @Subscribe

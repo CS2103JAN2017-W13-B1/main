@@ -61,7 +61,7 @@ public class AliasMap {
 
     /**
      * set a alias for a default command
-     * @throws IllegalValueException 
+
      */
     public void setAlias(String alias, String command) throws IllegalValueException {
         assert alias != null && !alias.isEmpty();

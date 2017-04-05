@@ -17,7 +17,6 @@ import utask.commons.core.ComponentManager;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.UnmodifiableObservableList;
 import utask.commons.events.model.UTaskChangedEvent;
-import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.CollectionUtil;
 import utask.commons.util.StringUtil;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -544,21 +543,5 @@ public class ModelManager extends ComponentManager implements Model {
         public String toString() {
             return "deadline&timestamp=empty";
         }
-    }
-
-    //@@author A0138493W
-    @Override
-    public Set<String> getDefaultCommandsSet() {
-        return aliasMap.getDefaultCommandsSet();
-    }
-
-    @Override
-    public void setAlias(String alias, String command) throws IllegalValueException {
-        aliasMap.setAlias(alias, command);
-    }
-
-    @Override
-    public boolean isAliasForDefaultCommandWord(String alias, String defaultCommandWord) {
-        return aliasMap.isAliasForDefaultCommandWord(alias, defaultCommandWord);
     }
 }
