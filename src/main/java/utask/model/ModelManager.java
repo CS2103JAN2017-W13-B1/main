@@ -192,11 +192,18 @@ public class ModelManager extends ComponentManager implements Model {
     public void addTag(Tag tag) throws DuplicateTagException {
         assert tag != null;
         uTask.addTag(tag);
-//        indicateUTaskChanged();
         UTFilteredListHelper.getInstance().refresh();
         sortFilteredTaskList(sortingConfig);
     }
-    //@@author A0138423J
+
+    @Override
+    public void deleteTag(Tag tag) throws DuplicateTagException {
+        assert tag != null;
+        uTask.deleteTag(tag);
+        UTFilteredListHelper.getInstance().refresh();
+        sortFilteredTaskList(sortingConfig);
+    }
+    //@@author
 
     //@@author A0139996A
     /** Gets total size of tasks in underlying lists of listviews*/

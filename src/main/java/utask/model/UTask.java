@@ -171,11 +171,18 @@ public class UTask implements ReadOnlyUTask {
     }
 
 //// tag-level operations
-
+    // @@ author A0138423J
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
         EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(tags.getAsListTag()));
     }
+
+    public void deleteTag(Tag t) {
+        tags.delete(t);
+        EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(tags.getAsListTag()));
+    }
+
+    // @@ author
 
 //// util methods
 

@@ -10,8 +10,8 @@ import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.Tag;
 import utask.model.tag.TagColorIndex;
 import utask.model.tag.TagName;
-
-public class CreateTagCommand  extends Command  implements ReversibleCommand {
+// @@ author A0138423J
+public class CreateTagCommand extends Command  implements ReversibleCommand {
 
     public static final String COMMAND_WORD = "createtag";
 
@@ -20,7 +20,7 @@ public class CreateTagCommand  extends Command  implements ReversibleCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a custom tag in uTask. "
             + "Parameters: " + COMMAND_FORMAT + "\n"
             + "Example: " + COMMAND_WORD
-            + "createtag /colour blue";
+            + "Urgent /colour blue";
 
     public static final String MESSAGE_SUCCESS = "New tag created: %1$s";
     public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in uTask";

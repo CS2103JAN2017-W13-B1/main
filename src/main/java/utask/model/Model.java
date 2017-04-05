@@ -52,6 +52,8 @@ public interface Model {
             throws UniqueTaskList.DuplicateTaskException;
 
     void addTag(Tag tag) throws UniqueTagList.DuplicateTagException;
+
+    void deleteTag(Tag tag) throws UniqueTagList.DuplicateTagException;
     //@@author
 
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
