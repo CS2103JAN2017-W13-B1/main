@@ -16,6 +16,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import utask.commons.core.Config;
+import utask.commons.core.EventsCenter;
 import utask.commons.core.GuiSettings;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.ExitAppRequestEvent;
@@ -91,6 +92,8 @@ public class UTMainWindow extends StagingUiPart<Region> {
         this.primaryStage.setScene(scene);
         setEventHandlers();
         setAccelerators();
+
+        EventsCenter.getInstance().registerHandler(this);
     }
 
     /*
@@ -150,6 +153,8 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
         new UTFindTaskOverlay(topPlaceholder, logic);
+
+        raise(new UIShowTagColorDialogEvent(null));
     }
 
     public UTTodoListPanel getTodoListPanel() {

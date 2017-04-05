@@ -17,6 +17,9 @@ import utask.model.tag.Tag;
 import utask.staging.ui.helper.TagColorHelper;
 
 public class UTTagColorDialog extends UTDialog {
+    private static final String HAS_TAGS_HEADING = "Tags";
+    private static final String NO_TAGS_MESSAGE = "Try adding some tags first!";
+    private static final String NO_TAGS_HEADING = ":( No tags";
     private static final String LABEL_CSS = "-fx-padding: 1 3 1 3; -fx-text-fill: WHITE; -fx-background-color: %s;";
 
     public UTTagColorDialog(StackPane parent) {
@@ -25,45 +28,36 @@ public class UTTagColorDialog extends UTDialog {
 
     @Override
     protected void initialize() {
-        contentLayout.setHeading(new Label("Tags"));
-
         List<Node> labels = new ArrayList<Node>();
 
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
+        labels.add(setLabelSizingForDialogDisplay(createLabel("Important")));
+        labels.add(setLabelSizingForDialogDisplay(createLabel("Urgent")));
+        labels.add(setLabelSizingForDialogDisplay(createLabel("Todo")));
+        labels.add(setLabelSizingForDialogDisplay(createLabel("Friends")));
 
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
-
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
-
-        FlowPane pane = new FlowPane();
-        pane.getChildren().addAll(labels);
-
-        contentLayout.setBody(pane);
+        if (labels.size() > 0) {
+            FlowPane pane = new FlowPane();
+            pane.getChildren().addAll(labels);
+            contentLayout.setHeading(new Label(HAS_TAGS_HEADING));
+            contentLayout.setBody(pane);
+        } else {
+            contentLayout.setHeading(new Label(NO_TAGS_HEADING));
+            contentLayout.setBody(new Label(NO_TAGS_MESSAGE));
+        }
     }
 
-    private Node setLabelSizeForDialogDisplay(Label label) {
+    private Node setLabelSizingForDialogDisplay(Label label) {
         label.setMinHeight(20);
         label.setMaxHeight(20);
         label.setPrefHeight(20);
-
         label.setMinWidth(75);
         label.setMaxWidth(75);
         label.setPrefWidth(75);
 
-        VBox vb = new VBox();
-        vb.setPadding(new Insets(2, 2, 2, 2));
-//        vb.setSpacing(10);
-        vb.getChildren().add(label);
-        return vb;
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(2, 2, 2, 2));
+        vBox.getChildren().add(label);
+        return vBox;
     }
 
     public void show(List<Tag> tags) {
