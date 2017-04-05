@@ -1,5 +1,8 @@
 package utask.staging.ui;
 
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 import com.jfoenix.controls.JFXDecorator;
 
 import javafx.event.EventHandler;
@@ -14,11 +17,15 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import utask.commons.core.Config;
 import utask.commons.core.GuiSettings;
+import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.ExitAppRequestEvent;
+import utask.commons.events.ui.UIShowMessageDialogEvent;
+import utask.commons.events.ui.UIShowTagColorDialogEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
 import utask.ui.HelpWindow;
+import utask.ui.dialogs.UTMessageDialog;
 import utask.ui.dialogs.UTTagColorDialog;
 
 /**
@@ -26,7 +33,7 @@ import utask.ui.dialogs.UTTagColorDialog;
  * and space where other JavaFX elements can be placed.
  */
 public class UTMainWindow extends StagingUiPart<Region> {
-
+    private static final Logger logger = LogsCenter.getLogger(UTMainWindow.class);
     private static final String ICON = "/images/utask.png";
     private static final String FXML = "UTMainWindow.fxml";
     private static final int MIN_HEIGHT = 650;
@@ -143,7 +150,6 @@ public class UTMainWindow extends StagingUiPart<Region> {
         new UTStatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
         new UTCommandBox(commandBoxPlaceholder, logic);
         new UTFindTaskOverlay(topPlaceholder, logic);
-        new UTTagColorDialog(rootPane).show();
     }
 
     public UTTodoListPanel getTodoListPanel() {
@@ -212,5 +218,17 @@ public class UTMainWindow extends StagingUiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
+    }
+
+    @Subscribe
+    private void handleUIShowTagColorDialogEvent(UIShowTagColorDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        new UTTagColorDialog(rootPane).show(event.tags);
+    }
+
+    @Subscribe
+    private void handleUIShowMessageDialogEvent(UIShowMessageDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        new UTMessageDialog(rootPane).show(event.headingText, event.contentText);
     }
 }

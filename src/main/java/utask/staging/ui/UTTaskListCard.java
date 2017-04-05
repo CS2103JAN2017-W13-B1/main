@@ -62,7 +62,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         lblId.setText(displayedIndex + " ");
         String friendlyDate = buildFriendlyDateToDisplay(task);
         lblDate.setText(friendlyDate);
-        initTags(task);
+        createTags(task);
     }
 
     private String buildFriendlyDateToDisplay(ReadOnlyTask task) {
@@ -101,7 +101,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     }
     //@@author
 
-    private void initTags(ReadOnlyTask task) {
+    private void createTags(ReadOnlyTask task) {
         UniqueTagList tags = task.getTags();
 
         for (Tag tag : tags) {

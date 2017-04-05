@@ -13,7 +13,7 @@ public class UTMessageDialog extends UTDialog {
     }
 
     @Override
-    protected void setContent() {
+    protected void initialize() {
         lblHeading = new Label();
         lblContent = new Label();
         contentLayout.setHeading(lblHeading);

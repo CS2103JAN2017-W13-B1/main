@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import utask.model.tag.Tag;
 import utask.staging.ui.helper.TagColorHelper;
 
 public class UTTagColorDialog extends UTDialog {
@@ -23,7 +24,9 @@ public class UTTagColorDialog extends UTDialog {
     }
 
     @Override
-    protected void setContent() {
+    protected void initialize() {
+        contentLayout.setHeading(new Label("Tags"));
+
         List<Node> labels = new ArrayList<Node>();
 
         labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
@@ -41,31 +44,7 @@ public class UTTagColorDialog extends UTDialog {
         labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
         labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
 
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
-
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
-
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Important")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Urgent")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Todo")));
-        labels.add(setLabelSizeForDialogDisplay(createLabel("Friends")));
-
         FlowPane pane = new FlowPane();
-//        pane.setMaxWidth(300);
         pane.getChildren().addAll(labels);
 
         contentLayout.setBody(pane);
@@ -87,11 +66,11 @@ public class UTTagColorDialog extends UTDialog {
         return vb;
     }
 
-    public void show(String headingText, String contentText) {
+    public void show(List<Tag> tags) {
         super.show();
     }
 
-    //TODO: COPYPASTA FROM UTTASKLISTCAR REUSEABLE CODE!!!
+    //TODO: COPYPASTA FROM UTTASKLISTCARD REUSEABLE CODE!!!
     private Label createLabel(String name) {
         Label label = new Label(name);
         addStylingPropertiesToLabel(label);

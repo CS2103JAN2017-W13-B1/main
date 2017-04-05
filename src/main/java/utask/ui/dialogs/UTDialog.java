@@ -20,7 +20,7 @@ public abstract class UTDialog {
         dialog = new JFXDialog();
         contentLayout = new JFXDialogLayout();
         initialize(parent);
-        setContent();
+        initialize();
         EventsCenter.getInstance().registerHandler(this);
     }
 
@@ -33,14 +33,12 @@ public abstract class UTDialog {
         closeButton.setStyle("-fx-text-fill: -fx-utask-accentcolor");
         closeButton.setOnAction(this::onClose);
 
-//        JFXButton okButton = new JFXButton("CONTINUE [ENTER]");
-//        okButton.setStyle("-fx-text-fill: -fx-utask-accentcolor");
         contentLayout.setActions(closeButton);
     }
 
-    protected abstract void setContent();
+    protected abstract void initialize();
 
-    public void show() {
+    protected void show() {
         isShowing = true;
         dialog.show();
     }
