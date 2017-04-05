@@ -9,7 +9,7 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.Command;
 import utask.logic.commands.CreateTagCommand;
 import utask.logic.commands.IncorrectCommand;
-
+// @@ author A0138423J
 public class CreateTagCommandParser {
 
     /**
@@ -20,7 +20,6 @@ public class CreateTagCommandParser {
         ArgumentTokenizer argsTokenizer = new ArgumentTokenizer(
                 PREFIX_TAGCOLOR);
         argsTokenizer.tokenize(args);
-
         try {
             return new CreateTagCommand(argsTokenizer.getPreamble().get(),
                     argsTokenizer.getValue(PREFIX_TAGCOLOR).get());

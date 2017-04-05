@@ -16,11 +16,10 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 
+// @@ author A0138423J
 /**
  * Edits the details of an existing task in the uTask.
  */
-
-// @@author A0138423J
 public class UpdateCommand extends Command implements ReversibleCommand {
     private final Logger logger = LogsCenter.getLogger(UpdateCommand.class);
 
@@ -72,6 +71,7 @@ public class UpdateCommand extends Command implements ReversibleCommand {
     // @@author A0138423J
     @Override
     public CommandResult execute() throws CommandException {
+        assert model != null;
         if (filteredTaskListIndex >= model.getTotalSizeOfLists()) {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);

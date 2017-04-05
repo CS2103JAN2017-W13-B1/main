@@ -65,13 +65,13 @@ public class Tag {
     }
 
     private boolean isSameStateAs(Tag other) {
-        return other.getTagname().equals(this.getTagname())
-                        && other.getTagcolorindex().equals(this.getTagcolorindex());
+        return other.getTagname().equals(this.getTagname());
+//                        && other.getTagcolorindex().equals(this.getTagcolorindex());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tagname, tagcolorindex);
+        return Objects.hash(tagname);
     }
 
     /**

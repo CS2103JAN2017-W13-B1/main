@@ -12,17 +12,17 @@ public class UTMessageDialog extends UTDialog {
         super(parent);
     }
 
-    @Override
-    protected void initialize() {
+    private void initialize(String headingText, String contentText) {
         lblHeading = new Label();
         lblContent = new Label();
+        lblHeading.setText(headingText);
+        lblContent.setText(contentText);
         contentLayout.setHeading(lblHeading);
         contentLayout.setBody(lblContent);
     }
 
     public void show(String headingText, String contentText) {
-        lblHeading.setText(headingText);
-        lblContent.setText(contentText);
+        initialize(headingText, contentText);
         super.show();
     }
 }
