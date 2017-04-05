@@ -18,8 +18,8 @@ import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
+import utask.model.task.Status;
 import utask.model.task.Timestamp;
 
 /**
@@ -39,6 +39,9 @@ public class ParserUtil {
             Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
     private static final Pattern ALIAS_ARGS_FORMAT = Pattern
             .compile("[a-zA-Z0-9]+");
+    private static final Pattern SORT_IN_FIND_FORMAT =
+            Pattern.compile("(?<columnAlphabet>[a-f])\\s*(?<orderBy>(asc|dsc))?");
+
     /**
      * Returns the specified index in the {@code command} if it is a positive
      * unsigned integer Returns an {@code Optional.empty()} otherwise.
@@ -152,6 +155,7 @@ public class ParserUtil {
         return new HashSet<>(elements);
     }
 
+    //@@author A0138423J
     /**
      * Splits a preamble string into ordered fields.
      *
@@ -226,16 +230,51 @@ public class ParserUtil {
         return new UniqueTagList(tagSet);
     }
 
-    //@@author A0138423J
     /**
-     * Parses a {@code Optional<String> iscompleted} into an
-     * {@code Optional<IsCompleted>} if {@code iscompleted} is present.
+     * Parses a {@code Optional<String> status} into an
+     * {@code Optional<Status>} if {@code status} is present.
      */
-    public static Optional<IsCompleted> parseIsCompleted(
-            Optional<String> iscompleted) throws IllegalValueException {
-        assert iscompleted != null;
-        return iscompleted.isPresent()
-                ? Optional.of(new IsCompleted(iscompleted.get()))
+    public static Optional<Status> parseStatus(
+            Optional<String> status) throws IllegalValueException {
+        assert status != null;
+        return status.isPresent()
+                ? Optional.of(new Status(status.get()))
                 : Optional.empty();
+    }
+
+    //@@author A0139996A
+    public static String parseColumnAlphabetOfSortInFind(String command) {
+        assert command != null && !command.isEmpty();
+
+        Matcher matcher = SORT_IN_FIND_FORMAT.matcher(command);
+
+        String column = "";
+
+        if (matcher.matches()) {
+            column = matcher.group("columnAlphabet");
+        }
+
+        return column;
+    }
+
+    public static String parseOrderByOfSortInFind(String command) throws IllegalValueException {
+        assert command != null && !command.isEmpty();
+
+        Matcher matcher = SORT_IN_FIND_FORMAT.matcher(command);
+
+        String orderBy = "";
+
+        if (matcher.matches()) {
+            orderBy = matcher.group("orderBy");
+
+            //Since orderBy is optional, matcher::group may return a null ptr.
+            if (orderBy == null) {
+                orderBy = "";
+            }
+        } else {
+            throw new IllegalValueException("Sort order must be ASC or DSC");
+        }
+
+        return orderBy;
     }
 }

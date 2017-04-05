@@ -2,6 +2,7 @@ package utask.model;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Logger;
@@ -34,8 +35,9 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final UTask uTask;
+
     private final AliasMap aliasMap;
-    private final FilteredList<ReadOnlyTask> filteredTasks;
+    private final FilteredList<ReadOnlyTask> filteredFindTasks;
 
     private final FilteredList<ReadOnlyTask> dueTasks;
     private final FilteredList<ReadOnlyTask> todayTasks;
@@ -58,7 +60,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.aliasMap = new AliasMap();
         undoStack = new Stack<ReversibleCommand>();
         redoStack = new Stack<ReversibleCommand>();
-        filteredTasks = new FilteredList<>(this.uTask.getTaskList());
+        filteredFindTasks = new FilteredList<>(this.uTask.getTaskList());
 
         Date todayDate = new Date();
         Date yesterdayDate = new Date();
@@ -80,6 +82,7 @@ public class ModelManager extends ComponentManager implements Model {
 //        UTFliterListHelper.getInstance().addList(futureTasks);
 //        UTFliterListHelper.getInstance().addList(floatingTasks);
 
+        UTFilteredListHelper.getInstance().addFindFilteredList(filteredFindTasks);
         sortingConfig = Model.SORT_ORDER_DEFAULT;
         sortFilteredTaskList(sortingConfig);
     }
@@ -140,37 +143,46 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         uTask.removeTask(target);
         UTFilteredListHelper.getInstance().refresh();
+        updateFilteredListToShowAll();
         indicateUTaskChanged();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         uTask.addTask(task);
+
+        //TODO: DUPLICATES
         UTFilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
         sortFilteredTaskList(sortingConfig);
     }
 
     @Override
-    public void updateTask(int filteredTaskListIndex, ReadOnlyTask editedTask)
+    public synchronized void updateTask(int filteredTaskListIndex, ReadOnlyTask editedTask)
             throws UniqueTaskList.DuplicateTaskException {
         assert editedTask != null;
 
-        int uTaskIndex = filteredTasks.getSourceIndex(filteredTaskListIndex);
+        int uTaskIndex = filteredFindTasks.getSourceIndex(filteredTaskListIndex);
         uTask.updateTask(uTaskIndex, editedTask);
+
+        //TODO: DUPLICATES
         UTFilteredListHelper.getInstance().refresh();
+        updateFilteredListToShowAll();
         sortFilteredTaskList(sortingConfig);
     }
 
     //@@author A0139996A
     @Override
-    public void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
+    public synchronized void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
             throws UniqueTaskList.DuplicateTaskException {
         assert taskToEdit != null;
         assert editedTask != null;
 
         uTask.updateTask(taskToEdit, editedTask);
+
+        //TODO: DUPLICATES
         UTFilteredListHelper.getInstance().refresh();
+        updateFilteredListToShowAll();
         sortFilteredTaskList(sortingConfig);
     }
 
@@ -178,6 +190,28 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getTotalSizeOfLists() {
         return UTFilteredListHelper.getInstance().getTotalSizeOfAllList();
+    }
+
+    @Override
+    public void setIfFindOverlayShowing(boolean isShowing) {
+        UTFilteredListHelper.getInstance().setIfFindOverlayShowing(isShowing);
+    }
+
+    @Override
+    public boolean isFindOverlayShowing() {
+        return UTFilteredListHelper.getInstance().isFindOverlayShowing();
+    }
+
+
+    //TODO: refractor
+    @Override
+    public List<ReadOnlyTask> getUnderlyingListByIndex(int displayIndex) {
+        return UTFilteredListHelper.getInstance().getUnderlyingListByIndex(displayIndex);
+    }
+
+    @Override
+    public int getActualIndexFromDisplayIndex(int displayIndex) {
+        return UTFilteredListHelper.getInstance().getActualIndexFromDisplayIndex(displayIndex);
     }
     //@author
 
@@ -210,7 +244,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
-        return new UnmodifiableObservableList<>(filteredTasks);
+        return new UnmodifiableObservableList<>(filteredFindTasks);
     }
 
     //@@author A0139996A
@@ -240,10 +274,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
-    //TODO: Mark for deletion
     @Override
     public void updateFilteredListToShowAll() {
-        filteredTasks.setPredicate(null);
+        filteredFindTasks.setPredicate(null);
     }
 
     @Override
@@ -252,12 +285,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void updateFilteredTaskList(Expression expression) {
-        filteredTasks.setPredicate(expression::satisfies);
+        filteredFindTasks.setPredicate(expression::satisfies);
     }
 
+    //TODO: Mark for deletion
     //@@author A0139996A
     public void updateFilteredTaskListByKeywords(String keywords) {
-        filteredTasks.setPredicate(task -> {
+        filteredFindTasks.setPredicate(task -> {
             // If filter text is empty, display all persons.
             if (keywords == null || keywords.isEmpty()) {
                 return true;
@@ -374,7 +408,7 @@ public class ModelManager extends ComponentManager implements Model {
                             || StringUtil.containsWordIgnoreCase(task.getDeadline().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getTimestamp().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getFrequency().value, keyword)
-                            || StringUtil.containsWordIgnoreCase(task.getIsCompleted().value, keyword)
+                            || StringUtil.containsWordIgnoreCase(task.getStatus().toString(), keyword)
                             || StringUtil.containsWordIgnoreCase(task.getTags().getAllTagNames(), keyword))
                     .findAny()
                     .isPresent();
@@ -408,7 +442,7 @@ public class ModelManager extends ComponentManager implements Model {
                 return taskDate.getYear() == date.getYear()
                         && taskDate.getMonth() == date.getMonth()
                         && taskDate.getDate() == date.getDate()
-                        && !task.getIsCompleted().isCompleted();
+                        && !task.getStatus().isStatusComplete();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -438,7 +472,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             try {
                 return task.getDeadline().getDate().before(date)
-                        && !task.getIsCompleted().isCompleted();
+                        && !task.getStatus().isStatusComplete();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -468,7 +502,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             try {
                 return task.getDeadline().getDate().after(date)
-                        && !task.getIsCompleted().isCompleted();
+                        && !task.getStatus().isStatusComplete();
             } catch (ParseException e) {
                 assert false : "Date is in wrong format";
             }
@@ -485,7 +519,7 @@ public class ModelManager extends ComponentManager implements Model {
     private class EmptyDeadlineAndTimestampQualifier implements Qualifier {
         @Override
         public boolean run(ReadOnlyTask task) {
-            if (task.getDeadline().isEmpty() && task.getTimestamp().isEmpty() && !task.getIsCompleted().isCompleted()) {
+            if (task.getDeadline().isEmpty() && task.getTimestamp().isEmpty() && !task.getStatus().isStatusComplete()) {
                 return true;
             } else {
                 return false;

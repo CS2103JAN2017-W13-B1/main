@@ -11,13 +11,13 @@ import utask.model.task.Name;
 public class CreateDeadlineTaskCommand extends CreateCommand {
 
     public CreateDeadlineTaskCommand(String name, String deadline,
-            String frequency, Set<String> tags, String isCompleted)
+            String frequency, Set<String> tags, String status)
             throws IllegalValueException {
-        super(frequency, tags, isCompleted);
+        super(frequency, tags, status);
 
         this.toAdd = new DeadlineTask(new Name(name), new Deadline(deadline),
                 this.frequency, new UniqueTagList(tagSet),
-                this.isCompleted);
+                this.status);
     }
 
 }

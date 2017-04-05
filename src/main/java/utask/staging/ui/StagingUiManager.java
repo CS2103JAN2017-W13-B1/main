@@ -15,7 +15,6 @@ import utask.commons.core.Config;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.storage.DataSavingExceptionEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
-import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.commons.util.StringUtil;
 import utask.logic.Logic;
@@ -55,7 +54,6 @@ public class StagingUiManager extends ComponentManager implements Ui {
             mainWindow = new UTMainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
-
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
@@ -85,7 +83,7 @@ public class StagingUiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        //alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -120,12 +118,4 @@ public class StagingUiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         UTListViewHelper.getInstance().scrollTo(event.targetIndex);
     }
-
-    //TODO: Remove, no more browser
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        //mainWindow.loadPersonPage(event.getNewSelection());
-    }
-
 }

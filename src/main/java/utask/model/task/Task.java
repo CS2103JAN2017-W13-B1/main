@@ -13,17 +13,17 @@ public abstract class Task implements ReadOnlyTask {
 
     protected Name name;
     protected Frequency frequency;
-    protected IsCompleted isCompleted;
+    protected Status status;
     protected UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Frequency frequency, UniqueTagList tags, IsCompleted isCompleted) {
+    public Task(Name name, Frequency frequency, UniqueTagList tags, Status status) {
         assert !CollectionUtil.isAnyNull(name, frequency, tags);
         this.name = name;
         this.frequency = frequency;
-        this.isCompleted = isCompleted;
+        this.status = status;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -48,13 +48,13 @@ public abstract class Task implements ReadOnlyTask {
     }
 
     //@@author A0138423J
-    public void setCompleted(IsCompleted isCompleted) {
-        this.isCompleted = isCompleted;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
-    public IsCompleted getIsCompleted() {
-        return isCompleted;
+    public Status getStatus() {
+        return status;
     }
 
     @Override
@@ -77,7 +77,7 @@ public abstract class Task implements ReadOnlyTask {
 
         this.setName(replacement.getName());
         this.setFrequency(replacement.getFrequency());
-        this.setCompleted(replacement.getIsCompleted());
+        this.setStatus(replacement.getStatus());
         this.setTags(replacement.getTags());
     }
 
@@ -91,7 +91,7 @@ public abstract class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, frequency, tags, isCompleted);
+        return Objects.hash(name, frequency, tags, status);
     }
 
     @Override

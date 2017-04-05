@@ -36,7 +36,7 @@ import utask.ui.Ui;
  */
 public class StageDriver extends Application {
     private static final Logger logger = LogsCenter.getLogger(StageDriver.class);
-
+    private static final String DEAFULT_FILE_NAME = "/utask.xml";
     public static final Version VERSION = new Version(1, 0, 0, true);
 
     protected Ui ui;
@@ -190,10 +190,13 @@ public class StageDriver extends Application {
     @Subscribe
     private void handleFileRelocateEvent(FileRelocateEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        config.setUTaskFilePath(event.getPath() + "/utask.xml");
-        //Update config file in case it was missing to begin with or there are new/unused fields
+        String prePath = config.getUTaskFilePath();
+        //Update config file and storage the changed file location
+        config.setUTaskFilePath(event.getPath() + DEAFULT_FILE_NAME);
+        storage.setFilePath(event.getPath() + DEAFULT_FILE_NAME);
         try {
-            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
+            ConfigUtil.saveConfig(config, ConfigUtil.getConfigPath());
+            storage.moveSaveFile(prePath, event.getPath() + DEAFULT_FILE_NAME);
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
         }

@@ -6,7 +6,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
+import utask.commons.core.EventsCenter;
+import utask.commons.core.LogsCenter;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
@@ -19,14 +24,21 @@ import utask.logic.commands.RedoCommand;
 import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
+import utask.logic.commands.SortInFindCommand;
 import utask.logic.commands.UpdateCommand;
+import utask.staging.ui.events.FindRequestEvent;
+import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 
 public class SuggestionHelper {
 
-    private static final SortedMap<String, String> suggestionMap =  new TreeMap<String, String>();
-    private static final StringBuilder sb;
+    private final Logger logger = LogsCenter.getLogger(SuggestionHelper.class);
+    private final SortedMap<String, String> suggestionMap =  new TreeMap<String, String>();
+    private final StringBuilder sb;
 
-    static {
+    private static SuggestionHelper instance;
+
+    private SuggestionHelper() {
+        EventsCenter.getInstance().registerHandler(this);
         sb = new StringBuilder();
         suggestionMap.put(CreateCommand.COMMAND_WORD, CreateCommand.COMMAND_WORD + " " + CreateCommand.COMMAND_FORMAT);
         suggestionMap.put(ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD + " " + ClearCommand.COMMAND_FORMAT);
@@ -41,10 +53,20 @@ public class SuggestionHelper {
         suggestionMap.put(RelocateCommand.COMMAND_WORD, RelocateCommand.COMMAND_WORD
                           + " " + RelocateCommand.COMMAND_FORMAT);
         suggestionMap.put(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD + " " + SelectCommand.COMMAND_FORMAT);
+
+        //Dynamic Suggested
         suggestionMap.put(SortCommand.COMMAND_WORD, SortCommand.COMMAND_WORD + " " + SortCommand.COMMAND_FORMAT);
     }
 
-    public static final String getInputSuggestionOfPreamble(String preamble) {
+    public static SuggestionHelper getInstance() {
+        if (instance == null) {
+            instance = new SuggestionHelper();
+        }
+
+        return instance;
+    }
+
+    public final String getInputSuggestionOfPreamble(String preamble) {
         assert preamble != "" && preamble != null;
 
         Set<Entry<String, String>> results = filterPrefix(suggestionMap, preamble).entrySet();
@@ -78,7 +100,7 @@ public class SuggestionHelper {
         return baseMap;
     }
 
-    private static String showAllSuggetions() {
+    private String showAllSuggetions() {
         sb.setLength(0); // clears stringbuilder
 
         for (Entry<String, String> entry : suggestionMap.entrySet()) {
@@ -87,5 +109,18 @@ public class SuggestionHelper {
         }
 
         return sb.toString();
+    }
+
+    @Subscribe
+    private void handleFindRequestEvent(FindRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        suggestionMap.put(SortInFindCommand.COMMAND_WORD, SortInFindCommand.COMMAND_WORD + " "
+                        + SortInFindCommand.COMMAND_FORMAT);
+    }
+
+    @Subscribe
+    private void handleKeyboardEscapeKeyPressedEvent(KeyboardEscapeKeyPressedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        suggestionMap.put(SortCommand.COMMAND_WORD, SortCommand.COMMAND_WORD + " " + SortCommand.COMMAND_FORMAT);
     }
 }

@@ -31,6 +31,7 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredTaskList(keywords);
+        model.setIfFindOverlayShowing(true);
         EventsCenter.getInstance().post(new FindRequestEvent());
         return new CommandResult(String.format(Messages.MESSAGE_SEARCH_RESULTS, keywords.toString(),
                                                 model.getFilteredTaskList().size()));

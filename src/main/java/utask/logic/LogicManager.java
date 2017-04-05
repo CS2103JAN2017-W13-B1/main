@@ -65,4 +65,10 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<ReadOnlyTask> getFloatingFilteredTaskList() {
         return model.getFloatingFilteredTaskList();
     }
+
+    //TODO: too many of this?
+    @Override
+    public void setIfFindOverlayShowing(boolean isShowing) {
+        model.setIfFindOverlayShowing(isShowing);
+    }
 }

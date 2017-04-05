@@ -16,6 +16,8 @@ public interface UTaskStorage {
      */
     String getUTaskFilePath();
 
+    void setFilePath(String path);
+
     /**
      * Returns UTask data as a {@link ReadOnlyUTask}.
      *   Returns {@code Optional.empty()} if storage file is not found.
@@ -40,5 +42,10 @@ public interface UTaskStorage {
      * @see #saveUTask(ReadOnlyUTask)
      */
     void saveUTask(ReadOnlyUTask uTask, String filePath) throws IOException;
+
+    /*
+     * Move the storage data file to new path
+     */
+    void moveSaveFile(String prePath, String newPath);
 
 }

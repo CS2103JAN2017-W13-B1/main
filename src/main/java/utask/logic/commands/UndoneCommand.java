@@ -1,8 +1,9 @@
 package utask.logic.commands;
 
-import utask.commons.core.EventsCenter;
+import java.util.logging.Logger;
+
+import utask.commons.core.LogsCenter;
 import utask.commons.core.Messages;
-import utask.commons.events.ui.ShowTaskOfInterestEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
@@ -10,26 +11,26 @@ import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 
+//@@author A0138423J
 /**
  * Edits the details of an existing task in the uTask.
  */
-// @@author A0138423J
 public class UndoneCommand extends Command implements ReversibleCommand {
+    private final Logger logger = LogsCenter.getLogger(UndoneCommand.class);
 
     public static final String COMMAND_WORD = "undone";
     public static final String COMMAND_FORMAT = "[INDEX (must be a positive integer)]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Updates the status to uncompleted of the task specified "
+            + ": Updates the status to Incomplete of the task specified "
             + "by the index number used in the last task listing. \n"
-            + "Parameters: " + COMMAND_FORMAT
-            + "Example: " + COMMAND_WORD
-            + COMMAND_WORD + " ";
+            + "Parameters: " + COMMAND_FORMAT + "\n" + "Example: "
+            + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_UNDONE_TASK_SUCCESS = "Undone task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";
     public static final String MESSAGE_DUPLICATE_STATUS = "This task is already uncompleted in uTask.";
-    public static final String MESSAGE_INTERNAL_ERROR = "Error updating isCompleted attribute.";
+    public static final String MESSAGE_INTERNAL_ERROR = "Error updating Status.";
 
     private final int filteredTaskListIndex;
     private ReadOnlyTask taskToEdit;
@@ -53,6 +54,10 @@ public class UndoneCommand extends Command implements ReversibleCommand {
             throw new CommandException(
                     Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
+        // If value already incomplete, inform the user
+        if (!taskToEdit.getStatus().isStatusComplete()) {
+            throw new CommandException(MESSAGE_DUPLICATE_STATUS);
+        }
 
         // Retrieve task to be edited from save file
         taskToEdit = UpdateUtil.fetchTaskToEdit(filteredTaskListIndex);
@@ -61,9 +66,12 @@ public class UndoneCommand extends Command implements ReversibleCommand {
             editedTask = UpdateUtil.createEditedTask(taskToEdit, false);
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
+
+            notifyUI(editedTask);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }
+        logger.fine(String.format(MESSAGE_UNDONE_TASK_SUCCESS, editedTask));
         return new CommandResult(
                 String.format(MESSAGE_UNDONE_TASK_SUCCESS, editedTask));
     }
@@ -72,13 +80,13 @@ public class UndoneCommand extends Command implements ReversibleCommand {
     @Override
     public void undo() throws Exception {
         model.updateTask(editedTask, taskToEdit);
+        notifyUI(taskToEdit);
     }
 
     // @@author A0138423J
     @Override
     public void redo() throws Exception {
         model.updateTask(taskToEdit, editedTask);
-        EventsCenter.getInstance()
-                .post(new ShowTaskOfInterestEvent(editedTask));
+        notifyUI(editedTask);
     }
 }

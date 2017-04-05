@@ -5,8 +5,8 @@ import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.Deadline;
 import utask.model.task.Frequency;
-import utask.model.task.IsCompleted;
 import utask.model.task.Name;
+import utask.model.task.Status;
 import utask.model.task.Timestamp;
 
 /**
@@ -56,8 +56,8 @@ public class TaskBuilder {
     }
 
     //author A0138423J
-    public TaskBuilder withIsCompleted(String iscompleted) throws IllegalValueException {
-        this.task.setIsCompleted(new IsCompleted(iscompleted));
+    public TaskBuilder withStatus(String status) throws IllegalValueException {
+        this.task.setStatus(new Status(status));
         return this;
     }
 
