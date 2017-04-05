@@ -51,8 +51,6 @@ public class Parser {
     
     public Parser(Model model) {
         this.model = model;
-
-    public Parser() {
         EventsCenter.getInstance().registerHandler(this);
     }
 
