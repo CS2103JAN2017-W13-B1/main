@@ -3,6 +3,7 @@ package utask.model.tag;
 import java.util.Random;
 
 import utask.commons.exceptions.IllegalValueException;
+import utask.staging.ui.helper.TagColorHelper;
 import utask.staging.ui.helper.TagColorHelper.ColorType;
 //@@author A0138423J
 public class TagColorIndex {
@@ -27,7 +28,7 @@ public class TagColorIndex {
         String trimmedValue = value.trim();
         int colorIndex = -1;
         if (!isValidColorIndex(trimmedValue)) {
-            throw new IllegalValueException(MESSAGE_TAG_INDEX_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_TAG_INDEX_CONSTRAINTS + TagColorHelper.getListOfSupportedColor());
         }
 
         if ("".equals(trimmedValue)) {
