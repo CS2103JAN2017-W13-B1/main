@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import utask.commons.exceptions.IllegalValueException;
+import utask.commons.util.DateUtil;
 
 /**
  * Represents a Task's deadline in the UTask. Guarantees: immutable; is valid as
@@ -32,7 +33,11 @@ public class Deadline {
         if (!isValidDeadline(trimmedDeadline)) {
             throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
         }
-        this.value = trimmedDeadline;
+
+        Date date = DateUtil.parseStringToDate(deadline).get();
+        System.out.println(date.toString());
+        //this.value = trimmedDeadline;
+        this.value = DateUtil.getDeadlineFormat(date);
     }
 
     private Deadline() {
@@ -71,7 +76,8 @@ public class Deadline {
      */
     public static boolean isValidDeadline(String test) {
         return (test.matches(DEADLINE_VALIDATION_REGEX)
-                || test.matches(DEADLINE_REMOVAL_VALIDATION_REGEX));
+                || test.matches(DEADLINE_REMOVAL_VALIDATION_REGEX)
+                || DateUtil.isValidDate(test));
     }
 
     @Override

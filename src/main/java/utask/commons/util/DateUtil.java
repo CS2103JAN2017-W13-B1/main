@@ -14,17 +14,42 @@ public class DateUtil {
     private static List<SimpleDateFormat> knownPatterns;
     private static Map<String, Integer> wordPatterns;
 
+    private static final int DAYS_DIFFERENCE_TODAY = 0;
+    private static final int DAYS_DIFFERENCE_TOMORROW = 1;
+
+    private static final String[] SUPPORTED_DATE_FORMAT = {"ddMMyy", "dd MM", "ddMMyyyy"};
+    private static final String[] WAYS_TO_SPELL_TODAY = {"today"};
+    private static final String[] WAYS_TO_SPELL_TOMORROW = {"tomorrow", "tmr", "tmrw"};
+
     static {
         knownPatterns = new ArrayList<SimpleDateFormat>();
-        knownPatterns.add(new SimpleDateFormat("ddMMyy"));
-        knownPatterns.add(new SimpleDateFormat("ddMMyyyy"));
-        knownPatterns.add(new SimpleDateFormat("dd MM yyyy"));
+        addSupportedDateFormatToKnownPattern(SUPPORTED_DATE_FORMAT);
 
         wordPatterns = new HashMap<String, Integer>();
-        wordPatterns.put("today", 0);
-        wordPatterns.put("tomorrow", 1);
-        wordPatterns.put("tmr", 1);
-        wordPatterns.put("tmrw", 1);
+        addWordsToWordPattern(WAYS_TO_SPELL_TODAY, DAYS_DIFFERENCE_TODAY);
+        addWordsToWordPattern(WAYS_TO_SPELL_TOMORROW, DAYS_DIFFERENCE_TOMORROW);
+    }
+
+    private static void addWordsToWordPattern(String[] waysArray, int value) {
+        for (int i = 0; i < waysArray.length; i++) {
+            String key = waysArray[i];
+            wordPatterns.put(key, value);
+        }
+    }
+
+    private static void addSupportedDateFormatToKnownPattern(String[] dates) {
+        for (int i = 0; i < dates.length; i++) {
+            String key = dates[i];
+            knownPatterns.add(new SimpleDateFormat(key));
+        }
+    }
+
+    public static boolean isValidDate(String string) {
+        if (parseStringToDate(string).isPresent()) {
+            return true;
+        }
+
+        return false;
     }
 
     public static Optional<Date> parseStringToDate(String string) {
@@ -55,7 +80,7 @@ public class DateUtil {
     }
 
     public static String getDeadlineFormat(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("DDMMYY");
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyy");
         String formattedDate = formatter.format(date);
         return formattedDate;
     }
