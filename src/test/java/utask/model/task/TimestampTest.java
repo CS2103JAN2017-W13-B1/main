@@ -11,18 +11,18 @@ public class TimestampTest {
     public void isValidTimestamp() {
         // blank timestamp
         assertFalse(Timestamp.isValidTimestamp("")); // empty string
-        assertFalse(Timestamp.isValidTimestamp(" ")); // spaces only
+        assertFalse(Timestamp.isValidTimestamp(" ")); //spaces treated as empty string
 
         // missing parts
-        assertFalse(Timestamp.isValidTimestamp("1530 to ")); // hhmm in to
-                                                                  // portion
-        assertFalse(Timestamp.isValidTimestamp("from 1530 top 2300")); // misspelled
-                                                                        // to
+        assertFalse(Timestamp.isValidTimestamp("1530 to ")); // missing to data portion
+        assertFalse(Timestamp.isValidTimestamp("1530 top 2300")); //misspelled to
         // invalid parts
         assertFalse(Timestamp.isValidTimestamp("9999 to 9999")); // invalid hhmm
         assertFalse(Timestamp.isValidTimestamp("0000 to 9999"));
         assertFalse(Timestamp.isValidTimestamp("0000 to 2930"));
         assertFalse(Timestamp.isValidTimestamp("000 to 2359"));
+
+        assertFalse(Timestamp.isValidTimestamp("1300 to 0100")); //Start is later than end
 
         // valid timestamp
         assertTrue(Timestamp.isValidTimestamp("0000 to 1200"));
