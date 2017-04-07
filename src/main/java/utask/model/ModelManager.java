@@ -440,7 +440,7 @@ public class ModelManager extends ComponentManager implements Model {
         public boolean run(ReadOnlyTask task) {
             return nameKeyWords.stream()
                     .filter(keyword -> StringUtil.containsWordIgnoreCase(task.getName().fullName, keyword)
-                            || StringUtil.containsWordIgnoreCase(task.getDeadline().value, keyword)
+                            || StringUtil.containsWordIgnoreCase(task.getDeadline().toString(), keyword)
                             || StringUtil.containsWordIgnoreCase(task.getTimestamp().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getFrequency().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getStatus().toString(), keyword)

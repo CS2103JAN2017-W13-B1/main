@@ -1,9 +1,9 @@
 package utask.model.task;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlElement;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.DateUtil;
@@ -19,7 +19,8 @@ public class Deadline {
             + "31(?!(?:0[2469]|11))|30(?!02))(0[1-9]|1[0-2])([1-2]\\d{1})";
     public static final String DEADLINE_REMOVAL_VALIDATION_REGEX = "^[-]$";
 
-    public final String value;
+    @XmlElement
+    private final Date date;
 
     /**
      * Validates given deadline.
@@ -34,14 +35,15 @@ public class Deadline {
             throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
         }
 
-        Date date = DateUtil.parseStringToDate(deadline).get();
-        System.out.println(date.toString());
-        //this.value = trimmedDeadline;
-        this.value = DateUtil.getDeadlineFormat(date);
+        date = DateUtil.parseStringToDate(deadline).get();
+    }
+
+    public Deadline(Date date) {
+        this.date = date;
     }
 
     private Deadline() {
-        this.value = "";
+        date = null;
     }
 
     public static Deadline getEmptyDeadline() {
@@ -49,7 +51,7 @@ public class Deadline {
     }
 
     public boolean isEmpty() {
-        return "".equals(value);
+        return (date == null);
     }
 
     // @@author A0138493W
@@ -60,12 +62,12 @@ public class Deadline {
      * @throws ParseException
      */
     public Date getDate() throws ParseException {
-        assert value != null;
+        assert date != null;
 
-        DateFormat fmt = new SimpleDateFormat("ddMMyyyy");
-        StringBuilder dateString = new StringBuilder(value);
-        dateString.insert(4, "20");
-        Date date = fmt.parse(dateString.toString());
+//        DateFormat fmt = new SimpleDateFormat("ddMMyyyy");
+//        StringBuilder dateString = new StringBuilder(value);
+//        dateString.insert(4, "20");
+//        Date date = fmt.parse(dateString.toString());
         return date;
     }
 
@@ -82,19 +84,26 @@ public class Deadline {
 
     @Override
     public String toString() {
-        return value;
+        if (date == null) {
+            return "";
+        }
+
+        return date.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Deadline // instanceof handles nulls
-                        && this.value.equals(((Deadline) other).value));
+                        && this.toString().equals(((Deadline) other).toString()));
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        if (date == null) {
+            return "".hashCode();
+        }
+        return date.hashCode();
     }
 
 }

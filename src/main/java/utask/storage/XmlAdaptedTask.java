@@ -28,7 +28,7 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String deadline;
+    private Deadline deadline;
     @XmlElement(required = true)
     private String timestamp;
     @XmlElement(required = true)
@@ -53,7 +53,7 @@ public class XmlAdaptedTask {
      */
     public XmlAdaptedTask(ReadOnlyTask source) {
         name = source.getName().fullName;
-        deadline = source.getDeadline().value;
+        deadline = source.getDeadline();
         timestamp = source.getTimestamp().value;
         frequency = source.getFrequency().value;
         status = source.getStatus().toString();
@@ -88,10 +88,10 @@ public class XmlAdaptedTask {
         final Status status;
 
         //TODO: Do a helper/factory to spawn necessary objects
-        if ("".equals(this.deadline)) {
+        if (this.deadline == null) {
             deadline = Deadline.getEmptyDeadline();
         } else {
-            deadline = new Deadline(this.deadline);
+            deadline = this.deadline;
         }
 
         if ("".equals(this.timestamp)) {
@@ -112,7 +112,7 @@ public class XmlAdaptedTask {
             status = new Status(this.status);
         }
 
-        if (!"".equals(this.deadline) && !"".equals(this.timestamp)) {
+        if (this.deadline != null && !"".equals(this.timestamp)) {
             return new EventTask(name, deadline, timestamp, frequency, tags, status);
         } else if ("".equals(this.timestamp)) {
             return new DeadlineTask(name, deadline, frequency, tags, status);
