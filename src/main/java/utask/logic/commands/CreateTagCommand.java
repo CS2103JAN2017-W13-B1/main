@@ -2,7 +2,9 @@ package utask.logic.commands;
 
 import java.util.logging.Logger;
 
+import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.UIShowTagColorDialogEvent;
 
 //import utask.commons.core.EventsCenter;
 //import utask.commons.events.ui.ShowTaskOfInterestEvent;
@@ -19,7 +21,8 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
     private final Logger logger = LogsCenter.getLogger(CreateTagCommand.class);
     public static final String COMMAND_WORD = "createtag";
 
-    public static final String COMMAND_FORMAT = "NAME [/color COLOR]";
+    //TODO: YH EDITED THIS TO CONFORM TO ACTUAL BEHAVIOUR
+    public static final String COMMAND_FORMAT = "NAME /color COLOR";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a custom tag in uTask. "
             + "Parameters: " + COMMAND_FORMAT + "\n"
@@ -51,7 +54,8 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
         try {
             model.addTag(toAdd);
             model.addUndoCommand(this);
-        } catch (Exception e) {
+            EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(model.getTags()));
+        } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TAG);
         }
         logger.fine(String.format(MESSAGE_SUCCESS, toAdd));

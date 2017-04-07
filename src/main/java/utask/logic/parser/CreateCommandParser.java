@@ -30,7 +30,6 @@ public class CreateCommandParser {
         ArgumentTokenizer argsTokenizer =
                 new ArgumentTokenizer(PREFIX_DEADLINE, PREFIX_TIMESTAMP, PREFIX_FREQUENCY, PREFIX_TAG, PREFIX_DONE);
         argsTokenizer.tokenize(args);
-
         try {
             if (argsTokenizer.getValue(PREFIX_TIMESTAMP).isPresent() &&
                     argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {
@@ -64,5 +63,4 @@ public class CreateCommandParser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
 }

@@ -164,14 +164,16 @@ public class UniqueTagList implements Iterable<Tag> {
         }
     }
 
-    public void update(Tag tagToReplace, Tag updatedTag) {
+    public boolean update(Tag tagToReplace, Tag updatedTag) {
         assert tagToReplace != null;
         assert updatedTag != null;
         if (contains(tagToReplace)) {
             internalList.set(internalList.indexOf(tagToReplace), updatedTag);
+            return true;
         } else {
             // TODO
             // throw error that tag not found/
+            return false;
         }
     }
 
@@ -197,13 +199,13 @@ public class UniqueTagList implements Iterable<Tag> {
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
-    public List<Tag> getAsListTag() {
-        ArrayList<Tag> listOfTags = new ArrayList<Tag>();
-        for (Tag x : internalList) {
-            listOfTags.add(x);
-        }
-        return listOfTags;
-    }
+//    public List<Tag> getAsListTag() {
+//        ArrayList<Tag> listOfTags = new ArrayList<Tag>();
+//        for (Tag x : internalList) {
+//            listOfTags.add(x);
+//        }
+//        return listOfTags;
+//    }
 
     @Override
     public int hashCode() {

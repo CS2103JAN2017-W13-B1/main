@@ -25,7 +25,9 @@ import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
 import utask.logic.commands.IncorrectCommand;
+import utask.logic.commands.ListAliasCommand;
 import utask.logic.commands.ListCommand;
+import utask.logic.commands.ListTagCommand;
 import utask.logic.commands.RedoCommand;
 import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
@@ -34,9 +36,8 @@ import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
-import utask.model.AliasCommandMap;
 import utask.logic.commands.UpdateTagCommand;
-import utask.model.Model;
+import utask.model.AliasCommandMap;
 import utask.staging.ui.events.FindRequestEvent;
 import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 import utask.staging.ui.helper.SuggestionHelper;
@@ -75,6 +76,7 @@ public class Parser {
         String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
         aliasMap = AliasCommandMap.getInstance();
+
         if (!isDefaultCommand(commandWord)) {
             try {
                 commandWord = getDefaultCommand(commandWord);
@@ -124,6 +126,12 @@ public class Parser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
+
+        case ListTagCommand.COMMAND_WORD:
+            return new ListTagCommand();
+
+        case ListAliasCommand.COMMAND_WORD:
+            return new ListAliasCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

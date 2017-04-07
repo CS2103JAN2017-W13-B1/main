@@ -213,6 +213,11 @@ public class ModelManager extends ComponentManager implements Model {
         UTFilteredListHelper.getInstance().refresh();
         sortFilteredTaskList(sortingConfig);
     }
+
+    @Override
+    public List<Tag> getTags() {
+        return uTask.getTagList();
+    }
     //@@author
 
     //@@author A0139996A

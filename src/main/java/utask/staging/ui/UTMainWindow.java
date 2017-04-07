@@ -20,12 +20,14 @@ import utask.commons.core.EventsCenter;
 import utask.commons.core.GuiSettings;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.ExitAppRequestEvent;
+import utask.commons.events.ui.UIShowAliasDialogEvent;
 import utask.commons.events.ui.UIShowMessageDialogEvent;
 import utask.commons.events.ui.UIShowTagColorDialogEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
 import utask.ui.HelpWindow;
+import utask.ui.dialogs.UTAliasDialog;
 import utask.ui.dialogs.UTMessageDialog;
 import utask.ui.dialogs.UTTagColorDialog;
 
@@ -227,6 +229,12 @@ public class UTMainWindow extends StagingUiPart<Region> {
     private void handleUIShowTagColorDialogEvent(UIShowTagColorDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         new UTTagColorDialog(rootPane).show(event.tags);
+    }
+
+    @Subscribe
+    private void handleUIShowAliasDialogEvent(UIShowAliasDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        new UTAliasDialog(rootPane).show(event.map);
     }
 
     @Subscribe
