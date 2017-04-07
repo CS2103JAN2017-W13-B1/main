@@ -30,24 +30,21 @@ public class CreateCommandParser {
         ArgumentTokenizer argsTokenizer =
                 new ArgumentTokenizer(PREFIX_DEADLINE, PREFIX_TIMESTAMP, PREFIX_FREQUENCY, PREFIX_TAG, PREFIX_DONE);
         argsTokenizer.tokenize(args);
-        String deadline = "";
         try {
             if (argsTokenizer.getValue(PREFIX_TIMESTAMP).isPresent() &&
                     argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {
-                deadline = getDateFromMeaningfulDeadline(argsTokenizer.getValue(PREFIX_DEADLINE).get());
                 return new CreateEventTaskCommand(
                         argsTokenizer.getPreamble().get(),
-                        deadline,
+                        argsTokenizer.getValue(PREFIX_DEADLINE).get(),
                         argsTokenizer.getValue(PREFIX_TIMESTAMP).get(),
                         argsTokenizer.tryGet(PREFIX_FREQUENCY),
                         ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG)),
                         argsTokenizer.tryGet(PREFIX_DONE)
                 );
-            } else if (argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {
-                deadline = getDateFromMeaningfulDeadline(argsTokenizer.getValue(PREFIX_DEADLINE).get());
+            } else if (argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {                
                 return new CreateDeadlineTaskCommand(
                         argsTokenizer.getPreamble().get(),
-                        deadline,
+                        argsTokenizer.getValue(PREFIX_DEADLINE).get(),
                         argsTokenizer.tryGet(PREFIX_FREQUENCY),
                         ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG)),
                         argsTokenizer.tryGet(PREFIX_DONE)
@@ -65,17 +62,5 @@ public class CreateCommandParser {
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
-    }
-
-    //TODO: Fake demo make it real
-    private String getDateFromMeaningfulDeadline(String deadline) {
-        if (deadline.equals("today")) {
-            return "060417";
-        } else if (deadline.equals("tmr") | deadline.equals("tomorrow")) {
-            return "070417";
-        } else if (deadline.equals("next week")) {
-            return "130417";
-        }
-        return deadline;
     }
 }
