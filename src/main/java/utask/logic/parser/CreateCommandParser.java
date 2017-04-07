@@ -41,7 +41,7 @@ public class CreateCommandParser {
                         ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG)),
                         argsTokenizer.tryGet(PREFIX_DONE)
                 );
-            } else if (argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {                
+            } else if (argsTokenizer.getValue(PREFIX_DEADLINE).isPresent()) {
                 return new CreateDeadlineTaskCommand(
                         argsTokenizer.getPreamble().get(),
                         argsTokenizer.getValue(PREFIX_DEADLINE).get(),
