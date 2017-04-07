@@ -13,22 +13,21 @@ public class DateUtil {
     private static final String ALPHABET_PATTERN = "[a-zA-Z]+";
     private static List<SimpleDateFormat> knownPatterns;
     private static Map<String, Integer> wordPatterns;
-            
+
     static {
         knownPatterns = new ArrayList<SimpleDateFormat>();
         knownPatterns.add(new SimpleDateFormat("ddMMyy"));
         knownPatterns.add(new SimpleDateFormat("ddMMyyyy"));
         knownPatterns.add(new SimpleDateFormat("dd MM yyyy"));
-        
+
         wordPatterns = new HashMap<String, Integer>();
         wordPatterns.put("today", 0);
         wordPatterns.put("tomorrow", 1);
         wordPatterns.put("tmr", 1);
         wordPatterns.put("tmrw", 1);
     }
-    
+
     public static Optional<Date> parseStringToDate(String string) {
-        
         if (string.matches(ALPHABET_PATTERN)) {
             return parseStringByWord(string);
         } else {
@@ -37,26 +36,24 @@ public class DateUtil {
                     Date date = pattern.parse(string);
                     return Optional.of(date);
                 } catch (ParseException pe) {
-                    //Continue checking 
+                    //Continue to check for other patterns
                 }
             }
         }
-        
         return Optional.empty();
     }
-    
     public static Optional<Date> parseStringByWord(String string) {
-        if (wordPatterns.containsKey(string)){
+        if (wordPatterns.containsKey(string)) {
             int offset = wordPatterns.get(string);
             Date date = new Date();
             offset += date.getDate();
             date.setDate(offset);
             return Optional.of(date);
         }
-        
+
         return Optional.empty();
     }
-    
+
     public static String getDeadlineFormat(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("DDMMYY");
         String formattedDate = formatter.format(date);

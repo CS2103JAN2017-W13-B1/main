@@ -23,6 +23,7 @@ import utask.model.tag.UniqueTagList;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.helper.TagColorHelper;
 
+//@@author A0139996A
 public class UTTaskListCard extends StagingUiPart<Region> {
     public static final double CARD_HEIGHT = 102.0;
     private static final String FXML = "UTTaskListCard.fxml";
@@ -111,6 +112,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
             hbTagContainer.getChildren().add(label);
         }
     }
+    // @@author
 
     private Label createLabel(String name, int colorIndex) {
         Label label = new Label(name);
@@ -120,15 +122,12 @@ public class UTTaskListCard extends StagingUiPart<Region> {
 
     private void addStylingPropertiesToLabel(Label label, int colorIndex) {
         label.setAlignment(Pos.CENTER);
-        ;
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextOverrun(OverrunStyle.CLIP);
         label.setMinWidth(15.0);
-        label.setStyle(String.format(LABEL_CSS,
-                TagColorHelper.getColorValueFromIndex(colorIndex)));
+        label.setStyle(String.format(LABEL_CSS, TagColorHelper.getColorValueFromIndex(colorIndex)));
         HBox.setMargin(label, new Insets(5, 5, 5, 0));
     }
-    // @@author
 
     public void addStylingProperitesOnCompletion() {
         boolean isComplete = task.getStatus().isStatusComplete();
