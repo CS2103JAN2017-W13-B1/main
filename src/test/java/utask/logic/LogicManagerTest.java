@@ -41,9 +41,11 @@ import utask.logic.commands.DoneCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
+import utask.logic.commands.ListAliasCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
+import utask.logic.commands.SortInFindCommand;
 import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
@@ -244,17 +246,24 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_unAlias_aliasNotExist() {
+    public void execute_unalias_aliasNotExist() {
         String alias = "c";
         assertCommandFailure("unalias " + alias, String.format(UnaliasCommand.MESSAGE_ALIAS_NOT_EXIST, alias));
     }
 
     @Test
-    public void execute_unAlias_successful() throws CommandException {
+    public void execute_unalias_successful() throws CommandException {
         String alias = "c";
         logic.execute("alias c /as create");
         assertCommandSuccess("unalias " + alias,
                 String.format(UnaliasCommand.MESSAGE_UNALIAS_SUCCESS, alias),
+                new UTask(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_listalias_successful() throws CommandException {
+        assertCommandSuccess("listalias",
+                String.format(ListAliasCommand.MESSAGE_SUCCESS),
                 new UTask(), Collections.emptyList());
     }
     //@@ author
@@ -445,6 +454,32 @@ public class LogicManagerTest {
         assertCommandSuccess("find " + keyword,
                 String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
                         expectedList.size()),
+                expectedUT, expectedList);
+    }
+
+    @Test
+    public void execute_sortinfind_invalidOrder() throws CommandException {
+        logic.execute("find incomplete");
+        assertCommandFailure("sort a abc", Messages.MESSAGE_INVALID_SORT_ORDER);
+    }
+
+    @Test
+    public void execute_sortinfind_successful() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task pTarget1 = helper.generateTaskWithName("a");
+        Task pTarget2 = helper.generateTaskWithName("b");
+        Task pTarget3 = helper.generateTaskWithName("c");
+
+        List<Task> threeTasks = helper.generateTaskList(pTarget1, pTarget2,
+                pTarget3);
+        UTask expectedUT = helper.generateUTask(threeTasks);
+        List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2,
+                pTarget3);
+        helper.addToModel(model, threeTasks);
+
+        String keyword = "incomplete";
+        logic.execute("find " + keyword);
+        assertCommandSuccess("sort a asc", SortInFindCommand.MESSAGE_SUCCESS,
                 expectedUT, expectedList);
     }
     //@@ author

@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import utask.commons.core.Messages;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.StringUtil;
 import utask.model.tag.Tag;
@@ -282,7 +283,7 @@ public class ParserUtil {
                 orderBy = "";
             }
         } else {
-            throw new IllegalValueException("Sort order must be ASC or DSC");
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_SORT_ORDER);
         }
 
         return orderBy;
