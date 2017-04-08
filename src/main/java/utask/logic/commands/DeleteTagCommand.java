@@ -29,6 +29,7 @@ public class DeleteTagCommand extends Command implements ReversibleCommand {
     protected Tag toRemove;
     protected TagName tagName;
     protected TagColorIndex tagColorIndex;
+    private String tagToRemove;
 
     /**
      * Creates an DeleteTagCommand using raw values.
@@ -39,6 +40,7 @@ public class DeleteTagCommand extends Command implements ReversibleCommand {
     public DeleteTagCommand(String tagName) throws IllegalValueException {
         assert tagName != null;
         this.tagName = new TagName(tagName);
+        tagToRemove = tagName;
         this.tagColorIndex = new TagColorIndex("");
         this.toRemove = new Tag(this.tagName, this.tagColorIndex);
     }
@@ -53,8 +55,8 @@ public class DeleteTagCommand extends Command implements ReversibleCommand {
         } catch (Exception e) {
             throw new CommandException(MESSAGE_MISSING_TAG);
         }
-        logger.fine(String.format(MESSAGE_SUCCESS, toRemove));
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toRemove));
+        logger.fine(String.format(MESSAGE_SUCCESS, tagToRemove));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, tagToRemove));
     }
 
     @Override

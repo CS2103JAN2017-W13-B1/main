@@ -159,20 +159,6 @@ public class ModelManager extends ComponentManager implements Model {
         sortFilteredTaskList(sortingConfig);
     }
 
-    @Override
-    public synchronized void updateTask(int filteredTaskListIndex, ReadOnlyTask editedTask)
-            throws UniqueTaskList.DuplicateTaskException {
-        assert editedTask != null;
-
-        int uTaskIndex = filteredFindTasks.getSourceIndex(filteredTaskListIndex);
-        uTask.updateTask(uTaskIndex, editedTask);
-
-        //TODO: DUPLICATES
-        UTFilteredListHelper.getInstance().refresh();
-        updateFilteredListToShowAll();
-        sortFilteredTaskList(sortingConfig);
-    }
-
     //@@author A0138423J
     @Override
     public synchronized void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedTask)
@@ -205,7 +191,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateTag(Tag tagToReplace, Tag updatedTag) throws DuplicateTagException {
+    public void updateTag(Tag tagToReplace, Tag updatedTag) {
         assert tagToReplace != null;
         assert updatedTag != null;
         uTask.updateTag(tagToReplace, updatedTag);

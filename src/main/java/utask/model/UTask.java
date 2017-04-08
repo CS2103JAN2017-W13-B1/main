@@ -119,15 +119,6 @@ public class UTask implements ReadOnlyUTask {
         syncMasterTagListWith((Task) editedReadOnlyTask);
         tasks.updateTask(taskToEdit, editedReadOnlyTask);
     }
-
-    public void updateTask(int taskToEdit, ReadOnlyTask editedReadOnlyTask)
-            throws UniqueTaskList.DuplicateTaskException {
-        assert taskToEdit >= 0;
-        assert editedReadOnlyTask != null;
-
-        syncMasterTagListWith((Task) editedReadOnlyTask);
-        tasks.updateTask(taskToEdit, editedReadOnlyTask);
-    }
     //@@author
 
     /**

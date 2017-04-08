@@ -1,7 +1,5 @@
 package utask.logic.commands;
 
-import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -68,7 +66,6 @@ public class UpdateCommand extends Command implements ReversibleCommand {
         this.attributeToRemove = attributeToRemove;
     }
 
-    // @@author A0138423J
     @Override
     public CommandResult execute() throws CommandException {
         assert model != null;
@@ -87,9 +84,6 @@ public class UpdateCommand extends Command implements ReversibleCommand {
             model.updateTask(taskToEdit, editedTask);
             model.addUndoCommand(this);
             notifyUI(editedTask);
-        } catch (IllegalArgumentException ive) {
-            throw new CommandException(String
-                    .format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         } catch (UniqueTaskList.DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
@@ -98,14 +92,12 @@ public class UpdateCommand extends Command implements ReversibleCommand {
                 String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }
 
-    // @@author A0138423J
     @Override
     public void undo() throws Exception {
         model.updateTask(editedTask, taskToEdit);
         notifyUI(taskToEdit);
     }
 
-    // @@author A0138423J
     @Override
     public void redo() throws Exception {
         model.updateTask(taskToEdit, editedTask);

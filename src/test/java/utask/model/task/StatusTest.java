@@ -1,12 +1,19 @@
 package utask.model.task;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import utask.commons.exceptions.IllegalValueException;
 
 //@@author A0138423J
 public class StatusTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void isValidTimestamp() {
@@ -15,8 +22,9 @@ public class StatusTest {
         assertFalse(Status.isValidBoolean(" ")); // spaces only
 
         // missing parts
-        assertFalse(Status.isValidBoolean("COMPLE")); // Upper case with incomplete
-                                                   // spelling
+        assertFalse(Status.isValidBoolean("COMPLE")); // Upper case with
+                                                      // incomplete
+                                                      // spelling
         assertFalse(Status.isValidBoolean("incompl")); // Lower case with
                                                        // incomplete spelling
 
@@ -31,4 +39,17 @@ public class StatusTest {
         assertTrue(Status.isValidBoolean("Incomplete"));
     }
 
+    @Test
+    public void validStatusConstructor() throws IllegalValueException {
+        String value = "Complete";
+        Status s = new Status(value);
+        assertEquals(s.toString(), value);
+    }
+
+    @Test(expected = IllegalValueException.class)
+    public void invalidStatusConstructor() throws IllegalValueException {
+        String value = "-";
+        Status s = new Status(value);
+        assertEquals(s.toString(), "");
+    }
 }

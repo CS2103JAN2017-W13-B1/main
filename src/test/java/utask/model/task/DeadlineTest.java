@@ -1,11 +1,20 @@
 package utask.model.task;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import java.util.Date;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import utask.commons.exceptions.IllegalValueException;
+//@@author A0138423J
 public class DeadlineTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void isValidDeadline() {
@@ -20,5 +29,30 @@ public class DeadlineTest {
         assertTrue(Deadline.isValidDeadline("300406"));  // support backdated
         assertTrue(Deadline.isValidDeadline("130117"));
         assertTrue(Deadline.isValidDeadline("090820"));
+    }
+
+    @Test
+    public void validDeadlineConstructor() throws IllegalValueException {
+        Date date = new Date();
+        Deadline d = new Deadline(date); // Date constructor
+        assertEquals(d.getDate(), date); //checking if both dates tally
+    }
+
+    @Test
+    public void validEmptyDeadlineConstructor() throws IllegalValueException {
+        Deadline d = Deadline.getEmptyDeadline(); // empty constructor
+        assertEquals(d.hashCode(), "".hashCode()); //checking hashCode when Deadline is Null
+    }
+
+    @Test
+    public void removeDeadlineConstructor() throws IllegalValueException {
+        String value = "-";
+        Deadline d = new Deadline(value); // constructor with dash only
+        assertEquals(d.toString(), ""); //checking toString() value when Deadline is Null
+    }
+
+    @Test(expected = IllegalValueException.class)
+    public void invalidDeadlineConstructor() throws IllegalValueException {
+        Deadline d = new Deadline("$%^&*("); // constructor with random symbols
     }
 }
