@@ -344,18 +344,44 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_create_successful() throws Exception {
+    public void execute_create_eventTaskSuccessful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.simpleTask();
-        UTask expectedAB = new UTask();
-        expectedAB.addTask(toBeAdded);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(toBeAdded);
         logic.execute("createtag urgent /color CYAN");
         logic.execute("createtag assignment /color YELLOW");
         // execute command and verify result
-        assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
+        assertCommandSuccess(helper.generateEventCreateCommand(toBeAdded),
                 String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
-                expectedAB, expectedAB.getTaskList());
+                expectedUT, expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_create_deadlineTaskSuccessful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateDeadlineTaskWithSeed(1);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(toBeAdded);
+        // execute command and verify result
+        assertCommandSuccess("create Task 1 /by 010120 /repeat Every 1",
+                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedUT, expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_create_floatingTaskSuccessful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateFloatingTaskWithSeed(1);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(toBeAdded);
+        // execute command and verify result
+        assertCommandSuccess("create Task 1 /repeat Every 1",
+                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedUT, expectedUT.getTaskList());
     }
 
     @Test
@@ -367,7 +393,7 @@ public class LogicManagerTest {
         // setup starting state
         model.addTask(toBeAdded); // task already in internal address book
         // execute command and verify result
-        assertCommandFailure(helper.generateCreateCommand(toBeAdded),
+        assertCommandFailure(helper.generateEventCreateCommand(toBeAdded),
                 CreateCommand.MESSAGE_DUPLICATE_TASK);
     }
 
@@ -888,7 +914,7 @@ public class LogicManagerTest {
         // @@author
 
         /** Generates the correct add command based on the task given */
-        private String generateCreateCommand(Task p) {
+        private String generateEventCreateCommand(Task p) {
             StringBuffer cmd = new StringBuffer();
 
             cmd.append("create ");
