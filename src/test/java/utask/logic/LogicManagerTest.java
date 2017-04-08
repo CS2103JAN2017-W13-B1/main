@@ -44,6 +44,7 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.ListAliasCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.ListTagCommand;
+import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.SortInFindCommand;
@@ -203,6 +204,28 @@ public class LogicManagerTest {
     }
 
     //@@ author A0138493W
+    @Test
+    public void execute_relocate_invalidPath() {
+        String invalidPath = "this/path/is/invalid";
+        assertCommandFailure("relocate " + invalidPath,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RelocateCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void execute_relocate_defaultPathSuccess() {
+        assertCommandSuccess("relocate",
+                String.format(RelocateCommand.MESSAGE_RELOCATE_TASK_SUCCESS, "data"),
+                new UTask(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_relocate_success() {
+        String validPath = "/Users/validPath";
+        assertCommandSuccess("relocate " + validPath,
+                String.format(RelocateCommand.MESSAGE_RELOCATE_TASK_SUCCESS, validPath),
+                new UTask(), Collections.emptyList());
+    }
+
     @Test
     public void execute_alias_invalidAliasFormat() {
         String invalidAlias = "%$#@";

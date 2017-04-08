@@ -28,7 +28,7 @@ public class RelocateCommand extends Command {
      * Relocate Command for relocating back to default location.
      * */
     public RelocateCommand() {
-        this.destinationPath = DEFAULT_FOLDER_NAME;
+        destinationPath = DEFAULT_FOLDER_NAME;
     }
 
     /**
@@ -36,15 +36,14 @@ public class RelocateCommand extends Command {
      * */
     public RelocateCommand(String path, boolean isValidPath) {
         if (isValidPath) {
-            this.destinationPath = path;
+            destinationPath = path;
         } else {
-            this.destinationPath = DEFAULT_FOLDER_NAME;
+            destinationPath = DEFAULT_FOLDER_NAME;
         }
     }
 
     @Override
     public CommandResult execute() {
-        assert model != null;
         EventsCenter.getInstance().post(new FileRelocateEvent(destinationPath));
         return new CommandResult(String.format(MESSAGE_RELOCATE_TASK_SUCCESS, destinationPath));
     }
