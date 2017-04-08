@@ -1,6 +1,5 @@
 package guitests;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -18,14 +17,8 @@ public class HelpWindowTest extends UTaskGuiTest {
         resultDisplay.clickOnTextArea();
         assertHelpWindowOpen(mainMenu.openHelpWindowUsingAccelerator());
 
-        personListPanel.clickOnListView();
-        assertHelpWindowOpen(mainMenu.openHelpWindowUsingAccelerator());
-
-        browserPanel.clickOnWebView();
-        assertHelpWindowNotOpen(mainMenu.openHelpWindowUsingAccelerator());
-
-        //use menu button
-        assertHelpWindowOpen(mainMenu.openHelpWindowUsingMenu());
+        //click on help button
+        assertHelpWindowOpen(mainMenu.clickOnHelpButton());
 
         //use command
         assertHelpWindowOpen(commandBox.runHelpCommand());
@@ -35,9 +28,4 @@ public class HelpWindowTest extends UTaskGuiTest {
         assertTrue(helpWindowHandle.isWindowOpen());
         helpWindowHandle.closeWindow();
     }
-
-    private void assertHelpWindowNotOpen(HelpWindowHandle helpWindowHandle) {
-        assertFalse(helpWindowHandle.isWindowOpen());
-    }
-
 }
