@@ -51,15 +51,14 @@ public class DateUtil {
     }
 
     public static boolean isWordAValidDate(String string) {
-        assert string != null && !string.isEmpty();
-
-        if (parseStringToDate(string).isPresent()) {
+        if (!string.isEmpty() && parseStringToDate(string).isPresent()) {
             return true;
         }
         return false;
     }
 
     public static Optional<Date> parseStringToDate(String string) {
+        assert string != null && !string.isEmpty();
         if (string.matches(ALPHABET_PATTERN)) {
             return parseStringByWord(string);
         } else {

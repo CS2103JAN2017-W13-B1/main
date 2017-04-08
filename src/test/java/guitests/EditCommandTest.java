@@ -42,16 +42,16 @@ public class EditCommandTest extends UTaskGuiTest {
 //        assertEditSuccess(addressBookIndex, addressBookIndex, detailsToEdit, editedPerson);
 //    }
 
-    @Test
-    public void edit_clearTags_success() throws Exception {
-        String detailsToEdit = "/tag ";
-        int addressBookIndex = 2;
-
-        TestTask personToEdit = expectedPersonsList[addressBookIndex - 1];
-        TestTask editedPerson = new TaskBuilder(personToEdit).withTags().build();
-
-        assertEditSuccess(addressBookIndex, addressBookIndex, detailsToEdit, editedPerson);
-    }
+//    @Test
+//    public void edit_clearTags_success() throws Exception {
+//        String detailsToEdit = "/tag ";
+//        int addressBookIndex = 2;
+//
+//        TestTask personToEdit = expectedPersonsList[addressBookIndex - 1];
+//        TestTask editedPerson = new TaskBuilder(personToEdit).withTags().build();
+//
+//        assertEditSuccess(addressBookIndex, addressBookIndex, detailsToEdit, editedPerson);
+//    }
 
 //    @Test
 //    public void edit_findThenEdit_success() throws Exception {
