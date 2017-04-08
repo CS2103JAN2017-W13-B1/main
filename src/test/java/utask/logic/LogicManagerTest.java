@@ -314,7 +314,7 @@ public class LogicManagerTest {
                 "create Valid Name /by Aa;a /from 1830 to 2030 /repeat Every Monday /tag urgent",
                 Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
         assertCommandFailure(
-                "create valid name /by 111111 /from /repeat Every Monday /tag urgent",
+                "create valid name /by 111111 /from aaa /repeat Every Monday /tag urgent",
                 Timestamp.MESSAGE_TIMESTAMP_CONSTRAINTS);
         assertCommandFailure(
                 "create valid name /by 111111 /from 0000 to 1200 /repeat Every Monday /tag ;a!!e",
