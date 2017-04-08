@@ -27,15 +27,13 @@ public class DeadlineTest {
 
     @Test
     public void testConstructor() {
+        final String value = "-";
         Deadline d;
         try {
-            d = new Deadline("-"); // constructor with dash only
-            assertEquals(d, null);
+            d = new Deadline(value); // constructor with dash only
+            assertEquals(d.toString(), ""); //checking toString() value when Deadline is Null
 
             d = Deadline.getEmptyDeadline(); // empty constructor
-            assertEquals(d, null);
-
-            assertEquals(d.toString(), ""); //checking toString() value when Deadline is Null
             assertEquals(d.hashCode(), "".hashCode()); //checking hashCode when Deadline is Null
         } catch (IllegalValueException e) {
             e.printStackTrace();

@@ -42,16 +42,8 @@ public class Status {
             throws IllegalValueException {
         char value = strToEvaluate.toLowerCase().charAt(0);
         switch (value) {
-        case 't':
-            return true;
-        case 'y':
-            return true;
         case 'c':
             return true;
-        case 'f':
-            return false;
-        case 'n':
-            return false;
         case 'i':
             return false;
         default:
