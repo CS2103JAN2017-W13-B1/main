@@ -12,6 +12,8 @@ import utask.ui.CommandBox;
 
 public class CommandBoxTest extends UTaskGuiTest {
 
+    private static final String CLEAR_COMMAND = "clear";
+    private static final String LISTTAG_COMMAND = "listtag";
     private static final String COMMAND_THAT_SUCCEEDS = "select 3";
     private static final String COMMAND_THAT_FAILS = "invalid command";
 
@@ -54,5 +56,18 @@ public class CommandBoxTest extends UTaskGuiTest {
 
         assertEquals("", commandBox.getCommandInput());
         assertEquals(defaultStyleOfCommandBox, commandBox.getStyleClass());
+    }
+
+    @Test
+    public void commandBox_canCycleCommand() {
+        commandBox.runCommand(CLEAR_COMMAND);
+        commandBox.runCommand(LISTTAG_COMMAND);
+        commandBox.hitEscapeKey();
+        commandBox.hitArrowUpKey();
+//        assert(commandBox.getCommandInput().equals(LISTTAG_COMMAND));
+//        commandBox.hitArrowUpKey();
+//        assert(commandBox.getCommandInput().equals(LISTTAG_COMMAND));
+        commandBox.hitArrowDownKey();
+//        assert(commandBox.getCommandInput().equals(CLEAR_COMMAND));
     }
 }
