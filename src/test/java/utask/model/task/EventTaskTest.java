@@ -9,34 +9,36 @@ import org.junit.rules.ExpectedException;
 import utask.model.util.SampleDataUtil;
 
 //@@author A0138423J
-public class FloatingTaskTest {
+public class EventTaskTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void validFloatingTaskConstructorAndValidUpdate() throws Exception {
-        // test floating task creation
-        Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);
+    public void validEventTaskConstructorAndValidUpdate() throws Exception {
+        // test Event task creation
+        Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);
         // test update of correct task attributes
-        Task taskToOverwrite = SampleDataUtil.generateFloatingTaskWithSeed(2);
+        Task taskToOverwrite = SampleDataUtil.generateEventTaskWithSeed(2);
         taskToReplace.resetData(taskToOverwrite);
         assertEquals(taskToReplace, taskToOverwrite);
     }
 
     @Test
-    public void validFloatingTaskConstructorAndCopyReadOnlyTask() throws Exception {
+    public void validEventTaskConstructorAndCopyReadOnlyTask()
+            throws Exception {
         // test update of correct task attributes
-        ReadOnlyTask taskToOverwrite = SampleDataUtil.generateFloatingTaskWithSeed(2);
-        // test floating task creation
-        Task taskToReplace = new FloatingTask(taskToOverwrite);
+        ReadOnlyTask taskToOverwrite = SampleDataUtil
+                .generateEventTaskWithSeed(2);
+        // test Event task creation
+        Task taskToReplace = new EventTask(taskToOverwrite);
         assertEquals(taskToReplace, taskToOverwrite);
     }
 
     @Test
-    public void validFloatingTaskConstructorAndInvalidNameUpdate()
+    public void validEventTaskConstructorAndInvalidNameUpdate()
             throws Exception {
-        // test floating task creation
-        Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);
+        // test Event task creation
+        Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);
 
         // test update of null task name
         Name taskName = null;
@@ -46,10 +48,10 @@ public class FloatingTaskTest {
     }
 
     @Test
-    public void validFloatingTaskConstructorAndInvalidFrequencyUpdate()
+    public void validEventTaskConstructorAndInvalidFrequencyUpdate()
             throws Exception {
-        // test floating task creation
-        Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);
+        // test Event task creation
+        Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);
 
         // test update of wrong task names
         Frequency taskFrequency = null;
@@ -57,5 +59,4 @@ public class FloatingTaskTest {
         taskToReplace.setFrequency(taskFrequency);
         assertEquals(taskToReplace.getFrequency(), null);
     }
-
 }

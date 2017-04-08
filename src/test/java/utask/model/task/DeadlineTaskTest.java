@@ -9,34 +9,36 @@ import org.junit.rules.ExpectedException;
 import utask.model.util.SampleDataUtil;
 
 //@@author A0138423J
-public class FloatingTaskTest {
+public class DeadlineTaskTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void validFloatingTaskConstructorAndValidUpdate() throws Exception {
-        // test floating task creation
-        Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);
+    public void validDeadlineTaskConstructorAndValidUpdate() throws Exception {
+        // test Deadline task creation
+        Task taskToReplace = SampleDataUtil.generateDeadlineTaskWithSeed(1);
         // test update of correct task attributes
-        Task taskToOverwrite = SampleDataUtil.generateFloatingTaskWithSeed(2);
+        Task taskToOverwrite = SampleDataUtil.generateDeadlineTaskWithSeed(2);
         taskToReplace.resetData(taskToOverwrite);
         assertEquals(taskToReplace, taskToOverwrite);
     }
 
     @Test
-    public void validFloatingTaskConstructorAndCopyReadOnlyTask() throws Exception {
+    public void validDeadlineTaskConstructorAndCopyReadOnlyTask()
+            throws Exception {
         // test update of correct task attributes
-        ReadOnlyTask taskToOverwrite = SampleDataUtil.generateFloatingTaskWithSeed(2);
-        // test floating task creation
-        Task taskToReplace = new FloatingTask(taskToOverwrite);
+        ReadOnlyTask taskToOverwrite = SampleDataUtil
+                .generateDeadlineTaskWithSeed(2);
+        // test Deadline task creation
+        Task taskToReplace = new DeadlineTask(taskToOverwrite);
         assertEquals(taskToReplace, taskToOverwrite);
     }
 
     @Test
-    public void validFloatingTaskConstructorAndInvalidNameUpdate()
+    public void validDeadlineTaskConstructorAndInvalidNameUpdate()
             throws Exception {
-        // test floating task creation
-        Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);
+        // test Deadline task creation
+        Task taskToReplace = SampleDataUtil.generateDeadlineTaskWithSeed(1);
 
         // test update of null task name
         Name taskName = null;
@@ -46,10 +48,10 @@ public class FloatingTaskTest {
     }
 
     @Test
-    public void validFloatingTaskConstructorAndInvalidFrequencyUpdate()
+    public void validDeadlineTaskConstructorAndInvalidFrequencyUpdate()
             throws Exception {
-        // test floating task creation
-        Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);
+        // test Deadline task creation
+        Task taskToReplace = SampleDataUtil.generateDeadlineTaskWithSeed(1);
 
         // test update of wrong task names
         Frequency taskFrequency = null;
@@ -57,5 +59,4 @@ public class FloatingTaskTest {
         taskToReplace.setFrequency(taskFrequency);
         assertEquals(taskToReplace.getFrequency(), null);
     }
-
 }
