@@ -14,9 +14,6 @@ public enum Attribute {
         this.key = key;
     }
 
-    Attribute() {
-    }
-
     @Override
     public String toString() {
         return key;

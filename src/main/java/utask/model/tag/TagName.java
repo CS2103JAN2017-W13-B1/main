@@ -1,10 +1,10 @@
 package utask.model.tag;
 
+import utask.commons.core.Messages;
 import utask.commons.exceptions.IllegalValueException;
 //@@author A0138423J
 public class TagName {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
     public static final String TAGNAME_VALIDATION_REGEX = "^\\w+$";
 
     public final String tagName;
@@ -19,7 +19,7 @@ public class TagName {
         assert name != null;
         String trimmedName = name.trim();
         if (!isValidName(trimmedName)) {
-            throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
+            throw new IllegalValueException(Messages.MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
     }

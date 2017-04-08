@@ -1,11 +1,18 @@
 package utask.model.task;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import utask.commons.exceptions.IllegalValueException;
+//@@author A0138423J
 public class TimestampTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void isValidTimestamp() {
@@ -28,5 +35,44 @@ public class TimestampTest {
         assertTrue(Timestamp.isValidTimestamp("0000 to 1200"));
         assertTrue(Timestamp.isValidTimestamp("0000 to 2359"));
         assertTrue(Timestamp.isValidTimestamp("1600 to 2359"));
+    }
+
+    @Test
+    public void testConstructor() {
+        Timestamp d;
+        try {
+            d = new Timestamp("1200 to 1500");
+            String valueOfD = d.toString();
+            assertTrue(Timestamp.isValidTimestamp(valueOfD));
+
+            d = new Timestamp("-");
+            thrown.expect(AssertionError.class);
+            assertEquals(null, d.getFrom());
+            assertEquals(null, d.getTo());
+
+            d = new Timestamp("#$%^&*");
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void validTimestampConstructor() throws IllegalValueException {
+        Timestamp t = new Timestamp("1200 to 1500"); // valid constructor
+        String valueOfT = t.toString();
+        assertTrue(Timestamp.isValidTimestamp(valueOfT)); //checking String of valid Timestamp
+    }
+
+    @Test
+    public void removeTimestampConstructor() throws IllegalValueException {
+        Timestamp t = new Timestamp("-"); // constructor with dash only
+        thrown.expect(AssertionError.class);
+        assertEquals(null, t.getFrom()); //checking toString() value when Timestamp is Null
+        assertEquals(null, t.getTo()); //checking toString() value when Timestamp is Null
+    }
+
+    @Test(expected = IllegalValueException.class)
+    public void invalidTimestampConstructor() throws IllegalValueException {
+        Timestamp t = new Timestamp("#$%^&*"); // constructor with random symbols
     }
 }
