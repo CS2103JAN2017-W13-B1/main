@@ -140,4 +140,12 @@ public class DateUtil {
         String formattedTime = formatter.format(date);
         return formattedTime;
     }
+
+    public static Date getEmptyDate() {
+        calendar.setTime(new Date());
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.MONTH, 1);
+        calendar.set(Calendar.YEAR, 1);
+        return calendar.getTime();
+    }
 }

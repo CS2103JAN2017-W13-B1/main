@@ -71,8 +71,20 @@ public class Timestamp {
             throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
         }
 
-        from = null;
-        to = null;
+        if (timestamp.equals("-")) {
+            String[] str = timestamp.split(TIMESTAMP_DELIMITER);
+            String fromString = str[FROM_PARAM_IN_ARRAY];
+            String toString = str[TO_PARAM_IN_ARRAY];
+
+            Date date = DateUtil.getEmptyDate();
+
+            from = DateUtil.addHHMMStringToDate((Date) date.clone(), fromString);
+            to = DateUtil.addHHMMStringToDate((Date) date.clone(), toString);
+
+        } else {
+            from = null;
+            to = null;
+        }
     }
 
     private Timestamp() {
