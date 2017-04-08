@@ -37,6 +37,7 @@ import utask.logic.commands.CreateCommand;
 import utask.logic.commands.CreateTagCommand;
 //import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
+import utask.logic.commands.DoneCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
@@ -44,6 +45,7 @@ import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.UnaliasCommand;
+import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.Model;
@@ -309,10 +311,11 @@ public class LogicManagerTest {
         logic.execute("createtag " + tagName + " /color " + color);
         assertCommandFailure("createtag " + tagName + " /color " + color, CreateTagCommand.MESSAGE_DUPLICATE_TAG);
     }
+
     //@@ author
 
     @Test
-    public void execute_add_invalidTaskData() {
+    public void execute_create_invalidTaskData() {
         assertCommandFailure(
                 "create Valid Name /by Aa;a /from 1830 to 2030 /repeat Every Monday /tag urgent",
                 Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
@@ -334,14 +337,13 @@ public class LogicManagerTest {
         logic.execute("createtag urgent /color CYAN");
         logic.execute("createtag assignment /color YELLOW");
         // execute command and verify result
-        System.out.println(helper.generateCreateCommand(toBeAdded));
         assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
                 String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
                 expectedAB, expectedAB.getTaskList());
     }
 
     @Test
-    public void execute_addDuplicate_notAllowed() throws Exception {
+    public void execute_create_duplicateNotAllowed() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.simpleTask();
@@ -353,6 +355,100 @@ public class LogicManagerTest {
                 CreateCommand.MESSAGE_DUPLICATE_TASK);
     }
 
+    //@@ author A0138493W
+    @Test
+    public void execute_find_invalidArgsFormat() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FindCommand.MESSAGE_USAGE);
+        assertCommandFailure("find ", expectedMessage);
+    }
+
+    @Test
+    public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task pTarget1 = helper.generateTaskWithName("bla bla KEY bla");
+        Task pTarget2 = helper.generateTaskWithName("bla KEY bla bceofeia");
+        Task p1 = helper.generateTaskWithName("KE Y");
+        Task p2 = helper.generateTaskWithName("KEYKEYKEY sduauo");
+
+        List<Task> fourTasks = helper.generateTaskList(p1, pTarget1, p2,
+                pTarget2);
+        UTask expectedUT = helper.generateUTask(fourTasks);
+        List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2);
+        helper.addToModel(model, fourTasks);
+
+        String keyword = "KEY";
+        Set<String> mySet = new HashSet<String>(Arrays.asList(keyword));
+        assertCommandSuccess("find " + keyword,
+                String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
+                        expectedList.size()),
+                expectedUT, expectedList);
+    }
+
+    @Test
+    public void execute_find_completedTaskOnly() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.simpleTask();
+        UTask expectedUT = new UTask();
+        toBeAdded.setStatus(new Status("Complete"));
+        expectedUT.addTask(toBeAdded);
+
+        List<Task> compledTask = helper.generateTaskList(toBeAdded);
+        helper.addToModel(model, compledTask);
+        String keyword = "complete";
+        Set<String> mySet = new HashSet<String>(Arrays.asList(keyword));
+        assertCommandSuccess("find " + keyword,
+                String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
+                        expectedUT.getTaskList().size()),
+                expectedUT, expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_find_isNotCaseSensitive() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task p1 = helper.generateTaskWithName("bla bla KEY bla");
+        Task p2 = helper.generateTaskWithName("bla KEY bla bceofeia");
+        Task p3 = helper.generateTaskWithName("key key");
+        Task p4 = helper.generateTaskWithName("KEy sduauo");
+
+        List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
+        UTask expectedUT = helper.generateUTask(fourPersons);
+        List<Task> expectedList = fourPersons;
+        helper.addToModel(model, fourPersons);
+
+        String keyword = "KEY";
+        Set<String> mySet = new HashSet<String>(Arrays.asList(keyword));
+        assertCommandSuccess("find " + keyword,
+                String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
+                        expectedList.size()),
+                expectedUT, expectedList);
+    }
+
+    @Test
+    public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task pTarget1 = helper.generateTaskWithName("bla bla KEY bla");
+        Task pTarget2 = helper.generateTaskWithName("bla rAnDoM bla bceofeia");
+        Task pTarget3 = helper.generateTaskWithName("key key");
+        Task p1 = helper.generateTaskWithName("sduauo");
+
+        List<Task> fourTasks = helper.generateTaskList(pTarget1, p1, pTarget2,
+                pTarget3);
+        UTask expectedUT = helper.generateUTask(fourTasks);
+        List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2,
+                pTarget3);
+        helper.addToModel(model, fourTasks);
+
+        String keyword = "key rAnDoM";
+        Set<String> mySet = new HashSet<String>(
+                Arrays.asList(keyword.trim().split("\\s+")));
+        assertCommandSuccess("find " + keyword,
+                String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
+                        expectedList.size()),
+                expectedUT, expectedList);
+    }
+    //@@ author
+
     // @@author A0138423J
     @Test
     public void execute_updateInvalidArgsFormat_errorMessageShown()
@@ -361,57 +457,27 @@ public class LogicManagerTest {
                 MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
-    // @Test
-    // public void executeDoneUndoneSuccessFailure() throws Exception {
-    // // setup expectations
-    // TestDataHelper helper = new TestDataHelper();
-    // Task toBeAdded = helper.generateEventTaskWithSeed(1);
-    //
-    // UTask expectedAB = new UTask();
-    // expectedAB.addTask(toBeAdded);
-    //
-    // // execute command and verify result
-    // assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
-    // String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
-    // expectedAB, expectedAB.getTaskList());
-    //
-    // // new task by default is false
-    // // execute command and verify result
-    // assertCommandFailure("undone 1",
-    // String.format(UndoneCommand.MESSAGE_DUPLICATE_STATUS));
-    //
-    // // now set it to true for comparison
-    // toBeAdded.setCompleted(new IsCompleted("true"));
-    //
-    // // execute incomplete command
-    // assertCommandFailure("done ",
-    // String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-    // DoneCommand.MESSAGE_USAGE));
-    //
-    // // execute command and verify done is executed properly
-    // assertCommandSuccess("done 1",
-    // String.format(DoneCommand.MESSAGE_DONE_TASK_SUCCESS, toBeAdded),
-    // expectedAB, expectedAB.getTaskList());
-    //
-    // // repeated done attempts will fail due to no need to update again
-    // // execute command and verify result
-    // assertCommandFailure("done 1",
-    // String.format(DoneCommand.MESSAGE_DUPLICATE_STATUS));
-    //
-    // // now set it to false for comparison
-    // toBeAdded.setCompleted(new IsCompleted("false"));
-    //
-    // // execute incomplete command
-    // assertCommandFailure("undone ",
-    // String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-    // UndoneCommand.MESSAGE_USAGE));
-    //
-    // // execute command and verify result
-    // assertCommandSuccess("undone 1",
-    // String.format(UndoneCommand.MESSAGE_UNDONE_TASK_SUCCESS, toBeAdded),
-    // expectedAB, expectedAB.getTaskList());
-    //
-    // }
+    @Test
+    public void execute_undone_invalidIndex() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateEventTaskWithSeed(1);
+
+        UTask expectedAB = new UTask();
+        expectedAB.addTask(toBeAdded);
+
+        // execute incomplete command
+        assertCommandFailure("undone %",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        UndoneCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void execute_done_invalidIndex() throws Exception {
+        assertCommandFailure("done $%",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+             DoneCommand.MESSAGE_USAGE));
+    }
 
     // @@author A0138423J
     @Test
@@ -777,80 +843,6 @@ public class LogicManagerTest {
         return new UniqueTagList(tag1, tag2);
     }
 
-    @Test
-    public void execute_find_invalidArgsFormat() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                FindCommand.MESSAGE_USAGE);
-        assertCommandFailure("find ", expectedMessage);
-    }
-
-    @Test
-    public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Task pTarget1 = helper.generateTaskWithName("bla bla KEY bla");
-        Task pTarget2 = helper.generateTaskWithName("bla KEY bla bceofeia");
-        Task p1 = helper.generateTaskWithName("KE Y");
-        Task p2 = helper.generateTaskWithName("KEYKEYKEY sduauo");
-
-        List<Task> fourPersons = helper.generateTaskList(p1, pTarget1, p2,
-                pTarget2);
-        UTask expectedUT = helper.generateUTask(fourPersons);
-        List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2);
-        helper.addToModel(model, fourPersons);
-
-        String keyword = "KEY";
-        Set<String> mySet = new HashSet<String>(Arrays.asList(keyword));
-        assertCommandSuccess("find " + keyword,
-                String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
-                        expectedList.size()),
-                expectedUT, expectedList);
-    }
-
-    @Test
-    public void execute_find_isNotCaseSensitive() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Task p1 = helper.generateTaskWithName("bla bla KEY bla");
-        Task p2 = helper.generateTaskWithName("bla KEY bla bceofeia");
-        Task p3 = helper.generateTaskWithName("key key");
-        Task p4 = helper.generateTaskWithName("KEy sduauo");
-
-        List<Task> fourPersons = helper.generateTaskList(p3, p1, p4, p2);
-        UTask expectedUT = helper.generateUTask(fourPersons);
-        List<Task> expectedList = fourPersons;
-        helper.addToModel(model, fourPersons);
-
-        String keyword = "KEY";
-        Set<String> mySet = new HashSet<String>(Arrays.asList(keyword));
-        assertCommandSuccess("find " + keyword,
-                String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
-                        expectedList.size()),
-                expectedUT, expectedList);
-    }
-
-    @Test
-    public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Task pTarget1 = helper.generateTaskWithName("bla bla KEY bla");
-        Task pTarget2 = helper.generateTaskWithName("bla rAnDoM bla bceofeia");
-        Task pTarget3 = helper.generateTaskWithName("key key");
-        Task p1 = helper.generateTaskWithName("sduauo");
-
-        List<Task> fourTasks = helper.generateTaskList(pTarget1, p1, pTarget2,
-                pTarget3);
-        UTask expectedUT = helper.generateUTask(fourTasks);
-        List<Task> expectedList = helper.generateTaskList(pTarget1, pTarget2,
-                pTarget3);
-        helper.addToModel(model, fourTasks);
-
-        String keyword = "key rAnDoM";
-        Set<String> mySet = new HashSet<String>(
-                Arrays.asList(keyword.trim().split("\\s+")));
-        assertCommandSuccess("find " + keyword,
-                String.format(Messages.MESSAGE_SEARCH_RESULTS, mySet.toString(),
-                        expectedList.size()),
-                expectedUT, expectedList);
-    }
-
     // @@author
     // @@author A0138423J
     /**
@@ -885,33 +877,21 @@ public class LogicManagerTest {
             return new EventTask(new Name("Task " + seed),
                     new Deadline("010120"), new Timestamp("010120", "0000 to 2359"),
                     new Frequency("Every " + seed),
-                    new UniqueTagList(new Tag(
-                            new TagName("tag" + Math.abs(seed)),
-                            new TagColorIndex("2")),
-                            new Tag(new TagName("tag" + Math.abs(seed + 1)),
-                            new TagColorIndex("8"))),
+                    new UniqueTagList(),
                     new Status("incomplete"));
         }
 
         private Task generateDeadlineTaskWithSeed(int seed) throws Exception {
             return new DeadlineTask(new Name("Task " + seed),
                     new Deadline("010120"), new Frequency("Every " + seed),
-                    new UniqueTagList(new Tag(
-                            new TagName("tag" + Math.abs(seed)),
-                            new TagColorIndex("2")),
-                            new Tag(new TagName("tag" + Math.abs(seed + 1)),
-                            new TagColorIndex("8"))),
+                    new UniqueTagList(),
                     new Status("incomplete"));
         }
 
         private Task generateFloatingTaskWithSeed(int seed) throws Exception {
             return new FloatingTask(new Name("Task " + seed),
                     new Frequency("Every " + seed),
-                    new UniqueTagList(new Tag(
-                            new TagName("tag" + Math.abs(seed)),
-                            new TagColorIndex("2")),
-                            new Tag(new TagName("tag" + Math.abs(seed + 1)),
-                            new TagColorIndex("8"))),
+                    new UniqueTagList(),
                     new Status("incomplete"));
         }
         // @@author
