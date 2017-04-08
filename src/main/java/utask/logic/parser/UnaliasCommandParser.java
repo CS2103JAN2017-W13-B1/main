@@ -6,7 +6,6 @@ import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import utask.logic.commands.AliasCommand;
 import utask.logic.commands.Command;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.UnaliasCommand;
