@@ -72,6 +72,9 @@ public class Timestamp {
         }
 
         if (timestamp.equals("-")) {
+            from = null;
+            to = null;
+        } else {
             String[] str = timestamp.split(TIMESTAMP_DELIMITER);
             String fromString = str[FROM_PARAM_IN_ARRAY];
             String toString = str[TO_PARAM_IN_ARRAY];
@@ -80,10 +83,6 @@ public class Timestamp {
 
             from = DateUtil.addHHMMStringToDate((Date) date.clone(), fromString);
             to = DateUtil.addHHMMStringToDate((Date) date.clone(), toString);
-
-        } else {
-            from = null;
-            to = null;
         }
     }
 
