@@ -12,9 +12,6 @@ public enum TaskType {
         this.key = key;
     }
 
-    TaskType() {
-    }
-
     @Override
     public String toString() {
         return key;
