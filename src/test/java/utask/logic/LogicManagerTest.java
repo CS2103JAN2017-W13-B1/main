@@ -52,6 +52,7 @@ import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.exceptions.CommandException;
+import utask.logic.parser.ParserUtil;
 import utask.model.Model;
 import utask.model.ModelManager;
 import utask.model.ReadOnlyUTask;
@@ -220,7 +221,12 @@ public class LogicManagerTest {
 
     @Test
     public void execute_relocate_success() {
-        String validPath = "/Users/validPath";
+        String validPath;
+        if (System.getProperty("os.name").contains("Windows")) {
+            validPath = "C:\\path\\to\\destination";
+        } else {
+            validPath = "/Users/James/Desktop";
+        }
         assertCommandSuccess("relocate " + validPath,
                 String.format(RelocateCommand.MESSAGE_RELOCATE_TASK_SUCCESS, validPath),
                 new UTask(), Collections.emptyList());
