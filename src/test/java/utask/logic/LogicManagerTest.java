@@ -7,6 +7,8 @@ import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static utask.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import static utask.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,6 +33,7 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CommandResult;
+import utask.logic.commands.CreateCommand;
 import utask.logic.commands.CreateTagCommand;
 //import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
@@ -322,18 +325,19 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_add_successful() throws Exception {
+    public void execute_create_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.simpleTask();
         UTask expectedAB = new UTask();
         expectedAB.addTask(toBeAdded);
-        // TODO fix after Tag is reformed
+        logic.execute("createtag urgent /color CYAN");
+        logic.execute("createtag assignment /color YELLOW");
         // execute command and verify result
-//        assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
-//                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
-//                expectedAB, expectedAB.getTaskList());
-
+        System.out.println(helper.generateCreateCommand(toBeAdded));
+        assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
+                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedAB, expectedAB.getTaskList());
     }
 
     @Test
@@ -344,11 +348,9 @@ public class LogicManagerTest {
 
         // setup starting state
         model.addTask(toBeAdded); // task already in internal address book
-
-        // TODO fix after Tag is reformed
         // execute command and verify result
-//        assertCommandFailure(helper.generateCreateCommand(toBeAdded),
-//                CreateCommand.MESSAGE_DUPLICATE_TASK);
+        assertCommandFailure(helper.generateCreateCommand(toBeAdded),
+                CreateCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     // @@author A0138423J
@@ -922,7 +924,9 @@ public class LogicManagerTest {
 
             cmd.append(p.getName().toString());
             if (!p.getDeadline().isEmpty()) {
-                cmd.append(" /by ").append(p.getDeadline());
+                DateFormat fmt = new SimpleDateFormat("ddMMyy");
+                String deadline = fmt.format(p.getDeadline().getDate());
+                cmd.append(" /by ").append(deadline);
             }
             if (!p.getTimestamp().isEmpty()) {
                 cmd.append(" /from ").append(p.getTimestamp());
