@@ -48,16 +48,24 @@ public class CommandBoxTest extends UTaskGuiTest {
     }
 
     @Test
+    public void commandBox_anyKey_textClearedAndErrorStyleClassRemoved() {
+        commandBox.runCommand(COMMAND_THAT_FAILS);
+        commandBox.hitArrowRightKey();
+        assertEquals(COMMAND_THAT_FAILS, commandBox.getCommandInput());
+        assertEquals(defaultStyleOfCommandBox, commandBox.getStyleClass());
+    }
+
+    @Test
     public void commandBox_commandSucceedsAfterFailedCommand_textClearedAndErrorStyleClassRemoved() {
         // add error style to simulate a failed command
         commandBox.getStyleClass().add(CommandBox.ERROR_TEXTFIELD_STYLE_CLASS);
-
         commandBox.runCommand(COMMAND_THAT_SUCCEEDS);
 
         assertEquals("", commandBox.getCommandInput());
         assertEquals(defaultStyleOfCommandBox, commandBox.getStyleClass());
     }
 
+    //TODO
     @Test
     public void commandBox_canCycleCommand() {
         commandBox.runCommand(CLEAR_COMMAND);

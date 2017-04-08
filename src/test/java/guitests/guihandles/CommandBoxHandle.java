@@ -29,23 +29,22 @@ public class CommandBoxHandle extends GuiHandle {
 
     public void hitEscapeKey() {
         clickOnTextField(); // Ensure it is focused
-        guiRobot.sleep(100);
         guiRobot.press(KeyCode.ESCAPE);
-        guiRobot.sleep(100);
     }
 
     public void hitArrowUpKey() {
         clickOnTextField(); // Ensure it is focused
-        guiRobot.sleep(100);
         guiRobot.press(KeyCode.UP);
-        guiRobot.sleep(100);
     }
 
     public void hitArrowDownKey() {
         clickOnTextField(); // Ensure it is focused
-        guiRobot.sleep(100);
         guiRobot.press(KeyCode.DOWN);
-        guiRobot.sleep(100);
+    }
+
+    public void hitArrowRightKey() {
+        clickOnTextField(); // Ensure it is focused
+        guiRobot.press(KeyCode.RIGHT);
     }
 
     public String getCommandInput() {
