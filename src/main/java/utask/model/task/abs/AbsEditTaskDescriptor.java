@@ -19,10 +19,6 @@ public abstract class AbsEditTaskDescriptor {
     protected Optional<UniqueTagList> tags = Optional.empty();
     protected Optional<Status> status = Optional.empty();
 
-    public AbsEditTaskDescriptor() {
-        super();
-    }
-
     /**
      * Returns true if at least one field is edited.
      */
