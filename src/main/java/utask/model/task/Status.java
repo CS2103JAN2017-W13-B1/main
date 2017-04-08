@@ -33,6 +33,7 @@ public class Status {
         assert input != null;
         String trimmedName = input.trim();
         if (!isValidBoolean(trimmedName)) {
+            assert false : "Illegal Value!";
             throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
         }
         this.value = checkValue(input);
@@ -41,13 +42,10 @@ public class Status {
     private Boolean checkValue(String strToEvaluate)
             throws IllegalValueException {
         char value = strToEvaluate.toLowerCase().charAt(0);
-        switch (value) {
-        case 'c':
+        if ('c' == value) {
             return true;
-        case 'i':
+        } else {
             return false;
-        default:
-            throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
         }
     }
 

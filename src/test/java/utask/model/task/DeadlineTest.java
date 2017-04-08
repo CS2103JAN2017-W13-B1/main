@@ -38,6 +38,5 @@ public class DeadlineTest {
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
-
     }
 }
