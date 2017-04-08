@@ -77,7 +77,7 @@ public class SampleDataUtil {
     /*
      * This method is used to generate sample Event task
      */
-    private static Task generateEventTaskWithSeed(int seed) throws Exception {
+    public static Task generateEventTaskWithSeed(int seed) throws Exception {
 
         String deadline = (generateDeadline(seed));
 
@@ -89,13 +89,13 @@ public class SampleDataUtil {
                         new TagColorIndex("2")),
                         new Tag(new TagName("tag" + Math.abs(seed + 1)),
                         new TagColorIndex("8"))),
-                new Status("no"));
+                new Status("Incomplete"));
     }
 
     /*
      * This method is used to generate sample Deadline task
      */
-    private static Task generateDeadlineTaskWithSeed(int seed) throws Exception {
+    public static Task generateDeadlineTaskWithSeed(int seed) throws Exception {
         return new DeadlineTask(new Name("Deadline Task " + seed),
                 new Deadline(generateDeadline(seed)),
                 new Frequency("Every " + randomFrequency()),
@@ -104,13 +104,13 @@ public class SampleDataUtil {
                         new TagColorIndex("2")),
                         new Tag(new TagName("tag" + Math.abs(seed + 1)),
                         new TagColorIndex("8"))),
-                new Status("no"));
+                new Status("Incomplete"));
     }
 
     /*
      * This method is used to generate sample Floating task
      */
-    private static Task generateFloatingTaskWithSeed(int seed) throws Exception {
+    public static Task generateFloatingTaskWithSeed(int seed) throws Exception {
         return new FloatingTask(new Name("Floating Task " + seed),
                 new Frequency("Every " + randomFrequency()),
                 new UniqueTagList(new Tag(
@@ -118,7 +118,7 @@ public class SampleDataUtil {
                         new TagColorIndex("2")),
                         new Tag(new TagName("tag" + Math.abs(seed + 1)),
                         new TagColorIndex("8"))),
-                new Status("no"));
+                new Status("Incomplete"));
     }
 
     /*
