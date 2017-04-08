@@ -523,113 +523,33 @@ public class LogicManagerTest {
 
     // @@author A0138423J
     @Test
-    public void executeUpdateSuccess() throws Exception {
-        // setup expectations
-        TestDataHelper helper = new TestDataHelper();
-        Task toBeAdded = helper.generateFloatingTaskWithSeed(1);
-        // toBeAdded missing new Deadline("010117"), new Timestamp("0000 to
-        // 2359")
-
-        UTask expectedAB = new UTask();
-        expectedAB.addTask(toBeAdded);
-        // TODO fix after Tag is reformed
-        // execute command and verify result
-//        assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
-//                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
-//                expectedAB, expectedAB.getTaskList());
-
-        // create similar tasks with common attributes
-        // dTask missing (new Timestamp("0000 to 2359"))
-        DeadlineTask dTask = (DeadlineTask) helper
-                .generateDeadlineTaskWithSeed(1);
-        EventTask eTask = (EventTask) helper.generateEventTaskWithSeed(1);
-
-        // TODO fix tests
-        /*
-         * // attempt to update fTask into dTask
-         * expectedAB.updateTask(toBeAdded, dTask);
-         *
-         * assertCommandSuccess("update 1 /by 010117",
-         * String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, dTask),
-         * expectedAB, expectedAB.getTaskList());
-         *
-         * // attempt to update dTask into eTask expectedAB.updateTask(1,
-         * eTask);
-         *
-         * assertCommandSuccess("update 1 /from 0000 to 2359",
-         * String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
-         * expectedAB, expectedAB.getTaskList());
-         *
-         * // execute test for update name eTask.setName(new
-         * Name("Update Name")); expectedAB.updateTask(0, eTask);
-         *
-         * assertCommandSuccess("update 1 /name Update Name",
-         * String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
-         * expectedAB, expectedAB.getTaskList());
-         *
-         *
-         * // execute test for update frequency eTask.setFrequency(new
-         * Frequency("Every Sunday")); expectedAB.updateTask(0, eTask);
-         *
-         * assertCommandSuccess("update 1 /repeat Every Sunday",
-         * String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
-         * expectedAB, expectedAB.getTaskList());
-         *
-         *
-         * // execute test for update isComplete eTask.setCompleted(new
-         * Status("true")); expectedAB.updateTask(0, eTask);
-         *
-         * assertCommandSuccess("update 1 /done true",
-         * String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
-         * expectedAB, expectedAB.getTaskList());
-         *
-         *
-         * // execute test for update tags
-         * eTask.setTags(generateTagList("Urgent", "Important"));
-         * expectedAB.updateTask(0, eTask);
-         *
-         * assertCommandSuccess("update 1 /tag Urgent /tag Important",
-         * String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, eTask),
-         * expectedAB, expectedAB.getTaskList());
-         */
+    public void execute_update_invalidIndex() {
+        assertCommandFailure("update 999 /by today", MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
-    // @@author A0138423J
     @Test
-    public void executeUpdateFailure() throws Exception {
+    public void execute_update_duplicateTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        // toBeAdded name is "Task 1"
-        Task toBeAdded = helper.generateFloatingTaskWithSeed(1);
-        // toBeAdded name is "Task 2"
-        Task toBeAdded2 = helper.generateFloatingTaskWithSeed(2);
-        // toBeAdded missing new Deadline("010117"), new Timestamp("0000 to
-        // 2359")
+        Task task1 = helper.generateFloatingTaskWithSeed(1);
+        Task task2 = helper.generateFloatingTaskWithSeed(2);
+        List<Task> twoTasks = helper.generateTaskList(task1, task2);
+        helper.addToModel(model, twoTasks);
+        assertCommandFailure("update 1 /name Task 2 /repeat Every 2", UpdateCommand.MESSAGE_DUPLICATE_TASK);
+    }
 
-        UTask expectedAB = new UTask();
-        expectedAB.addTask(toBeAdded);
-        // TODO fix after Tag is reformed
-        // execute command and verify result add Task 1
-//        assertCommandSuccess(helper.generateCreateCommand(toBeAdded),
-//                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded),
-//                expectedAB, expectedAB.getTaskList());
-
-        // execute incomplete command without index and verify result
-        assertCommandFailure("update ", MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-
-        // execute incomplete command without parameters and verify result
-        assertCommandFailure("update 1 ", UpdateCommand.MESSAGE_NOT_EDITED);
-        // TODO fix after Tag is reformed
-        // execute command and verify result add Task 2
-        expectedAB.addTask(toBeAdded2);
-//        assertCommandSuccess(helper.generateCreateCommand(toBeAdded2),
-//                String.format(CreateCommand.MESSAGE_SUCCESS, toBeAdded2),
-//                expectedAB, expectedAB.getTaskList());
-
-        // TODO fix test
-        // test to change task 1 into task 2 (conflict test)
-        // assertCommandFailure("update 1 /name Task 2 /repeat Every 2 /tag tag2
-        // /tag tag3",
-        // EditCommand.MESSAGE_DUPLICATE_TASK);
+    @Test
+    public void execute_update_success() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task tobeAdded = helper.generateEventTaskWithSeed(1);
+        Task expectedTask = helper.generateEventTaskWithSeed(2);
+        List<Task> oneTask = helper.generateTaskList(tobeAdded);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(expectedTask);
+        helper.addToModel(model, oneTask);
+        assertCommandSuccess("update 1 /name Task 2 /by 010120 /from 0000 to 2359"
+                + " /repeat Every 2 /status incomplete",
+                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
+                expectedUT.getTaskList());
     }
 
     // @@author
@@ -638,13 +558,13 @@ public class LogicManagerTest {
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        UTask expectedAB = helper.generateAddressBook(2);
-        List<? extends ReadOnlyTask> expectedList = expectedAB.getTaskList();
+        UTask expectedUT = helper.generateAddressBook(2);
+        List<? extends ReadOnlyTask> expectedList = expectedUT.getTaskList();
 
         // prepare UTask state
         helper.addToModel(model, 2);
 
-        assertCommandSuccess("list", ListCommand.MESSAGE_SUCCESS, expectedAB,
+        assertCommandSuccess("list", ListCommand.MESSAGE_SUCCESS, expectedUT,
                 expectedList);
 
     }
