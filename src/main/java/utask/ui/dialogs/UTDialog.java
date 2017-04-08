@@ -11,11 +11,11 @@ import com.jfoenix.controls.JFXDialogLayout;
 import javafx.scene.layout.StackPane;
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
-import utask.staging.ui.UTMainWindow;
-import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
+import utask.commons.events.ui.KeyboardEscapeKeyPressedEvent;
+import utask.ui.MainWindow;
 
 public abstract class UTDialog {
-    private static final Logger logger = LogsCenter.getLogger(UTMainWindow.class);
+    private static final Logger logger = LogsCenter.getLogger(MainWindow.class);
     private final JFXDialog dialog;
     protected final JFXDialogLayout contentLayout;
     private boolean isShowing = false;

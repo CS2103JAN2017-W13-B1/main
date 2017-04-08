@@ -8,7 +8,6 @@ import org.junit.rules.ExpectedException;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.CreateTagCommand;
-import utask.staging.ui.helper.SuggestionHelper;
 
 public class SuggestionHelperTest {
     @Rule

@@ -2,7 +2,6 @@ package utask.commons.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.model.tag.UniqueTagList;
@@ -19,7 +18,7 @@ import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.TaskType;
 import utask.model.task.Timestamp;
-import utask.staging.ui.helper.UTFilteredListHelper;
+import utask.ui.helper.UTFilteredListHelper;
 
 // @@author A0138423J
 public class UpdateUtil {
@@ -121,7 +120,7 @@ public class UpdateUtil {
         Deadline updatedDeadline = updateOrRemoveDeadline(taskToEdit,
                 editTaskDescriptor, attributeToRemove);
         Timestamp updatedTimestamp = updateOrRemoveTimestamp(taskToEdit,
-                editTaskDescriptor, attributeToRemove);
+                editTaskDescriptor, attributeToRemove, updatedDeadline);
         Frequency updatedFrequency = updateOrRemoveFrequency(taskToEdit,
                 editTaskDescriptor, attributeToRemove);
         UniqueTagList updatedTags = updateOrRemoveUniqueTagList(taskToEdit,
@@ -179,34 +178,20 @@ public class UpdateUtil {
      */
     private static Timestamp updateOrRemoveTimestamp(ReadOnlyTask taskToEdit,
             EditTaskDescriptor editTaskDescriptor,
-            ArrayList<Attribute> attributeToRemove) {
+            ArrayList<Attribute> attributeToRemove,
+            Deadline updatedDeadline) {
         assert taskToEdit != null;
         assert editTaskDescriptor != null;
         assert attributeToRemove != null;
 
-        //TODO CLEAN UP
-//        Timestamp timestampToUpdate = editTaskDescriptor.getTimeStamp()
-//                .orElseGet(taskToEdit::getTimestamp);
-
-
         Timestamp timestampToUpdate = editTaskDescriptor.getTimeStamp()
               .orElseGet(taskToEdit::getTimestamp);
-        //        Timestamp timestampToUpdate = null;
 
-        if (!timestampToUpdate.equals(taskToEdit.getTimestamp()) && !attributeToRemove.contains(Attribute.TIMESTAMP)) {
-            Optional<Deadline> deadline = editTaskDescriptor.getDeadline();
-            Deadline deadlineToUpdate = null;
-
-            if (deadline.isPresent()) {
-                deadlineToUpdate = deadline.get();
-            } else {
-                deadlineToUpdate = taskToEdit.getDeadline();
-            }
-
-            Timestamp updatedTimestamp =
-                    Timestamp.getUpdateTimestampWithDeadline(timestampToUpdate, deadlineToUpdate);
-
-            timestampToUpdate = updatedTimestamp;
+        if (!timestampToUpdate.equals(taskToEdit.getTimestamp())
+                && !attributeToRemove.contains(Attribute.TIMESTAMP)) {
+            timestampToUpdate = Timestamp
+                    .getUpdateTimestampWithDeadline(timestampToUpdate,
+                            updatedDeadline);
         }
 
         if (attributeToRemove.contains(Attribute.TIMESTAMP)) {

@@ -16,7 +16,7 @@ import utask.commons.util.FileUtil;
 import utask.model.ReadOnlyUTask;
 import utask.model.UTask;
 import utask.model.task.EventTask;
-import utask.testutil.TypicalTestPersons;
+import utask.testutil.TypicalTask;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
@@ -62,7 +62,7 @@ public class XmlAddressBookStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
-        TypicalTestPersons td = new TypicalTestPersons();
+        TypicalTask td = new TypicalTask();
         UTask original = td.getTypicalAddressBook();
         XmlUTaskStorage xmlAddressBookStorage = new XmlUTaskStorage(filePath);
 

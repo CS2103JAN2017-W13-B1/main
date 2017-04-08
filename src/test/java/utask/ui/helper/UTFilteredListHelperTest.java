@@ -18,7 +18,6 @@ import utask.model.task.Frequency;
 import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Status;
-import utask.staging.ui.helper.UTFilteredListHelper;
 
 public class UTFilteredListHelperTest {
     @Rule

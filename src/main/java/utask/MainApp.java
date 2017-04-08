@@ -15,6 +15,7 @@ import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.Version;
 import utask.commons.events.ui.ExitAppRequestEvent;
+import utask.commons.events.ui.FileRelocateEvent;
 import utask.commons.exceptions.DataConversionException;
 import utask.commons.util.ConfigUtil;
 import utask.commons.util.StringUtil;
@@ -36,7 +37,7 @@ import utask.ui.UiManager;
  */
 public class MainApp extends Application {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-
+    private static final String DEFAULT_FILE_NAME = "/utask.xml";
     public static final Version VERSION = new Version(1, 0, 0, true);
 
     protected Ui ui;
@@ -49,7 +50,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing UTask ]===========================");
+        logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -63,9 +64,13 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model, storage);
 
-        ui = new UiManager(logic, config, userPrefs);
+        ui = getUiManager();
 
         initEventsCenter();
+    }
+
+    protected UiManager getUiManager() {
+        return new UiManager(logic, config, userPrefs);
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -79,14 +84,14 @@ public class MainApp extends Application {
         try {
             addressBookOptional = storage.readUTask();
             if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample UTask");
+                logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleUTask);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty UTask");
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new UTask();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty UTask");
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new UTask();
         }
 
@@ -143,7 +148,7 @@ public class MainApp extends Application {
                     "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty UTask");
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initializedPrefs = new UserPrefs();
         }
 
@@ -163,13 +168,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting UTask " + MainApp.VERSION);
+        logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping UTask ] =============================");
+        logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
@@ -185,6 +190,23 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
     }
+
+    // @@author A0138493W
+    @Subscribe
+    private void handleFileRelocateEvent(FileRelocateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String prePath = config.getUTaskFilePath();
+        //Update config file and storage the changed file location
+        config.setUTaskFilePath(event.getPath() + DEFAULT_FILE_NAME);
+        storage.setFilePath(event.getPath() + DEFAULT_FILE_NAME);
+        try {
+            ConfigUtil.saveConfig(config, ConfigUtil.getConfigPath());
+            storage.moveSaveFile(prePath, event.getPath() + DEFAULT_FILE_NAME);
+        } catch (IOException e) {
+            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
+        }
+    }
+    // @@author
 
     public static void main(String[] args) {
         launch(args);

@@ -1,6 +1,8 @@
 package utask.model.task;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -30,11 +32,12 @@ public class Deadline {
      *             if given deadline string is invalid.
      */
     public Deadline(String deadline) throws IllegalValueException {
-        assert deadline != null && !deadline.isEmpty();
         String trimmedDeadline = deadline.trim();
         if (!isValidDeadline(trimmedDeadline)) {
             throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
         }
+
+        assert deadline != null && !deadline.isEmpty();
 
         if (deadline.equals("-")) {
             date = null;
@@ -94,6 +97,13 @@ public class Deadline {
         }
 
         return date.toString();
+    }
+
+    //TODO FOR TEST BY JIAHAO
+    public String toCommandString() {
+        DateFormat fmt = new SimpleDateFormat("ddMMyy");
+        String deadline = fmt.format(getDate());
+        return deadline;
     }
 
     @Override

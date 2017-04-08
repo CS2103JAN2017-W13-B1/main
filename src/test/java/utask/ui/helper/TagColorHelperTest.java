@@ -5,8 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import utask.staging.ui.helper.TagColorHelper;
-import utask.staging.ui.helper.TagColorHelper.ColorType;
+import utask.ui.helper.TagColorHelper.ColorType;
 
 
 public class TagColorHelperTest {

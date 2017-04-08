@@ -3,6 +3,7 @@ package guitests;
 import static org.junit.Assert.assertTrue;
 import static utask.logic.commands.DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS;
 
+import guitests.working.UTaskGuiTest;
 import utask.testutil.TestTask;
 import utask.testutil.TestUtil;
 
@@ -44,7 +45,7 @@ public class DeleteCommandTest extends UTaskGuiTest {
         commandBox.runCommand("delete " + targetIndexOneIndexed);
 
         //confirm the list now contains all previous persons except the deleted person
-        assertTrue(personListPanel.isListMatching(expectedRemainder));
+        assertTrue(todoListPanel.isListMatching(expectedRemainder));
 
         //confirm the result message is correct
         assertResultMessage(String.format(MESSAGE_DELETE_TASK_SUCCESS, personToDelete));

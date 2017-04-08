@@ -3,7 +3,7 @@ package guitests.guihandles;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import guitests.GuiRobot;
+import guitests.working.GuiRobot;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

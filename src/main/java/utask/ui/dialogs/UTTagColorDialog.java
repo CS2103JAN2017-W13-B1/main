@@ -14,7 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import utask.model.tag.Tag;
-import utask.staging.ui.helper.TagColorHelper;
+import utask.ui.helper.TagColorHelper;
 
 public class UTTagColorDialog extends UTDialog {
     private static final String HAS_TAGS_HEADING = "Tags";

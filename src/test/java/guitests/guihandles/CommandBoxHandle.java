@@ -1,7 +1,8 @@
 package guitests.guihandles;
 
-import guitests.GuiRobot;
+import guitests.working.GuiRobot;
 import javafx.collections.ObservableList;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 /**
@@ -24,6 +25,26 @@ public class CommandBoxHandle extends GuiHandle {
 
     public void enterCommand(String command) {
         setTextField(COMMAND_INPUT_FIELD_ID, command);
+    }
+
+    public void hitEscapeKey() {
+        clickOnTextField(); // Ensure it is focused
+        guiRobot.press(KeyCode.ESCAPE);
+    }
+
+    public void hitArrowUpKey() {
+        clickOnTextField(); // Ensure it is focused
+        guiRobot.press(KeyCode.UP);
+    }
+
+    public void hitArrowDownKey() {
+        clickOnTextField(); // Ensure it is focused
+        guiRobot.press(KeyCode.DOWN);
+    }
+
+    public void hitArrowRightKey() {
+        clickOnTextField(); // Ensure it is focused
+        guiRobot.press(KeyCode.RIGHT);
     }
 
     public String getCommandInput() {

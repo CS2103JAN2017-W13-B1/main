@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import utask.MainApp;
 import utask.commons.core.EventsCenter;
 import utask.commons.events.BaseEvent;
-
 /**
  * Represents a distinct part of the UI. e.g. Windows, dialogs, panels, status bars, etc.
  * It contains a scene graph with a root node of type {@code T}.
@@ -28,6 +27,7 @@ public abstract class UiPart<T> {
      */
     public UiPart(URL fxmlFileUrl) {
         assert fxmlFileUrl != null;
+
         fxmlLoader = new FXMLLoader(fxmlFileUrl);
         fxmlLoader.setController(this);
         try {

@@ -1,11 +1,11 @@
 package guitests;
 
 import static org.junit.Assert.assertTrue;
-import static utask.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.TaskCardHandle;
+import guitests.working.UTaskGuiTest;
 import utask.commons.core.Messages;
 import utask.logic.commands.UpdateCommand;
 import utask.model.task.Deadline;
@@ -17,7 +17,7 @@ public class EditCommandTest extends UTaskGuiTest {
 
     // The list of persons in the person list panel is expected to match this list.
     // This list is updated with every successful call to assertEditSuccess().
-    TestTask[] expectedPersonsList = td.getTypicalPersons();
+    TestTask[] expectedPersonsList = td.getTypicalTasks();
 
 //    @Test
 //    public void edit_allFieldsSpecified_success() throws Exception {
@@ -66,11 +66,11 @@ public class EditCommandTest extends UTaskGuiTest {
 //        assertEditSuccess(filteredPersonListIndex, addressBookIndex, detailsToEdit, editedPerson);
 //    }
 
-    @Test
-    public void edit_missingPersonIndex_failure() {
-        commandBox.runCommand("update Bobby");
-        assertResultMessage(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-    }
+//    @Test
+//    public void edit_missingPersonIndex_failure() {
+//        commandBox.runCommand("update Bobby");
+//        assertResultMessage(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+//    }
 
 //    @Test
 //    public void edit_invalidPersonIndex_failure() {
@@ -102,6 +102,7 @@ public class EditCommandTest extends UTaskGuiTest {
         assertResultMessage(Messages.MESSAGE_TAG_CONSTRAINTS);
     }
 
+
 //    @Test
 //    public void edit_duplicatePerson_failure() {
 //        commandBox.runCommand("edit 3 Alice Pauline p/85355255 e/alice@gmail.com "
@@ -123,12 +124,12 @@ public class EditCommandTest extends UTaskGuiTest {
         commandBox.runCommand("update " + filteredPersonListIndex + " " + detailsToEdit);
 
         // confirm the new card contains the right data
-        PersonCardHandle editedCard = personListPanel.navigateToPerson(editedPerson.getName().fullName);
+        TaskCardHandle editedCard = todoListPanel.navigateToTask(editedPerson.getName().fullName);
         assertMatching(editedPerson, editedCard);
 
         // confirm the list now contains all previous persons plus the person with updated details
         expectedPersonsList[addressBookIndex - 1] = editedPerson;
-        assertTrue(personListPanel.isListMatching(expectedPersonsList));
+        assertTrue(todoListPanel.isListMatching(expectedPersonsList));
         assertResultMessage(String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, editedPerson));
     }
 }

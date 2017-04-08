@@ -1,6 +1,6 @@
 package guitests.guihandles;
 
-import guitests.GuiRobot;
+import guitests.working.GuiRobot;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import utask.TestApp;

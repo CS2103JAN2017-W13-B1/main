@@ -50,17 +50,20 @@ public class Timestamp {
             throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
         }
 
-        String[] str = timestamp.split(TIMESTAMP_DELIMITER);
-        String fromString = str[FROM_PARAM_IN_ARRAY];
-        String toString = str[TO_PARAM_IN_ARRAY];
+        if (!timestamp.equals("-")) {
+            String[] str = timestamp.split(TIMESTAMP_DELIMITER);
+            String fromString = str[FROM_PARAM_IN_ARRAY];
+            String toString = str[TO_PARAM_IN_ARRAY];
 
-        Date date = DateUtil.parseStringToDate(deadline).get();
-        assert date != null : "Certainly sure that date will be valid as tested by deadline";
+            Date date = DateUtil.parseStringToDate(deadline).get();
+            assert date != null : "Certainly sure that date will be valid as tested by deadline";
 
-        from = DateUtil.addHHMMStringToDate((Date) date.clone(), fromString);
-        to = DateUtil.addHHMMStringToDate((Date) date.clone(), toString);
-
-//        this.value = trimmedTimestamp;
+            from = DateUtil.addHHMMStringToDate((Date) date.clone(), fromString);
+            to = DateUtil.addHHMMStringToDate((Date) date.clone(), toString);
+        } else {
+            from = null;
+            to = null;
+        }
     }
 
     public Timestamp(String timestamp) throws IllegalValueException {

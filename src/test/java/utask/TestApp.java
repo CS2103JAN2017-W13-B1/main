@@ -10,6 +10,8 @@ import utask.model.ReadOnlyUTask;
 import utask.model.UserPrefs;
 import utask.storage.XmlSerializableUTask;
 import utask.testutil.TestUtil;
+import utask.ui.TestUiManager;
+import utask.ui.UiManager;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
@@ -42,6 +44,11 @@ public class TestApp extends MainApp {
     }
 
     @Override
+    protected UiManager getUiManager() {
+        return new TestUiManager(logic, config, userPrefs);
+    }
+
+    @Override
     protected Config initConfig(String configFilePath) {
         Config config = super.initConfig(configFilePath);
         config.setAppTitle(APP_TITLE);
@@ -59,7 +66,6 @@ public class TestApp extends MainApp {
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
         return userPrefs;
     }
-
 
     @Override
     public void start(Stage primaryStage) {

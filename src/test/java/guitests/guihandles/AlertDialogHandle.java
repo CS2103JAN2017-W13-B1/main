@@ -1,6 +1,6 @@
 package guitests.guihandles;
 
-import guitests.GuiRobot;
+import guitests.working.GuiRobot;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 import utask.ui.UiManager;

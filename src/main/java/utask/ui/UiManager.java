@@ -15,11 +15,11 @@ import utask.commons.core.Config;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.storage.DataSavingExceptionEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
-import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.commons.util.StringUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
+import utask.ui.helper.UTListViewHelper;
 
 /**
  * The manager of the UI component.
@@ -29,10 +29,11 @@ public class UiManager extends ComponentManager implements Ui {
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
-    private Logic logic;
-    private Config config;
-    private UserPrefs prefs;
+    protected Logic logic;
+    protected Config config;
+    protected UserPrefs prefs;
     private MainWindow mainWindow;
+    protected Stage primaryStage;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
@@ -43,28 +44,33 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting UI...");
+        logger.info("Starting Staging UI...");
+
+        this.primaryStage = primaryStage;
         primaryStage.setTitle(config.getAppTitle());
 
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+            mainWindow = createMainWindow(primaryStage);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
-
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
     }
 
+    protected MainWindow createMainWindow(Stage primaryStage) {
+        return new MainWindow(primaryStage, config, prefs, logic);
+    }
+
     @Override
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
-        mainWindow.releaseResources();
+        //mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -83,7 +89,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        //alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -116,13 +122,6 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.getPersonListPanel().scrollTo(event.targetIndex);
+        UTListViewHelper.getInstance().scrollTo(event.targetIndex);
     }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.loadPersonPage(event.getNewSelection());
-    }
-
 }

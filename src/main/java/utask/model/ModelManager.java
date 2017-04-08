@@ -25,7 +25,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
-import utask.staging.ui.helper.UTFilteredListHelper;
+import utask.ui.helper.UTFilteredListHelper;
 
 /**
  * Represents the in-memory model of the UTask data.
