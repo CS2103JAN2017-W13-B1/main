@@ -11,16 +11,16 @@ import java.util.Map;
 import java.util.Optional;
 
 public class DateUtil {
-    private static final String ALPHABET_PATTERN = "[a-zA-Z]+";
-    private static List<SimpleDateFormat> knownPatterns;
-    private static Map<String, Integer> wordPatterns;
+    private static final String ALPHABET_PATTERN = "[a-zA-Z ]+";
+    private static final List<SimpleDateFormat> knownPatterns;
+    private static final Map<String, Integer> wordPatterns;
 
     private static final int DAYS_DIFFERENCE_TODAY = 0;
     private static final int DAYS_DIFFERENCE_TOMORROW = 1;
 
     private static final String[] SUPPORTED_DATE_FORMAT = {"ddMMyy", "dd MM", "ddMMyyyy"};
     private static final String[] WAYS_TO_SPELL_TODAY = {"today"};
-    private static final String[] WAYS_TO_SPELL_TOMORROW = {"tomorrow", "tmr", "tmrw"};
+    private static final String[] WAYS_TO_SPELL_TOMORROW = {"tomorrow", "tmr", "tmrw", "next day"};
 
     private static final Calendar calendar;
 
@@ -142,7 +142,9 @@ public class DateUtil {
     }
 
     public static Date getEmptyDate() {
-        calendar.setTime(new Date());
+        Date now = new Date();
+        now = clearTimeInDate(now);
+        calendar.setTime(now);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.MONTH, 1);
         calendar.set(Calendar.YEAR, 1);
