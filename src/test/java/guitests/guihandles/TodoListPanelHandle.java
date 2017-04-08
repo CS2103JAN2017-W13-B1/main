@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import guitests.GuiRobot;
+import guitests.working.GuiRobot;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -38,6 +38,11 @@ public class TodoListPanelHandle extends GuiHandle {
 
     public ListView<ReadOnlyTask> getListView() {
         return getNode(TODO_LIST_VIEW_ID);
+    }
+
+    public boolean hasSelectionInListView() {
+        ListView<ReadOnlyTask> listView = getNode(TODO_LIST_VIEW_ID);
+        return !listView.getSelectionModel().isEmpty();
     }
 
     /**

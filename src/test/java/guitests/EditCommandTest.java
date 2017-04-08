@@ -1,16 +1,10 @@
 package guitests;
 
 import static org.junit.Assert.assertTrue;
-import static utask.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
-
-import org.junit.Test;
 
 import guitests.guihandles.TaskCardHandle;
+import guitests.working.UTaskGuiTest;
 import utask.logic.commands.UpdateCommand;
-import utask.model.tag.TagName;
-import utask.model.task.Deadline;
-import utask.model.task.Name;
-import utask.testutil.TaskBuilder;
 import utask.testutil.TestTask;
 
 // TODO: reduce GUI tests by transferring some tests to be covered by lower level tests.
@@ -18,7 +12,7 @@ public class EditCommandTest extends UTaskGuiTest {
 
     // The list of persons in the person list panel is expected to match this list.
     // This list is updated with every successful call to assertEditSuccess().
-    TestTask[] expectedPersonsList = td.getTypicalPersons();
+    TestTask[] expectedPersonsList = td.getTypicalTasks();
 
 //    @Test
 //    public void edit_allFieldsSpecified_success() throws Exception {
@@ -42,16 +36,16 @@ public class EditCommandTest extends UTaskGuiTest {
 //        assertEditSuccess(addressBookIndex, addressBookIndex, detailsToEdit, editedPerson);
 //    }
 
-    @Test
-    public void edit_clearTags_success() throws Exception {
-        String detailsToEdit = "/tag ";
-        int addressBookIndex = 2;
-
-        TestTask personToEdit = expectedPersonsList[addressBookIndex - 1];
-        TestTask editedPerson = new TaskBuilder(personToEdit).withTags().build();
-
-        assertEditSuccess(addressBookIndex, addressBookIndex, detailsToEdit, editedPerson);
-    }
+//    @Test
+//    public void edit_clearTags_success() throws Exception {
+//        String detailsToEdit = "/tag ";
+//        int addressBookIndex = 2;
+//
+//        TestTask personToEdit = expectedPersonsList[addressBookIndex - 1];
+//        TestTask editedPerson = new TaskBuilder(personToEdit).withTags().build();
+//
+//        assertEditSuccess(addressBookIndex, addressBookIndex, detailsToEdit, editedPerson);
+//    }
 
 //    @Test
 //    public void edit_findThenEdit_success() throws Exception {
@@ -67,11 +61,11 @@ public class EditCommandTest extends UTaskGuiTest {
 //        assertEditSuccess(filteredPersonListIndex, addressBookIndex, detailsToEdit, editedPerson);
 //    }
 
-    @Test
-    public void edit_missingPersonIndex_failure() {
-        commandBox.runCommand("update Bobby");
-        assertResultMessage(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
-    }
+//    @Test
+//    public void edit_missingPersonIndex_failure() {
+//        commandBox.runCommand("update Bobby");
+//        assertResultMessage(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+//    }
 
 //    @Test
 //    public void edit_invalidPersonIndex_failure() {
@@ -79,29 +73,29 @@ public class EditCommandTest extends UTaskGuiTest {
 //        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 //    }
 
-    @Test
-    public void edit_noFieldsSpecified_failure() {
-        commandBox.runCommand("update 1");
-        assertResultMessage(UpdateCommand.MESSAGE_NOT_EDITED);
-    }
-
-    @Test
-    public void edit_invalidValues_failure() {
-        commandBox.runCommand("update 1 /name *&");
-        assertResultMessage(Name.MESSAGE_NAME_CONSTRAINTS);
-
-        commandBox.runCommand("update 1 /by abcd");
-        assertResultMessage(Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
-
-//        commandBox.runCommand("edit 1 /from !!!!");
-//        assertResultMessage(Timestamp.MESSAGE_TIMESTAMP_CONSTRAINTS);
-
-//        commandBox.runCommand("edit 1 /repeat !!!");
-//        assertResultMessage(Frequency.MESSAGE_FREQUENCY_CONSTRAINTS);
-
-        commandBox.runCommand("update 1 /tag *&");
-        assertResultMessage(TagName.MESSAGE_TAG_CONSTRAINTS);
-    }
+//    @Test
+//    public void edit_noFieldsSpecified_failure() {
+//        commandBox.runCommand("update 1");
+//        assertResultMessage(UpdateCommand.MESSAGE_NOT_EDITED);
+//    }
+//
+//    @Test
+//    public void edit_invalidValues_failure() {
+//        commandBox.runCommand("update 1 /name *&");
+//        assertResultMessage(Name.MESSAGE_NAME_CONSTRAINTS);
+//
+//        commandBox.runCommand("update 1 /by abcd");
+//        assertResultMessage(Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
+//
+////        commandBox.runCommand("edit 1 /from !!!!");
+////        assertResultMessage(Timestamp.MESSAGE_TIMESTAMP_CONSTRAINTS);
+//
+////        commandBox.runCommand("edit 1 /repeat !!!");
+////        assertResultMessage(Frequency.MESSAGE_FREQUENCY_CONSTRAINTS);
+//
+//        commandBox.runCommand("update 1 /tag *&");
+//        assertResultMessage(TagName.MESSAGE_TAG_CONSTRAINTS);
+//    }
 
 //    @Test
 //    public void edit_duplicatePerson_failure() {

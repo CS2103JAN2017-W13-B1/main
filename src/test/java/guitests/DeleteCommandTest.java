@@ -3,6 +3,7 @@ package guitests;
 import static org.junit.Assert.assertTrue;
 import static utask.logic.commands.DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS;
 
+import guitests.working.UTaskGuiTest;
 import utask.testutil.TestTask;
 import utask.testutil.TestUtil;
 

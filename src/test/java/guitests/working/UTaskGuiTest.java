@@ -1,4 +1,4 @@
-package guitests;
+package guitests.working;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -28,7 +28,7 @@ import utask.commons.events.BaseEvent;
 import utask.model.UTask;
 import utask.model.task.ReadOnlyTask;
 import utask.testutil.TestUtil;
-import utask.testutil.TypicalTestPersons;
+import utask.testutil.TypicalTask;
 
 /**
  * A GUI Test class for AddressBook.
@@ -41,7 +41,7 @@ public abstract class UTaskGuiTest {
 
     TestApp testApp;
 
-    protected TypicalTestPersons td = new TypicalTestPersons();
+    protected TypicalTask td = new TypicalTask();
 
     /*
      *   Handles to GUI elements present at the start up are created in advance
@@ -98,7 +98,7 @@ public abstract class UTaskGuiTest {
      */
     protected UTask getInitialData() {
         UTask ab = new UTask();
-        TypicalTestPersons.loadAddressBookWithSampleData(ab);
+        TypicalTask.loadUTaskWithSampleData(ab);
         return ab;
     }
 

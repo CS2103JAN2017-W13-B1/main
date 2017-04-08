@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import guitests.UTaskGuiTest;
 import guitests.guihandles.TaskCardHandle;
 import utask.commons.core.Messages;
 import utask.testutil.TestTask;

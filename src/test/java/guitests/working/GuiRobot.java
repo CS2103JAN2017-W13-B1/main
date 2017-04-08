@@ -1,4 +1,4 @@
-package guitests;
+package guitests.working;
 
 import org.testfx.api.FxRobot;
 

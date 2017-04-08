@@ -18,7 +18,7 @@ import utask.model.ReadOnlyUTask;
 import utask.model.UTask;
 import utask.model.UserPrefs;
 import utask.testutil.EventsCollector;
-import utask.testutil.TypicalTestPersons;
+import utask.testutil.TypicalTask;
 
 public class StorageManagerTest {
 
@@ -60,7 +60,7 @@ public class StorageManagerTest {
          * {@link XmlAddressBookStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
          */
-        UTask original = new TypicalTestPersons().getTypicalAddressBook();
+        UTask original = new TypicalTask().getTypicalAddressBook();
         storageManager.saveUTask(original);
         ReadOnlyUTask retrieved = storageManager.readUTask().get();
         assertEquals(original, new UTask(retrieved));

@@ -8,11 +8,11 @@ import utask.model.task.UniqueTaskList;
 /**
  *
  */
-public class TypicalTestPersons {
+public class TypicalTask {
 
     public TestTask a, b, c, d, e, f, g, h, i, todo, due;
 
-    public TypicalTestPersons() {
+    public TypicalTask() {
         try {
             a = new TaskBuilder().withName("Ascertain work has been complete")
                     .withFrequency("Every Friday").withTimestamp("011217", "0800 to 2000")
@@ -51,8 +51,8 @@ public class TypicalTestPersons {
         }
     }
 
-    public static void loadAddressBookWithSampleData(UTask ab) {
-        for (TestTask task : new TypicalTestPersons().getTypicalPersons()) {
+    public static void loadUTaskWithSampleData(UTask ab) {
+        for (TestTask task : new TypicalTask().getTypicalTasks()) {
             try {
                 ab.addTask(new EventTask(task));
             } catch (UniqueTaskList.DuplicateTaskException e) {
@@ -61,13 +61,13 @@ public class TypicalTestPersons {
         }
     }
 
-    public TestTask[] getTypicalPersons() {
+    public TestTask[] getTypicalTasks() {
         return new TestTask[]{a, b, c, d, e, f, g};
     }
 
     public UTask getTypicalAddressBook() {
         UTask ab = new UTask();
-        loadAddressBookWithSampleData(ab);
+        loadUTaskWithSampleData(ab);
         return ab;
     }
 }

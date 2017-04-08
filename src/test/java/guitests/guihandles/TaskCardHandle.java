@@ -3,7 +3,7 @@ package guitests.guihandles;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import guitests.GuiRobot;
+import guitests.working.GuiRobot;
 import javafx.scene.Node;
 import javafx.scene.control.Labeled;
 import javafx.scene.layout.Region;

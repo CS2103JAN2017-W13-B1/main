@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import guitests.UTaskGuiTest;
 import utask.ui.CommandBox;
 
 public class CommandBoxTest extends UTaskGuiTest {

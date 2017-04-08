@@ -1,4 +1,4 @@
-package guitests;
+package guitests.working;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,14 +8,13 @@ import utask.model.task.ReadOnlyTask;
 
 public class SelectCommandTest extends UTaskGuiTest {
 
+    @Test
+    public void selectPerson_nonEmptyList() {
 
-//    @Test
-//    public void selectPerson_nonEmptyList() {
-//
-//        assertSelectionInvalid(10); // invalid index
-//        assertNoPersonSelected();
-//
-//        assertSelectionSuccess(1); // first person in the list
+        assertSelectionInvalid(10); // invalid index
+        assertNoTaskSelected();
+
+        //assertSelectionSuccess(1); // first person in the list
 //        int personCount = td.getTypicalPersons().length;
 //        assertSelectionSuccess(personCount); // last person in the list
 //        int middleIndex = personCount / 2;
@@ -23,9 +22,9 @@ public class SelectCommandTest extends UTaskGuiTest {
 //
 //        assertSelectionInvalid(personCount + 1); // invalid index
 //        assertPersonSelected(middleIndex); // assert previous selection remains
-//
-//        /* Testing other invalid indexes such as -1 should be done when testing the SelectCommand */
-//    }
+
+        /* Testing other invalid indexes such as -1 should be done when testing the SelectCommand */
+    }
 
     @Test
     public void selectPerson_emptyList() {
@@ -52,8 +51,9 @@ public class SelectCommandTest extends UTaskGuiTest {
         //TODO: confirm the correct page is loaded in the Browser Panel
     }
 
-    private void assertNoPersonSelected() {
-        assertEquals(todoListPanel.getSelectedTask().size(), 0);
+    private void assertNoTaskSelected() {
+        boolean hasSelection = taskListPanel.hasSelectionInListViews() || todoListPanel.hasSelectionInListView();
+        assert(hasSelection == false);
     }
 
 }

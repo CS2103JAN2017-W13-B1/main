@@ -2,7 +2,6 @@ package guitests.working;
 
 import org.junit.Test;
 
-import guitests.UTaskGuiTest;
 import utask.commons.core.Messages;
 import utask.testutil.TestTask;
 

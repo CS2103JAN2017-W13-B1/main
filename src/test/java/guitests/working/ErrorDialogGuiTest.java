@@ -1,4 +1,4 @@
-package guitests;
+package guitests.working;
 
 import static junit.framework.TestCase.assertTrue;
 

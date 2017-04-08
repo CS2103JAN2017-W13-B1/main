@@ -18,7 +18,7 @@ import utask.model.tag.Tag;
 import utask.model.task.EventTask;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
-import utask.testutil.TypicalTestPersons;
+import utask.testutil.TypicalTask;
 
 public class UTaskTest {
 
@@ -41,14 +41,14 @@ public class UTaskTest {
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        UTask newData = new TypicalTestPersons().getTypicalAddressBook();
+        UTask newData = new TypicalTask().getTypicalAddressBook();
         uTask.resetData(newData);
         assertEquals(newData, uTask);
     }
 
     @Test
     public void resetData_withDuplicatePersons_throwsAssertionError() {
-        TypicalTestPersons td = new TypicalTestPersons();
+        TypicalTask td = new TypicalTask();
         // Repeat td.alice twice
         List<Task> newPersons = Arrays.asList(new EventTask(td.a), new EventTask(td.a));
         List<Tag> newTags = td.a.getTags().asObservableList();
@@ -60,7 +60,7 @@ public class UTaskTest {
 
     @Test
     public void resetData_withDuplicateTags_throwsAssertionError() {
-        UTask typicalAddressBook = new TypicalTestPersons().getTypicalAddressBook();
+        UTask typicalAddressBook = new TypicalTask().getTypicalAddressBook();
         List<ReadOnlyTask> newPersons = typicalAddressBook.getTaskList();
         List<Tag> newTags = new ArrayList<>(typicalAddressBook.getTagList());
         // Repeat the first tag twice

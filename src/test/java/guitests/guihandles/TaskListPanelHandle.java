@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import guitests.GuiRobot;
+import guitests.working.GuiRobot;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -53,6 +53,18 @@ public class TaskListPanelHandle extends GuiHandle {
 
     public ListView<ReadOnlyTask> getFutureListView() {
         return getNode(FUTURE_LIST_VIEW_ID);
+    }
+
+    public boolean hasSelectionInListViews() {
+        ListView<ReadOnlyTask> dueListView = getDueListView();
+        ListView<ReadOnlyTask> todayListView = getTodayListView();
+        ListView<ReadOnlyTask> tomorrowListView = getTomorrowListView();
+        ListView<ReadOnlyTask> futureListView = getFutureListView();
+
+        return !dueListView.getSelectionModel().isEmpty()   ||
+               !todayListView.getSelectionModel().isEmpty() ||
+               !tomorrowListView.getSelectionModel().isEmpty() ||
+               !futureListView.getSelectionModel().isEmpty();
     }
 
     /**

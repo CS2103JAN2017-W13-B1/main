@@ -1,4 +1,4 @@
-package guitests;
+package guitests.working;
 
 import utask.model.UTask;
 import utask.testutil.TestUtil;

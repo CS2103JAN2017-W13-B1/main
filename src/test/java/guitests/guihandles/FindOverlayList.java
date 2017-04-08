@@ -3,7 +3,7 @@ package guitests.guihandles;
 
 import java.util.List;
 
-import guitests.GuiRobot;
+import guitests.working.GuiRobot;
 import javafx.geometry.Point2D;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
