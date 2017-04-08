@@ -87,12 +87,17 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     // @@author A0138493W
     private String getPrettyDate(ReadOnlyTask task) {
         assert task != null;
-        Date deadline = null;
-        deadline = task.getDeadline().getDate();
+        Date deadline = task.getDeadline().getDate();
+
         DateFormat fmt = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         if (fmt.format(deadline).equals(fmt.format(new Date()))) {
             return fmt.format(deadline) + ", today";
         }
+
+        if (task.getTimestamp().hasFrom()) {
+            deadline = task.getTimestamp().getFrom();
+        }
+
         PrettyTime p = new PrettyTime();
         return fmt.format(deadline) + ", " + p.format(deadline);
     }

@@ -87,9 +87,13 @@ public class Timestamp {
     }
 
     private Timestamp() {
-//        this.value = "";
         from = null;
         to = null;
+    }
+
+    private Timestamp(Date from, Date to) {
+        this.from = from;
+        this.to = to;
     }
 
     public static Timestamp getEmptyTimestamp() {
@@ -144,4 +148,28 @@ public class Timestamp {
         return toString().hashCode();
     }
 
+    public Date getFrom() {
+        assert from != null;
+        return from;
+    }
+
+    public boolean hasFrom() {
+        return from != null;
+    }
+
+    public Date getTo() {
+        assert to != null;
+        return to;
+    }
+
+    public static Timestamp getUpdateTimestampWithDeadline(Timestamp timestamp, Deadline deadline) {
+        Date dateComponent = deadline.getDate();
+        Date timeComponentOfFrom = timestamp.getFrom();
+        Date timeComponentOfTo = timestamp.getTo();
+
+        Date updatedFromDate = DateUtil.getDateUsingTimeComponentAndDateComponent(timeComponentOfFrom, dateComponent);
+        Date updatedToDate = DateUtil.getDateUsingTimeComponentAndDateComponent(timeComponentOfTo, dateComponent);
+
+        return new Timestamp(updatedFromDate, updatedToDate);
+    }
 }

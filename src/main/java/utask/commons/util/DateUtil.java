@@ -97,13 +97,16 @@ public class DateUtil {
         assert hhmm != null && !hhmm.isEmpty() && hhmm.length() == 4;
 
         String hh = hhmm.substring(0, 2);
-        String mm = hhmm.substring(3, 4);
+        String mm = hhmm.substring(2, 4);
 
+        System.out.println(mm);
         int hours = Integer.parseInt(hh);
         int minutes = Integer.parseInt(mm);
-
+        System.out.println(minutes);
         date = addHoursToDate(date, hours);
         date = addMinutesToDate(date, minutes);
+        
+        System.out.println(date);
 
         return date;
     }
@@ -136,7 +139,7 @@ public class DateUtil {
     }
 
     public static String getFormattedTime(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         String formattedTime = formatter.format(date);
         return formattedTime;
     }
@@ -145,9 +148,17 @@ public class DateUtil {
         Date now = new Date();
         now = clearTimeInDate(now);
         calendar.setTime(now);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.MONTH, 1);
-        calendar.set(Calendar.YEAR, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 0);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.YEAR, 0);
+        return calendar.getTime();
+    }
+
+    public static Date getDateUsingTimeComponentAndDateComponent(Date time, Date date) {
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, time.getHours());
+        calendar.set(Calendar.MINUTE, time.getMinutes());
+        calendar.set(Calendar.SECOND, time.getSeconds());
         return calendar.getTime();
     }
 }
