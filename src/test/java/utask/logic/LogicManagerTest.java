@@ -37,6 +37,7 @@ import utask.logic.commands.CreateCommand;
 import utask.logic.commands.CreateTagCommand;
 //import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
+import utask.logic.commands.DeleteTagCommand;
 import utask.logic.commands.DoneCommand;
 import utask.logic.commands.ExitCommand;
 import utask.logic.commands.FindCommand;
@@ -394,6 +395,42 @@ public class LogicManagerTest {
                 expectedUT.getTaskList());
     }
 
+    @Test
+    public void execute_deletetag_missingtag() {
+        assertCommandFailure("deletetag", Messages.MESSAGE_TAG_CONSTRAINTS);
+    }
+
+    @Test
+    public void execute_deletag_successful() throws CommandException, IllegalValueException {
+        String tagName = " school";
+        String color = "red";
+        UTask expectedUT = new UTask();
+        Tag deletedTag = new Tag(new TagName(tagName), new TagColorIndex(color));
+        expectedUT.addTag(deletedTag);
+        logic.execute("createtag" + tagName + " /color " + color);
+        logic.execute("deletetag" + tagName);
+        int index = 1;
+        assertCommandSuccess("undo " + index,
+                String.format(UndoCommand.MESSAGE_UNDO_SUCCESS, index), expectedUT,
+                expectedUT.getTaskList());
+        assertCommandSuccess("redo " + index,
+                String.format(RedoCommand.MESSAGE_REDO_SUCCESS, index), new UTask(),
+                Collections.emptyList());
+    }
+
+    @Test
+    public void execute_undoredo_deleteTagSuccessful() throws CommandException, IllegalValueException {
+        String tagName = " school";
+        String color = "red";
+        UTask expectedUT = new UTask();
+        Tag deletedTag = new Tag(new TagName(tagName), new TagColorIndex(color));
+        expectedUT.addTag(deletedTag);
+        logic.execute("createtag" + tagName + " /color " + color);
+        logic.execute("deletetag" + tagName);
+        assertCommandSuccess("deletetag" + tagName,
+                String.format(DeleteTagCommand.MESSAGE_SUCCESS, tagName), new UTask(),
+                Collections.emptyList());
+    }
     //@@ author
 
     @Test
