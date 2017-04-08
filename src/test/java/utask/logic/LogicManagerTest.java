@@ -538,7 +538,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_update_success() throws Exception {
+    public void execute_update_eventTaskSuccess() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Task tobeAdded = helper.generateEventTaskWithSeed(1);
         Task expectedTask = helper.generateEventTaskWithSeed(2);
@@ -547,6 +547,36 @@ public class LogicManagerTest {
         expectedUT.addTask(expectedTask);
         helper.addToModel(model, oneTask);
         assertCommandSuccess("update 1 /name Task 2 /by 010120 /from 0000 to 2359"
+                + " /repeat Every 2 /status incomplete",
+                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
+                expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_update_deadlineTaskSuccess() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task tobeAdded = helper.generateDeadlineTaskWithSeed(1);
+        Task expectedTask = helper.generateDeadlineTaskWithSeed(2);
+        List<Task> oneTask = helper.generateTaskList(tobeAdded);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(expectedTask);
+        helper.addToModel(model, oneTask);
+        assertCommandSuccess("update 1 /name Task 2 /by 010120"
+                + " /repeat Every 2 /status incomplete",
+                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
+                expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_update_floatingTaskSuccess() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task tobeAdded = helper.generateFloatingTaskWithSeed(1);
+        Task expectedTask = helper.generateFloatingTaskWithSeed(2);
+        List<Task> oneTask = helper.generateTaskList(tobeAdded);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(expectedTask);
+        helper.addToModel(model, oneTask);
+        assertCommandSuccess("update 1 /name Task 2"
                 + " /repeat Every 2 /status incomplete",
                 String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
                 expectedUT.getTaskList());
@@ -566,7 +596,6 @@ public class LogicManagerTest {
 
         assertCommandSuccess("list", ListCommand.MESSAGE_SUCCESS, expectedUT,
                 expectedList);
-
     }
 
     /**
