@@ -6,8 +6,8 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlElement;
 
 import utask.commons.exceptions.IllegalValueException;
-import utask.model.task.abs.AbsDeadline;
 import utask.commons.util.DateUtil;
+import utask.model.task.abs.AbsDeadline;
 
 /**
  * Represents a Task's deadline in the UTask. Guarantees: immutable; is valid as
