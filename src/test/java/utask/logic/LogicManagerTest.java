@@ -40,6 +40,7 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
+import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.Model;
@@ -195,6 +196,13 @@ public class LogicManagerTest {
 
     //@@ author A0138493W
     @Test
+    public void execute_alias_invalidAliasFormat() {
+        String invalidAlias = "%$#@";
+        assertCommandFailure("alias " + invalidAlias + " /as create" ,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void execute_alias_commandWordNotExist() {
         String notExistCommandword = "lalaland";
         assertCommandFailure("alias a /as " + notExistCommandword,
@@ -223,6 +231,27 @@ public class LogicManagerTest {
         assertCommandFailure(unknownCommand, MESSAGE_UNKNOWN_COMMAND);
     }
 
+    @Test
+    public void execute_alias_invalidUnaliasFormat() {
+        String invalidAlias = "$%#^";
+        assertCommandFailure("unalias " + invalidAlias,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void execute_unAlias_aliasNotExist() {
+        String alias = "c";
+        assertCommandFailure("unalias " + alias, String.format(UnaliasCommand.MESSAGE_ALIAS_NOT_EXIST, alias));
+    }
+
+    @Test
+    public void execute_unAlias_successful() throws CommandException {
+        String alias = "c";
+        logic.execute("alias c /as create");
+        assertCommandSuccess("unalias " + alias,
+                String.format(UnaliasCommand.MESSAGE_UNALIAS_SUCCESS, alias),
+                new UTask(), Collections.emptyList());
+    }
     //@@ author
 
     @Test
@@ -249,6 +278,7 @@ public class LogicManagerTest {
                 Collections.emptyList());
     }
 
+    //@@ author A0138493W
     @Test
     public void execute_clear_byAlias() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -276,6 +306,7 @@ public class LogicManagerTest {
         logic.execute("createtag " + tagName + " /color " + color);
         assertCommandFailure("createtag " + tagName + " /color " + color, CreateTagCommand.MESSAGE_DUPLICATE_TAG);
     }
+    //@@ author
 
     @Test
     public void execute_add_invalidTaskData() {

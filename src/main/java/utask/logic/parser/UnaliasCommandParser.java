@@ -25,6 +25,6 @@ public class UnaliasCommandParser {
             return new UnaliasCommand(aliasMap, args.trim());
         }
         return new IncorrectCommand(
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
     }
 }
