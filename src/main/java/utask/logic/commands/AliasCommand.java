@@ -42,7 +42,7 @@ public class AliasCommand extends Command {
         try {
             aliasMap.setAlias(alias, defaultCommandWord);
         } catch (IllegalValueException e) {
-            throw new CommandException(String.format(MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND, defaultCommandWord));
+            throw new CommandException(String.format(MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND, alias));
         }
         UserPrefs userPrefs = model.getUserPrefs();
         userPrefs.aliasMap = aliasMap.getAliasMap();

@@ -28,8 +28,10 @@ import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.commons.exceptions.IllegalValueException;
+import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CommandResult;
+import utask.logic.commands.CreateCommand;
 //import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.ExitCommand;
@@ -40,6 +42,7 @@ import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.exceptions.CommandException;
+import utask.model.AliasCommandMap;
 import utask.model.Model;
 import utask.model.ModelManager;
 import utask.model.ReadOnlyUTask;
@@ -70,6 +73,7 @@ public class LogicManagerTest {
 
     private Model model;
     private Logic logic;
+    private AliasCommandMap aliasMap;
 
     // These are for checking the correctness of the events raised
     private ReadOnlyUTask latestSavedUTask;
@@ -100,6 +104,8 @@ public class LogicManagerTest {
                 + "TempPreferences.json";
         logic = new LogicManager(model,
                 new StorageManager(tempAddressBookFile, tempPreferencesFile));
+        AliasCommandMap.getInstance().setAliasCommandMap(model.getUserPrefs().getAliasMap());
+        aliasMap = AliasCommandMap.getInstance();
         EventsCenter.getInstance().registerHandler(this);
 
         latestSavedUTask = new UTask(model.getUTask()); // last
@@ -142,18 +148,18 @@ public class LogicManagerTest {
 
     /**
      * Executes the command, confirms that a CommandException is thrown and that
-     * the result message is correct. Both the 'address book' and the 'last
+     * the result message is correct. Both the 'UTask' and the 'last
      * shown list' are verified to be unchanged.
      *
      * @see #assertCommandBehavior(boolean, String, String, ReadOnlyUTask, List)
      */
     private void assertCommandFailure(String inputCommand,
             String expectedMessage) {
-        UTask expectedAddressBook = new UTask(model.getUTask());
+        UTask expectedUTask = new UTask(model.getUTask());
         List<ReadOnlyTask> expectedShownList = new ArrayList<>(
                 model.getFilteredTaskList());
         assertCommandBehavior(true, inputCommand, expectedMessage,
-                expectedAddressBook, expectedShownList);
+                expectedUTask, expectedShownList);
     }
 
     /**
@@ -190,11 +196,37 @@ public class LogicManagerTest {
         assertEquals(expectedUTask, latestSavedUTask);
     }
 
+    //@@ author A0138493W
+    @Test
+    public void execute_alias_commandWordNotExist() {
+        String notExistCommandword = "lalaland";
+        assertCommandFailure("alias a /as " + notExistCommandword,
+                String.format(AliasCommand.MESSAGE_COMMAND_WORD_NOT_EXIST, notExistCommandword));
+    }
+
+    @Test
+    public void execute_alias_aliasCannotBeDefaultCommandWord() {
+        String defaultCommandword = "create";
+        assertCommandFailure("alias " + defaultCommandword + " /as clear",
+                String.format(AliasCommand.MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND, defaultCommandword));
+    }
+
+    @Test
+    public void execute_alias_successful() {
+        String alias = "c";
+        String defaultCommand = "create";
+        assertCommandSuccess("alias " + alias + " /as " + defaultCommand,
+                String.format(AliasCommand.MESSAGE_CREATE_ALIAS_SUCCESS, alias, defaultCommand),
+                new UTask(), Collections.emptyList());
+    }
+
     @Test
     public void execute_unknownCommandWord() {
         String unknownCommand = "uicfhmowqewca";
         assertCommandFailure(unknownCommand, MESSAGE_UNKNOWN_COMMAND);
     }
+
+    //@@ author
 
     @Test
     public void execute_help() {
