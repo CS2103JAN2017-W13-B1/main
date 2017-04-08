@@ -94,7 +94,7 @@ public class UpdateCommandParser {
         editTaskDescriptor.setDeadline(ParserUtil
                 .parseDeadline(argsTokenizer.getValue(PREFIX_DEADLINE)));
         editTaskDescriptor.setTimeStamp(ParserUtil
-                .parseTimestamp(argsTokenizer.getValue(PREFIX_TIMESTAMP)));
+                .parseTimestamp(argsTokenizer.getValue(PREFIX_DEADLINE), argsTokenizer.getValue(PREFIX_TIMESTAMP)));
         editTaskDescriptor.setTags(parseTagsForEdit(
                 ParserUtil.toSet(argsTokenizer.getAllValues(PREFIX_TAG))));
         editTaskDescriptor.setFrequency(ParserUtil

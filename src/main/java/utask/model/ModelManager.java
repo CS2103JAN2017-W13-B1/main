@@ -1,6 +1,5 @@
 package utask.model;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -440,8 +439,8 @@ public class ModelManager extends ComponentManager implements Model {
         public boolean run(ReadOnlyTask task) {
             return nameKeyWords.stream()
                     .filter(keyword -> StringUtil.containsWordIgnoreCase(task.getName().fullName, keyword)
-                            || StringUtil.containsWordIgnoreCase(task.getDeadline().value, keyword)
-                            || StringUtil.containsWordIgnoreCase(task.getTimestamp().value, keyword)
+                            || StringUtil.containsWordIgnoreCase(task.getDeadline().toString(), keyword)
+                            || StringUtil.containsWordIgnoreCase(task.getTimestamp().toString(), keyword)
                             || StringUtil.containsWordIgnoreCase(task.getFrequency().value, keyword)
                             || StringUtil.containsWordIgnoreCase(task.getStatus().toString(), keyword)
                             || StringUtil.containsWordIgnoreCase(task.getTags().getAllTagNames(), keyword))
@@ -471,18 +470,12 @@ public class ModelManager extends ComponentManager implements Model {
                 return false;
             }
 
-            try {
-                Date taskDate = task.getDeadline().getDate();
+            Date taskDate = task.getDeadline().getDate();
 
-                return taskDate.getYear() == date.getYear()
-                        && taskDate.getMonth() == date.getMonth()
-                        && taskDate.getDate() == date.getDate()
-                        && !task.getStatus().isStatusComplete();
-            } catch (ParseException e) {
-                assert false : "Date is in wrong format";
-            }
-
-            return false;
+            return taskDate.getYear() == date.getYear()
+                    && taskDate.getMonth() == date.getMonth()
+                    && taskDate.getDate() == date.getDate()
+                    && !task.getStatus().isStatusComplete();
         }
 
         @Override
@@ -505,13 +498,8 @@ public class ModelManager extends ComponentManager implements Model {
                 return false;
             }
 
-            try {
-                return task.getDeadline().getDate().before(date)
-                        && !task.getStatus().isStatusComplete();
-            } catch (ParseException e) {
-                assert false : "Date is in wrong format";
-            }
-            return false;
+            return task.getDeadline().getDate().before(date)
+                    && !task.getStatus().isStatusComplete();
         }
 
         @Override
@@ -535,14 +523,8 @@ public class ModelManager extends ComponentManager implements Model {
                 return false;
             }
 
-            try {
-                return task.getDeadline().getDate().after(date)
-                        && !task.getStatus().isStatusComplete();
-            } catch (ParseException e) {
-                assert false : "Date is in wrong format";
-            }
-
-            return false;
+            return task.getDeadline().getDate().after(date)
+                    && !task.getStatus().isStatusComplete();
         }
 
         @Override

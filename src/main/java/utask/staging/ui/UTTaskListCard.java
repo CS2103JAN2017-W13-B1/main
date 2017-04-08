@@ -1,7 +1,6 @@
 package utask.staging.ui;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -23,6 +22,7 @@ import utask.model.tag.UniqueTagList;
 import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.helper.TagColorHelper;
 
+//@@author A0139996A
 public class UTTaskListCard extends StagingUiPart<Region> {
     public static final double CARD_HEIGHT = 102.0;
     private static final String FXML = "UTTaskListCard.fxml";
@@ -78,7 +78,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         }
 
         if (!task.getTimestamp().isEmpty()) {
-            sb.append(", " + task.getTimestamp().value);
+            sb.append(", " + task.getTimestamp().toString());
         }
 
         return sb.toString();
@@ -87,16 +87,17 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     // @@author A0138493W
     private String getPrettyDate(ReadOnlyTask task) {
         assert task != null;
-        Date deadline = null;
-        try {
-            deadline = task.getDeadline().getDate();
-        } catch (ParseException e) {
-            assert false : "Should never have parse error, regex should check input";
-        }
+        Date deadline = task.getDeadline().getDate();
+
         DateFormat fmt = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         if (fmt.format(deadline).equals(fmt.format(new Date()))) {
             return fmt.format(deadline) + ", today";
         }
+
+        if (task.getTimestamp().hasFrom()) {
+            deadline = task.getTimestamp().getFrom();
+        }
+
         PrettyTime p = new PrettyTime();
         return fmt.format(deadline) + ", " + p.format(deadline);
     }
@@ -111,6 +112,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
             hbTagContainer.getChildren().add(label);
         }
     }
+    // @@author
 
     private Label createLabel(String name, int colorIndex) {
         Label label = new Label(name);
@@ -120,15 +122,12 @@ public class UTTaskListCard extends StagingUiPart<Region> {
 
     private void addStylingPropertiesToLabel(Label label, int colorIndex) {
         label.setAlignment(Pos.CENTER);
-        ;
         label.setTextAlignment(TextAlignment.CENTER);
         label.setTextOverrun(OverrunStyle.CLIP);
         label.setMinWidth(15.0);
-        label.setStyle(String.format(LABEL_CSS,
-                TagColorHelper.getColorValueFromIndex(colorIndex)));
+        label.setStyle(String.format(LABEL_CSS, TagColorHelper.getColorValueFromIndex(colorIndex)));
         HBox.setMargin(label, new Insets(5, 5, 5, 0));
     }
-    // @@author
 
     public void addStylingProperitesOnCompletion() {
         boolean isComplete = task.getStatus().isStatusComplete();

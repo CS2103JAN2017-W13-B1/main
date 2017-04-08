@@ -176,7 +176,7 @@ public class Parser {
     private String getDefaultCommand (String alias) throws IllegalValueException {
         assert alias != null && !alias.isEmpty();
         if (!aliasMap.isAliasExist(alias)) {
-            throw new IllegalValueException("The entered alias does not exist");
+            throw new IllegalValueException(MESSAGE_UNKNOWN_COMMAND);
         }
         return aliasMap.getMappedCommand(alias);
     }

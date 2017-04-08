@@ -33,7 +33,7 @@ public class TypicalTaskBuilder {
 
         try {
             DeadlineTask f = new DeadlineTask(new Name("Help Alice with MSWord"), new Deadline("010417"), Frequency.getEmptyFrequency(), new UniqueTagList("Asap"), new Status("complete"));
-            EventTask e = new EventTask(new Name("Dinner with friends"), new Deadline("010417"), new Timestamp("1730 to 2200"), new Frequency("Every Monday"), new UniqueTagList("Life", "NonWork"), new Status("complete"));
+            EventTask e = new EventTask(new Name("Dinner with friends"), new Deadline("010417"), new Timestamp("010417", "1730 to 2200"), new Frequency("Every Monday"), new UniqueTagList("Life", "NonWork"), new Status("complete"));
             tasks.add(f);
             tasks.add(e);
         } catch (IllegalValueException e) {

@@ -1,12 +1,13 @@
 package utask.model.task;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.xml.bind.annotation.XmlElement;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.model.task.abs.AbsDeadline;
+import utask.commons.util.DateUtil;
 
 /**
  * Represents a Task's deadline in the UTask. Guarantees: immutable; is valid as
@@ -19,7 +20,9 @@ public class Deadline extends AbsDeadline {
             + "31(?!(?:0[2469]|11))|30(?!02))(0[1-9]|1[0-2])([1-2]\\d{1})";
     public static final String DEADLINE_REMOVAL_VALIDATION_REGEX = "^[-]$";
 
-    public final String value;
+    //Denotes that this will be the attribute we are interested to serialise in this class
+    @XmlElement
+    private final Date date;
 
     /**
      * Validates given deadline.
@@ -28,16 +31,25 @@ public class Deadline extends AbsDeadline {
      *             if given deadline string is invalid.
      */
     public Deadline(String deadline) throws IllegalValueException {
-        assert deadline != null;
+        assert deadline != null && !deadline.isEmpty();
         String trimmedDeadline = deadline.trim();
         if (!isValidDeadline(trimmedDeadline)) {
             throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
         }
-        this.value = trimmedDeadline;
+
+        if (deadline.equals("-")) {
+            date = null;
+        } else {
+            date = DateUtil.parseStringToDate(deadline).get();
+        }
+    }
+
+    public Deadline(Date date) {
+        this.date = date;
     }
 
     private Deadline() {
-        this.value = "";
+        date = null;
     }
 
     public static Deadline getEmptyDeadline() {
@@ -45,7 +57,7 @@ public class Deadline extends AbsDeadline {
     }
 
     public boolean isEmpty() {
-        return "".equals(value);
+        return (date == null);
     }
 
     // @@author A0138493W
@@ -55,13 +67,13 @@ public class Deadline extends AbsDeadline {
      * @return date
      * @throws ParseException
      */
-    public Date getDate() throws ParseException {
-        assert value != null;
+    public Date getDate() {
+        assert date != null;
 
-        DateFormat fmt = new SimpleDateFormat("ddMMyyyy");
-        StringBuilder dateString = new StringBuilder(value);
-        dateString.insert(4, "20");
-        Date date = fmt.parse(dateString.toString());
+//        DateFormat fmt = new SimpleDateFormat("ddMMyyyy");
+//        StringBuilder dateString = new StringBuilder(value);
+//        dateString.insert(4, "20");
+//        Date date = fmt.parse(dateString.toString());
         return date;
     }
 
@@ -72,24 +84,31 @@ public class Deadline extends AbsDeadline {
      */
     public static boolean isValidDeadline(String test) {
         return (test.matches(DEADLINE_VALIDATION_REGEX)
-                || test.matches(DEADLINE_REMOVAL_VALIDATION_REGEX));
+                || test.matches(DEADLINE_REMOVAL_VALIDATION_REGEX)
+                || DateUtil.isWordAValidDate(test));
     }
 
     @Override
     public String toString() {
-        return value;
+        if (date == null) {
+            return "";
+        }
+
+        return date.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Deadline // instanceof handles nulls
-                        && this.value.equals(((Deadline) other).value));
+                        && this.toString().equals(((Deadline) other).toString()));
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        if (date == null) {
+            return "".hashCode();
+        }
+        return date.hashCode();
     }
-
 }

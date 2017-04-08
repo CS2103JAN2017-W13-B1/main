@@ -75,19 +75,20 @@ public class TestUtil {
                 String.format("Expected %s to be thrown, but nothing was thrown.", expected.getName()));
     }
 
+    //TODO!!!
     private static Task[] getSampleTaskData() {
         try {
             //CHECKSTYLE.OFF: LineLength
             return new Task[]{
-                new EventTask(new Name("Sample Task A"), new Deadline("010117"), new Timestamp("0000 to 2359"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
-                new EventTask(new Name("Sample Task B"), new Deadline("010217"), new Timestamp("0800 to 1200"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
-                new EventTask(new Name("Sample Task C"), new Deadline("010317"), new Timestamp("1200 to 1300"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
-                new EventTask(new Name("Sample Task D"), new Deadline("010417"), new Timestamp("1600 to 1800"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
-                new EventTask(new Name("Sample Task E"), new Deadline("010517"), new Timestamp("1800 to 1830"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
-                new EventTask(new Name("Sample Task F"), new Deadline("010617"), new Timestamp("1800 to 1815"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
-                new EventTask(new Name("Sample Task G"), new Deadline("010717"), new Timestamp("2000 to 2300"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
-                new EventTask(new Name("Sample Task H"), new Deadline("010817"), new Timestamp("1500 to 1530"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
-                new EventTask(new Name("Sample Task I"), new Deadline("010917"), new Timestamp("0600 to 0800"), new Frequency("-"), new UniqueTagList(), new Status("incomplete"))
+                new EventTask(new Name("Sample Task A"), new Deadline("010117"), new Timestamp("010117", "0000 to 2359"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task B"), new Deadline("010217"), new Timestamp("010217", "0800 to 1200"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task C"), new Deadline("010317"), new Timestamp("010317", "1200 to 1300"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task D"), new Deadline("010417"), new Timestamp("010417", "1600 to 1800"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task E"), new Deadline("010517"), new Timestamp("010517", "1800 to 1830"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task F"), new Deadline("010617"), new Timestamp("010617", "1800 to 1815"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task G"), new Deadline("010717"), new Timestamp("010717", "2000 to 2300"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task H"), new Deadline("010817"), new Timestamp("010817", "1500 to 1530"), new Frequency("-"), new UniqueTagList(), new Status("incomplete")),
+                new EventTask(new Name("Sample Task I"), new Deadline("010917"), new Timestamp("010917", "0600 to 0800"), new Frequency("-"), new UniqueTagList(), new Status("incomplete"))
             };
             //CHECKSTYLE.ON: LineLength
         } catch (IllegalValueException e) {
