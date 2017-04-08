@@ -354,7 +354,8 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_undoredo_createTagSuccessful() throws CommandException, DuplicateTagException, IllegalValueException {
+    public void execute_undoredo_createTagSuccessful()
+            throws CommandException, DuplicateTagException, IllegalValueException {
         String tagName = "school";
         String color = "red";
         UTask expectedUT = new UTask();
