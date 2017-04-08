@@ -2,11 +2,7 @@ package guitests;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
 import guitests.guihandles.PersonCardHandle;
-import utask.commons.core.Messages;
-import utask.logic.commands.CreateCommand;
 import utask.testutil.TestTask;
 import utask.testutil.TestUtil;
 

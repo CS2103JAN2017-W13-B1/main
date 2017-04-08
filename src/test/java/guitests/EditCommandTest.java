@@ -10,7 +10,6 @@ import utask.logic.commands.UpdateCommand;
 import utask.model.tag.TagName;
 import utask.model.task.Deadline;
 import utask.model.task.Name;
-import utask.testutil.TaskBuilder;
 import utask.testutil.TestTask;
 
 // TODO: reduce GUI tests by transferring some tests to be covered by lower level tests.
