@@ -55,4 +55,24 @@ public class TimestampTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void validTimestampConstructor() throws IllegalValueException {
+        Timestamp t = new Timestamp("1200 to 1500"); // valid constructor
+        String valueOfT = t.toString();
+        assertTrue(Timestamp.isValidTimestamp(valueOfT)); //checking String of valid Timestamp
+    }
+
+    @Test
+    public void removeTimestampConstructor() throws IllegalValueException {
+        Timestamp t = new Timestamp("-");
+        thrown.expect(AssertionError.class); // constructor with dash only
+        assertEquals(null, t.getFrom()); //checking toString() value when Timestamp is Null
+        assertEquals(null, t.getTo()); //checking toString() value when Timestamp is Null
+    }
+
+    @Test(expected = IllegalValueException.class)
+    public void invalidTimestampConstructor() throws IllegalValueException {
+        Timestamp t = new Timestamp("#$%^&*"); // constructor with random symbols
+    }
 }

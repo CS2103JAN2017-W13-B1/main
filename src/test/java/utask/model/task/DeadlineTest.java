@@ -4,11 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import utask.commons.exceptions.IllegalValueException;
 //@@author A0138423J
 public class DeadlineTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void isValidDeadline() {
@@ -26,17 +30,20 @@ public class DeadlineTest {
     }
 
     @Test
-    public void testConstructor() {
-        final String value = "-";
-        Deadline d;
-        try {
-            d = new Deadline(value); // constructor with dash only
-            assertEquals(d.toString(), ""); //checking toString() value when Deadline is Null
+    public void validDeadlineConstructor() throws IllegalValueException {
+        Deadline d = Deadline.getEmptyDeadline(); // empty constructor
+        assertEquals(d.hashCode(), "".hashCode()); //checking hashCode when Deadline is Null
+    }
 
-            d = Deadline.getEmptyDeadline(); // empty constructor
-            assertEquals(d.hashCode(), "".hashCode()); //checking hashCode when Deadline is Null
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
+    @Test
+    public void removeDeadlineConstructor() throws IllegalValueException {
+        String value = "-";
+        Deadline d = new Deadline(value); // constructor with dash only
+        assertEquals(d.toString(), ""); //checking toString() value when Deadline is Null
+    }
+
+    @Test(expected = IllegalValueException.class)
+    public void invalidDeadlineConstructor() throws IllegalValueException {
+        Deadline d = new Deadline("$%^&*("); // constructor with random symbols
     }
 }

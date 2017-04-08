@@ -33,7 +33,7 @@ public class Status {
         assert input != null;
         String trimmedName = input.trim();
         if (!isValidBoolean(trimmedName)) {
-            assert false : "Illegal Value!";
+//            assert false : "Illegal Value!";
             throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
         }
         this.value = checkValue(input);

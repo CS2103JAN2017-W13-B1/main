@@ -22,8 +22,9 @@ public class StatusTest {
         assertFalse(Status.isValidBoolean(" ")); // spaces only
 
         // missing parts
-        assertFalse(Status.isValidBoolean("COMPLE")); // Upper case with incomplete
-                                                   // spelling
+        assertFalse(Status.isValidBoolean("COMPLE")); // Upper case with
+                                                      // incomplete
+                                                      // spelling
         assertFalse(Status.isValidBoolean("incompl")); // Lower case with
                                                        // incomplete spelling
 
@@ -39,20 +40,16 @@ public class StatusTest {
     }
 
     @Test
-    public void testConstructor() {
-        thrown.expect(AssertionError.class);
-        final String value = "-";
-        final String value2 = "Complete";
-        Status d;
-        try {
-            d = new Status(value); // constructor with dash only
-            assertEquals(d.toString(), ""); //checking toString() value when Deadline is Null
-
-            d = new Status(value2);
-            assertEquals(d.toString(), value2); //checking toString() value when Deadline is Null
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
+    public void validStatusConstructor() throws IllegalValueException {
+        String value = "Complete";
+        Status s = new Status(value);
+        assertEquals(s.toString(), value);
     }
 
+    @Test(expected = IllegalValueException.class)
+    public void invalidStatusConstructor() throws IllegalValueException {
+        String value = "-";
+        Status s = new Status(value);
+        assertEquals(s.toString(), "");
+    }
 }

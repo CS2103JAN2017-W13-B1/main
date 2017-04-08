@@ -47,7 +47,6 @@ public class Timestamp {
 
         String trimmedTimestamp = timestamp.trim();
         if (!isValidTimestamp(trimmedTimestamp)) {
-            assert false : "Illegal Value!";
             throw new IllegalValueException(MESSAGE_TIMESTAMP_CONSTRAINTS);
         }
 
