@@ -140,7 +140,7 @@ public class DateUtil {
     }
 
     public static String getFormattedTime(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
+        SimpleDateFormat formatter = new SimpleDateFormat("hhmm");
         String formattedTime = formatter.format(date);
         return formattedTime;
     }

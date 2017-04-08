@@ -711,6 +711,21 @@ public class LogicManagerTest {
                 expectedUT.getTaskList());
     }
 
+    @Test
+    public void execute_update_fromDeadlineToEvent() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task tobeAdded = helper.generateDeadlineTaskWithSeed(1);
+        Task expectedTask = helper.generateEventTaskWithSeed(2);
+        List<Task> oneTask = helper.generateTaskList(tobeAdded);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(expectedTask);
+        helper.addToModel(model, oneTask);
+        assertCommandSuccess("update 1 /name Task 2 /from 0000 to 2359"
+                + " /repeat Every 2 /status incomplete",
+                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
+                expectedUT.getTaskList());
+    }
+
     // @@author
 
     @Test
@@ -780,12 +795,6 @@ public class LogicManagerTest {
                 SelectCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("select", expectedMessage);
     }
-
-    // @Test
-    // public void executeSelectIndexNotFoundErrorMessageShown()
-    // throws Exception {
-    // assertIndexNotFoundBehaviorForCommand("select");
-    // }
 
     // @@author A0138493W
     @Test
