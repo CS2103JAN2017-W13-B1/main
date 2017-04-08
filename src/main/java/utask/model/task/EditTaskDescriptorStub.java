@@ -5,7 +5,7 @@ import java.util.Optional;
 import utask.model.tag.UniqueTagList;
 
 //@@author A0138423J
-public class EditTaskDescriptorStub extends EditTaskInformation {
+public class EditTaskDescriptorStub extends AbsEditTaskDescriptor {
 
     @Override
     public boolean isAnyFieldEdited() {

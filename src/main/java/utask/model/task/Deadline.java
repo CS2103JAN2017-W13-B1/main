@@ -11,7 +11,7 @@ import utask.commons.exceptions.IllegalValueException;
  * Represents a Task's deadline in the UTask. Guarantees: immutable; is valid as
  * declared in {@link #isValidDeadline(String)}
  */
-public class Deadline {
+public class Deadline extends AbsDeadline {
 
     public static final String MESSAGE_DEADLINE_CONSTRAINTS = "Deadline for tasks should in format DDMMYY";
     public static final String DEADLINE_VALIDATION_REGEX = "^(0[1-9]|[1-2][0-9]|"

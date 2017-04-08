@@ -5,7 +5,7 @@ import java.util.Optional;
 import utask.model.tag.UniqueTagList;
 
 //@@author A0138423J
-public abstract class EditTaskInformation {
+public abstract class AbsEditTaskDescriptor {
 
     protected Optional<Name> name = Optional.empty();
     protected Optional<Deadline> deadLine = Optional.empty();
@@ -14,7 +14,7 @@ public abstract class EditTaskInformation {
     protected Optional<UniqueTagList> tags = Optional.empty();
     protected Optional<Status> status = Optional.empty();
 
-    public EditTaskInformation() {
+    public AbsEditTaskDescriptor() {
         super();
     }
 

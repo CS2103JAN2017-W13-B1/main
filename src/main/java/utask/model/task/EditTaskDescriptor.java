@@ -6,7 +6,7 @@ import utask.commons.util.CollectionUtil;
 import utask.model.tag.UniqueTagList;
 
 //@@author A0138423J
-public class EditTaskDescriptor extends EditTaskInformation {
+public class EditTaskDescriptor extends AbsEditTaskDescriptor {
     public EditTaskDescriptor() {
     }
 
