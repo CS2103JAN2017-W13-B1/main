@@ -68,7 +68,6 @@ public abstract class UTaskGuiTest {
 
     @Before
     public void setup() throws Exception {
-        //FxToolkit.hideStage();
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
@@ -89,7 +88,6 @@ public abstract class UTaskGuiTest {
     @After
     public void cleanup() throws TimeoutException {
         FxToolkit.cleanupStages();
-        //FxToolkit.hideStage();
     }
 
     /**
@@ -120,8 +118,8 @@ public abstract class UTaskGuiTest {
      * Asserts the size of the person list is equal to the given number.
      */
     protected void assertListSize(int size) {
-        int numberOfPeople = todoListPanel.getNumberOfPeople();
-        assertEquals(size, numberOfPeople);
+        int numberOfTask = todoListPanel.getNumberOfPeople();
+        assertEquals(size, numberOfTask);
     }
 
     /**

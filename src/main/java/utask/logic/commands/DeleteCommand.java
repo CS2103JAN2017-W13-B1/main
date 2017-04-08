@@ -38,6 +38,7 @@ public class DeleteCommand extends Command implements ReversibleCommand {
     public CommandResult execute() throws CommandException {
 
         for (int targetIndex : targetList) {
+            System.out.println("DETELTEINGING " + targetIndex);
             checkIfGivenIndexIsValid(targetIndex);
             taskToDelete = getTaskToDelete(targetIndex);
 
