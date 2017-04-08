@@ -20,12 +20,12 @@ import utask.commons.core.EventsCenter;
 import utask.model.tag.Tag;
 import utask.model.tag.UniqueTagList;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.helper.TagColorHelper;
+import utask.ui.helper.TagColorHelper;
 
 //@@author A0139996A
 public class TaskListCard extends UiPart<Region> {
     public static final double CARD_HEIGHT = 102.0;
-    private static final String FXML = "UTTaskListCard.fxml";
+    private static final String FXML = "TaskListCard.fxml";
     private static final String LABEL_CSS = "-fx-padding: 1 3 1 3; -fx-text-fill: WHITE; -fx-background-color: %s;";
     private static final String LABEL_STRIKETHROUGH_STYLE = "label-text-done";
 

@@ -1,4 +1,4 @@
-package utask.staging.ui.helper;
+package utask.ui.helper;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

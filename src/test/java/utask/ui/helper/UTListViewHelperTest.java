@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.helper.UTListView;
-import utask.staging.ui.helper.UTListViewHelper;
 
 public class UTListViewHelperTest {
     @Rule

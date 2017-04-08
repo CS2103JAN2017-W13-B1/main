@@ -15,7 +15,7 @@ import utask.commons.util.FxViewUtil;
 
 public class StatusBarFooter extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
-    private static final String FXML = "UTStatusBarFooter.fxml";
+    private static final String FXML = "StatusBarFooter.fxml";
 
     @FXML
     private Label syncStatus;

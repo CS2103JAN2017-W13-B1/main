@@ -40,7 +40,7 @@ import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.UpdateTagCommand;
 import utask.model.AliasCommandMap;
-import utask.staging.ui.helper.SuggestionHelper;
+import utask.ui.helper.SuggestionHelper;
 
 /**
  * Parses user input.

@@ -3,7 +3,7 @@ package utask.model.tag;
 import java.util.Objects;
 
 import utask.commons.util.CollectionUtil;
-import utask.staging.ui.helper.TagColorHelper;
+import utask.ui.helper.TagColorHelper;
 
 // @@author A0138423J
 /**

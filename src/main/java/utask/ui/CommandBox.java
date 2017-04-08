@@ -22,11 +22,11 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.logic.commands.CommandResult;
 import utask.logic.commands.exceptions.CommandException;
-import utask.staging.ui.helper.SuggestionHelper;
+import utask.ui.helper.SuggestionHelper;
 
 public class CommandBox extends UiPart<Region> {
 
-    private static final String FXML = "UTCommandBox.fxml";
+    private static final String FXML = "CommandBox.fxml";
     public static final String ERROR_TEXTFIELD_STYLE_CLASS = "command-textfield-error";
     public static final String ERROR_SUGGESTION_STYLE_CLASS = "suggestion-error";
 

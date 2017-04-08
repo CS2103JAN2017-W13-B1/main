@@ -20,7 +20,7 @@ import utask.commons.util.FxViewUtil;
 public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
-    private static final String FXML = "UTResultDisplay.fxml";
+    private static final String FXML = "ResultDisplay.fxml";
 
     private final StringProperty displayed = new SimpleStringProperty("");
 

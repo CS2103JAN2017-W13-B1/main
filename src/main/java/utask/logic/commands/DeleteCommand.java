@@ -9,7 +9,7 @@ import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
-import utask.staging.ui.helper.DelayedExecution;
+import utask.ui.helper.DelayedExecution;
 
 /**
  * Deletes a task identified using it's last displayed index from the uTask.

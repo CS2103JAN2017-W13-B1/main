@@ -32,7 +32,7 @@ import utask.model.task.ReadOnlyTask;
 public class FindTaskOverlay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(FindTaskOverlay.class);
-    private static final String FXML = "UTFindTaskOverlay.fxml";
+    private static final String FXML = "FindTaskOverlay.fxml";
 
     private static final int SEARCHPANE_HIDDEN_X_POS = -3000;
     private final TranslateTransition openTransitionEffect = new TranslateTransition(new Duration(350), getRoot());

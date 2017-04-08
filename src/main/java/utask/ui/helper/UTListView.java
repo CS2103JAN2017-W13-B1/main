@@ -1,4 +1,4 @@
-package utask.staging.ui.helper;
+package utask.ui.helper;
 
 import java.util.Collection;
 import java.util.Iterator;

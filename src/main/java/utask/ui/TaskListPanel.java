@@ -22,11 +22,11 @@ import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.helper.UTListView;
-import utask.staging.ui.helper.UTListViewHelper;
+import utask.ui.helper.UTListView;
+import utask.ui.helper.UTListViewHelper;
 
 public class TaskListPanel extends UiPart<Region> {
-    private static final String FXML = "UTTaskListPanel.fxml";
+    private static final String FXML = "TaskListPanel.fxml";
     private static final double CARD_HEIGHT = TaskListCard.CARD_HEIGHT;
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 

@@ -37,7 +37,7 @@ import utask.ui.dialogs.UTTagColorDialog;
 public class MainWindow extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(MainWindow.class);
     private static final String ICON = "/images/utask.png";
-    private static final String FXML = "UTMainWindow.fxml";
+    private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 650;
     private static final int MIN_WIDTH = 620;
 

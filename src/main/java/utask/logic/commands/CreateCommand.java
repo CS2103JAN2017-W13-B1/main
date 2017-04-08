@@ -15,7 +15,7 @@ import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.DuplicateTaskException;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
-import utask.staging.ui.helper.DelayedExecution;
+import utask.ui.helper.DelayedExecution;
 
 /**
  * Creates a new task to uTask.

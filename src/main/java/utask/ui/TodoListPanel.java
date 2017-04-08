@@ -11,11 +11,11 @@ import javafx.scene.layout.VBox;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.helper.UTListView;
-import utask.staging.ui.helper.UTListViewHelper;
+import utask.ui.helper.UTListView;
+import utask.ui.helper.UTListViewHelper;
 
 public class TodoListPanel extends UiPart<Region> {
-    private static final String FXML = "UTTodoListPanel.fxml";
+    private static final String FXML = "TodoListPanel.fxml";
 
     @FXML
     private VBox rootPane;

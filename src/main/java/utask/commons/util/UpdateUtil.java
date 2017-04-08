@@ -19,7 +19,7 @@ import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.TaskType;
 import utask.model.task.Timestamp;
-import utask.staging.ui.helper.UTFilteredListHelper;
+import utask.ui.helper.UTFilteredListHelper;
 
 // @@author A0138423J
 public class UpdateUtil {

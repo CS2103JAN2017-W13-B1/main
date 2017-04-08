@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import utask.commons.exceptions.IllegalValueException;
-import utask.staging.ui.helper.SuggestionHelper;
+import utask.ui.helper.SuggestionHelper;
 
 /*
  * Stores a HashMap of command maps aliases
