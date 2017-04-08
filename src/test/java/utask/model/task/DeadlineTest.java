@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -31,6 +33,13 @@ public class DeadlineTest {
 
     @Test
     public void validDeadlineConstructor() throws IllegalValueException {
+        Date date = new Date();
+        Deadline d = new Deadline(date); // Date constructor
+        assertEquals(d.getDate(), date); //checking if both dates tally
+    }
+
+    @Test
+    public void validEmptyDeadlineConstructor() throws IllegalValueException {
         Deadline d = Deadline.getEmptyDeadline(); // empty constructor
         assertEquals(d.hashCode(), "".hashCode()); //checking hashCode when Deadline is Null
     }
