@@ -44,7 +44,6 @@ public class TypicalTestPersons {
             i = new TaskBuilder().withName("Inspect Goods").withDeadline("091217")
                     .withTimestamp("091217", "0900 to 1300").withFrequency("-").withStatus("incomplete").build();
             todo = new TaskBuilder().withName("Do tests").withStatus("incomplete").build();
-
             due = new TaskBuilder().withName("Forgot my work").withStatus("incomplete").withDeadline("010217").build();
         } catch (IllegalValueException e) {
             e.printStackTrace();

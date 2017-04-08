@@ -1,9 +1,10 @@
-package guitests;
+package guitests.working;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import guitests.UTaskGuiTest;
 import guitests.guihandles.HelpWindowHandle;
 
 public class HelpWindowTest extends UTaskGuiTest {

@@ -72,8 +72,8 @@ public abstract class UTaskGuiTest {
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
-//            todoListPanel = mainGui.getTodoListPanel();
-//            taskListPanel = mainGui.getTaskListPanel();
+            todoListPanel = mainGui.getTodoListPanel();
+            taskListPanel = mainGui.getTaskListPanel();
             findOverlayList = mainGui.getfindOverlayList();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();

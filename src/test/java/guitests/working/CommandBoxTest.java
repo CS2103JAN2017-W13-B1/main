@@ -1,4 +1,4 @@
-package guitests;
+package guitests.working;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import guitests.UTaskGuiTest;
 import utask.ui.CommandBox;
 
 public class CommandBoxTest extends UTaskGuiTest {
@@ -37,22 +38,22 @@ public class CommandBoxTest extends UTaskGuiTest {
         assertEquals(defaultStyleOfCommandBox, commandBox.getStyleClass());
     }
 
-//    @Test
-//    public void commandBox_commandFails_textStaysAndErrorStyleClassAdded() {
-//        commandBox.runCommand(COMMAND_THAT_FAILS);
-//
-//        assertEquals(COMMAND_THAT_FAILS, commandBox.getCommandInput());
-//        assertEquals(errorStyleOfCommandBox, commandBox.getStyleClass());
-//    }
-//
-//    @Test
-//    public void commandBox_commandSucceedsAfterFailedCommand_textClearedAndErrorStyleClassRemoved() {
-//        // add error style to simulate a failed command
-//        commandBox.getStyleClass().add(CommandBox.ERROR_TEXTFIELD_STYLE_CLASS);
-//
-//        commandBox.runCommand(COMMAND_THAT_SUCCEEDS);
-//
-//        assertEquals("", commandBox.getCommandInput());
-//        assertEquals(defaultStyleOfCommandBox, commandBox.getStyleClass());
-//    }
+    @Test
+    public void commandBox_commandFails_textStaysAndErrorStyleClassAdded() {
+        commandBox.runCommand(COMMAND_THAT_FAILS);
+
+        assertEquals(COMMAND_THAT_FAILS, commandBox.getCommandInput());
+        assertEquals(errorStyleOfCommandBox, commandBox.getStyleClass());
+    }
+
+    @Test
+    public void commandBox_commandSucceedsAfterFailedCommand_textClearedAndErrorStyleClassRemoved() {
+        // add error style to simulate a failed command
+        commandBox.getStyleClass().add(CommandBox.ERROR_TEXTFIELD_STYLE_CLASS);
+
+        commandBox.runCommand(COMMAND_THAT_SUCCEEDS);
+
+        assertEquals("", commandBox.getCommandInput());
+        assertEquals(defaultStyleOfCommandBox, commandBox.getStyleClass());
+    }
 }

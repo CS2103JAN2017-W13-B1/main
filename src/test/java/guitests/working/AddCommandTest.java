@@ -44,7 +44,7 @@ public class AddCommandTest extends UTaskGuiTest {
     public void addDueTasks() {
         TestTask[] currentList = new TestTask[0];
         TestTask taskToAdd = td.due;
-        assertAddToDueListSuccess(taskToAdd, currentList);
+        assertAddToDueListSuccess(taskToAdd);
     }
 
     public void addTodayTasks() {
@@ -67,7 +67,6 @@ public class AddCommandTest extends UTaskGuiTest {
 
     private void assertAddToDueListSuccess(TestTask task, TestTask... currentList) {
         commandBox.runCommand(task.getAddCommand());
-
         //confirm the new card contains the right data
         TaskCardHandle addedCard = taskListPanel.navigateToDueTask(task.getName().fullName);
         assertMatching(task, addedCard);
