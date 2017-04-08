@@ -105,7 +105,7 @@ public class DateUtil {
         System.out.println(minutes);
         date = addHoursToDate(date, hours);
         date = addMinutesToDate(date, minutes);
-        
+
         System.out.println(date);
 
         return date;
