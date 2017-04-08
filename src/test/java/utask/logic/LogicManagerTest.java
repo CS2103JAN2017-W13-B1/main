@@ -250,6 +250,15 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void execute_clear_byAlias() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        model.addTask(helper.generateEventTaskWithSeed(1));
+        logic.execute("alias c /as clear");
+        assertCommandSuccess("c", ClearCommand.MESSAGE_SUCCESS, new UTask(),
+                Collections.emptyList());
+    }
+
+    @Test
     public void execute_createtag_successful() throws DuplicateTagException, IllegalValueException {
         String tagName = "school";
         String color = "red";
