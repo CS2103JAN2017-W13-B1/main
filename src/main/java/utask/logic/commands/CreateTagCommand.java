@@ -29,12 +29,13 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
             + "Example: " + COMMAND_WORD
             + " Urgent /colour blue";
 
-    public static final String MESSAGE_SUCCESS = "New tag created: %1$s";
+    public static final String MESSAGE_SUCCESS = "New tag created: %1$s with color %2$s";
     public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in uTask";
 
     protected Tag toAdd;
     protected TagName tagName;
     protected TagColorIndex tagColorIndex;
+    private String tagColorName;
     /**
      * Creates an CreateTagCommand using raw values.
      *
@@ -46,6 +47,7 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
         this.tagName = new TagName(tagName);
         this.tagColorIndex = new TagColorIndex(tagColorIndex);
         this.toAdd = new Tag(this.tagName, this.tagColorIndex);
+        tagColorName = tagColorIndex;
     }
 
     @Override
@@ -58,8 +60,8 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TAG);
         }
-        logger.fine(String.format(MESSAGE_SUCCESS, toAdd));
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        logger.fine(String.format(MESSAGE_SUCCESS, tagName, tagColorName));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, tagName, tagColorName));
     }
 
     @Override

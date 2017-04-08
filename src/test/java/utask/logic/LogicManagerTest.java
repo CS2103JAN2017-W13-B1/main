@@ -28,8 +28,10 @@ import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.commons.exceptions.IllegalValueException;
+import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CommandResult;
+import utask.logic.commands.CreateTagCommand;
 //import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.ExitCommand;
@@ -38,6 +40,7 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
+import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.Model;
@@ -48,6 +51,7 @@ import utask.model.tag.Tag;
 import utask.model.tag.TagColorIndex;
 import utask.model.tag.TagName;
 import utask.model.tag.UniqueTagList;
+import utask.model.tag.UniqueTagList.DuplicateTagException;
 import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
@@ -142,18 +146,18 @@ public class LogicManagerTest {
 
     /**
      * Executes the command, confirms that a CommandException is thrown and that
-     * the result message is correct. Both the 'address book' and the 'last
+     * the result message is correct. Both the 'UTask' and the 'last
      * shown list' are verified to be unchanged.
      *
      * @see #assertCommandBehavior(boolean, String, String, ReadOnlyUTask, List)
      */
     private void assertCommandFailure(String inputCommand,
             String expectedMessage) {
-        UTask expectedAddressBook = new UTask(model.getUTask());
+        UTask expectedUTask = new UTask(model.getUTask());
         List<ReadOnlyTask> expectedShownList = new ArrayList<>(
                 model.getFilteredTaskList());
         assertCommandBehavior(true, inputCommand, expectedMessage,
-                expectedAddressBook, expectedShownList);
+                expectedUTask, expectedShownList);
     }
 
     /**
@@ -190,11 +194,65 @@ public class LogicManagerTest {
         assertEquals(expectedUTask, latestSavedUTask);
     }
 
+    //@@ author A0138493W
+    @Test
+    public void execute_alias_invalidAliasFormat() {
+        String invalidAlias = "%$#@";
+        assertCommandFailure("alias " + invalidAlias + " /as create" ,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void execute_alias_commandWordNotExist() {
+        String notExistCommandword = "lalaland";
+        assertCommandFailure("alias a /as " + notExistCommandword,
+                String.format(AliasCommand.MESSAGE_COMMAND_WORD_NOT_EXIST, notExistCommandword));
+    }
+
+    @Test
+    public void execute_alias_aliasCannotBeDefaultCommandWord() {
+        String defaultCommandword = "create";
+        assertCommandFailure("alias " + defaultCommandword + " /as clear",
+                String.format(AliasCommand.MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND, defaultCommandword));
+    }
+
+    @Test
+    public void execute_alias_successful() {
+        String alias = "c";
+        String defaultCommand = "create";
+        assertCommandSuccess("alias " + alias + " /as " + defaultCommand,
+                String.format(AliasCommand.MESSAGE_CREATE_ALIAS_SUCCESS, alias, defaultCommand),
+                new UTask(), Collections.emptyList());
+    }
+
     @Test
     public void execute_unknownCommandWord() {
         String unknownCommand = "uicfhmowqewca";
         assertCommandFailure(unknownCommand, MESSAGE_UNKNOWN_COMMAND);
     }
+
+    @Test
+    public void execute_alias_invalidUnaliasFormat() {
+        String invalidAlias = "$%#^";
+        assertCommandFailure("unalias " + invalidAlias,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void execute_unAlias_aliasNotExist() {
+        String alias = "c";
+        assertCommandFailure("unalias " + alias, String.format(UnaliasCommand.MESSAGE_ALIAS_NOT_EXIST, alias));
+    }
+
+    @Test
+    public void execute_unAlias_successful() throws CommandException {
+        String alias = "c";
+        logic.execute("alias c /as create");
+        assertCommandSuccess("unalias " + alias,
+                String.format(UnaliasCommand.MESSAGE_UNALIAS_SUCCESS, alias),
+                new UTask(), Collections.emptyList());
+    }
+    //@@ author
 
     @Test
     public void execute_help() {
@@ -220,6 +278,36 @@ public class LogicManagerTest {
                 Collections.emptyList());
     }
 
+    //@@ author A0138493W
+    @Test
+    public void execute_clear_byAlias() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        model.addTask(helper.generateEventTaskWithSeed(1));
+        logic.execute("alias c /as clear");
+        assertCommandSuccess("c", ClearCommand.MESSAGE_SUCCESS, new UTask(),
+                Collections.emptyList());
+    }
+
+    @Test
+    public void execute_createtag_successful() throws DuplicateTagException, IllegalValueException {
+        String tagName = "school";
+        String color = "red";
+        UTask expectedUT = new UTask();
+        expectedUT.addTag(new Tag(new TagName(tagName), new TagColorIndex(color)));
+        assertCommandSuccess("createtag " + tagName + " /color " + color,
+                String.format(CreateTagCommand.MESSAGE_SUCCESS, tagName, color), expectedUT,
+                expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_createtag_duplicateTag() throws CommandException {
+        String tagName = "school";
+        String color = "red";
+        logic.execute("createtag " + tagName + " /color " + color);
+        assertCommandFailure("createtag " + tagName + " /color " + color, CreateTagCommand.MESSAGE_DUPLICATE_TAG);
+    }
+    //@@ author
+
     @Test
     public void execute_add_invalidTaskData() {
         assertCommandFailure(
@@ -231,7 +319,6 @@ public class LogicManagerTest {
         assertCommandFailure(
                 "create valid name /by 111111 /from 0000 to 1200 /repeat Every Monday /tag ;a!!e",
                 TagName.MESSAGE_TAG_CONSTRAINTS);
-
     }
 
     @Test
