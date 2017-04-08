@@ -44,11 +44,13 @@ import utask.logic.commands.HelpCommand;
 import utask.logic.commands.ListAliasCommand;
 import utask.logic.commands.ListCommand;
 import utask.logic.commands.ListTagCommand;
+import utask.logic.commands.RedoCommand;
 import utask.logic.commands.RelocateCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.SortInFindCommand;
 import utask.logic.commands.UnaliasCommand;
+import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.UpdateTagCommand;
@@ -349,6 +351,22 @@ public class LogicManagerTest {
         String color = "red";
         logic.execute("createtag " + tagName + " /color " + color);
         assertCommandFailure("createtag " + tagName + " /color " + color, CreateTagCommand.MESSAGE_DUPLICATE_TAG);
+    }
+
+    @Test
+    public void execute_undoredo_createTagSuccessful() throws CommandException, DuplicateTagException, IllegalValueException {
+        String tagName = "school";
+        String color = "red";
+        UTask expectedUT = new UTask();
+        expectedUT.addTag(new Tag(new TagName(tagName), new TagColorIndex(color)));
+        logic.execute("createtag " + tagName + " /color " + color);
+        int index = 1;
+        assertCommandSuccess("undo " + index,
+                String.format(UndoCommand.MESSAGE_UNDO_SUCCESS, index), new UTask(),
+                Collections.emptyList());
+        assertCommandSuccess("redo " + index,
+                String.format(RedoCommand.MESSAGE_REDO_SUCCESS, index), expectedUT,
+                expectedUT.getTaskList());
     }
 
     @Test
