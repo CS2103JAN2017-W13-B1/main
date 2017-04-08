@@ -2,6 +2,7 @@ package utask.commons.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import utask.commons.exceptions.IllegalValueException;
 import utask.model.tag.UniqueTagList;
@@ -183,12 +184,35 @@ public class UpdateUtil {
         assert editTaskDescriptor != null;
         assert attributeToRemove != null;
 
-        Timestamp updatedTimestamp = editTaskDescriptor.getTimeStamp()
-                .orElseGet(taskToEdit::getTimestamp);
-        if (attributeToRemove.contains(Attribute.TIMESTAMP)) {
-            updatedTimestamp = Timestamp.getEmptyTimestamp();
+        //TODO CLEAN UP
+//        Timestamp timestampToUpdate = editTaskDescriptor.getTimeStamp()
+//                .orElseGet(taskToEdit::getTimestamp);
+
+
+        Timestamp timestampToUpdate = editTaskDescriptor.getTimeStamp()
+              .orElseGet(taskToEdit::getTimestamp);
+        //        Timestamp timestampToUpdate = null;
+
+        if (!timestampToUpdate.equals(taskToEdit.getTimestamp()) && !attributeToRemove.contains(Attribute.TIMESTAMP)) {
+            Optional<Deadline> deadline = editTaskDescriptor.getDeadline();
+            Deadline deadlineToUpdate = null;
+
+            if (deadline.isPresent()) {
+                deadlineToUpdate = deadline.get();
+            } else {
+                deadlineToUpdate = taskToEdit.getDeadline();
+            }
+
+            Timestamp updatedTimestamp =
+                    Timestamp.getUpdateTimestampWithDeadline(timestampToUpdate, deadlineToUpdate);
+
+            timestampToUpdate = updatedTimestamp;
         }
-        return updatedTimestamp;
+
+        if (attributeToRemove.contains(Attribute.TIMESTAMP)) {
+            timestampToUpdate = Timestamp.getEmptyTimestamp();
+        }
+        return timestampToUpdate;
     }
 
     // @@author A0138423J

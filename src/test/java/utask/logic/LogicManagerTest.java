@@ -859,7 +859,7 @@ public class LogicManagerTest {
         private Task simpleTask() throws Exception {
             Name name = new Name("My debug task");
             Deadline deadline = new Deadline("010117");
-            Timestamp timestamp = new Timestamp("1830 to 2030");
+            Timestamp timestamp = new Timestamp("010117", "1830 to 2030");
             Frequency frequency = new Frequency("Every Monday");
             Status iscompleted = new Status("incomplete");
             Tag tag1 = new Tag(new TagName("urgent"),
@@ -881,7 +881,7 @@ public class LogicManagerTest {
          */
         private Task generateEventTaskWithSeed(int seed) throws Exception {
             return new EventTask(new Name("Task " + seed),
-                    new Deadline("010120"), new Timestamp("0000 to 2359"),
+                    new Deadline("010120"), new Timestamp("010120", "0000 to 2359"),
                     new Frequency("Every " + seed),
                     new UniqueTagList(new Tag(
                             new TagName("tag" + Math.abs(seed)),
@@ -1022,7 +1022,7 @@ public class LogicManagerTest {
          */
         private Task generateTaskWithName(String name) throws Exception {
             return new EventTask(new Name(name), new Deadline("010117"),
-                    new Timestamp("0000 to 1300"), new Frequency("-"),
+                    new Timestamp("010117", "0000 to 1300"), new Frequency("-"),
                     new UniqueTagList(new Tag(
                             new TagName("tag"),
                             new TagColorIndex("2"))),
@@ -1037,7 +1037,7 @@ public class LogicManagerTest {
         private Task generateDeadlineTask(String name, String deadline)
                 throws Exception {
             return new EventTask(new Name(name), new Deadline(deadline),
-                    new Timestamp("0000 to 1300"), new Frequency("-"),
+                    new Timestamp(deadline, "0000 to 1300"), new Frequency("-"),
                     new UniqueTagList(new Tag(
                             new TagName("tag"),
                             new TagColorIndex("2"))),
@@ -1051,7 +1051,7 @@ public class LogicManagerTest {
         private Task generateTaskwithTags(String name, UniqueTagList tags)
                 throws Exception {
             return new EventTask(new Name(name), new Deadline("150317"),
-                    new Timestamp("0000 to 1300"), new Frequency("-"), tags,
+                    new Timestamp("150317", "0000 to 1300"), new Frequency("-"), tags,
                     new Status("incomplete"));
         }
     }

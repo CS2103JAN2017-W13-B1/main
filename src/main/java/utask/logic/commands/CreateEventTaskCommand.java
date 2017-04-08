@@ -17,8 +17,7 @@ public class CreateEventTaskCommand extends CreateCommand {
         super(frequency, tags, status);
 
         this.toAdd = new EventTask(new Name(name), new Deadline(deadline),
-                new Timestamp(timestamp), this.frequency,
+                new Timestamp(deadline, timestamp), this.frequency,
                 new UniqueTagList(tagSet), this.status);
     }
-
 }
