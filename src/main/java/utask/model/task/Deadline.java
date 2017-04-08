@@ -30,11 +30,12 @@ public class Deadline {
      *             if given deadline string is invalid.
      */
     public Deadline(String deadline) throws IllegalValueException {
-        assert deadline != null && !deadline.isEmpty();
         String trimmedDeadline = deadline.trim();
         if (!isValidDeadline(trimmedDeadline)) {
             throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
         }
+
+        assert deadline != null && !deadline.isEmpty();
 
         if (deadline.equals("-")) {
             date = null;
