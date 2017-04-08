@@ -65,8 +65,8 @@ public class TimestampTest {
 
     @Test
     public void removeTimestampConstructor() throws IllegalValueException {
-        Timestamp t = new Timestamp("-");
-        thrown.expect(AssertionError.class); // constructor with dash only
+        Timestamp t = new Timestamp("-"); // constructor with dash only
+        thrown.expect(AssertionError.class);
         assertEquals(null, t.getFrom()); //checking toString() value when Timestamp is Null
         assertEquals(null, t.getTo()); //checking toString() value when Timestamp is Null
     }
