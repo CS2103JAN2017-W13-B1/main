@@ -52,7 +52,6 @@ import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.exceptions.CommandException;
-import utask.logic.parser.ParserUtil;
 import utask.model.Model;
 import utask.model.ModelManager;
 import utask.model.ReadOnlyUTask;
