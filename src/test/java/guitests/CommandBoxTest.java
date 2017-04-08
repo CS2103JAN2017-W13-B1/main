@@ -22,11 +22,11 @@ public class CommandBoxTest extends UTaskGuiTest {
     public void setUp() {
         defaultStyleOfCommandBox = new ArrayList<>(commandBox.getStyleClass());
         assertFalse("CommandBox default style classes should not contain error style class.",
-                    defaultStyleOfCommandBox.contains(CommandBox.ERROR_STYLE_CLASS));
+                    defaultStyleOfCommandBox.contains(CommandBox.ERROR_TEXTFIELD_STYLE_CLASS));
 
         // build style class for error
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
-        errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+        errorStyleOfCommandBox.add(CommandBox.ERROR_TEXTFIELD_STYLE_CLASS);
     }
 
 //    @Test

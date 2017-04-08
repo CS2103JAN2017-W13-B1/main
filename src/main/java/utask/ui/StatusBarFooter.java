@@ -3,31 +3,26 @@ package utask.ui;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import org.controlsfx.control.StatusBar;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.util.FxViewUtil;
 
-/**
- * A ui for the status bar that is displayed at the footer of the application.
- */
 public class StatusBarFooter extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
+    private static final String FXML = "UTStatusBarFooter.fxml";
 
     @FXML
-    private StatusBar syncStatus;
+    private Label syncStatus;
     @FXML
-    private StatusBar saveLocationStatus;
+    private Label saveLocationStatus;
 
-    private static final String FXML = "StatusBarFooter.fxml";
-
-    public StatusBarFooter(AnchorPane placeHolder, String saveLocation) {
+    public StatusBarFooter(Pane placeHolder, String saveLocation) {
         super(FXML);
         addToPlaceholder(placeHolder);
         setSyncStatus("Not updated yet in this session");
@@ -35,7 +30,7 @@ public class StatusBarFooter extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void addToPlaceholder(AnchorPane placeHolder) {
+    private void addToPlaceholder(Pane placeHolder) {
         FxViewUtil.applyAnchorBoundaryParameters(getRoot(), 0.0, 0.0, 0.0, 0.0);
         placeHolder.getChildren().add(getRoot());
     }
@@ -49,7 +44,7 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleAddressBookChangedEvent(UTaskChangedEvent abce) {
+    public void handleUTaskChangedEvent(UTaskChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);

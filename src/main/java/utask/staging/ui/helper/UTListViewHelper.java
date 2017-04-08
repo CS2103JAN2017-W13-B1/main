@@ -11,10 +11,10 @@ import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToTaskListRequestEvent;
+import utask.commons.events.ui.TaskListPanelSelectionChangedEvent;
 import utask.commons.events.ui.UIClearListSelectionEvent;
 import utask.commons.events.ui.UIShowTaskOfInterestInMainWindowEvent;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.events.TaskListPanelSelectionChangedEvent;
 
 /*
  * UTListViewHelper uses facade and singleton pattern

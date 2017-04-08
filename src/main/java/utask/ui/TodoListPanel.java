@@ -1,5 +1,5 @@
 //@@author A0139996A
-package utask.staging.ui;
+package utask.ui;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -14,7 +14,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.helper.UTListView;
 import utask.staging.ui.helper.UTListViewHelper;
 
-public class UTTodoListPanel extends StagingUiPart<Region> {
+public class TodoListPanel extends UiPart<Region> {
     private static final String FXML = "UTTodoListPanel.fxml";
 
     @FXML
@@ -26,7 +26,7 @@ public class UTTodoListPanel extends StagingUiPart<Region> {
     @FXML
     private UTListView<ReadOnlyTask> lstTodoTasks;
 
-    public UTTodoListPanel(Pane parent, Logic logic) {
+    public TodoListPanel(Pane parent, Logic logic) {
         super(FXML);
 
         assert(parent != null && logic != null);

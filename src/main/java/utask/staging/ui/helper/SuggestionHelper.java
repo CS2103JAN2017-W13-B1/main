@@ -14,6 +14,8 @@ import com.google.common.eventbus.Subscribe;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.FindRequestEvent;
+import utask.commons.events.ui.KeyboardEscapeKeyPressedEvent;
 import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CreateCommand;
@@ -37,8 +39,6 @@ import utask.logic.commands.UndoCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.UpdateTagCommand;
-import utask.staging.ui.events.FindRequestEvent;
-import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 
 public class SuggestionHelper {
 

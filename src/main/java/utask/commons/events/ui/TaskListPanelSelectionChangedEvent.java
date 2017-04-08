@@ -1,5 +1,5 @@
 //@@author A0139996A
-package utask.staging.ui.events;
+package utask.commons.events.ui;
 
 import javafx.scene.control.ListView;
 import utask.commons.events.BaseEvent;

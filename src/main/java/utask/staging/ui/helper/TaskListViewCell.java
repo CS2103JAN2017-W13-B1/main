@@ -4,7 +4,7 @@ package utask.staging.ui.helper;
 import com.jfoenix.controls.JFXListCell;
 
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.UTTaskListCard;
+import utask.ui.TaskListCard;
 
 public class TaskListViewCell extends JFXListCell<ReadOnlyTask> {
 
@@ -26,7 +26,7 @@ public class TaskListViewCell extends JFXListCell<ReadOnlyTask> {
             setGraphic(null);
             setText(null);
         } else {
-            setGraphic(new UTTaskListCard(task, getIndex() + offset).getRoot());
+            setGraphic(new TaskListCard(task, getIndex() + offset).getRoot());
         }
     }
 }

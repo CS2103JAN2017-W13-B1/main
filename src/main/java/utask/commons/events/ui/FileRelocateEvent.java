@@ -1,6 +1,6 @@
 //@@author A0138493W
 
-package utask.staging.ui.events;
+package utask.commons.events.ui;
 
 import utask.commons.events.BaseEvent;
 

@@ -1,60 +1,78 @@
 package utask.ui;
 
-import javafx.event.ActionEvent;
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
+import com.jfoenix.controls.JFXDecorator;
+
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import utask.commons.core.Config;
+import utask.commons.core.EventsCenter;
 import utask.commons.core.GuiSettings;
+import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.ExitAppRequestEvent;
+import utask.commons.events.ui.UIShowAliasDialogEvent;
+import utask.commons.events.ui.UIShowMessageDialogEvent;
+import utask.commons.events.ui.UIShowTagColorDialogEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
-import utask.model.task.ReadOnlyTask;
+import utask.ui.dialogs.UTAliasDialog;
+import utask.ui.dialogs.UTMessageDialog;
+import utask.ui.dialogs.UTTagColorDialog;
 
 /**
- * The Main Window. Provides the basic application layout containing
- * a menu bar and space where other JavaFX elements can be placed.
+ * The Main Window. Provides the basic application layout containing a menu bar
+ * and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart<Region> {
-
-    private static final String ICON = "/images/address_book_32.png";
-    private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final Logger logger = LogsCenter.getLogger(MainWindow.class);
+    private static final String ICON = "/images/utask.png";
+    private static final String FXML = "UTMainWindow.fxml";
+    private static final int MIN_HEIGHT = 650;
+    private static final int MIN_WIDTH = 620;
 
     private Stage primaryStage;
     private Logic logic;
-
-    // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
     private Config config;
 
+    private TodoListPanel todoListPanel;
+
+    //Independent Ui parts residing in this Ui container
     @FXML
-    private AnchorPane browserPlaceholder;
+    private StackPane rootPane;
 
     @FXML
-    private AnchorPane commandBoxPlaceholder;
+    private Pane topPlaceholder;
 
     @FXML
-    private MenuItem helpMenuItem;
+    private Pane personListPanelPlaceholder;
 
     @FXML
-    private AnchorPane personListPanelPlaceholder;
+    private Pane todoListPanelPlaceholder;
 
     @FXML
-    private AnchorPane resultDisplayPlaceholder;
+    private Pane commandBoxPlaceholder;
 
     @FXML
-    private AnchorPane statusbarPlaceholder;
+    private Pane resultDisplayPlaceholder;
 
+    @FXML
+    private Pane statusbarPlaceholder;
+
+    @FXML
+    private Button btnHelp;
+
+    //@@author A0139996A
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -66,74 +84,85 @@ public class MainWindow extends UiPart<Region> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
-        setWindowMinSize();
+
         setWindowDefaultSize(prefs);
-        Scene scene = new Scene(getRoot());
-        primaryStage.setScene(scene);
+        setWindowMinSize();
 
+        Scene scene = createScene();
+        setStyleSheets(scene);
+        this.primaryStage.setScene(scene);
+        setEventHandlers();
         setAccelerators();
+
+        EventsCenter.getInstance().registerHandler(this);
     }
 
-    public Stage getPrimaryStage() {
-        return primaryStage;
+    /*
+     * Creates Scene
+     * JFXDecorator is used to create 'material' styled window frame
+     * */
+    private Scene createScene() {
+        JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot(), false, true, true);
+        decorator.setPrefSize(MIN_WIDTH, MIN_HEIGHT);
+        decorator.setCustomMaximize(true);
+        Scene scene = new Scene(decorator);
+        return scene;
     }
 
-    private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+    /*
+     * Sets required CSS Stylesheets to a scene
+     *
+     * Note that fonts CSS has to be set first
+     * */
+    private void setStyleSheets(Scene scene) {
+        scene.getStylesheets().add(MainWindow.class.getResource("/css/jfoenix-fonts.css").toExternalForm());
+        scene.getStylesheets().add(MainWindow.class.getResource("/css/jfoenix-design.css").toExternalForm());
+        scene.getStylesheets().add(MainWindow.class.getResource("/css/utask.css").toExternalForm());
     }
 
     /**
-     * Sets the accelerator of a MenuItem.
+     * Sets the accelerator of a Button
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
-    private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
-        menuItem.setAccelerator(keyCombination);
+    private void setAccelerator(Button control, KeyCombination keyCombination) {
+        control.getScene().getAccelerators().put(keyCombination, new Runnable() {
+            @Override
+            public void run() {
+                handleHelp();
+            }
+        });
+    }
 
-        /*
-         * TODO: the code below can be removed once the bug reported here
-         * https://bugs.openjdk.java.net/browse/JDK-8131666
-         * is fixed in later version of SDK.
-         *
-         * According to the bug report, TextInputControl (TextField, TextArea) will
-         * consume function-key events. Because CommandBox contains a TextField, and
-         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will
-         * not work when the focus is in them because the key event is consumed by
-         * the TextInputControl(s).
-         *
-         * For now, we add following event filter to capture such key events and open
-         * help window purposely so to support accelerators even when focus is
-         * in CommandBox or ResultDisplay.
-         */
-        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
-                menuItem.getOnAction().handle(new ActionEvent());
-                event.consume();
+    private void setAccelerators() {
+        setAccelerator(btnHelp, KeyCombination.valueOf("F1"));
+    }
+
+    private void setEventHandlers() {
+        btnHelp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                handleHelp();
             }
         });
     }
 
     void fillInnerParts() {
-        browserPanel = new BrowserPanel(browserPlaceholder);
-        personListPanel = new PersonListPanel(getPersonListPlaceholder(), logic.getFilteredTaskList());
-        new ResultDisplay(getResultDisplayPlaceholder());
-        new StatusBarFooter(getStatusbarPlaceholder(), config.getUTaskFilePath());
-        new CommandBox(getCommandBoxPlaceholder(), logic);
+        new TaskListPanel(personListPanelPlaceholder, logic);
+        todoListPanel = new TodoListPanel(todoListPanelPlaceholder, logic);
+        new ResultDisplay(resultDisplayPlaceholder);
+        new StatusBarFooter(statusbarPlaceholder, config.getUTaskFilePath());
+        new CommandBox(commandBoxPlaceholder, logic);
+        new FindTaskOverlay(topPlaceholder, logic);
     }
 
-    private AnchorPane getCommandBoxPlaceholder() {
-        return commandBoxPlaceholder;
+    public TodoListPanel getTodoListPanel() {
+        return todoListPanel;
     }
 
-    private AnchorPane getStatusbarPlaceholder() {
-        return statusbarPlaceholder;
-    }
-
-    private AnchorPane getResultDisplayPlaceholder() {
-        return resultDisplayPlaceholder;
-    }
-
-    private AnchorPane getPersonListPlaceholder() {
-        return personListPanelPlaceholder;
+    //@@author
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     void hide() {
@@ -173,8 +202,8 @@ public class MainWindow extends UiPart<Region> {
      * Returns the current size and the position of the main Window.
      */
     GuiSettings getCurrentGuiSetting() {
-        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(), (int) primaryStage.getX(),
+                (int) primaryStage.getY());
     }
 
     @FXML
@@ -195,16 +224,21 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    @Subscribe
+    private void handleUIShowTagColorDialogEvent(UIShowTagColorDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        new UTTagColorDialog(rootPane).show(event.tags);
     }
 
-    void loadPersonPage(ReadOnlyTask person) {
-        browserPanel.loadPersonPage(person);
+    @Subscribe
+    private void handleUIShowAliasDialogEvent(UIShowAliasDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        new UTAliasDialog(rootPane).show(event.map);
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    @Subscribe
+    private void handleUIShowMessageDialogEvent(UIShowMessageDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        new UTMessageDialog(rootPane).show(event.headingText, event.contentText);
     }
-
 }

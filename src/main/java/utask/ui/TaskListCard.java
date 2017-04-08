@@ -1,4 +1,4 @@
-package utask.staging.ui;
+package utask.ui;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,7 +23,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.helper.TagColorHelper;
 
 //@@author A0139996A
-public class UTTaskListCard extends StagingUiPart<Region> {
+public class TaskListCard extends UiPart<Region> {
     public static final double CARD_HEIGHT = 102.0;
     private static final String FXML = "UTTaskListCard.fxml";
     private static final String LABEL_CSS = "-fx-padding: 1 3 1 3; -fx-text-fill: WHITE; -fx-background-color: %s;";
@@ -49,7 +49,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     // checking for UI events
     private final ReadOnlyTask task;
 
-    public UTTaskListCard(ReadOnlyTask task, int displayedIndex) {
+    public TaskListCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         assert (task != null && displayedIndex > 0);
         this.task = task;

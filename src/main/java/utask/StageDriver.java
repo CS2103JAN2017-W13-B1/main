@@ -1,4 +1,4 @@
-package utask.staging.ui;
+package utask;
 
 import java.io.IOException;
 import java.util.Map;
@@ -15,6 +15,7 @@ import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.core.Version;
 import utask.commons.events.ui.ExitAppRequestEvent;
+import utask.commons.events.ui.FileRelocateEvent;
 import utask.commons.exceptions.DataConversionException;
 import utask.commons.util.ConfigUtil;
 import utask.commons.util.StringUtil;
@@ -26,10 +27,10 @@ import utask.model.ReadOnlyUTask;
 import utask.model.UTask;
 import utask.model.UserPrefs;
 import utask.model.util.SampleDataUtil;
-import utask.staging.ui.events.FileRelocateEvent;
 import utask.storage.Storage;
 import utask.storage.StorageManager;
 import utask.ui.Ui;
+import utask.ui.UiManager;
 
 /**
  * The main entry point to the application.
@@ -63,7 +64,7 @@ public class StageDriver extends Application {
 
         logic = new LogicManager(model, storage);
 
-        ui = new StagingUiManager(logic, config, userPrefs);
+        ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
     }

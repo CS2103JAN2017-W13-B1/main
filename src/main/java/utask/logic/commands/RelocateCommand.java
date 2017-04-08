@@ -2,7 +2,7 @@
 
 package utask.logic.commands;
 import utask.commons.core.EventsCenter;
-import utask.staging.ui.events.FileRelocateEvent;
+import utask.commons.events.ui.FileRelocateEvent;
 
 /**
  * Relocate the data file by the given location from user input

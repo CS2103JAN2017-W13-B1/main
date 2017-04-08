@@ -5,7 +5,7 @@ import java.util.Set;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.Messages;
-import utask.staging.ui.events.FindRequestEvent;
+import utask.commons.events.ui.FindRequestEvent;
 
 /**
  * Finds and lists all tasks in uTask who contains any of the argument keywords.

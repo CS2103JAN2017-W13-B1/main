@@ -15,11 +15,11 @@ import utask.commons.core.Config;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.storage.DataSavingExceptionEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
-import utask.commons.events.ui.PersonPanelSelectionChangedEvent;
 import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.commons.util.StringUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
+import utask.staging.ui.helper.UTListViewHelper;
 
 /**
  * The manager of the UI component.
@@ -43,7 +43,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting UI...");
+        logger.info("Starting Staging UI...");
         primaryStage.setTitle(config.getAppTitle());
 
         //Set the application icon.
@@ -53,7 +53,6 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
-
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
@@ -64,7 +63,7 @@ public class UiManager extends ComponentManager implements Ui {
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
-        mainWindow.releaseResources();
+        //mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -83,7 +82,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        //alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -116,13 +115,6 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.getPersonListPanel().scrollTo(event.targetIndex);
+        UTListViewHelper.getInstance().scrollTo(event.targetIndex);
     }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.loadPersonPage(event.getNewSelection());
-    }
-
 }

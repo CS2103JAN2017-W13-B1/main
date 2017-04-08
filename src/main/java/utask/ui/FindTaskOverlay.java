@@ -1,5 +1,5 @@
 //@@author A0139996A
-package utask.staging.ui;
+package utask.ui;
 
 import java.util.logging.Logger;
 
@@ -20,18 +20,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import utask.commons.core.LogsCenter;
+import utask.commons.events.ui.FindRequestEvent;
+import utask.commons.events.ui.KeyboardEscapeKeyPressedEvent;
 import utask.commons.events.ui.UIJumpToListInFindOverlayEvent;
 import utask.commons.events.ui.UIShowTaskOfInterestInFindOverlayEvent;
 import utask.commons.events.ui.UIUpdateSortInFindOverlayEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
-import utask.staging.ui.events.FindRequestEvent;
-import utask.staging.ui.events.KeyboardEscapeKeyPressedEvent;
 
-public class UTFindTaskOverlay extends StagingUiPart<Region> {
+public class FindTaskOverlay extends UiPart<Region> {
 
-    private static final Logger logger = LogsCenter.getLogger(UTFindTaskOverlay.class);
+    private static final Logger logger = LogsCenter.getLogger(FindTaskOverlay.class);
     private static final String FXML = "UTFindTaskOverlay.fxml";
 
     private static final int SEARCHPANE_HIDDEN_X_POS = -3000;
@@ -72,7 +72,7 @@ public class UTFindTaskOverlay extends StagingUiPart<Region> {
     private FilteredList<ReadOnlyTask> filteredData;
     private Logic logic;
 
-    public UTFindTaskOverlay(Pane parent, Logic logic) {
+    public FindTaskOverlay(Pane parent, Logic logic) {
         super(FXML);
 
         assert(parent != null && logic != null);

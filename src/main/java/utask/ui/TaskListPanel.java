@@ -1,5 +1,5 @@
 //@@author A0139996A
-package utask.staging.ui;
+package utask.ui;
 
 import java.util.logging.Logger;
 
@@ -25,10 +25,10 @@ import utask.model.task.ReadOnlyTask;
 import utask.staging.ui.helper.UTListView;
 import utask.staging.ui.helper.UTListViewHelper;
 
-public class UTTaskListPanel extends StagingUiPart<Region> {
+public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "UTTaskListPanel.fxml";
-    private static final double CARD_HEIGHT = UTTaskListCard.CARD_HEIGHT;
-    private final Logger logger = LogsCenter.getLogger(UTTaskListPanel.class);
+    private static final double CARD_HEIGHT = TaskListCard.CARD_HEIGHT;
+    private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 
     @FXML
     private ScrollPane rootPane;
@@ -36,7 +36,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
     @FXML
     private VBox container;
 
-    public UTTaskListPanel(Pane parent, Logic logic) {
+    public TaskListPanel(Pane parent, Logic logic) {
         super(FXML);
 
         assert (parent != null && logic != null);
@@ -120,7 +120,7 @@ public class UTTaskListPanel extends StagingUiPart<Region> {
         Bounds viewport = pane.getViewportBounds();
         double contentHeight = pane.getContent().getBoundsInLocal().getHeight();
         double nodeMinY = listView.getBoundsInParent().getMinY();
-        double cardHeight = UTTaskListCard.CARD_HEIGHT;
+        double cardHeight = TaskListCard.CARD_HEIGHT;
 
         double topOfList = (nodeMinY + (numberOfCards * cardHeight)) / (contentHeight - viewport.getHeight());
         pane.setVvalue(topOfList);
