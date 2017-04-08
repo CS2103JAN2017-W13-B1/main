@@ -31,6 +31,7 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.AliasCommand;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CommandResult;
+import utask.logic.commands.CreateTagCommand;
 //import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.ExitCommand;
@@ -41,7 +42,6 @@ import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.exceptions.CommandException;
-import utask.model.AliasCommandMap;
 import utask.model.Model;
 import utask.model.ModelManager;
 import utask.model.ReadOnlyUTask;
@@ -50,6 +50,7 @@ import utask.model.tag.Tag;
 import utask.model.tag.TagColorIndex;
 import utask.model.tag.TagName;
 import utask.model.tag.UniqueTagList;
+import utask.model.tag.UniqueTagList.DuplicateTagException;
 import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
 import utask.model.task.EventTask;
@@ -72,7 +73,6 @@ public class LogicManagerTest {
 
     private Model model;
     private Logic logic;
-    private AliasCommandMap aliasMap;
 
     // These are for checking the correctness of the events raised
     private ReadOnlyUTask latestSavedUTask;
@@ -103,8 +103,6 @@ public class LogicManagerTest {
                 + "TempPreferences.json";
         logic = new LogicManager(model,
                 new StorageManager(tempAddressBookFile, tempPreferencesFile));
-        AliasCommandMap.getInstance().setAliasCommandMap(model.getUserPrefs().getAliasMap());
-        aliasMap = AliasCommandMap.getInstance();
         EventsCenter.getInstance().registerHandler(this);
 
         latestSavedUTask = new UTask(model.getUTask()); // last
@@ -252,6 +250,25 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void execute_createtag_successful() throws DuplicateTagException, IllegalValueException {
+        String tagName = "school";
+        String color = "red";
+        UTask expectedUT = new UTask();
+        expectedUT.addTag(new Tag(new TagName(tagName), new TagColorIndex(color)));
+        assertCommandSuccess("createtag " + tagName + " /color " + color,
+                String.format(CreateTagCommand.MESSAGE_SUCCESS, tagName, color), expectedUT,
+                expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_createtag_duplicateTag() throws CommandException {
+        String tagName = "school";
+        String color = "red";
+        logic.execute("createtag " + tagName + " /color " + color);
+        assertCommandFailure("createtag " + tagName + " /color " + color, CreateTagCommand.MESSAGE_DUPLICATE_TAG);
+    }
+
+    @Test
     public void execute_add_invalidTaskData() {
         assertCommandFailure(
                 "create Valid Name /by Aa;a /from 1830 to 2030 /repeat Every Monday /tag urgent",
@@ -262,7 +279,6 @@ public class LogicManagerTest {
         assertCommandFailure(
                 "create valid name /by 111111 /from 0000 to 1200 /repeat Every Monday /tag ;a!!e",
                 TagName.MESSAGE_TAG_CONSTRAINTS);
-
     }
 
     @Test

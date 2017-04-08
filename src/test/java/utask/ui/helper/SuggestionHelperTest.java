@@ -7,6 +7,7 @@ import org.junit.rules.ExpectedException;
 
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CreateCommand;
+import utask.logic.commands.CreateTagCommand;
 import utask.staging.ui.helper.SuggestionHelper;
 
 public class SuggestionHelperTest {
@@ -23,7 +24,8 @@ public class SuggestionHelperTest {
     @Test
     public void partial_commands_showPossibleCommandNames() {
         String suggestion = SuggestionHelper.getInstance().getInputSuggestionOfPreamble("c").trim();
-        String commandFormat = ClearCommand.COMMAND_WORD + "  " + CreateCommand.COMMAND_WORD;
+        String commandFormat = ClearCommand.COMMAND_WORD + "  " + CreateCommand.COMMAND_WORD
+                + "  " + CreateTagCommand.COMMAND_WORD;
         assert (suggestion.equals(commandFormat));
     }
 
