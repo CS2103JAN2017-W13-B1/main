@@ -43,6 +43,7 @@ import utask.logic.commands.FindCommand;
 import utask.logic.commands.HelpCommand;
 import utask.logic.commands.ListAliasCommand;
 import utask.logic.commands.ListCommand;
+import utask.logic.commands.ListTagCommand;
 import utask.logic.commands.SelectCommand;
 import utask.logic.commands.SortCommand;
 import utask.logic.commands.SortInFindCommand;
@@ -319,6 +320,12 @@ public class LogicManagerTest {
         String color = "red";
         logic.execute("createtag " + tagName + " /color " + color);
         assertCommandFailure("createtag " + tagName + " /color " + color, CreateTagCommand.MESSAGE_DUPLICATE_TAG);
+    }
+
+    @Test
+    public void execute_listtag_successful() {
+        assertCommandSuccess("listtag", ListTagCommand.MESSAGE_SUCCESS, new UTask(),
+                Collections.emptyList());
     }
 
     //@@ author
