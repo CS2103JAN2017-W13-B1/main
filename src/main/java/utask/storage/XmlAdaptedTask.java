@@ -30,7 +30,7 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private Deadline deadline;
     @XmlElement(required = true)
-    private String timestamp;
+    private Timestamp timestamp;
     @XmlElement(required = true)
     private String frequency;
     @XmlElement(required = true)
@@ -54,7 +54,7 @@ public class XmlAdaptedTask {
     public XmlAdaptedTask(ReadOnlyTask source) {
         name = source.getName().fullName;
         deadline = source.getDeadline();
-        timestamp = source.getTimestamp().value;
+        timestamp = source.getTimestamp();
         frequency = source.getFrequency().value;
         status = source.getStatus().toString();
         tagged = new ArrayList<>();
@@ -94,10 +94,10 @@ public class XmlAdaptedTask {
             deadline = this.deadline;
         }
 
-        if ("".equals(this.timestamp)) {
+        if (this.timestamp == null) {
             timestamp = Timestamp.getEmptyTimestamp();
         } else {
-            timestamp = new Timestamp(this.timestamp);
+            timestamp = this.timestamp;
         }
 
         if ("".equals(this.frequency)) {

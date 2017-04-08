@@ -191,6 +191,7 @@ public class ParserUtil {
     public static Optional<Deadline> parseDeadline(Optional<String> deadline)
             throws IllegalValueException {
         assert deadline != null;
+
         return deadline.isPresent() ? Optional.of(new Deadline(deadline.get()))
                 : Optional.empty();
     }
@@ -211,9 +212,14 @@ public class ParserUtil {
      * Parses a {@code Optional<String> timestamp} into an
      * {@code Optional<Timestamp>} if {@code timestamp} is present.
      */
-    public static Optional<Timestamp> parseTimestamp(Optional<String> timestamp)
+    public static Optional<Timestamp> parseTimestamp(Optional<String> date, Optional<String> timestamp)
             throws IllegalValueException {
         assert timestamp != null;
+
+        if (date.isPresent() && timestamp.isPresent()) {
+            return Optional.of(new Timestamp(date.get(), timestamp.get()));
+        }
+
         return timestamp.isPresent()
                 ? Optional.of(new Timestamp(timestamp.get()))
                 : Optional.empty();

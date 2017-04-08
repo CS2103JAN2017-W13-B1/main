@@ -51,8 +51,8 @@ public class TaskBuilder {
         return this;
     }
 
-    public TaskBuilder withTimestamp(String timestamp) throws IllegalValueException {
-        this.task.setTimestamp(new Timestamp(timestamp));
+    public TaskBuilder withTimestamp(String deadline, String timestamp) throws IllegalValueException {
+        this.task.setTimestamp(new Timestamp(deadline, timestamp));
         return this;
     }
 

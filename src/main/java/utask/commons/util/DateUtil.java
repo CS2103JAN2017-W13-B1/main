@@ -3,6 +3,7 @@ package utask.commons.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,10 @@ public class DateUtil {
     private static final String[] WAYS_TO_SPELL_TODAY = {"today"};
     private static final String[] WAYS_TO_SPELL_TOMORROW = {"tomorrow", "tmr", "tmrw"};
 
+    private static final Calendar calendar;
+
     static {
+        calendar = Calendar.getInstance();
         knownPatterns = new ArrayList<SimpleDateFormat>();
         addSupportedDateFormatToKnownPattern(SUPPORTED_DATE_FORMAT);
 
@@ -44,11 +48,12 @@ public class DateUtil {
         }
     }
 
-    public static boolean isValidDate(String string) {
+    public static boolean isWordAValidDate(String string) {
+        assert string != null && !string.isEmpty();
+
         if (parseStringToDate(string).isPresent()) {
             return true;
         }
-
         return false;
     }
 
@@ -70,18 +75,69 @@ public class DateUtil {
     public static Optional<Date> parseStringByWord(String string) {
         if (wordPatterns.containsKey(string)) {
             int offset = wordPatterns.get(string);
+
+            //TODO
             Date date = new Date();
-            offset += date.getDate();
-            date.setDate(offset);
+            //As date() gets the current time, this ensure the time starts from 00
+            date = clearTimeInDate(date);
+            date = addDayOfMonthToDate(date, offset);
             return Optional.of(date);
         }
 
         return Optional.empty();
     }
 
-    public static String getDeadlineFormat(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyy");
-        String formattedDate = formatter.format(date);
-        return formattedDate;
+//    public static String getDeadlineFormat(Date date) {
+//        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyy");
+//        String formattedDate = formatter.format(date);
+//        return formattedDate;
+//    }
+
+    public static Date addHHMMStringToDate(Date date, String hhmm) {
+        assert hhmm != null && !hhmm.isEmpty() && hhmm.length() == 4;
+
+        String hh = hhmm.substring(0, 2);
+        String mm = hhmm.substring(3, 4);
+
+        int hours = Integer.parseInt(hh);
+        int minutes = Integer.parseInt(mm);
+
+        date = addHoursToDate(date, hours);
+        date = addMinutesToDate(date, minutes);
+
+        return date;
+    }
+
+    //hours in HH 24hrs
+    public static Date addHoursToDate(Date date, int hours) {
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, hours);
+        return calendar.getTime();
+    }
+
+    public static Date addMinutesToDate(Date date, int minutes) {
+        calendar.setTime(date);
+        calendar.add(Calendar.MINUTE, minutes);
+        return calendar.getTime();
+    }
+
+    public static Date addDayOfMonthToDate(Date date, int dayOfMonth) {
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, dayOfMonth);
+        return calendar.getTime();
+    }
+
+    public static Date clearTimeInDate(Date date) {
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTime();
+    }
+
+    public static String getFormattedTime(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
+        String formattedTime = formatter.format(date);
+        return formattedTime;
     }
 }

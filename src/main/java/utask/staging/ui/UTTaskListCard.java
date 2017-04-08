@@ -1,7 +1,6 @@
 package utask.staging.ui;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -79,7 +78,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
         }
 
         if (!task.getTimestamp().isEmpty()) {
-            sb.append(", " + task.getTimestamp().value);
+            sb.append(", " + task.getTimestamp().toString());
         }
 
         return sb.toString();
@@ -89,11 +88,7 @@ public class UTTaskListCard extends StagingUiPart<Region> {
     private String getPrettyDate(ReadOnlyTask task) {
         assert task != null;
         Date deadline = null;
-        try {
-            deadline = task.getDeadline().getDate();
-        } catch (ParseException e) {
-            assert false : "Should never have parse error, regex should check input";
-        }
+        deadline = task.getDeadline().getDate();
         DateFormat fmt = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         if (fmt.format(deadline).equals(fmt.format(new Date()))) {
             return fmt.format(deadline) + ", today";

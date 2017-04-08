@@ -32,7 +32,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
 //        phone.setText(person.getDeadline().value);
         address.setText(person.getFrequency().value);
-        email.setText(person.getTimestamp().value);
+//        email.setText(person.getTimestamp());
         initTags(person);
     }
 

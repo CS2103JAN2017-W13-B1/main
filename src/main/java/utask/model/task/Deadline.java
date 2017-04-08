@@ -19,6 +19,7 @@ public class Deadline {
             + "31(?!(?:0[2469]|11))|30(?!02))(0[1-9]|1[0-2])([1-2]\\d{1})";
     public static final String DEADLINE_REMOVAL_VALIDATION_REGEX = "^[-]$";
 
+    //Denotes that this will be the attribute we are interested to serialise in this class
     @XmlElement
     private final Date date;
 
@@ -29,13 +30,17 @@ public class Deadline {
      *             if given deadline string is invalid.
      */
     public Deadline(String deadline) throws IllegalValueException {
-        assert deadline != null;
+        assert deadline != null && !deadline.isEmpty();
         String trimmedDeadline = deadline.trim();
         if (!isValidDeadline(trimmedDeadline)) {
             throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
         }
 
-        date = DateUtil.parseStringToDate(deadline).get();
+        if (deadline.equals("-")) {
+            date = null;
+        } else {
+            date = DateUtil.parseStringToDate(deadline).get();
+        }
     }
 
     public Deadline(Date date) {
@@ -61,7 +66,7 @@ public class Deadline {
      * @return date
      * @throws ParseException
      */
-    public Date getDate() throws ParseException {
+    public Date getDate() {
         assert date != null;
 
 //        DateFormat fmt = new SimpleDateFormat("ddMMyyyy");
@@ -79,7 +84,7 @@ public class Deadline {
     public static boolean isValidDeadline(String test) {
         return (test.matches(DEADLINE_VALIDATION_REGEX)
                 || test.matches(DEADLINE_REMOVAL_VALIDATION_REGEX)
-                || DateUtil.isValidDate(test));
+                || DateUtil.isWordAValidDate(test));
     }
 
     @Override
@@ -105,5 +110,4 @@ public class Deadline {
         }
         return date.hashCode();
     }
-
 }

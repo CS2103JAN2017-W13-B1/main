@@ -78,8 +78,11 @@ public class SampleDataUtil {
      * This method is used to generate sample Event task
      */
     private static Task generateEventTaskWithSeed(int seed) throws Exception {
+
+        String deadline = (generateDeadline(seed));
+
         return new EventTask(new Name("Event Task " + seed),
-                new Deadline(generateDeadline(seed)), new Timestamp("0000 to 2359"),
+                new Deadline(deadline), new Timestamp(deadline, "0000 to 2359"),
                 new Frequency("Every " + randomFrequency()),
                 new UniqueTagList(new Tag(
                         new TagName("tag" + Math.abs(seed)),
