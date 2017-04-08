@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import utask.commons.util.CollectionUtil;
 import utask.model.tag.UniqueTagList;
+import utask.model.task.abs.AbsEditTaskDescriptor;
 
 //@@author A0138423J
 public class EditTaskDescriptor extends AbsEditTaskDescriptor {

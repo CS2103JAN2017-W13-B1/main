@@ -1,7 +1,9 @@
-package utask.model.task;
+package utask.model.task.stub;
 
 import java.text.ParseException;
 import java.util.Date;
+
+import utask.model.task.abs.AbsDeadline;
 
 //@@author A0138423J
 public class DeadlineStub extends AbsDeadline {

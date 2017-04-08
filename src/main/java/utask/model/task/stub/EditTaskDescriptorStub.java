@@ -1,8 +1,14 @@
-package utask.model.task;
+package utask.model.task.stub;
 
 import java.util.Optional;
 
 import utask.model.tag.UniqueTagList;
+import utask.model.task.Deadline;
+import utask.model.task.Frequency;
+import utask.model.task.Name;
+import utask.model.task.Status;
+import utask.model.task.Timestamp;
+import utask.model.task.abs.AbsEditTaskDescriptor;
 
 //@@author A0138423J
 public class EditTaskDescriptorStub extends AbsEditTaskDescriptor {

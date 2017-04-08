@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import utask.commons.exceptions.IllegalValueException;
+import utask.model.task.abs.AbsDeadline;
 
 /**
  * Represents a Task's deadline in the UTask. Guarantees: immutable; is valid as
