@@ -6,8 +6,8 @@ import static utask.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
+import utask.commons.core.Messages;
 import utask.logic.commands.UpdateCommand;
-import utask.model.tag.TagName;
 import utask.model.task.Deadline;
 import utask.model.task.Name;
 import utask.testutil.TestTask;
@@ -99,7 +99,7 @@ public class EditCommandTest extends UTaskGuiTest {
 //        assertResultMessage(Frequency.MESSAGE_FREQUENCY_CONSTRAINTS);
 
         commandBox.runCommand("update 1 /tag *&");
-        assertResultMessage(TagName.MESSAGE_TAG_CONSTRAINTS);
+        assertResultMessage(Messages.MESSAGE_TAG_CONSTRAINTS);
     }
 
 //    @Test

@@ -51,6 +51,7 @@ import utask.logic.commands.SortInFindCommand;
 import utask.logic.commands.UnaliasCommand;
 import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
+import utask.logic.commands.UpdateTagCommand;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.Model;
 import utask.model.ModelManager;
@@ -356,6 +357,24 @@ public class LogicManagerTest {
                 Collections.emptyList());
     }
 
+    @Test
+    public void execute_updatetag_invalid() {
+        assertCommandFailure("updatetag invalid@#", Messages.MESSAGE_TAG_CONSTRAINTS);
+    }
+
+    @Test
+    public void execute_updatetag_successful() throws CommandException, DuplicateTagException, IllegalValueException {
+        logic.execute("createtag tag /color blue");
+        String tagName = "school";
+        String color = "red";
+        UTask expectedUT = new UTask();
+        Tag updatedTag = new Tag(new TagName(tagName), new TagColorIndex(color));
+        expectedUT.addTag(updatedTag);
+        assertCommandSuccess("updatetag tag /name" + tagName + " /color " + color,
+                String.format(UpdateTagCommand.MESSAGE_SUCCESS, updatedTag), expectedUT,
+                expectedUT.getTaskList());
+    }
+
     //@@ author
 
     @Test
@@ -368,7 +387,7 @@ public class LogicManagerTest {
                 Timestamp.MESSAGE_TIMESTAMP_CONSTRAINTS);
         assertCommandFailure(
                 "create valid name /by 111111 /from 0000 to 1200 /repeat Every Monday /tag ;a!!e",
-                TagName.MESSAGE_TAG_CONSTRAINTS);
+                Messages.MESSAGE_TAG_CONSTRAINTS);
     }
 
     @Test

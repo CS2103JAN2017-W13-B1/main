@@ -191,7 +191,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateTag(Tag tagToReplace, Tag updatedTag) throws DuplicateTagException {
+    public void updateTag(Tag tagToReplace, Tag updatedTag) {
         assert tagToReplace != null;
         assert updatedTag != null;
         uTask.updateTag(tagToReplace, updatedTag);
