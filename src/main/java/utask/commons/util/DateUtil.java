@@ -18,7 +18,7 @@ public class DateUtil {
     private static final int DAYS_DIFFERENCE_TODAY = 0;
     private static final int DAYS_DIFFERENCE_TOMORROW = 1;
 
-    private static final String[] SUPPORTED_DATE_FORMAT = {"ddMMyy", "dd MM", "ddMMyyyy"};
+    private static final String[] SUPPORTED_DATE_FORMAT = {"ddMMyy"};
     private static final String[] WAYS_TO_SPELL_TODAY = {"today"};
     private static final String[] WAYS_TO_SPELL_TOMORROW = {"tomorrow", "tmr", "tmrw", "next day"};
 
@@ -44,7 +44,9 @@ public class DateUtil {
     private static void addSupportedDateFormatToKnownPattern(String[] dates) {
         for (int i = 0; i < dates.length; i++) {
             String key = dates[i];
-            knownPatterns.add(new SimpleDateFormat(key));
+            SimpleDateFormat dateFormat = new SimpleDateFormat(key);
+            dateFormat.setLenient(false);
+            knownPatterns.add(dateFormat);
         }
     }
 
