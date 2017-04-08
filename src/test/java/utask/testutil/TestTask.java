@@ -96,13 +96,29 @@ public class TestTask implements ReadOnlyTask {
     }
 
     //TODO
+//    public String getAddCommand() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("create " + this.getName().fullName + " ");
+//        sb.append("/by " + this.getDeadline() + " ");
+//        sb.append("/from " + this.getTimestamp() + " ");
+//        sb.append("/repeat " + this.getFrequency().value + " ");
+//        sb.append("/status " + this.getStatus().toString() + " ");
+//        this.getTags().asObservableList().stream().forEach(s -> sb.append("/tag " + s.getTagname().toString() + " "));
+//        return sb.toString();
+//    }
+
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("create " + this.getName().fullName + " ");
-        sb.append("/by " + this.getDeadline() + " ");
-        sb.append("/from " + this.getTimestamp() + " ");
-        sb.append("/repeat " + this.getFrequency().value + " ");
-        sb.append("/status " + this.getStatus().toString() + " ");
+
+        if (this.getDeadline() != null) {
+            sb.append("/by " + this.getDeadline().toCommandString() + " ");
+        }
+
+        if (this.getTimestamp() != null) {
+            sb.append("/from " + this.getTimestamp().toString() + " ");
+        }
+
         this.getTags().asObservableList().stream().forEach(s -> sb.append("/tag " + s.getTagname().toString() + " "));
         return sb.toString();
     }

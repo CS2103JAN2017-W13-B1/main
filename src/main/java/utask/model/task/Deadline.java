@@ -1,6 +1,8 @@
 package utask.model.task;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -95,6 +97,13 @@ public class Deadline {
         }
 
         return date.toString();
+    }
+
+    //TODO FOR TEST BY JIAHAO
+    public String toCommandString() {
+        DateFormat fmt = new SimpleDateFormat("ddMMyy");
+        String deadline = fmt.format(getDate());
+        return deadline;
     }
 
     @Override

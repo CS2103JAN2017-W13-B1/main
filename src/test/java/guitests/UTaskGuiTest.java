@@ -13,11 +13,13 @@ import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.FindOverlayList;
 import guitests.guihandles.MainGuiHandle;
 import guitests.guihandles.MainMenuHandle;
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TaskCardHandle;
+import guitests.guihandles.TaskListPanelHandle;
+import guitests.guihandles.TodoListPanelHandle;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import utask.TestApp;
@@ -47,7 +49,9 @@ public abstract class UTaskGuiTest {
      */
     protected MainGuiHandle mainGui;
     protected MainMenuHandle mainMenu;
-    protected PersonListPanelHandle personListPanel;
+    protected TodoListPanelHandle todoListPanel;
+    protected TaskListPanelHandle taskListPanel;
+    protected FindOverlayList findOverlayList;
     protected ResultDisplayHandle resultDisplay;
     protected CommandBoxHandle commandBox;
     private Stage stage;
@@ -64,10 +68,13 @@ public abstract class UTaskGuiTest {
 
     @Before
     public void setup() throws Exception {
+        //FxToolkit.hideStage();
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
-            personListPanel = mainGui.getPersonListPanel();
+//            todoListPanel = mainGui.getTodoListPanel();
+//            taskListPanel = mainGui.getTaskListPanel();
+            findOverlayList = mainGui.getfindOverlayList();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();
             this.stage = stage;
@@ -77,6 +84,12 @@ public abstract class UTaskGuiTest {
         FxToolkit.showStage();
         while (!stage.isShowing());
         mainGui.focusOnMainApp();
+    }
+
+    @After
+    public void cleanup() throws TimeoutException {
+        FxToolkit.cleanupStages();
+        //FxToolkit.hideStage();
     }
 
     /**
@@ -96,23 +109,18 @@ public abstract class UTaskGuiTest {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
     }
 
-    @After
-    public void cleanup() throws TimeoutException {
-        FxToolkit.cleanupStages();
-    }
-
     /**
      * Asserts the person shown in the card is same as the given person
      */
-    public void assertMatching(ReadOnlyTask person, PersonCardHandle card) {
-        assertTrue(TestUtil.compareCardAndTask(card, person));
+    public void assertMatching(ReadOnlyTask task, TaskCardHandle card) {
+        assertTrue(TestUtil.compareCardAndTask(card, task));
     }
 
     /**
      * Asserts the size of the person list is equal to the given number.
      */
     protected void assertListSize(int size) {
-        int numberOfPeople = personListPanel.getNumberOfPeople();
+        int numberOfPeople = todoListPanel.getNumberOfPeople();
         assertEquals(size, numberOfPeople);
     }
 
@@ -126,5 +134,10 @@ public abstract class UTaskGuiTest {
     public void raise(BaseEvent e) {
         //JUnit doesn't run its test cases on the UI thread. Platform.runLater is used to post event on the UI thread.
         Platform.runLater(() -> EventsCenter.getInstance().post(e));
+    }
+
+    protected void assertSearchListSize(int size) {
+        int numberOfTasks = findOverlayList.getResultsSize();
+        assertEquals(size, numberOfTasks);
     }
 }

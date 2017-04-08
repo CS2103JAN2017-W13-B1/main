@@ -64,9 +64,13 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model, storage);
 
-        ui = new UiManager(logic, config, userPrefs);
+        ui = getUiManager();
 
         initEventsCenter();
+    }
+
+    protected UiManager getUiManager() {
+        return new UiManager(logic, config, userPrefs);
     }
 
     private String getApplicationParameter(String parameterName) {

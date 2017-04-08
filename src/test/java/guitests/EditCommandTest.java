@@ -5,7 +5,7 @@ import static utask.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.TaskCardHandle;
 import utask.logic.commands.UpdateCommand;
 import utask.model.tag.TagName;
 import utask.model.task.Deadline;
@@ -124,12 +124,12 @@ public class EditCommandTest extends UTaskGuiTest {
         commandBox.runCommand("update " + filteredPersonListIndex + " " + detailsToEdit);
 
         // confirm the new card contains the right data
-        PersonCardHandle editedCard = personListPanel.navigateToPerson(editedPerson.getName().fullName);
+        TaskCardHandle editedCard = todoListPanel.navigateToTask(editedPerson.getName().fullName);
         assertMatching(editedPerson, editedCard);
 
         // confirm the list now contains all previous persons plus the person with updated details
         expectedPersonsList[addressBookIndex - 1] = editedPerson;
-        assertTrue(personListPanel.isListMatching(expectedPersonsList));
+        assertTrue(todoListPanel.isListMatching(expectedPersonsList));
         assertResultMessage(String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, editedPerson));
     }
 }

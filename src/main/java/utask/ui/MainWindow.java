@@ -41,7 +41,7 @@ public class MainWindow extends UiPart<Region> {
     private static final int MIN_HEIGHT = 650;
     private static final int MIN_WIDTH = 620;
 
-    private Stage primaryStage;
+    protected Stage primaryStage;
     private Logic logic;
     private Config config;
 
@@ -90,9 +90,10 @@ public class MainWindow extends UiPart<Region> {
 
         Scene scene = createScene();
         setStyleSheets(scene);
-        this.primaryStage.setScene(scene);
+        primaryStage.setScene(scene);
         setEventHandlers();
         setAccelerators();
+
 
         EventsCenter.getInstance().registerHandler(this);
     }
@@ -101,7 +102,7 @@ public class MainWindow extends UiPart<Region> {
      * Creates Scene
      * JFXDecorator is used to create 'material' styled window frame
      * */
-    private Scene createScene() {
+    protected Scene createScene() {
         JFXDecorator decorator = new JFXDecorator(this.primaryStage, getRoot(), false, true, true);
         decorator.setPrefSize(MIN_WIDTH, MIN_HEIGHT);
         decorator.setCustomMaximize(true);

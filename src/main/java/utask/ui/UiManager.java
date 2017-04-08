@@ -29,10 +29,11 @@ public class UiManager extends ComponentManager implements Ui {
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
-    private Logic logic;
-    private Config config;
-    private UserPrefs prefs;
+    protected Logic logic;
+    protected Config config;
+    protected UserPrefs prefs;
     private MainWindow mainWindow;
+    protected Stage primaryStage;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
@@ -44,19 +45,25 @@ public class UiManager extends ComponentManager implements Ui {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting Staging UI...");
+
+        this.primaryStage = primaryStage;
         primaryStage.setTitle(config.getAppTitle());
 
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+            mainWindow = createMainWindow(primaryStage);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
+    }
+
+    protected MainWindow createMainWindow(Stage primaryStage) {
+        return new MainWindow(primaryStage, config, prefs, logic);
     }
 
     @Override

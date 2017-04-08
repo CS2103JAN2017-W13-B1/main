@@ -102,14 +102,10 @@ public class DateUtil {
         String hh = hhmm.substring(0, 2);
         String mm = hhmm.substring(2, 4);
 
-        System.out.println(mm);
         int hours = Integer.parseInt(hh);
         int minutes = Integer.parseInt(mm);
-        System.out.println(minutes);
         date = addHoursToDate(date, hours);
         date = addMinutesToDate(date, minutes);
-
-        System.out.println(date);
 
         return date;
     }

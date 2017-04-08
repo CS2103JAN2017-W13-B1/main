@@ -10,7 +10,6 @@ import guitests.guihandles.AlertDialogHandle;
 import utask.commons.events.storage.DataSavingExceptionEvent;
 
 public class ErrorDialogGuiTest extends UTaskGuiTest {
-
     @Test
     public void showErrorDialogs() throws InterruptedException {
         //Test DataSavingExceptionEvent dialog
@@ -18,7 +17,5 @@ public class ErrorDialogGuiTest extends UTaskGuiTest {
         AlertDialogHandle alertDialog = mainGui.getAlertDialog("File Op Error");
         assertTrue(alertDialog.isMatching("Could not save data", "Could not save data to file" + ":\n"
                                                                          + "java.io.IOException: Stub"));
-
     }
-
 }

@@ -22,6 +22,6 @@ public class ClearCommandTest extends UTaskGuiTest {
     private void assertClearCommandSuccess() {
         commandBox.runCommand("clear");
         assertListSize(0);
-        assertResultMessage("Address book has been cleared!");
+        assertResultMessage("UTask has been cleared!");
     }
 }
