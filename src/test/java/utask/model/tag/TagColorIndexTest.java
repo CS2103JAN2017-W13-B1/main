@@ -42,9 +42,9 @@ public class TagColorIndexTest {
         assertEquals(t, toCompare); //checking if both TagColorIndex tally
     }
 
-    @Test(expected = IllegalValueException.class)
+    @Test(expected = AssertionError.class)
     public void invalidTagColorIndexConstructor() throws IllegalValueException {
-        TagColorIndex t = new TagColorIndex("$%^&*("); // constructor with random symbols
+        TagColorIndex t = null;
         TagColorIndex toCompare = new TagColorIndex(t);
         assertEquals(t, toCompare); //checking if both TagColorIndex tally
     }

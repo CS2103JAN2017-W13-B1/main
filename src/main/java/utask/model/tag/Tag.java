@@ -14,7 +14,6 @@ public class Tag {
 
     protected TagName tagname;
     protected TagColorIndex tagcolorindex;
-    protected Integer tagCount;
 
     /**
      * Every field must be present and not null.
@@ -24,7 +23,6 @@ public class Tag {
 
         this.tagname = tagName;
         this.tagcolorindex = tagColorIndex;
-        tagCount = 0;
     }
 
     public Tag(Tag tag) {
@@ -32,7 +30,6 @@ public class Tag {
 
         this.tagname = tag.getTagName();
         this.tagcolorindex = tag.getTagColorIndex();
-        tagCount = 0;
     }
 
     public Tag() {
@@ -54,18 +51,9 @@ public class Tag {
         this.tagcolorindex = tagcolorindex;
     }
 
-    public Integer getTagCount() {
-        return tagCount;
-    }
-
-    public void setTagCount(Integer tagCount) {
-        this.tagCount = tagCount;
-    }
-
     public void setTag(Tag updatedTag) {
         this.tagname = updatedTag.tagname;
         this.tagcolorindex = updatedTag.tagcolorindex;
-        this.tagCount = updatedTag.tagCount;
     }
 
     @Override

@@ -32,9 +32,9 @@ public class TagNameTest {
         assertEquals(t, toCompare); //checking if both TagName tally
     }
 
-    @Test(expected = IllegalValueException.class)
+    @Test(expected = AssertionError.class)
     public void invalidTagNameConstructor() throws IllegalValueException {
-        TagName t = new TagName("$%^&*("); // constructor with random symbols
+        TagName t = null;
         TagName toCompare = new TagName(t);
         assertEquals(t, toCompare); //checking if both TagName tally
     }
