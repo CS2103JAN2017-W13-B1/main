@@ -20,8 +20,8 @@ import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.DuplicateTaskException;
 
 /**
- * Wraps all data at the utask level
- * Duplicates are not allowed (by .equals comparison)
+ * Wraps all data at the utask level Duplicates are not allowed (by .equals
+ * comparison)
  */
 public class UTask implements ReadOnlyUTask {
 
@@ -29,18 +29,20 @@ public class UTask implements ReadOnlyUTask {
     private final UniqueTagList tags;
 
     /*
-     * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
+     * The 'unusual' code block below is an non-static initialization block,
+     * sometimes used to avoid duplication between constructors. See
+     * https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * Note that non-static init blocks are not recommended to use. There are
+     * other ways to avoid duplication among constructors.
      */
     {
         tasks = new UniqueTaskList();
         tags = new UniqueTagList();
     }
 
-    public UTask() {}
+    public UTask() {
+    }
 
     /**
      * Creates a task using the Task and Tags in the {@code toBeCopied}
@@ -50,7 +52,7 @@ public class UTask implements ReadOnlyUTask {
         resetData(toBeCopied);
     }
 
-    //@@author A0138493W
+    // @@author A0138493W
     /**
      * Sort task by comparator
      */
@@ -59,16 +61,17 @@ public class UTask implements ReadOnlyUTask {
         FXCollections.sort(tasks.getInternalList(), comparator);
     }
 
-    //@@author
+    // @@author
 
-//// list overwrite operations
+    //// list overwrite operations
 
     public void setTasks(List<? extends ReadOnlyTask> tasks)
             throws UniqueTaskList.DuplicateTaskException {
         this.tasks.setTasks(tasks);
     }
 
-    public void setTags(Collection<Tag> tags) throws UniqueTagList.DuplicateTagException {
+    public void setTags(Collection<Tag> tags)
+            throws UniqueTagList.DuplicateTagException {
         this.tags.setTags(tags);
     }
 
@@ -87,31 +90,37 @@ public class UTask implements ReadOnlyUTask {
         syncMasterTagListWith(tasks);
     }
 
-//// task-level operations
+    //// task-level operations
 
     /**
-     * Adds a task to UTask.
-     * Also checks the new task's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the task to point to those in {@link #tags}.
+     * Adds a task to UTask. Also checks the new task's tags and updates
+     * {@link #tags} with any new tags found, and updates the Tag objects in the
+     * task to point to those in {@link #tags}.
      *
-     * @throws UniqueTaskList.DuplicateTaskException if an equivalent task already exists.
+     * @throws UniqueTaskList.DuplicateTaskException
+     *             if an equivalent task already exists.
      */
     public void addTask(Task p) throws UniqueTaskList.DuplicateTaskException {
         syncMasterTagListWith(p);
         tasks.add(p);
     }
 
-    //@@author A0138423J
+    // @@author A0138423J
     /**
-     * Updates the original task in the list {@code taskToEdit} with {@code editedReadOnlyTask}.
-     * {@code UTask}'s tag list will be updated with the tags of {@code editedReadOnlyTask}.
+     * Updates the original task in the list {@code taskToEdit} with
+     * {@code editedReadOnlyTask}. {@code UTask}'s tag list will be updated with
+     * the tags of {@code editedReadOnlyTask}.
+     *
      * @see #syncMasterTagListWith(Task)
      *
-     * @throws DuplicateTaskException if updating the task's details causes the task to be equivalent to
-     *      another existing task in the list.
-     * @throws IndexOutOfBoundsException if {@code index} < 0 or >= the size of the list.
+     * @throws DuplicateTaskException
+     *             if updating the task's details causes the task to be
+     *             equivalent to another existing task in the list.
+     * @throws IndexOutOfBoundsException
+     *             if {@code index} < 0 or >= the size of the list.
      */
-    public void updateTask(ReadOnlyTask taskToEdit, ReadOnlyTask editedReadOnlyTask)
+    public void updateTask(ReadOnlyTask taskToEdit,
+            ReadOnlyTask editedReadOnlyTask)
             throws UniqueTaskList.DuplicateTaskException {
         assert taskToEdit != null;
         assert editedReadOnlyTask != null;
@@ -119,12 +128,11 @@ public class UTask implements ReadOnlyUTask {
         syncMasterTagListWith((Task) editedReadOnlyTask);
         tasks.updateTask(taskToEdit, editedReadOnlyTask);
     }
-    //@@author
+    // @@author
 
     /**
-     * Ensures that every tag in this task:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * Ensures that every tag in this task: - exists in the master list
+     * {@link #tags} - points to a Tag object in the master list
      */
     private void syncMasterTagListWith(Task tempTask) {
         final UniqueTagList taskTags = tempTask.getTags();
@@ -135,23 +143,26 @@ public class UTask implements ReadOnlyUTask {
         final Map<Tag, Tag> masterTagObjects = new HashMap<>();
         tags.forEach(tag -> masterTagObjects.put(tag, tag));
 
-        // Rebuild the list of task tags to point to the relevant tags in the master tag list.
+        // Rebuild the list of task tags to point to the relevant tags in the
+        // master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
-        taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        taskTags.forEach(
+            tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         tempTask.setTags(new UniqueTagList(correctTagReferences));
     }
 
     /**
-     * Ensures that every tag in these tasks:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Task)
+     * Ensures that every tag in these tasks: - exists in the master list
+     * {@link #tags} - points to a Tag object in the master list
+     *
+     * @see #syncMasterTagListWith(Task)
      */
     private void syncMasterTagListWith(UniqueTaskList tasks) {
         tasks.forEach(this::syncMasterTagListWith);
     }
 
-    public boolean removeTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
+    public boolean removeTask(ReadOnlyTask key)
+            throws UniqueTaskList.TaskNotFoundException {
         if (tasks.remove(key)) {
             return true;
         } else {
@@ -159,14 +170,16 @@ public class UTask implements ReadOnlyUTask {
         }
     }
 
-//// tag-level operations
+    //// tag-level operations
     // @@ author A0138423J
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
     public void deleteTag(Tag t) {
-        tags.delete(t);
+        if (tags.delete(t)) {
+            tasks.deleteTaskWithDeletedTag(t);
+        }
     }
 
     public void updateTag(Tag tagToReplace, Tag updatedTag) {
@@ -177,11 +190,12 @@ public class UTask implements ReadOnlyUTask {
 
     // @@ author
 
-//// util methods
+    //// util methods
 
     @Override
     public String toString() {
-        return tasks.asObservableList().size() + " tasks, " + tags.asObservableList().size() +  " tags";
+        return tasks.asObservableList().size() + " tasks, "
+                + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
@@ -199,13 +213,14 @@ public class UTask implements ReadOnlyUTask {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UTask // instanceof handles nulls
-                && this.tasks.equals(((UTask) other).tasks)
-                && this.tags.equalsOrderInsensitive(((UTask) other).tags));
+                        && this.tasks.equals(((UTask) other).tasks) && this.tags
+                                .equalsOrderInsensitive(((UTask) other).tags));
     }
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
+        // use this method for custom fields hashing instead of implementing
+        // your own
         return Objects.hash(tasks, tags);
     }
 }

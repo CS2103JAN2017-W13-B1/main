@@ -9,9 +9,7 @@ import utask.commons.util.UpdateUtil;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.task.ReadOnlyTask;
-import utask.model.task.Task;
-import utask.model.task.UniqueTaskList.DuplicateTaskException;
-import utask.ui.helper.DelayedExecution;;
+import utask.model.task.Task;;
 
 //@@author A0138423J
 /**
@@ -33,6 +31,7 @@ public class DoneCommand extends Command implements ReversibleCommand {
     public static final String MESSAGE_DONE_TASK_SUCCESS = "Done task: %1$s";
     public static final String MESSAGE_NOT_DONE = "A number for index must be provided.";
     public static final String MESSAGE_DUPLICATE_STATUS = "This task is already completed in uTask.";
+    public static final String MESSAGE_DUPLICATE_TASK = "A similar completed task is already found in uTask.";
     public static final String MESSAGE_INTERNAL_ERROR = "Error updating Status.";
 
     private final int filteredTaskListIndex;
@@ -65,19 +64,13 @@ public class DoneCommand extends Command implements ReversibleCommand {
         }
         editedTask = null;
         try {
-
             editedTask = UpdateUtil.createEditedTask(taskToEdit, STATUS_TO);
+            if (model.getFilteredTaskList().contains(editedTask)) {
+                throw new CommandException(MESSAGE_DUPLICATE_TASK);
+            }
+            model.updateTask(taskToEdit, editedTask);
+            model.addUndoCommand(this);
             notifyUI(taskToEdit);
-
-            // BAD CODE -- BAD CODE -- BAD CODE
-            new DelayedExecution((e) -> {
-                try {
-                    model.updateTask(taskToEdit, editedTask);
-                    model.addUndoCommand(this);
-                } catch (DuplicateTaskException e1) {
-                    assert false : "Should never happen?";
-                }
-            }).run();
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INTERNAL_ERROR);
         }

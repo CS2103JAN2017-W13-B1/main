@@ -14,9 +14,6 @@ public class DeleteTagCommandParser {
     public Command parse(String args) {
 
         try {
-            System.out.println(args);
-            String temp = args.trim();
-            System.out.println(temp);
             return new DeleteTagCommand(args);
         } catch (NoSuchElementException nsee) {
             return new IncorrectCommand(

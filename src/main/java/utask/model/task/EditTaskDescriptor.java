@@ -17,12 +17,12 @@ public class EditTaskDescriptor {
     }
 
     public EditTaskDescriptor(EditTaskDescriptor toCopy) {
-        this.name = toCopy.getName();
-        this.deadLine = toCopy.getDeadline();
-        this.timeStamp = toCopy.getTimeStamp();
-        this.frequency = toCopy.getFrequency();
-        this.tags = toCopy.getTags();
-        this.status = toCopy.getStatus();
+        name = toCopy.getName();
+        deadLine = toCopy.getDeadline();
+        timeStamp = toCopy.getTimeStamp();
+        frequency = toCopy.getFrequency();
+        tags = toCopy.getTags();
+        status = toCopy.getStatus();
     }
 
     /**

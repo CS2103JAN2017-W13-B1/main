@@ -14,7 +14,7 @@ public class FloatingTaskTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void validFloatingTaskConstructorAndValidUpdate() throws Exception {
+    public void valid_FloatingTaskConstructor_AndValidUpdate() throws Exception {
         // test floating task creation
         Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);
         // test update of correct task attributes
@@ -24,7 +24,7 @@ public class FloatingTaskTest {
     }
 
     @Test
-    public void validFloatingTaskConstructorAndCopyReadOnlyTask() throws Exception {
+    public void valid_FloatingTaskConstructor_AndCopyReadOnlyTask() throws Exception {
         // test update of correct task attributes
         ReadOnlyTask taskToOverwrite = SampleDataUtil.generateFloatingTaskWithSeed(2);
         // test floating task creation
@@ -33,7 +33,7 @@ public class FloatingTaskTest {
     }
 
     @Test
-    public void validFloatingTaskConstructorAndInvalidNameUpdate()
+    public void valid_FloatingTaskConstructor_AndInvalidNameUpdate()
             throws Exception {
         // test floating task creation
         Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);
@@ -46,7 +46,7 @@ public class FloatingTaskTest {
     }
 
     @Test
-    public void validFloatingTaskConstructorAndInvalidFrequencyUpdate()
+    public void valid_FloatingTaskConstructor_AndInvalidFrequencyUpdate()
             throws Exception {
         // test floating task creation
         Task taskToReplace = SampleDataUtil.generateFloatingTaskWithSeed(1);

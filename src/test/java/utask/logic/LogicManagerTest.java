@@ -35,7 +35,6 @@ import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CommandResult;
 import utask.logic.commands.CreateCommand;
 import utask.logic.commands.CreateTagCommand;
-//import utask.logic.commands.CreateCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.DeleteTagCommand;
 import utask.logic.commands.DoneCommand;
@@ -159,8 +158,8 @@ public class LogicManagerTest {
 
     /**
      * Executes the command, confirms that a CommandException is thrown and that
-     * the result message is correct. Both the 'UTask' and the 'last
-     * shown list' are verified to be unchanged.
+     * the result message is correct. Both the 'UTask' and the 'last shown list'
+     * are verified to be unchanged.
      *
      * @see #assertCommandBehavior(boolean, String, String, ReadOnlyUTask, List)
      */
@@ -207,18 +206,18 @@ public class LogicManagerTest {
         assertEquals(expectedUTask, latestSavedUTask);
     }
 
-    //@@ author A0138493W
+    // @@ author A0138493W
     @Test
     public void execute_relocate_invalidPath() {
         String invalidPath = "this/path/is/invalid";
-        assertCommandFailure("relocate " + invalidPath,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RelocateCommand.MESSAGE_USAGE));
+        assertCommandFailure("relocate " + invalidPath, String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RelocateCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void execute_relocate_defaultPathSuccess() {
-        assertCommandSuccess("relocate",
-                String.format(RelocateCommand.MESSAGE_RELOCATE_TASK_SUCCESS, "data"),
+        assertCommandSuccess("relocate", String
+                .format(RelocateCommand.MESSAGE_RELOCATE_TASK_SUCCESS, "data"),
                 new UTask(), Collections.emptyList());
     }
 
@@ -231,29 +230,34 @@ public class LogicManagerTest {
             validPath = "/Users/James/Desktop";
         }
         assertCommandSuccess("relocate " + validPath,
-                String.format(RelocateCommand.MESSAGE_RELOCATE_TASK_SUCCESS, validPath),
+                String.format(RelocateCommand.MESSAGE_RELOCATE_TASK_SUCCESS,
+                        validPath),
                 new UTask(), Collections.emptyList());
     }
 
     @Test
     public void execute_alias_invalidAliasFormat() {
         String invalidAlias = "%$#@";
-        assertCommandFailure("alias " + invalidAlias + " /as create" ,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+        assertCommandFailure("alias " + invalidAlias + " /as create",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        AliasCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void execute_alias_commandWordNotExist() {
         String notExistCommandword = "lalaland";
         assertCommandFailure("alias a /as " + notExistCommandword,
-                String.format(AliasCommand.MESSAGE_COMMAND_WORD_NOT_EXIST, notExistCommandword));
+                String.format(AliasCommand.MESSAGE_COMMAND_WORD_NOT_EXIST,
+                        notExistCommandword));
     }
 
     @Test
     public void execute_alias_aliasCannotBeDefaultCommandWord() {
         String defaultCommandword = "create";
         assertCommandFailure("alias " + defaultCommandword + " /as clear",
-                String.format(AliasCommand.MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND, defaultCommandword));
+                String.format(
+                        AliasCommand.MESSAGE_ALIAS_CANNOT_BE_DEFAULT_COMMAND,
+                        defaultCommandword));
     }
 
     @Test
@@ -261,7 +265,8 @@ public class LogicManagerTest {
         String alias = "c";
         String defaultCommand = "create";
         assertCommandSuccess("alias " + alias + " /as " + defaultCommand,
-                String.format(AliasCommand.MESSAGE_CREATE_ALIAS_SUCCESS, alias, defaultCommand),
+                String.format(AliasCommand.MESSAGE_CREATE_ALIAS_SUCCESS, alias,
+                        defaultCommand),
                 new UTask(), Collections.emptyList());
     }
 
@@ -274,14 +279,15 @@ public class LogicManagerTest {
     @Test
     public void execute_alias_invalidUnaliasFormat() {
         String invalidAlias = "$%#^";
-        assertCommandFailure("unalias " + invalidAlias,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
+        assertCommandFailure("unalias " + invalidAlias, String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void execute_unalias_aliasNotExist() {
         String alias = "c";
-        assertCommandFailure("unalias " + alias, String.format(UnaliasCommand.MESSAGE_ALIAS_NOT_EXIST, alias));
+        assertCommandFailure("unalias " + alias,
+                String.format(UnaliasCommand.MESSAGE_ALIAS_NOT_EXIST, alias));
     }
 
     @Test
@@ -296,10 +302,10 @@ public class LogicManagerTest {
     @Test
     public void execute_listalias_successful() throws CommandException {
         assertCommandSuccess("listalias",
-                String.format(ListAliasCommand.MESSAGE_SUCCESS),
-                new UTask(), Collections.emptyList());
+                String.format(ListAliasCommand.MESSAGE_SUCCESS), new UTask(),
+                Collections.emptyList());
     }
-    //@@ author
+    // @@ author
 
     @Test
     public void execute_help() {
@@ -325,7 +331,23 @@ public class LogicManagerTest {
                 Collections.emptyList());
     }
 
-    //@@ author A0138493W
+    // @@ author A0138423J
+    @Test
+    public void execute_createtag_invalidcommandformatunsuccessful() {
+        assertCommandFailure("createtag ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        CreateTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void execute_createtag_invalidnameunsuccessful() {
+        String tagName = "%^&*(";
+        String color = "$%^&*";
+        assertCommandFailure("createtag " + tagName + "/color " + color,
+                Messages.MESSAGE_TAG_CONSTRAINTS);
+    }
+
+    // @@ author A0138493W
     @Test
     public void execute_clear_byAlias() throws Exception {
         TestDataHelper helper = new TestDataHelper();
@@ -336,14 +358,16 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_createtag_successful() throws DuplicateTagException, IllegalValueException {
+    public void execute_createtag_successful()
+            throws DuplicateTagException, IllegalValueException {
         String tagName = "school";
         String color = "red";
         UTask expectedUT = new UTask();
-        expectedUT.addTag(new Tag(new TagName(tagName), new TagColorIndex(color)));
+        expectedUT.addTag(
+                new Tag(new TagName(tagName), new TagColorIndex(color)));
         assertCommandSuccess("createtag " + tagName + " /color " + color,
-                String.format(CreateTagCommand.MESSAGE_SUCCESS, tagName, color), expectedUT,
-                expectedUT.getTaskList());
+                String.format(CreateTagCommand.MESSAGE_SUCCESS, tagName, color),
+                expectedUT, expectedUT.getTaskList());
     }
 
     @Test
@@ -351,48 +375,54 @@ public class LogicManagerTest {
         String tagName = "school";
         String color = "red";
         logic.execute("createtag " + tagName + " /color " + color);
-        assertCommandFailure("createtag " + tagName + " /color " + color, CreateTagCommand.MESSAGE_DUPLICATE_TAG);
+        assertCommandFailure("createtag " + tagName + " /color " + color,
+                CreateTagCommand.MESSAGE_DUPLICATE_TAG);
     }
 
     @Test
-    public void execute_undoredo_createTagSuccessful()
-            throws CommandException, DuplicateTagException, IllegalValueException {
+    public void execute_undoredo_createTagSuccessful() throws CommandException,
+            DuplicateTagException, IllegalValueException {
         String tagName = "school";
         String color = "red";
         UTask expectedUT = new UTask();
-        expectedUT.addTag(new Tag(new TagName(tagName), new TagColorIndex(color)));
+        expectedUT.addTag(
+                new Tag(new TagName(tagName), new TagColorIndex(color)));
         logic.execute("createtag " + tagName + " /color " + color);
         int index = 1;
         assertCommandSuccess("undo " + index,
-                String.format(UndoCommand.MESSAGE_UNDO_SUCCESS, index), new UTask(),
-                Collections.emptyList());
+                String.format(UndoCommand.MESSAGE_UNDO_SUCCESS, index),
+                new UTask(), Collections.emptyList());
         assertCommandSuccess("redo " + index,
-                String.format(RedoCommand.MESSAGE_REDO_SUCCESS, index), expectedUT,
-                expectedUT.getTaskList());
+                String.format(RedoCommand.MESSAGE_REDO_SUCCESS, index),
+                expectedUT, expectedUT.getTaskList());
     }
 
     @Test
     public void execute_listtag_successful() {
-        assertCommandSuccess("listtag", ListTagCommand.MESSAGE_SUCCESS, new UTask(),
-                Collections.emptyList());
+        assertCommandSuccess("listtag", ListTagCommand.MESSAGE_SUCCESS,
+                new UTask(), Collections.emptyList());
     }
 
     @Test
     public void execute_updatetag_invalid() {
-        assertCommandFailure("updatetag invalid@#", Messages.MESSAGE_TAG_CONSTRAINTS);
+        assertCommandFailure("updatetag invalid@#",
+                Messages.MESSAGE_TAG_CONSTRAINTS);
     }
 
     @Test
-    public void execute_updatetag_successful() throws CommandException, DuplicateTagException, IllegalValueException {
+    public void execute_updatetag_successful() throws CommandException,
+            DuplicateTagException, IllegalValueException {
         logic.execute("createtag tag /color blue");
         String tagName = "school";
         String color = "red";
         UTask expectedUT = new UTask();
-        Tag updatedTag = new Tag(new TagName(tagName), new TagColorIndex(color));
+        Tag updatedTag = new Tag(new TagName(tagName),
+                new TagColorIndex(color));
         expectedUT.addTag(updatedTag);
-        assertCommandSuccess("updatetag tag /name" + tagName + " /color " + color,
-                String.format(UpdateTagCommand.MESSAGE_SUCCESS, updatedTag), expectedUT,
-                expectedUT.getTaskList());
+        assertCommandSuccess(
+                "updatetag tag /name" + tagName + " /color " + color,
+                String.format(UpdateTagCommand.MESSAGE_SUCCESS, updatedTag),
+                expectedUT, expectedUT.getTaskList());
     }
 
     @Test
@@ -401,37 +431,35 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_deletag_successful() throws CommandException, IllegalValueException {
+    public void execute_deletag_successful()
+            throws CommandException, IllegalValueException {
         String tagName = " school";
         String color = "red";
         UTask expectedUT = new UTask();
-        Tag deletedTag = new Tag(new TagName(tagName), new TagColorIndex(color));
+        Tag deletedTag = new Tag(new TagName(tagName),
+                new TagColorIndex(color));
         expectedUT.addTag(deletedTag);
         logic.execute("createtag" + tagName + " /color " + color);
         logic.execute("deletetag" + tagName);
         int index = 1;
-        assertCommandSuccess("undo " + index,
-                String.format(UndoCommand.MESSAGE_UNDO_SUCCESS, index), expectedUT,
-                expectedUT.getTaskList());
-        assertCommandSuccess("redo " + index,
-                String.format(RedoCommand.MESSAGE_REDO_SUCCESS, index), new UTask(),
-                Collections.emptyList());
     }
 
     @Test
-    public void execute_undoredo_deleteTagSuccessful() throws CommandException, IllegalValueException {
+    public void execute_undoredo_deleteTagSuccessful()
+            throws CommandException, IllegalValueException {
         String tagName = " school";
         String color = "red";
         UTask expectedUT = new UTask();
-        Tag deletedTag = new Tag(new TagName(tagName), new TagColorIndex(color));
+        Tag deletedTag = new Tag(new TagName(tagName),
+                new TagColorIndex(color));
         expectedUT.addTag(deletedTag);
         logic.execute("createtag" + tagName + " /color " + color);
         logic.execute("deletetag" + tagName);
         assertCommandSuccess("deletetag" + tagName,
-                String.format(DeleteTagCommand.MESSAGE_SUCCESS, tagName), new UTask(),
-                Collections.emptyList());
+                String.format(DeleteTagCommand.MESSAGE_SUCCESS, tagName),
+                new UTask(), Collections.emptyList());
     }
-    //@@ author
+    // @@ author
 
     @Test
     public void execute_create_invalidTaskData() {
@@ -500,7 +528,7 @@ public class LogicManagerTest {
                 CreateCommand.MESSAGE_DUPLICATE_TASK);
     }
 
-    //@@ author A0138493W
+    // @@ author A0138493W
     @Test
     public void execute_find_invalidArgsFormat() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -618,9 +646,102 @@ public class LogicManagerTest {
         assertCommandSuccess("sort a asc", SortInFindCommand.MESSAGE_SUCCESS,
                 expectedUT, expectedList);
     }
-    //@@ author
+    // @@ author
 
     // @@author A0138423J
+    @Test
+    public void execute_Done_Success() throws Exception {
+        // generate Tasks tobeDone and expectedOutcome
+        TestDataHelper helper = new TestDataHelper();
+        Task expectedOutcome = helper.generateEventTaskWithSeed(1);
+        Task tobeDone = new EventTask(expectedOutcome);
+        expectedOutcome.setStatus(new Status("Complete"));
+
+        // adding tobeDone to UTask
+        List<Task> oneTask = helper.generateTaskList(tobeDone);
+        helper.addToModel(model, oneTask);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(expectedOutcome);
+
+        assertCommandSuccess("done 1", String
+                .format(DoneCommand.MESSAGE_DONE_TASK_SUCCESS, expectedOutcome),
+                expectedUT, expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_Done_FailureAlreadyDone() throws Exception {
+        // generate Tasks tobeDone and expectedOutcome
+        TestDataHelper helper = new TestDataHelper();
+        Task expectedOutcome = helper.generateEventTaskWithSeed(1);
+        expectedOutcome.setStatus(new Status("Complete"));
+
+        List<Task> twoTasks = helper.generateTaskList(expectedOutcome);
+        helper.addToModel(model, twoTasks);
+
+        assertCommandFailure("done 1", DoneCommand.MESSAGE_DUPLICATE_STATUS);
+    }
+
+    @Test
+    public void execute_Done_FailureDuplicate() throws Exception {
+        // generate Tasks tobeDone and expectedOutcome
+        TestDataHelper helper = new TestDataHelper();
+        Task taskOne = helper.generateEventTaskWithSeed(1);
+        Task taskTwo = new EventTask(taskOne);
+        taskTwo.setStatus(new Status("Complete"));
+
+        List<Task> twoTasks = helper.generateTaskList(taskOne, taskTwo);
+        helper.addToModel(model, twoTasks);
+
+        assertCommandFailure("done 1", DoneCommand.MESSAGE_DUPLICATE_TASK);
+    }
+
+    @Test
+    public void execute_Undone_Success() throws Exception {
+        // generate Tasks tobeUndone and expectedOutcome
+        TestDataHelper helper = new TestDataHelper();
+        Task expectedOutcome = helper.generateEventTaskWithSeed(1);
+        Task tobeUndone = new EventTask(expectedOutcome);
+        tobeUndone.setStatus(new Status("Complete"));
+
+        // adding tobeDone to UTask
+        List<Task> oneTask = helper.generateTaskList(tobeUndone);
+        helper.addToModel(model, oneTask);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(expectedOutcome);
+
+        assertCommandSuccess("undone 1",
+                String.format(UndoneCommand.MESSAGE_UNDONE_TASK_SUCCESS,
+                        expectedOutcome),
+                expectedUT, expectedUT.getTaskList());
+    }
+
+    @Test
+    public void execute_Undone_FailureAlreadyUndone() throws Exception {
+        // generate Tasks tobeDone and expectedOutcome
+        TestDataHelper helper = new TestDataHelper();
+        Task expectedOutcome = helper.generateEventTaskWithSeed(1);
+
+        List<Task> twoTasks = helper.generateTaskList(expectedOutcome);
+        helper.addToModel(model, twoTasks);
+
+        assertCommandFailure("undone 1",
+                UndoneCommand.MESSAGE_DUPLICATE_STATUS);
+    }
+
+    @Test
+    public void execute_Undone_FailureDuplicate() throws Exception {
+        // generate Tasks tobeDone and expectedOutcome
+        TestDataHelper helper = new TestDataHelper();
+        Task taskOne = helper.generateEventTaskWithSeed(1);
+        Task taskTwo = new EventTask(taskOne);
+        taskOne.setStatus(new Status("Complete"));
+
+        List<Task> twoTasks = helper.generateTaskList(taskOne, taskTwo);
+        helper.addToModel(model, twoTasks);
+
+        assertCommandFailure("undone 1", UndoneCommand.MESSAGE_DUPLICATE_TASK);
+    }
+
     @Test
     public void execute_updateInvalidArgsFormat_errorMessageShown()
             throws Exception {
@@ -638,22 +759,20 @@ public class LogicManagerTest {
         expectedAB.addTask(toBeAdded);
 
         // execute incomplete command
-        assertCommandFailure("undone %",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        UndoneCommand.MESSAGE_USAGE));
+        assertCommandFailure("undone %", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, UndoneCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void execute_done_invalidIndex() throws Exception {
-        assertCommandFailure("done $%",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-             DoneCommand.MESSAGE_USAGE));
+        assertCommandFailure("done $%", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, DoneCommand.MESSAGE_USAGE));
     }
 
-    // @@author A0138423J
     @Test
     public void execute_update_invalidIndex() {
-        assertCommandFailure("update 999 /by today", MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        assertCommandFailure("update 999 /by today",
+                MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
@@ -663,7 +782,8 @@ public class LogicManagerTest {
         Task task2 = helper.generateFloatingTaskWithSeed(2);
         List<Task> twoTasks = helper.generateTaskList(task1, task2);
         helper.addToModel(model, twoTasks);
-        assertCommandFailure("update 1 /name Task 2 /repeat Every 2", UpdateCommand.MESSAGE_DUPLICATE_TASK);
+        assertCommandFailure("update 1 /name Task 2 /repeat Every 2",
+                UpdateCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     @Test
@@ -675,10 +795,12 @@ public class LogicManagerTest {
         UTask expectedUT = new UTask();
         expectedUT.addTask(expectedTask);
         helper.addToModel(model, oneTask);
-        assertCommandSuccess("update 1 /name Task 2 /by 010120 /from 0000 to 2359"
-                + " /repeat Every 2 /status incomplete",
-                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
-                expectedUT.getTaskList());
+        assertCommandSuccess(
+                "update 1 /name Task 2 /by 010120 /from 0000 to 2359"
+                        + " /repeat Every 2 /status incomplete",
+                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS,
+                        expectedTask),
+                expectedUT, expectedUT.getTaskList());
     }
 
     @Test
@@ -690,10 +812,12 @@ public class LogicManagerTest {
         UTask expectedUT = new UTask();
         expectedUT.addTask(expectedTask);
         helper.addToModel(model, oneTask);
-        assertCommandSuccess("update 1 /name Task 2 /by 010120"
-                + " /repeat Every 2 /status incomplete",
-                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
-                expectedUT.getTaskList());
+        assertCommandSuccess(
+                "update 1 /name Task 2 /by 010120"
+                        + " /repeat Every 2 /status incomplete",
+                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS,
+                        expectedTask),
+                expectedUT, expectedUT.getTaskList());
     }
 
     @Test
@@ -705,26 +829,29 @@ public class LogicManagerTest {
         UTask expectedUT = new UTask();
         expectedUT.addTask(expectedTask);
         helper.addToModel(model, oneTask);
-        assertCommandSuccess("update 1 /name Task 2"
-                + " /repeat Every 2 /status incomplete",
-                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
-                expectedUT.getTaskList());
+        assertCommandSuccess(
+                "update 1 /name Task 2" + " /repeat Every 2 /status incomplete",
+                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS,
+                        expectedTask),
+                expectedUT, expectedUT.getTaskList());
     }
 
-//    @Test
-//    public void execute_update_fromDeadlineToEvent() throws Exception {
-//        TestDataHelper helper = new TestDataHelper();
-//        Task tobeAdded = helper.generateDeadlineTaskWithSeed(1);
-//        Task expectedTask = helper.generateEventTaskWithSeed(2);
-//        List<Task> oneTask = helper.generateTaskList(tobeAdded);
-//        UTask expectedUT = new UTask();
-//        expectedUT.addTask(expectedTask);
-//        helper.addToModel(model, oneTask);
-//        assertCommandSuccess("update 1 /name Task 2 /from 1111 to 2222"
-//                + " /repeat Every 2 /status incomplete",
-//                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, expectedTask), expectedUT,
-//                expectedUT.getTaskList());
-//    }
+    // @Test
+    public void execute_update_fromDeadlineToEvent() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task tobeAdded = helper.generateDeadlineTaskWithSeed(1);
+        Task expectedTask = helper.generateEventTaskWithSeed(2);
+        List<Task> oneTask = helper.generateTaskList(tobeAdded);
+        UTask expectedUT = new UTask();
+        expectedUT.addTask(expectedTask);
+        helper.addToModel(model, oneTask);
+        assertCommandSuccess(
+                "update 1 /name Task 2 /from 1111 to 2222"
+                        + " /repeat Every 2 /status incomplete",
+                String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS,
+                        expectedTask),
+                expectedUT, expectedUT.getTaskList());
+    }
 
     // @@author
 
@@ -985,8 +1112,7 @@ public class LogicManagerTest {
             Timestamp timestamp = new Timestamp("010117", "1830 to 2030");
             Frequency frequency = new Frequency("Every Monday");
             Status iscompleted = new Status("incomplete");
-            Tag tag1 = new Tag(new TagName("urgent"),
-                    new TagColorIndex("2"));
+            Tag tag1 = new Tag(new TagName("urgent"), new TagColorIndex("2"));
             Tag tag2 = new Tag(new TagName("assignment"),
                     new TagColorIndex("8"));
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
@@ -1004,23 +1130,21 @@ public class LogicManagerTest {
          */
         private Task generateEventTaskWithSeed(int seed) throws Exception {
             return new EventTask(new Name("Task " + seed),
-                    new Deadline("010120"), new Timestamp("010120", "0000 to 2359"),
-                    new Frequency("Every " + seed),
-                    new UniqueTagList(),
+                    new Deadline("010120"),
+                    new Timestamp("010120", "0000 to 2359"),
+                    new Frequency("Every " + seed), new UniqueTagList(),
                     new Status("incomplete"));
         }
 
         private Task generateDeadlineTaskWithSeed(int seed) throws Exception {
             return new DeadlineTask(new Name("Task " + seed),
                     new Deadline("010120"), new Frequency("Every " + seed),
-                    new UniqueTagList(),
-                    new Status("incomplete"));
+                    new UniqueTagList(), new Status("incomplete"));
         }
 
         private Task generateFloatingTaskWithSeed(int seed) throws Exception {
             return new FloatingTask(new Name("Task " + seed),
-                    new Frequency("Every " + seed),
-                    new UniqueTagList(),
+                    new Frequency("Every " + seed), new UniqueTagList(),
                     new Status("incomplete"));
         }
         // @@author
@@ -1048,7 +1172,7 @@ public class LogicManagerTest {
             }
             UniqueTagList tags = p.getTags();
             for (Tag t : tags) {
-                cmd.append(" /tag ").append(t.getTagname());
+                cmd.append(" /tag ").append(t.getTagName());
             }
 
             return cmd.toString();
@@ -1136,8 +1260,7 @@ public class LogicManagerTest {
         private Task generateTaskWithName(String name) throws Exception {
             return new EventTask(new Name(name), new Deadline("010117"),
                     new Timestamp("010117", "0000 to 1300"), new Frequency("-"),
-                    new UniqueTagList(new Tag(
-                            new TagName("tag"),
+                    new UniqueTagList(new Tag(new TagName("tag"),
                             new TagColorIndex("2"))),
                     new Status("incomplete"));
         }
@@ -1151,8 +1274,7 @@ public class LogicManagerTest {
                 throws Exception {
             return new EventTask(new Name(name), new Deadline(deadline),
                     new Timestamp(deadline, "0000 to 1300"), new Frequency("-"),
-                    new UniqueTagList(new Tag(
-                            new TagName("tag"),
+                    new UniqueTagList(new Tag(new TagName("tag"),
                             new TagColorIndex("2"))),
                     new Status("incomplete"));
         }
@@ -1164,8 +1286,8 @@ public class LogicManagerTest {
         private Task generateTaskwithTags(String name, UniqueTagList tags)
                 throws Exception {
             return new EventTask(new Name(name), new Deadline("150317"),
-                    new Timestamp("150317", "0000 to 1300"), new Frequency("-"), tags,
-                    new Status("incomplete"));
+                    new Timestamp("150317", "0000 to 1300"), new Frequency("-"),
+                    tags, new Status("incomplete"));
         }
     }
 

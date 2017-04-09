@@ -114,6 +114,7 @@ public class UpdateCommandParser {
         ArrayList<Attribute> attributesToRemove = new ArrayList<Attribute>();
         if (argsTokenizer.tryGet(PREFIX_DEADLINE).equals(TO_BE_REMOVED)) {
             attributesToRemove.add(Attribute.DEADLINE);
+            attributesToRemove.add(Attribute.TIMESTAMP);
         }
         if (argsTokenizer.tryGet(PREFIX_TIMESTAMP).equals(TO_BE_REMOVED)) {
             attributesToRemove.add(Attribute.TIMESTAMP);

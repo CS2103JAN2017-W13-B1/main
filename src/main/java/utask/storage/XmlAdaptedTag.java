@@ -32,8 +32,8 @@ public class XmlAdaptedTag {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedTag(Tag source) {
-        tagName = source.getTagname().toString();
-        tagColorIndex = source.getTagcolorindex().toString();
+        tagName = source.getTagName().toString();
+        tagColorIndex = source.getTagColorIndex().toString();
     }
 
     /**

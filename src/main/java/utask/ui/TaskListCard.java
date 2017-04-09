@@ -107,8 +107,8 @@ public class TaskListCard extends UiPart<Region> {
     private void createTags(ReadOnlyTask task) {
         UniqueTagList tags = task.getTags();
         for (Tag tag : tags) {
-            Label label = createLabel(tag.getTagname().toString(),
-                    tag.getTagcolorindex().getTagColorIndexAsInt());
+            Label label = createLabel(tag.getTagName().toString(),
+                    tag.getTagColorIndex().getTagColorIndexAsInt());
             hbTagContainer.getChildren().add(label);
         }
     }

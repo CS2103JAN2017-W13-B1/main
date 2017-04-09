@@ -42,6 +42,25 @@ public class TagColorIndex {
         this.tagColorIndex = colorIndex;
     }
 
+    public TagColorIndex(TagColorIndex value) throws IllegalValueException {
+        assert value != null;
+        String trimmedValue = value.toString();
+        int colorIndex = -1;
+        if (!isValidColorIndex(trimmedValue)) {
+            throw new IllegalValueException(MESSAGE_TAG_INDEX_CONSTRAINTS + TagColorHelper.getListOfSupportedColor());
+        }
+
+        if ("".equals(trimmedValue)) {
+            colorIndex = getRandomColorIndex();
+        } else if (1 == trimmedValue.length()) {
+            colorIndex = Integer.parseInt(trimmedValue);
+        } else {
+            colorIndex = ColorType.valueOf(trimmedValue.toUpperCase())
+                    .ordinal();
+        }
+        this.tagColorIndex = colorIndex;
+    }
+
     private int getRandomColorIndex() {
         Random random = new Random();
         return random.nextInt(ColorType.values().length);

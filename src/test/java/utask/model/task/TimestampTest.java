@@ -38,7 +38,7 @@ public class TimestampTest {
     }
 
     @Test
-    public void testConstructor() {
+    public void timestamp_constructor_tests() {
         Timestamp d;
         try {
             d = new Timestamp("1200 to 1500");
@@ -57,14 +57,14 @@ public class TimestampTest {
     }
 
     @Test
-    public void validTimestampConstructor() throws IllegalValueException {
+    public void valid_Timestamp_Constructor() throws IllegalValueException {
         Timestamp t = new Timestamp("1200 to 1500"); // valid constructor
         String valueOfT = t.toString();
         assertTrue(Timestamp.isValidTimestamp(valueOfT)); //checking String of valid Timestamp
     }
 
     @Test
-    public void removeTimestampConstructor() throws IllegalValueException {
+    public void remove_Timestamp_Constructor() throws IllegalValueException {
         Timestamp t = new Timestamp("-"); // constructor with dash only
         thrown.expect(AssertionError.class);
         assertEquals(null, t.getFrom()); //checking toString() value when Timestamp is Null
@@ -72,7 +72,7 @@ public class TimestampTest {
     }
 
     @Test(expected = IllegalValueException.class)
-    public void invalidTimestampConstructor() throws IllegalValueException {
+    public void invalid_Timestamp_Constructor() throws IllegalValueException {
         Timestamp t = new Timestamp("#$%^&*"); // constructor with random symbols
     }
 }

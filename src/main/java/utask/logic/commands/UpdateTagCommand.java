@@ -10,11 +10,10 @@ import utask.commons.events.ui.ShowTagColorDialogEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.CollectionUtil;
 import utask.logic.commands.exceptions.CommandException;
-import utask.logic.commands.inteface.ReversibleCommand;
 import utask.model.tag.Tag;
 
 //@@ author A0138423J
-public class UpdateTagCommand  extends Command implements ReversibleCommand {
+public class UpdateTagCommand  extends Command {
     private final Logger logger = LogsCenter.getLogger(UpdateTagCommand.class);
     public static final String COMMAND_WORD = "updatetag";
 
@@ -46,7 +45,6 @@ public class UpdateTagCommand  extends Command implements ReversibleCommand {
         assert model != null;
         try {
             model.updateTag(toBeEdited, editedTag);
-            model.addUndoCommand(this);
             EventsCenter.getInstance().post(new ShowTagColorDialogEvent(model.getTags()));
         } catch (IllegalArgumentException ive) {
             throw new CommandException(String
@@ -56,18 +54,6 @@ public class UpdateTagCommand  extends Command implements ReversibleCommand {
         }
         logger.fine(String.format(MESSAGE_SUCCESS, editedTag));
         return new CommandResult(String.format(MESSAGE_SUCCESS, editedTag));
-    }
-
-    @Override
-    public void undo() throws Exception {
-        assert model != null;
-        model.updateTag(editedTag, toBeEdited);
-    }
-
-    @Override
-    public void redo() throws Exception {
-        assert model != null;
-        model.updateTag(toBeEdited, editedTag);
     }
 
 }

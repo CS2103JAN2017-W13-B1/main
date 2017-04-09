@@ -31,8 +31,8 @@ public class TagColorDialog extends Dialog {
         List<Node> displayTags = new ArrayList<Node>();
 
         for (Tag tag : tags) {
-            Label label = createLabel(tag.getTagname().toString(),
-                    tag.getTagcolorindex().getTagColorIndexAsInt());
+            Label label = createLabel(tag.getTagName().toString(),
+                    tag.getTagColorIndex().getTagColorIndexAsInt());
             Node displayTag = setLabelSizingForDialogDisplay(label);
             displayTags.add(displayTag);
         }

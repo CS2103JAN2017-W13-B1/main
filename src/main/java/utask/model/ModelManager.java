@@ -78,12 +78,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         FilteredListHelper.getInstance().addList(dueTasks, todayTasks, tomorrowTasks, futureTasks, floatingTasks);
 
-//        UTFliterListHelper.getInstance().addList(dueTasks);
-//        UTFliterListHelper.getInstance().addList(todayTasks);
-//        UTFliterListHelper.getInstance().addList(tomorrowTasks);
-//        UTFliterListHelper.getInstance().addList(futureTasks);
-//        UTFliterListHelper.getInstance().addList(floatingTasks);
-
         FilteredListHelper.getInstance().addFindFilteredList(filteredFindTasks);
         sortingConfig = Model.SORT_ORDER_DEFAULT;
         sortFilteredTaskList(sortingConfig);
@@ -144,19 +138,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         uTask.removeTask(target);
-        FilteredListHelper.getInstance().refresh();
-        updateFilteredListToShowAll();
-        indicateUTaskChanged();
+        refresh();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         uTask.addTask(task);
-
-        //TODO: DUPLICATES
-        FilteredListHelper.getInstance().refresh();
-        updateFilteredListToShowAll();
-        sortFilteredTaskList(sortingConfig);
+        refresh();
     }
 
     //@@author A0138423J
@@ -167,27 +155,21 @@ public class ModelManager extends ComponentManager implements Model {
         assert editedTask != null;
 
         uTask.updateTask(taskToEdit, editedTask);
-
-        //TODO: DUPLICATES
-        FilteredListHelper.getInstance().refresh();
-        updateFilteredListToShowAll();
-        sortFilteredTaskList(sortingConfig);
+        refresh();
     }
 
     @Override
     public void addTag(Tag tag) throws DuplicateTagException {
         assert tag != null;
         uTask.addTag(tag);
-        FilteredListHelper.getInstance().refresh();
-        sortFilteredTaskList(sortingConfig);
+        refresh();
     }
 
     @Override
     public void deleteTag(Tag tag) {
         assert tag != null;
         uTask.deleteTag(tag);
-        FilteredListHelper.getInstance().refresh();
-        sortFilteredTaskList(sortingConfig);
+        refresh();
     }
 
     @Override
@@ -195,8 +177,7 @@ public class ModelManager extends ComponentManager implements Model {
         assert tagToReplace != null;
         assert updatedTag != null;
         uTask.updateTag(tagToReplace, updatedTag);
-        FilteredListHelper.getInstance().refresh();
-        sortFilteredTaskList(sortingConfig);
+        refresh();
     }
 
     @Override
@@ -438,6 +419,13 @@ public class ModelManager extends ComponentManager implements Model {
         public String toString() {
             return "name=" + String.join(", ", nameKeyWords);
         }
+    }
+
+    //@@author A0138423J
+    private void refresh() {
+        FilteredListHelper.getInstance().refresh();
+        updateFilteredListToShowAll();
+        sortFilteredTaskList(sortingConfig);
     }
 
     //@@author A0139996A

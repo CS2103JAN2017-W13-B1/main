@@ -32,27 +32,27 @@ public class DeadlineTest {
     }
 
     @Test
-    public void validDeadlineConstructor() throws IllegalValueException {
+    public void valid_Deadline_Constructor() throws IllegalValueException {
         Date date = new Date();
         Deadline d = new Deadline(date); // Date constructor
         assertEquals(d.getDate(), date); //checking if both dates tally
     }
 
     @Test
-    public void validEmptyDeadlineConstructor() throws IllegalValueException {
+    public void valid_EmptyDeadline_Constructor() throws IllegalValueException {
         Deadline d = Deadline.getEmptyDeadline(); // empty constructor
         assertEquals(d.hashCode(), "".hashCode()); //checking hashCode when Deadline is Null
     }
 
     @Test
-    public void removeDeadlineConstructor() throws IllegalValueException {
+    public void remove_Deadline_Constructor() throws IllegalValueException {
         String value = "-";
         Deadline d = new Deadline(value); // constructor with dash only
         assertEquals(d.toString(), ""); //checking toString() value when Deadline is Null
     }
 
     @Test(expected = IllegalValueException.class)
-    public void invalidDeadlineConstructor() throws IllegalValueException {
+    public void invalid_Deadline_Constructor() throws IllegalValueException {
         Deadline d = new Deadline("$%^&*("); // constructor with random symbols
     }
 }

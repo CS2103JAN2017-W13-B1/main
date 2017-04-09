@@ -16,7 +16,7 @@ public class StatusTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void isValidTimestamp() {
+    public void isValidStatus() {
         // blank Status
         assertFalse(Status.isValidBoolean("")); // empty string
         assertFalse(Status.isValidBoolean(" ")); // spaces only
@@ -40,14 +40,14 @@ public class StatusTest {
     }
 
     @Test
-    public void validStatusConstructor() throws IllegalValueException {
+    public void valid_Status_Constructor() throws IllegalValueException {
         String value = "Complete";
         Status s = new Status(value);
         assertEquals(s.toString(), value);
     }
 
     @Test(expected = IllegalValueException.class)
-    public void invalidStatusConstructor() throws IllegalValueException {
+    public void invalid_Status_Constructor() throws IllegalValueException {
         String value = "-";
         Status s = new Status(value);
         assertEquals(s.toString(), "");

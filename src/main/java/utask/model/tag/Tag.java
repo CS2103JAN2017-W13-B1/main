@@ -3,7 +3,7 @@ package utask.model.tag;
 import java.util.Objects;
 
 import utask.commons.util.CollectionUtil;
-import utask.ui.helper.TagColorHelper;
+import utask.ui.helper.TagColorHelper.ColorType;
 
 // @@author A0138423J
 /**
@@ -12,9 +12,8 @@ import utask.ui.helper.TagColorHelper;
  */
 public class Tag {
 
-    protected TagName tagname;
-    protected TagColorIndex tagcolorindex;
-    protected Integer tagCount;
+    protected TagName tagName;
+    protected TagColorIndex tagColorIndex;
 
     /**
      * Every field must be present and not null.
@@ -22,47 +21,39 @@ public class Tag {
     public Tag(TagName tagName, TagColorIndex tagColorIndex) {
         assert !CollectionUtil.isAnyNull(tagName, tagColorIndex);
 
-        this.tagname = tagName;
-        this.tagcolorindex = tagColorIndex;
-        tagCount = 0;
+        this.tagName = tagName;
+        this.tagColorIndex = tagColorIndex;
     }
 
     public Tag(Tag tag) {
         assert tag != null;
 
-        this.tagname = tag.getTagname();
-        this.tagcolorindex = tag.getTagcolorindex();
-        tagCount = 0;
+        this.tagName = tag.getTagName();
+        this.tagColorIndex = tag.getTagColorIndex();
     }
 
-    public TagName getTagname() {
-        return tagname;
+    public Tag() {
     }
 
-    public void setTagname(TagName tagname) {
-        this.tagname = tagname;
+    public TagName getTagName() {
+        return tagName;
     }
 
-    public TagColorIndex getTagcolorindex() {
-        return tagcolorindex;
+    public void setTagName(TagName tagname) {
+        this.tagName = tagname;
     }
 
-    public void setTagcolorindex(TagColorIndex tagcolorindex) {
-        this.tagcolorindex = tagcolorindex;
+    public TagColorIndex getTagColorIndex() {
+        return tagColorIndex;
     }
 
-    public Integer getTagCount() {
-        return tagCount;
-    }
-
-    public void setTagCount(Integer tagCount) {
-        this.tagCount = tagCount;
+    public void setTagColorIndex(TagColorIndex tagcolorindex) {
+        this.tagColorIndex = tagcolorindex;
     }
 
     public void setTag(Tag updatedTag) {
-        this.tagname = updatedTag.tagname;
-        this.tagcolorindex = updatedTag.tagcolorindex;
-        this.tagCount = updatedTag.tagCount;
+        this.tagName = updatedTag.tagName;
+        this.tagColorIndex = updatedTag.tagColorIndex;
     }
 
     @Override
@@ -73,21 +64,22 @@ public class Tag {
     }
 
     private boolean isSameStateAs(Tag other) {
-        return other.getTagname().equals(this.getTagname());
+        return other.getTagName().equals(this.getTagName());
         // && other.getTagcolorindex().equals(this.getTagcolorindex());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tagname);
+        return Objects.hash(tagName);
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + tagname.toString() + ']' + '[' + TagColorHelper
-                .getColorValueFromIndex(tagcolorindex.getTagColorIndexAsInt())
+        return '[' + tagName.toString() + ']' + '['
+                + ColorType.values()[tagColorIndex.getTagColorIndexAsInt()]
+                        .name()
                 + ']';
     }
 

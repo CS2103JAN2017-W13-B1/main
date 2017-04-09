@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class AttributeTest {
     @Test
-    public void isValidAttributeName() {
+    public void is_Valid_AttributeName() {
         assertEquals("DEADLINE", Attribute.DEADLINE.name());
         assertEquals("TIMESTAMP", Attribute.TIMESTAMP.name());
         assertEquals("STATUS", Attribute.STATUS.name());
@@ -16,7 +16,7 @@ public class AttributeTest {
     }
 
     @Test
-    public void isValidAttributeString() {
+    public void is_Valid_AttributeString() {
         assertEquals("deadline", Attribute.DEADLINE.toString());
         assertEquals("timestamp", Attribute.TIMESTAMP.toString());
         assertEquals("status", Attribute.STATUS.toString());

@@ -53,7 +53,7 @@ public class TaskCardHandle extends GuiHandle {
         return tags
                 .asObservableList()
                 .stream()
-                .map(tag -> tag.getTagname().toString())
+                .map(tag -> tag.getTagName().toString())
                 .collect(Collectors.toList());
     }
 

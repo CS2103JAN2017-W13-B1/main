@@ -19,7 +19,7 @@ import utask.model.util.SampleDataUtil;
 public class UniqueTaskListTest {
 
     @Test
-    public void validEventUniqueTaskListConstructorAndHashCode() throws Exception {
+    public void valid_EventUniqueTaskListConstructor_AndHashCode() throws Exception {
         // UniqueTaskList created from its constructor
         UniqueTaskList listOfTask = new UniqueTaskList();
         Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);
@@ -35,7 +35,7 @@ public class UniqueTaskListTest {
     }
 
     @Test
-    public void validEventUniqueTaskListUpdateTag() throws Exception {
+    public void valid_EventUniqueTaskList_UpdateTag() throws Exception {
         // UniqueTaskList created from its constructor
         UniqueTaskList listOfTask = new UniqueTaskList();
         Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);
@@ -57,7 +57,7 @@ public class UniqueTaskListTest {
     }
 
     @Test(expected = TaskNotFoundException.class)
-    public void validEventUniqueTaskListRemoveFail() throws Exception {
+    public void valid_EventUniqueTaskList_RemoveFail() throws Exception {
         // UniqueTaskList created from its constructor
         UniqueTaskList listOfTask = new UniqueTaskList();
         Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);
