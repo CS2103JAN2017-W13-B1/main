@@ -7,11 +7,11 @@ import utask.model.task.ReadOnlyTask;
  * This event is used to notify UTFindOverlay
  *  to select last added or updated task
  * */
-public class UIShowTaskOfInterestInFindOverlayEvent extends BaseEvent {
+public class ShowTaskOfInterestInFindOverlayEvent extends BaseEvent {
 
     public final ReadOnlyTask task;
 
-    public UIShowTaskOfInterestInFindOverlayEvent(ReadOnlyTask task) {
+    public ShowTaskOfInterestInFindOverlayEvent(ReadOnlyTask task) {
         this.task = task;
     }
 

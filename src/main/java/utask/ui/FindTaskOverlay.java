@@ -21,10 +21,10 @@ import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.FindRequestEvent;
+import utask.commons.events.ui.JumpToListInFindOverlayEvent;
 import utask.commons.events.ui.KeyboardEscapeKeyPressedEvent;
-import utask.commons.events.ui.UIJumpToListInFindOverlayEvent;
-import utask.commons.events.ui.UIShowTaskOfInterestInFindOverlayEvent;
-import utask.commons.events.ui.UIUpdateSortInFindOverlayEvent;
+import utask.commons.events.ui.ShowTaskOfInterestInFindOverlayEvent;
+import utask.commons.events.ui.UpdateSortInFindOverlayEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
@@ -206,7 +206,7 @@ public class FindTaskOverlay extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleUIShowTaskOfInterestInFindOverlayEvent(UIShowTaskOfInterestInFindOverlayEvent event) {
+    private void handleShowTaskOfInterestInFindOverlayEvent(ShowTaskOfInterestInFindOverlayEvent event) {
         assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
 
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -215,7 +215,7 @@ public class FindTaskOverlay extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleUIUpdateSortInFindOverlayEvent(UIUpdateSortInFindOverlayEvent event) {
+    private void handleUpdateSortInFindOverlayEvent(UpdateSortInFindOverlayEvent event) {
         assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
 
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -224,7 +224,7 @@ public class FindTaskOverlay extends UiPart<Region> {
 
     //TODO: Refractor
     @Subscribe
-    private void handleUIJumpToListInFindOverlayEvent(UIJumpToListInFindOverlayEvent event) {
+    private void handleJumpToListInFindOverlayEvent(JumpToListInFindOverlayEvent event) {
         assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);

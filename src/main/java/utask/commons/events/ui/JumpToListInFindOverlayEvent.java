@@ -5,11 +5,11 @@ import utask.commons.events.BaseEvent;
 /**
  * Indicates a request to jump to the list of tasks
  */
-public class UIJumpToListInFindOverlayEvent extends BaseEvent {
+public class JumpToListInFindOverlayEvent extends BaseEvent {
 
     public final int targetIndex;
 
-    public UIJumpToListInFindOverlayEvent(int targetIndex) {
+    public JumpToListInFindOverlayEvent(int targetIndex) {
         this.targetIndex = targetIndex;
     }
 
