@@ -426,20 +426,26 @@ There is no need to save manually.
 Command | Format
 -------- | :--------
 help | `help`
-setpath| `setpath PATH`
+create | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
+find | `find KEYWORD...`
+update | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/status COMPLETE|INCOMPLETE]`
+done | `done INDEX`
+delete | `delete INDEX,[INDEX],..` *or* `delete INDEX to INDEX`
+clear | `clear`
+select | `select INDEX`
+undo | `undo [/last STEPS]`
+redo | `redo [/last STEPS]`
 createtag | `createtag NAME [/color COLOR]`
 listtag | `listtag`
 updatetag | `updatetag INDEX [/name NAME] [/color COLOR]`
 deletetag | `deletetag INDEX`
-create | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
-list | `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
-find | `find KEYWORD...`
-select | `select INDEX` *or* `select last`
-update | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
-done | `done INDEX`
-delete | `delete INDEX`
-clear | `clear`
-undo | `undo [/last STEPS]`
-redo | `redo [/last STEPS]`
+alias | `alias ALIAS /as COMMAND`
+listalias | `liastalias`
+unalias | `unalias ALIAS`
+setpath| `setpath PATH`
 exit | `exit`
+
+
+
+
 
