@@ -13,7 +13,7 @@ import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.FindOverlayList;
+import guitests.guihandles.FindTaskOverlayHandle;
 import guitests.guihandles.ListPanelHandle;
 import guitests.guihandles.MainGuiHandle;
 import guitests.guihandles.MainMenuHandle;
@@ -51,7 +51,7 @@ public abstract class UTaskGuiTest {
 //    protected TodoListPanelHandle todoListPanel;
 //    protected TaskListPanelHandle taskListPanel;
     protected ListPanelHandle listPanel;
-    protected FindOverlayList findOverlayList;
+    protected FindTaskOverlayHandle findOverlayList;
     protected ResultDisplayHandle resultDisplay;
     protected CommandBoxHandle commandBox;
     private Stage stage;

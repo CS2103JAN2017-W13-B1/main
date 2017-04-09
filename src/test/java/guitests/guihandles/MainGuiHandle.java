@@ -37,8 +37,8 @@ public class MainGuiHandle extends GuiHandle {
         return new MainMenuHandle(guiRobot, primaryStage);
     }
 
-    public FindOverlayList getfindOverlayList() {
-        return new FindOverlayList(guiRobot, primaryStage);
+    public FindTaskOverlayHandle getfindOverlayList() {
+        return new FindTaskOverlayHandle(guiRobot, primaryStage);
     }
 
     public AlertDialogHandle getAlertDialog(String title) {

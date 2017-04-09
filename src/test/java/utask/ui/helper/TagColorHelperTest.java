@@ -20,6 +20,13 @@ public class TagColorHelperTest {
     }
 
     @Test
+    public void get_ColorName_FromIndex() {
+        String black = TagColorHelper.getColorNameFromIndex(0);
+        black = black.toUpperCase();
+        assert black.equals(ColorType.BLACK.name());
+    }
+
+    @Test
     public void get_SupportedColors() {
         String colors = TagColorHelper.getListOfSupportedColor();
         assert (colors != "");

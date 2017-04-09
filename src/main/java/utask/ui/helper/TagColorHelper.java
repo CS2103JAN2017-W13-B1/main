@@ -14,7 +14,11 @@ public class TagColorHelper {
         return color.toString();
     }
 
-    public static String getColorValueFromIndex (int colorIndex) {
+    public static String getColorNameFromIndex(int colorIndex) {
+        return getColorTypeFromIndex(colorIndex).name();
+    }
+
+    public static String getColorValueFromIndex(int colorIndex) {
         return getColorTypeFromIndex(colorIndex).toString();
     }
 
