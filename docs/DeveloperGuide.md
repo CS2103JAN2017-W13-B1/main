@@ -166,10 +166,10 @@ command `update 1 /name Urgent Task`.
 <img src="images/UpdateCommand.png" width="800"><br>
 _Figure 2.1.3a : Component interactions for `update 1 /name Urgent Task` command (part 1)_
 
->Components of UI: `UIManager` <br>
->Components of Logic: `LogicManager`, `UpdateCommand` <br>
->Components of Model: `ModelManager`, `UTask`, `UniqueTaskList` <br>
->Components of Event: `EventsCenter` <br>
+>Components of UI: `UIManager`. <br>
+>Components of Logic: `LogicManager`, `UpdateCommand`. <br>
+>Components of Model: `ModelManager`, `UTask`, `UniqueTaskList`. <br>
+>Components of Event: `EventsCenter`. <br>
 >Note how the `Logic` simply raises a `post(Event)` when the UTask data are changed,
  instead of asking the `Storage` to save the updates to the hard disk.
 
@@ -179,8 +179,8 @@ being saved to the hard disk and the status bar of the UI being updated to refle
 _Figure 2.1.3b : Component interactions for `update 1 /name Urgent Task` command (part 2)_
 
 
->Components of Storage: `StorageManager` <br>
->Components of Events: `UTaskChangedEvent` <br>
+>Components of Storage: `StorageManager`. <br>
+>Components of Events: `UTaskChangedEvent`. <br>
 > Notice how the event is propagated through the `EventsCenter` to the `StorageManager` and `UIManager` without the need for `Model` to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
