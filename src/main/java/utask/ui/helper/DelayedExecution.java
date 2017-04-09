@@ -6,8 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 
+//@@author A0139996A
 /**
- *  Provides a way to delay execution in order to prevent race conditions
+ *  Provides a way to delay execution of a block of code in order to prevent race conditions
  *  Inspired by: http://tomasmikula.github.io/blog/2014/06/04/timers-in-javafx-and-reactfx.html
  */
 public class DelayedExecution {

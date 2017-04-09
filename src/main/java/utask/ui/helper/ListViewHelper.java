@@ -1,4 +1,3 @@
-//@@author A0139996A
 package utask.ui.helper;
 
 import java.util.logging.Logger;
@@ -15,6 +14,7 @@ import utask.commons.events.ui.ShowTaskOfInterestInMainWindowEvent;
 import utask.commons.events.ui.TaskListPanelSelectionChangedEvent;
 import utask.model.task.ReadOnlyTask;
 
+//@@author A0139996A
 /*
  * ListViewHelper uses facade and singleton pattern
  * It coordinates multiple ListViews to ensure their index numbers are in running sequence
@@ -43,14 +43,13 @@ public class ListViewHelper extends ListHelper<UTListView<ReadOnlyTask>, ReadOnl
         setEventHandlerForSelectionChangeEvent(lv);
     }
 
-    //TODO: Possible to use lazy rendering to prevent double rendering
     private void addDefaultCellFactory(ListView<ReadOnlyTask> lv) {
         final int startIndex = 0;
         lv.setCellFactory(l -> new TaskListViewCell(startIndex));
     }
 
-    //TODO: This function may look like updateOffsetMap() in parent but it has different feature
-    //      Requires effort to correctly refractor this
+    //This function may look like updateOffsetMap() in parent but it has different algorithm
+    //Careful attention is needed correctly refractor this and not to break this
     public void updateListViews() {
         Platform.runLater(() -> {
             addToOffsetMap(lists.get(0), 0); //First list starts counting from 1
@@ -89,6 +88,7 @@ public class ListViewHelper extends ListHelper<UTListView<ReadOnlyTask>, ReadOnl
      * Gets display index of a ReadOnlyTask
      * */
     public int getDisplayedIndexFromReadOnlyTask(ReadOnlyTask task) {
+        assert task != null;
         //Ensures the correctness when updating
         //i.e. Update that move a task from today list down to future list
         //Therefore, the lists after today list may have outdated offset of size + 1
@@ -108,7 +108,6 @@ public class ListViewHelper extends ListHelper<UTListView<ReadOnlyTask>, ReadOnl
         }
     }
 
-    //TODO: Cleanup abit confusing?
     public void scrollTo(int index) {
         Platform.runLater(() -> {
 

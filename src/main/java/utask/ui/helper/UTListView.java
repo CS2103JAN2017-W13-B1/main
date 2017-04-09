@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.jfoenix.controls.JFXListView;
 
+//@@author A0139996A
 /**
  *  As ListHelper works with generic of Collection type, it is required to implement Collection.
  *
@@ -14,6 +15,7 @@ import com.jfoenix.controls.JFXListView;
  *  E.g.    ((FilteredList) T).size()
  *         ((ListView) T).getItems().size()
  *
+ * This demonstrates the use of adapter pattern, where incompatible types are ‘adapted’ so they can work together.
  **/
 public class UTListView<T> extends JFXListView<T> implements Collection<T> {
 

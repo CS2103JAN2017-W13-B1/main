@@ -1,4 +1,3 @@
-
 package utask.ui.helper;
 
 import java.util.ArrayList;
@@ -41,6 +40,14 @@ import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.UpdateTagCommand;
 
 //@@author A0139996A
+/*
+ * Provides suggestion of command.
+ *
+ * SuggestionMap has to be updated statically to include new commands.
+ *
+ * To update dynamically, reflection can be used to read classes in Command packge.
+ * However, this may result in slow startup speed.
+ * */
 public class SuggestionHelper {
     private final Logger logger = LogsCenter.getLogger(SuggestionHelper.class);
     private final SortedMap<String, String> suggestionMap =  new TreeMap<String, String>();
@@ -152,7 +159,7 @@ public class SuggestionHelper {
         return sb.toString();
     }
 
-    //TODO JIAHAO CODE
+    //@@author A0138493W
     public List<String> getDefaultCommands() {
         List<String> defaultCommands = new ArrayList<String>();
         for (Entry<String, String> entry : suggestionMap.entrySet()) {
@@ -161,6 +168,7 @@ public class SuggestionHelper {
         }
         return defaultCommands;
     }
+    //@@author
 
     @Subscribe
     private void handleFindRequestEvent(FindRequestEvent event) {

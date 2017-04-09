@@ -1,4 +1,3 @@
-//@@author A0139996A
 package utask.ui;
 
 import java.util.logging.Logger;
@@ -29,6 +28,11 @@ import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
 
+//@@author A0139996A
+/*
+ * FindTaskOverlay handles the UI Logic of find tableview,
+ * which includes display (rendering of data to the correct column) and sort.
+ * */
 public class FindTaskOverlay extends UiPart<Region> {
 
     private static final String ASCENDING_ORDER = "asc";
@@ -138,9 +142,10 @@ public class FindTaskOverlay extends UiPart<Region> {
         String columnName = column.getText();
         assert !columnName.isEmpty();
 
-        return column.getText().substring(0, 1);
+        return column.getText().substring(0, 1); //Substring to get first letter
     }
 
+    //Dynamically find TableColumn based on the first alphabet in the display FXML
     private TableColumn<ReadOnlyTask, String> getColumnToSortFromStringColumnAlphabet(String columnAlphabet) {
 
         if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnName))) {
@@ -222,7 +227,6 @@ public class FindTaskOverlay extends UiPart<Region> {
         sort(event.columnAlphabet, event.orderBy);
     }
 
-    //TODO: Refractor
     @Subscribe
     private void handleJumpToListInFindOverlayEvent(JumpToListInFindOverlayEvent event) {
         assert isSearchOverlayShown : "This event should only be propagated when find overlay is showing";

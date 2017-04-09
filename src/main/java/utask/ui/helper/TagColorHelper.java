@@ -1,8 +1,14 @@
-//@@author A0139996A
 package utask.ui.helper;
 
 import java.util.Random;;
 
+//@@author A0139996A
+/*
+ * TagColorHelper provides helpful utility helpers for its internal enum ColorType.
+ *
+ * To add more colors, add more constants to ColorType enum.
+ * The utility methods in TagColorHelper will work with size changes.
+ * */
 public class TagColorHelper {
 
     public static int getSize() {

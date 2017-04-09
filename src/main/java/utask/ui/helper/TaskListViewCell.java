@@ -1,4 +1,3 @@
-//@@author A0139996A
 package utask.ui.helper;
 
 import com.jfoenix.controls.JFXListCell;
@@ -6,6 +5,11 @@ import com.jfoenix.controls.JFXListCell;
 import utask.model.task.ReadOnlyTask;
 import utask.ui.TaskListCard;
 
+//@@author A0139996A
+/*
+ * TaskListViewCell renders TaskListCard in ListViews.
+ * Note it extends JFXListCell, which ensure correct material styling are applied.
+ * */
 public class TaskListViewCell extends JFXListCell<ReadOnlyTask> {
 
     private int offset;

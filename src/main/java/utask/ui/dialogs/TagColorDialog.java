@@ -68,8 +68,6 @@ public class TagColorDialog extends Dialog {
         super.show();
     }
 
-
-    //TODO: COPYPASTA FROM UTTASKLISTCARD REUSEABLE CODE!!!
     private Label createLabel(String name, int colorIndex) {
         Label label = new Label(name);
         addStylingPropertiesToLabel(label, colorIndex);

@@ -12,10 +12,18 @@ import javafx.scene.layout.StackPane;
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.KeyboardEscapeKeyPressedEvent;
-import utask.ui.MainWindow;
-
+//@@author A0139996A
+/*
+ * Dialog enables displaying of information on MainWindow as popup dialog, which can be dismissed with esc key.
+ * It uses Decorator pattern and leaves the actual UI implementation of its subclass.
+ *
+ * E.g. TagColorDialog extends it and add a FlowPane with tags as text labels
+ *      AliasDialog extends it and add a VBox with alias as text labels
+ * */
 public abstract class Dialog {
-    private static final Logger logger = LogsCenter.getLogger(MainWindow.class);
+    private static final String DIALOG_BUTTON_TEXT = "CLOSE [ESC]";
+    private static final String DIALOG_BUTTON_CSS = "-fx-text-fill: -fx-utask-accentcolor";
+    private static final Logger logger = LogsCenter.getLogger(Dialog.class);
     private final JFXDialog dialog;
     protected final JFXDialogLayout contentLayout;
     private boolean isShowing = false;
@@ -34,8 +42,8 @@ public abstract class Dialog {
         dialog.setContent(contentLayout);
         dialog.setTransitionType(DialogTransition.CENTER);
 
-        JFXButton closeButton = new JFXButton("CLOSE [ESC]");
-        closeButton.setStyle("-fx-text-fill: -fx-utask-accentcolor");
+        JFXButton closeButton = new JFXButton(DIALOG_BUTTON_TEXT);
+        closeButton.setStyle(DIALOG_BUTTON_CSS);
         closeButton.setOnAction((event) -> {
             onClose();
         });
