@@ -20,7 +20,6 @@ public class SelectCommandTest extends UTaskGuiTest {
 
         assertSelectionInvalid(100); // invalid index
         assertNoTaskSelected();
-
         //assertSelectionSuccess(1); // first person in the list
 //        int personCount = td.getTypicalPersons().length;
 //        assertSelectionSuccess(personCount); // last person in the list

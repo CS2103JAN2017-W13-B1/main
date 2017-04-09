@@ -48,8 +48,6 @@ public abstract class UTaskGuiTest {
      */
     protected MainGuiHandle mainGui;
     protected MainMenuHandle mainMenu;
-//    protected TodoListPanelHandle todoListPanel;
-//    protected TaskListPanelHandle taskListPanel;
     protected ListPanelHandle listPanel;
     protected FindTaskOverlayHandle findOverlayList;
     protected ResultDisplayHandle resultDisplay;
@@ -71,9 +69,6 @@ public abstract class UTaskGuiTest {
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
-//            todoListPanel = mainGui.getTodoListPanel();
-//            taskListPanel = mainGui.getTaskListPanel();
-
             listPanel = mainGui.getListPanelHandle();
             findOverlayList = mainGui.getfindOverlayList();
             resultDisplay = mainGui.getResultDisplay();
