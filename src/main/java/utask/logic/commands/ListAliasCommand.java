@@ -3,7 +3,7 @@ package utask.logic.commands;
 import java.util.Map;
 
 import utask.commons.core.EventsCenter;
-import utask.commons.events.ui.UIShowAliasDialogEvent;
+import utask.commons.events.ui.ShowAliasDialogEvent;
 import utask.model.AliasCommandMap;
 
 /**
@@ -18,7 +18,7 @@ public class ListAliasCommand extends Command {
     public CommandResult execute() {
         //TODO: BADCODE -- BADCODE -- BADCODE
         Map<String, String> map = AliasCommandMap.getInstance().getAliasMap();
-        EventsCenter.getInstance().post(new UIShowAliasDialogEvent(map));
+        EventsCenter.getInstance().post(new ShowAliasDialogEvent(map));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

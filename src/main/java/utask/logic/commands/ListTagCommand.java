@@ -1,7 +1,7 @@
 package utask.logic.commands;
 
 import utask.commons.core.EventsCenter;
-import utask.commons.events.ui.UIShowTagColorDialogEvent;
+import utask.commons.events.ui.ShowTagColorDialogEvent;
 
 /**
  * Shows tag in a dialog in the uTask to the user.
@@ -13,7 +13,7 @@ public class ListTagCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(model.getTags()));
+        EventsCenter.getInstance().post(new ShowTagColorDialogEvent(model.getTags()));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

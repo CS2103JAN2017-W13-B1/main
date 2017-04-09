@@ -3,12 +3,12 @@ package utask.ui.dialogs;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
-public class UTMessageDialog extends UTDialog {
+public class MessageDialog extends Dialog {
 
     private Label lblHeading;
     private Label lblContent;
 
-    public UTMessageDialog(StackPane parent) {
+    public MessageDialog(StackPane parent) {
         super(parent);
     }
 

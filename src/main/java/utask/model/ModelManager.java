@@ -25,7 +25,7 @@ import utask.model.task.ReadOnlyTask;
 import utask.model.task.Task;
 import utask.model.task.UniqueTaskList;
 import utask.model.task.UniqueTaskList.TaskNotFoundException;
-import utask.ui.helper.UTFilteredListHelper;
+import utask.ui.helper.FilteredListHelper;
 
 /**
  * Represents the in-memory model of the UTask data.
@@ -76,7 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
         futureTasks = getTasksFliteredListByAfterGivenDate(tomorrowDate);
         floatingTasks = getFloatingTaskFliteredListByEmptyDeadlineAndTimestamp();
 
-        UTFilteredListHelper.getInstance().addList(dueTasks, todayTasks, tomorrowTasks, futureTasks, floatingTasks);
+        FilteredListHelper.getInstance().addList(dueTasks, todayTasks, tomorrowTasks, futureTasks, floatingTasks);
 
 //        UTFliterListHelper.getInstance().addList(dueTasks);
 //        UTFliterListHelper.getInstance().addList(todayTasks);
@@ -84,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
 //        UTFliterListHelper.getInstance().addList(futureTasks);
 //        UTFliterListHelper.getInstance().addList(floatingTasks);
 
-        UTFilteredListHelper.getInstance().addFindFilteredList(filteredFindTasks);
+        FilteredListHelper.getInstance().addFindFilteredList(filteredFindTasks);
         sortingConfig = Model.SORT_ORDER_DEFAULT;
         sortFilteredTaskList(sortingConfig);
     }
@@ -144,7 +144,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         uTask.removeTask(target);
-        UTFilteredListHelper.getInstance().refresh();
+        FilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
         indicateUTaskChanged();
     }
@@ -154,7 +154,7 @@ public class ModelManager extends ComponentManager implements Model {
         uTask.addTask(task);
 
         //TODO: DUPLICATES
-        UTFilteredListHelper.getInstance().refresh();
+        FilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
         sortFilteredTaskList(sortingConfig);
     }
@@ -169,7 +169,7 @@ public class ModelManager extends ComponentManager implements Model {
         uTask.updateTask(taskToEdit, editedTask);
 
         //TODO: DUPLICATES
-        UTFilteredListHelper.getInstance().refresh();
+        FilteredListHelper.getInstance().refresh();
         updateFilteredListToShowAll();
         sortFilteredTaskList(sortingConfig);
     }
@@ -178,7 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void addTag(Tag tag) throws DuplicateTagException {
         assert tag != null;
         uTask.addTag(tag);
-        UTFilteredListHelper.getInstance().refresh();
+        FilteredListHelper.getInstance().refresh();
         sortFilteredTaskList(sortingConfig);
     }
 
@@ -186,7 +186,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void deleteTag(Tag tag) {
         assert tag != null;
         uTask.deleteTag(tag);
-        UTFilteredListHelper.getInstance().refresh();
+        FilteredListHelper.getInstance().refresh();
         sortFilteredTaskList(sortingConfig);
     }
 
@@ -195,7 +195,7 @@ public class ModelManager extends ComponentManager implements Model {
         assert tagToReplace != null;
         assert updatedTag != null;
         uTask.updateTag(tagToReplace, updatedTag);
-        UTFilteredListHelper.getInstance().refresh();
+        FilteredListHelper.getInstance().refresh();
         sortFilteredTaskList(sortingConfig);
     }
 
@@ -209,29 +209,29 @@ public class ModelManager extends ComponentManager implements Model {
     /** Gets total size of tasks in underlying lists of listviews*/
     @Override
     public int getTotalSizeOfLists() {
-        return UTFilteredListHelper.getInstance().getTotalSizeOfAllList();
+        return FilteredListHelper.getInstance().getTotalSizeOfAllList();
     }
 
     @Override
     public void setIfFindOverlayShowing(boolean isShowing) {
-        UTFilteredListHelper.getInstance().setIfFindOverlayShowing(isShowing);
+        FilteredListHelper.getInstance().setIfFindOverlayShowing(isShowing);
     }
 
     @Override
     public boolean isFindOverlayShowing() {
-        return UTFilteredListHelper.getInstance().isFindOverlayShowing();
+        return FilteredListHelper.getInstance().isFindOverlayShowing();
     }
 
 
     //TODO: refractor
     @Override
     public List<ReadOnlyTask> getUnderlyingListByIndex(int displayIndex) {
-        return UTFilteredListHelper.getInstance().getUnderlyingListByIndex(displayIndex);
+        return FilteredListHelper.getInstance().getUnderlyingListByIndex(displayIndex);
     }
 
     @Override
     public int getActualIndexFromDisplayIndex(int displayIndex) {
-        return UTFilteredListHelper.getInstance().getActualIndexFromDisplayIndex(displayIndex);
+        return FilteredListHelper.getInstance().getActualIndexFromDisplayIndex(displayIndex);
     }
     //@author
 

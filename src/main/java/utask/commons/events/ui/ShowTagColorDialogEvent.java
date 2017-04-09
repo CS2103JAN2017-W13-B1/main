@@ -8,11 +8,11 @@ import utask.model.tag.Tag;
 /*
  * This event is used to notify UTMainWindow to show a tag color dialog
  * */
-public class UIShowTagColorDialogEvent extends BaseEvent {
+public class ShowTagColorDialogEvent extends BaseEvent {
 
     public final List<Tag> tags;
 
-    public UIShowTagColorDialogEvent(List<Tag> tags) {
+    public ShowTagColorDialogEvent(List<Tag> tags) {
         this.tags = tags;
     }
 

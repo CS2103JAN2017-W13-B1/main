@@ -19,7 +19,7 @@ import utask.commons.events.ui.ShowHelpRequestEvent;
 import utask.commons.util.StringUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
-import utask.ui.helper.UTListViewHelper;
+import utask.ui.helper.ListViewHelper;
 
 /**
  * The manager of the UI component.
@@ -122,6 +122,6 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        UTListViewHelper.getInstance().scrollTo(event.targetIndex);
+        ListViewHelper.getInstance().scrollTo(event.targetIndex);
     }
 }

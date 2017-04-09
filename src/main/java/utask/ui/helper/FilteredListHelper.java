@@ -13,26 +13,26 @@ import utask.commons.events.model.UTaskChangedEvent;
 import utask.model.task.ReadOnlyTask;
 
 /*
- * UTListHelper uses facade and singleton pattern
+ * FilteredListHelper uses facade and singleton pattern
  * It provides an interface to simplify the manage of multiple underlying FliterList.
  *
  * */
-public class UTFilteredListHelper extends UTListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
-    private static final Logger logger = LogsCenter.getLogger(UTFilteredListHelper.class);
+public class FilteredListHelper extends ListHelper<FilteredList<ReadOnlyTask>, ReadOnlyTask> {
+    private static final Logger logger = LogsCenter.getLogger(FilteredListHelper.class);
     private static final String NAMED_LIST_FIND_FILTERED_LIST = "FindFilteredList";
 
-    private static UTFilteredListHelper instance = null;
+    private static FilteredListHelper instance = null;
     private boolean isFindOverlayShowing = false;
     private final HashMap<String, FilteredList<ReadOnlyTask>> namedList;
 
-    private UTFilteredListHelper() {
+    private FilteredListHelper() {
         namedList = new HashMap<String, FilteredList<ReadOnlyTask>>();
         EventsCenter.getInstance().registerHandler(this);
     }
 
-    public static UTFilteredListHelper getInstance() {
+    public static FilteredListHelper getInstance() {
         if (instance == null) {
-            instance = new UTFilteredListHelper();
+            instance = new FilteredListHelper();
         }
 
         return instance;

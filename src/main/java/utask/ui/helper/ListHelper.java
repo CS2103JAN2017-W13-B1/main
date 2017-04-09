@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-/* UTListHelper groups similar method used by UTFilterListHelper and UTListViewHelper
+/* ListHelper groups similar method used by FilterListHelper and ListViewHelper
  *
  * Due to how different the actual type T is in the concrete classes,
  * it necessary have a common abstraction to get item size.
@@ -17,12 +17,12 @@ import java.util.HashMap;
  *         ((ListView) T).getItems().size()
  *
  **/
-public abstract class UTListHelper<T extends Collection<E>, E> {
+public abstract class ListHelper<T extends Collection<E>, E> {
 
     protected final ArrayList<T> lists;
     protected final HashMap<T, Integer> offsetMap;
 
-    protected UTListHelper() {
+    protected ListHelper() {
         lists = new ArrayList<T>();
         offsetMap = new HashMap<T, Integer>();
     }

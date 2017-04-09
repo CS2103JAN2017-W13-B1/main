@@ -1,4 +1,4 @@
-//@@author A0139996A
+
 package utask.ui.helper;
 
 import java.util.ArrayList;
@@ -40,8 +40,8 @@ import utask.logic.commands.UndoneCommand;
 import utask.logic.commands.UpdateCommand;
 import utask.logic.commands.UpdateTagCommand;
 
+//@@author A0139996A
 public class SuggestionHelper {
-
     private final Logger logger = LogsCenter.getLogger(SuggestionHelper.class);
     private final SortedMap<String, String> suggestionMap =  new TreeMap<String, String>();
     private final StringBuilder sb;

@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
-import utask.commons.events.ui.UIShowTagColorDialogEvent;
+import utask.commons.events.ui.ShowTagColorDialogEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
@@ -51,7 +51,7 @@ public class DeleteTagCommand extends Command implements ReversibleCommand {
         try {
             model.deleteTag(toRemove);
             model.addUndoCommand(this);
-            EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(model.getTags()));
+            EventsCenter.getInstance().post(new ShowTagColorDialogEvent(model.getTags()));
         } catch (Exception e) {
             throw new CommandException(MESSAGE_MISSING_TAG);
         }

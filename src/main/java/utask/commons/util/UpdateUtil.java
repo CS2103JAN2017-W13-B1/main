@@ -18,7 +18,7 @@ import utask.model.task.Status;
 import utask.model.task.Task;
 import utask.model.task.TaskType;
 import utask.model.task.Timestamp;
-import utask.ui.helper.UTFilteredListHelper;
+import utask.ui.helper.FilteredListHelper;
 
 // @@author A0138423J
 public class UpdateUtil {
@@ -28,9 +28,9 @@ public class UpdateUtil {
     // @@author A0138423J
     public static ReadOnlyTask fetchTaskToEdit(int index) {
         assert index >= 0;
-        List<ReadOnlyTask> lastShownList = UTFilteredListHelper.getInstance()
+        List<ReadOnlyTask> lastShownList = FilteredListHelper.getInstance()
                 .getUnderlyingListByIndex(index);
-        int actualInt = UTFilteredListHelper.getInstance()
+        int actualInt = FilteredListHelper.getInstance()
                 .getActualIndexFromDisplayIndex(index);
 
         return lastShownList.get(actualInt);

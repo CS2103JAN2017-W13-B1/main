@@ -16,14 +16,14 @@ import javafx.scene.text.TextAlignment;
 import utask.model.tag.Tag;
 import utask.ui.helper.TagColorHelper;
 
-public class UTTagColorDialog extends UTDialog {
+public class TagColorDialog extends Dialog {
     private static final String HAS_TAGS_HEADING = "Tags";
     private static final String NO_TAGS_MESSAGE = "Try adding some tags first!";
     private static final String NO_TAGS_HEADING = ":( NO TAGS";
     private static final String LABEL_CSS = "-fx-padding: 1 3 1 3; -fx-text-fill: WHITE; -fx-background-color: %s;";
 
 
-    public UTTagColorDialog(StackPane parent) {
+    public TagColorDialog(StackPane parent) {
         super(parent);
     }
 

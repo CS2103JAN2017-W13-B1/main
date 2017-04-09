@@ -11,12 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class UTAliasDialog extends UTDialog {
+public class AliasDialog extends Dialog {
     private static final String HAS_ALIAS_HEADING = "Alias";
     private static final String NO_ALIAS_MESSAGE = "Try adding some alias first!";
     private static final String NO_ALIAS_HEADING = ":( NO ALIAS";
 
-    public UTAliasDialog(StackPane parent) {
+    public AliasDialog(StackPane parent) {
         super(parent);
     }
 

@@ -7,11 +7,11 @@ import utask.model.task.ReadOnlyTask;
  * This event is used to notify UTListViewHelper
  *  to select last added or updated task
  * */
-public class UIShowTaskOfInterestInMainWindowEvent extends BaseEvent {
+public class ShowTaskOfInterestInMainWindowEvent extends BaseEvent {
 
     public final ReadOnlyTask task;
 
-    public UIShowTaskOfInterestInMainWindowEvent(ReadOnlyTask task) {
+    public ShowTaskOfInterestInMainWindowEvent(ReadOnlyTask task) {
         this.task = task;
     }
 

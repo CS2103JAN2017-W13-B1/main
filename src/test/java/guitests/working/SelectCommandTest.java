@@ -18,7 +18,7 @@ public class SelectCommandTest extends UTaskGuiTest {
     @Test
     public void selectPerson_nonEmptyList() {
 
-        assertSelectionInvalid(100); // invalid index
+        assertSelectionInvalid(1000); // invalid index
         assertNoTaskSelected();
         //assertSelectionSuccess(1); // first person in the list
 //        int personCount = td.getTypicalPersons().length;
