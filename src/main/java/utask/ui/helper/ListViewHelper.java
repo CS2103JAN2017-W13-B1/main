@@ -16,7 +16,7 @@ import utask.commons.events.ui.TaskListPanelSelectionChangedEvent;
 import utask.model.task.ReadOnlyTask;
 
 /*
- * UTListViewHelper uses facade and singleton pattern
+ * ListViewHelper uses facade and singleton pattern
  * It coordinates multiple ListViews to ensure their index numbers are in running sequence
  * and also provides utility functions for retrieving and scrolling.
  *
