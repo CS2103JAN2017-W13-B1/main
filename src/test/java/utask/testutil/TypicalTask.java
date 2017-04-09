@@ -49,7 +49,7 @@ public class TypicalTask {
             todayTask = new TaskBuilder().withName("Do this today")
                     .withStatus("incomplete").withDeadline("today").build();
             tomorrowTask = new TaskBuilder().withName("Do this tomorrow")
-                    .withStatus("incomplete").withDeadline("today").build();
+                    .withStatus("incomplete").withDeadline("tomorrow").build();
             futureTask = new TaskBuilder().withName("Do this in year 2020")
                     .withStatus("incomplete").withDeadline("010120").build();
             todoTask = new TaskBuilder().withName("Do tests").withStatus("incomplete").build();
