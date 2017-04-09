@@ -94,7 +94,7 @@ public class UniqueTagList implements Iterable<Tag> {
     public String getAllTagNames() {
         String allTagNames = "";
         for (Tag tag:internalList) {
-            allTagNames += tag.tagname + " ";
+            allTagNames += tag.tagName + " ";
         }
         return allTagNames;
     }
@@ -154,13 +154,13 @@ public class UniqueTagList implements Iterable<Tag> {
         internalList.add(toAdd);
     }
 
-    public void delete(Tag toAdd) {
+    public boolean delete(Tag toAdd) {
         assert toAdd != null;
         if (contains(toAdd)) {
             internalList.remove(internalList.indexOf(toAdd));
+            return true;
         } else {
-            // TODO
-            // throw error that tag not found/
+            return false;
         }
     }
 
@@ -171,8 +171,6 @@ public class UniqueTagList implements Iterable<Tag> {
             internalList.set(internalList.indexOf(tagToReplace), updatedTag);
             return true;
         } else {
-            // TODO
-            // throw error that tag not found/
             return false;
         }
     }

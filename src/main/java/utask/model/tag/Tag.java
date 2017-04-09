@@ -3,7 +3,7 @@ package utask.model.tag;
 import java.util.Objects;
 
 import utask.commons.util.CollectionUtil;
-import utask.ui.helper.TagColorHelper;
+import utask.ui.helper.TagColorHelper.ColorType;
 
 // @@author A0138423J
 /**
@@ -12,8 +12,8 @@ import utask.ui.helper.TagColorHelper;
  */
 public class Tag {
 
-    protected TagName tagname;
-    protected TagColorIndex tagcolorindex;
+    protected TagName tagName;
+    protected TagColorIndex tagColorIndex;
 
     /**
      * Every field must be present and not null.
@@ -21,39 +21,39 @@ public class Tag {
     public Tag(TagName tagName, TagColorIndex tagColorIndex) {
         assert !CollectionUtil.isAnyNull(tagName, tagColorIndex);
 
-        this.tagname = tagName;
-        this.tagcolorindex = tagColorIndex;
+        this.tagName = tagName;
+        this.tagColorIndex = tagColorIndex;
     }
 
     public Tag(Tag tag) {
         assert tag != null;
 
-        this.tagname = tag.getTagName();
-        this.tagcolorindex = tag.getTagColorIndex();
+        this.tagName = tag.getTagName();
+        this.tagColorIndex = tag.getTagColorIndex();
     }
 
     public Tag() {
     }
 
     public TagName getTagName() {
-        return tagname;
+        return tagName;
     }
 
     public void setTagName(TagName tagname) {
-        this.tagname = tagname;
+        this.tagName = tagname;
     }
 
     public TagColorIndex getTagColorIndex() {
-        return tagcolorindex;
+        return tagColorIndex;
     }
 
     public void setTagColorIndex(TagColorIndex tagcolorindex) {
-        this.tagcolorindex = tagcolorindex;
+        this.tagColorIndex = tagcolorindex;
     }
 
     public void setTag(Tag updatedTag) {
-        this.tagname = updatedTag.tagname;
-        this.tagcolorindex = updatedTag.tagcolorindex;
+        this.tagName = updatedTag.tagName;
+        this.tagColorIndex = updatedTag.tagColorIndex;
     }
 
     @Override
@@ -70,15 +70,16 @@ public class Tag {
 
     @Override
     public int hashCode() {
-        return Objects.hash(tagname);
+        return Objects.hash(tagName);
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + tagname.toString() + ']' + '[' + TagColorHelper
-                .getColorValueFromIndex(tagcolorindex.getTagColorIndexAsInt())
+        return '[' + tagName.toString() + ']' + '['
+                + ColorType.values()[tagColorIndex.getTagColorIndexAsInt()]
+                        .name()
                 + ']';
     }
 
