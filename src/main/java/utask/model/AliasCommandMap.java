@@ -10,7 +10,7 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.ui.helper.SuggestionHelper;
 
 /*
- * Stores a HashMap of command maps aliases
+ * Stores a HashMap of alias maps command
  */
 public class AliasCommandMap {
     private HashMap<String, String> aliasesToCommand;

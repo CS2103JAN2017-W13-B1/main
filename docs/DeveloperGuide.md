@@ -232,7 +232,7 @@ ObservableList() | `getFilteredTaskList()`: Retrieves the filtered task list fro
 
 ### Model component
 
-Author: Team-uTask
+Author: LIU JIAHAO
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
 _Figure 2.4.1 : Structure of the Model Component_
@@ -246,6 +246,29 @@ The `Model`:
 * exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' e.g. the UI can be bound to this list
   so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+**`Model` Interface:**
+
+The **`Model`** interface allows you to access all the model-related operations, such as retrieving or modifying utask and user preference. This is using mediator pattern, other component outside `Model` will have to talk to **`Model`** interface. Objects no longer communicate directly with each other, but instead communicate through the mediator.
+
+**`ModelManager` Class:**
+The `ModelManager` class implements the **`Model`** interface, and provides all the services and functionality specifed in the **`Model`** interface.
+
+Other components should not directly use this class, you may access the method through **`Model`** interface.
+
+**`ReadOnlyTask` Interface:**
+The **`ReadOnlyTask`** allow you to retrieve tasks, but not edit tasks. You can get full task list and tag list using this interface. This is using Decorator pattern, whichever implements the **`ReadOnlyTask`** interface will implement the methods.
+
+**`UTask` Class:**
+The **`UTask`** class implements the **`ReadOnlyTask`** interface, and responsible for managing the task list. You should not directly call any methods in this class, you can access them via the `ModelManager` class.
+
+**`UserPrefs` Class:**
+
+The `UserPrefs` class is responsible for storing application settings.
+
+**`AliasCommandMap` Class:**
+
+The `AliasCommandMap` class is used to store a HashMap of alias maps command.
 
 ### Storage component
 
