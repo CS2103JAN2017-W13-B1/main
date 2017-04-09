@@ -208,9 +208,10 @@ The `UI` component:
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+<!-- @@author A0138493W -->
 ### Logic component
 
-Author: Team-uTask
+Author: LIU JIAHAO
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 _Figure 2.3.1 : Structure of the Logic Component_
@@ -227,6 +228,10 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 <img src="images/DeleteTaskSdForLogic.png" width="800"><br>
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
+Given below is the Activity Diagram when you `execute("alias c /as create")`<br>
+<img src="images/AliasCommandActivityDiagram.png" width="800"><br>
+_Figure 2.3.1 : Activity diagram for the `alias c /as create` Command_
+
 **`Logic` Interface**
 
 The `Logic` interface contains two abstract methods which allows you to do any logic-related operation, such as executing commands. This interface can be accessed by any class in any package.
@@ -238,7 +243,10 @@ Return type | Method and Description
 CommandResult() | `execute(String commandText)`: Executes the command `commandText` and returns the result.
 ObservableList() | `getFilteredTaskList()`: Retrieves the filtered task list from the **`Model`** component.
 <br>
+<!-- @@author -->
+Author:
 
+<!-- @@author A0138493W -->
 ### Model component
 
 Author: LIU JIAHAO
@@ -278,6 +286,8 @@ The `UserPrefs` class is responsible for storing application settings.
 **`AliasCommandMap` Class:**
 
 The `AliasCommandMap` class is used to store a HashMap of alias maps command.
+
+<!-- @@author -->
 
 ### Storage component
 
