@@ -12,7 +12,7 @@ import utask.commons.exceptions.IllegalValueException;
 public class EditTagDescriptorTest {
 
     @Test
-    public void validEditTagDescriptorConstructor() throws IllegalValueException {
+    public void valid_EditTagDescriptor_Constructor() throws IllegalValueException {
         EditTagDescriptor t = new EditTagDescriptor();
         Optional<TagName> tempName = Optional.of(new TagName("IMPT"));
         Optional<TagColorIndex> tempColor = Optional.of(new TagColorIndex("yellow"));

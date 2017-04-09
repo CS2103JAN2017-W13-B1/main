@@ -14,7 +14,7 @@ public class EventTaskTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void validEventTaskConstructorAndValidUpdate() throws Exception {
+    public void valid_EventTaskConstructor_AndValidUpdate() throws Exception {
         // test Event task creation
         Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);
         // test update of correct task attributes
@@ -24,7 +24,7 @@ public class EventTaskTest {
     }
 
     @Test
-    public void validEventTaskConstructorAndCopyReadOnlyTask()
+    public void valid_EventTaskConstructor_AndCopyReadOnlyTask()
             throws Exception {
         // test update of correct task attributes
         ReadOnlyTask taskToOverwrite = SampleDataUtil
@@ -35,7 +35,7 @@ public class EventTaskTest {
     }
 
     @Test
-    public void validEventTaskConstructorAndInvalidNameUpdate()
+    public void valid_EventTaskConstructor_AndInvalidNameUpdate()
             throws Exception {
         // test Event task creation
         Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);
@@ -48,7 +48,7 @@ public class EventTaskTest {
     }
 
     @Test
-    public void validEventTaskConstructorAndInvalidFrequencyUpdate()
+    public void valid_EventTaskConstructor_AndInvalidFrequencyUpdate()
             throws Exception {
         // test Event task creation
         Task taskToReplace = SampleDataUtil.generateEventTaskWithSeed(1);

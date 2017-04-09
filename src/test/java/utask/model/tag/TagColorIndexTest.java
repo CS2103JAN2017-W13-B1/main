@@ -11,7 +11,7 @@ import utask.commons.exceptions.IllegalValueException;
 public class TagColorIndexTest {
 
     @Test
-    public void isValidName() {
+    public void isValidTagColorIndex() {
         // invalid name
         assertFalse(TagColorIndex.isValidColorIndex(" ")); // spaces only
         assertFalse(TagColorIndex.isValidColorIndex("^")); // only non-alphanumeric characters
@@ -28,7 +28,7 @@ public class TagColorIndexTest {
     }
 
     @Test
-    public void validTagColorIndexConstructor() throws IllegalValueException {
+    public void valid_TagColorIndex_Constructor() throws IllegalValueException {
         TagColorIndex t = new TagColorIndex("");
         TagColorIndex toCompare = new TagColorIndex(t);
         assertEquals(t, toCompare); //checking if both TagColorIndex tally
@@ -43,7 +43,7 @@ public class TagColorIndexTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void invalidTagColorIndexConstructor() throws IllegalValueException {
+    public void invalid_TagColorIndex_Constructor() throws IllegalValueException {
         TagColorIndex t = null;
         TagColorIndex toCompare = new TagColorIndex(t);
         assertEquals(t, toCompare); //checking if both TagColorIndex tally

@@ -11,7 +11,7 @@ import utask.commons.exceptions.IllegalValueException;
 public class TagNameTest {
 
     @Test
-    public void isValidName() {
+    public void isValidTagName() {
         // invalid name
         assertFalse(TagName.isValidName("")); // empty string
         assertFalse(TagName.isValidName(" ")); // spaces only
@@ -26,14 +26,14 @@ public class TagNameTest {
     }
 
     @Test
-    public void validTagNameConstructor() throws IllegalValueException {
+    public void valid_TagName_Constructor() throws IllegalValueException {
         TagName t = new TagName("Hello");
         TagName toCompare = new TagName(t);
         assertEquals(t, toCompare); //checking if both TagName tally
     }
 
     @Test(expected = AssertionError.class)
-    public void invalidTagNameConstructor() throws IllegalValueException {
+    public void invalid_TagName_Constructor() throws IllegalValueException {
         TagName t = null;
         TagName toCompare = new TagName(t);
         assertEquals(t, toCompare); //checking if both TagName tally

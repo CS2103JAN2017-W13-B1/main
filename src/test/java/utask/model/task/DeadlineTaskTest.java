@@ -14,7 +14,7 @@ public class DeadlineTaskTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void validDeadlineTaskConstructorAndValidUpdate() throws Exception {
+    public void valid_DeadlineTaskConstructor_AndValidUpdate() throws Exception {
         // test Deadline task creation
         Task taskToReplace = SampleDataUtil.generateDeadlineTaskWithSeed(1);
         // test update of correct task attributes
@@ -24,7 +24,7 @@ public class DeadlineTaskTest {
     }
 
     @Test
-    public void validDeadlineTaskConstructorAndCopyReadOnlyTask()
+    public void valid_DeadlineTaskConstructor_AndCopyReadOnlyTask()
             throws Exception {
         // test update of correct task attributes
         ReadOnlyTask taskToOverwrite = SampleDataUtil
@@ -35,7 +35,7 @@ public class DeadlineTaskTest {
     }
 
     @Test
-    public void validDeadlineTaskConstructorAndInvalidNameUpdate()
+    public void valid_DeadlineTaskConstructor_AndInvalidNameUpdate()
             throws Exception {
         // test Deadline task creation
         Task taskToReplace = SampleDataUtil.generateDeadlineTaskWithSeed(1);
@@ -48,7 +48,7 @@ public class DeadlineTaskTest {
     }
 
     @Test
-    public void validDeadlineTaskConstructorAndInvalidFrequencyUpdate()
+    public void valid_DeadlineTaskConstructor_AndInvalidFrequencyUpdate()
             throws Exception {
         // test Deadline task creation
         Task taskToReplace = SampleDataUtil.generateDeadlineTaskWithSeed(1);

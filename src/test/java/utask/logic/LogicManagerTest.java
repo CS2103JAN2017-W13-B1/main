@@ -333,14 +333,14 @@ public class LogicManagerTest {
 
     // @@ author A0138423J
     @Test
-    public void execute_createtag_invalidcommandformat_unsuccessful() {
+    public void execute_createtag_invalidcommandformatunsuccessful() {
         assertCommandFailure("createtag ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         CreateTagCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void execute_createtag_invalidname_unsuccessful() {
+    public void execute_createtag_invalidnameunsuccessful() {
         String tagName = "%^&*(";
         String color = "$%^&*";
         assertCommandFailure("createtag " + tagName + "/color " + color,
@@ -669,7 +669,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_Done_Failure_Already_Done() throws Exception {
+    public void execute_Done_FailureAlreadyDone() throws Exception {
         // generate Tasks tobeDone and expectedOutcome
         TestDataHelper helper = new TestDataHelper();
         Task expectedOutcome = helper.generateEventTaskWithSeed(1);
@@ -682,7 +682,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_Done_Failure_Duplicate() throws Exception {
+    public void execute_Done_FailureDuplicate() throws Exception {
         // generate Tasks tobeDone and expectedOutcome
         TestDataHelper helper = new TestDataHelper();
         Task taskOne = helper.generateEventTaskWithSeed(1);
@@ -716,7 +716,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_Undone_Failure_Already_Undone() throws Exception {
+    public void execute_Undone_FailureAlreadyUndone() throws Exception {
         // generate Tasks tobeDone and expectedOutcome
         TestDataHelper helper = new TestDataHelper();
         Task expectedOutcome = helper.generateEventTaskWithSeed(1);
@@ -729,7 +729,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_Undone_Failure_Duplicate() throws Exception {
+    public void execute_Undone_FailureDuplicate() throws Exception {
         // generate Tasks tobeDone and expectedOutcome
         TestDataHelper helper = new TestDataHelper();
         Task taskOne = helper.generateEventTaskWithSeed(1);
