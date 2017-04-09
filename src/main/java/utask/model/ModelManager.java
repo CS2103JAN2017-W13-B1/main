@@ -37,7 +37,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final UTask uTask;
     private final UserPrefs userPrefs;
-    private final AliasMap aliasMap;
     private final FilteredList<ReadOnlyTask> filteredFindTasks;
 
     private final FilteredList<ReadOnlyTask> dueTasks;
@@ -58,7 +57,6 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with UTask: " + uTask + " and user prefs " + userPrefs);
 
         this.uTask = new UTask(uTask);
-        this.aliasMap = new AliasMap();
         this.userPrefs = userPrefs;
         undoStack = new Stack<ReversibleCommand>();
         redoStack = new Stack<ReversibleCommand>();

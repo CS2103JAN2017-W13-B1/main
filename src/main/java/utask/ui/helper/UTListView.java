@@ -6,7 +6,7 @@ import java.util.Iterator;
 import com.jfoenix.controls.JFXListView;
 
 /**
- *  As UTListHelper works with generic of Collection type, it is required to implement Collection.
+ *  As ListHelper works with generic of Collection type, it is required to implement Collection.
  *
  *  Although, ListView has a underlying collection, we are using the helper for UI manipulation.
  *  Thus, the need to abstract different methods to prevent the need to cast generic types to get item size.

@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+//@@author A0138493W
 public class AliasDialog extends Dialog {
     private static final String HAS_ALIAS_HEADING = "Alias";
     private static final String NO_ALIAS_MESSAGE = "Try adding some alias first!";
