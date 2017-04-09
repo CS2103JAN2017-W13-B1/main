@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import utask.commons.core.EventsCenter;
-
 /* UTListHelper groups similar method used by UTFilterListHelper and UTListViewHelper
  *
  * Due to how different the actual type T is in the concrete classes,
@@ -27,7 +25,6 @@ public abstract class UTListHelper<T extends Collection<E>, E> {
     protected UTListHelper() {
         lists = new ArrayList<T>();
         offsetMap = new HashMap<T, Integer>();
-        EventsCenter.getInstance().registerHandler(this);
     }
 
     public void addList(T list) {

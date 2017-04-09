@@ -8,6 +8,7 @@ import org.junit.Test;
 import guitests.guihandles.TaskCardHandle;
 import javafx.scene.control.ListView;
 import utask.commons.core.Messages;
+import utask.logic.commands.ClearCommand;
 import utask.logic.commands.CreateCommand;
 import utask.model.task.ReadOnlyTask;
 import utask.testutil.TestTask;
@@ -17,7 +18,7 @@ public class AddCommandTest extends UTaskGuiTest {
 
     @Before
     public void clear() {
-        commandBox.runCommand("clear");
+        commandBox.runCommand(ClearCommand.COMMAND_WORD);
     }
 
     @Test
