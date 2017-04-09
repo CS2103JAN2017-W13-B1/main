@@ -225,7 +225,7 @@ In the above figure, UTask displays different content depending on the state of 
 
 Depending on the states, commands that work with index will retrieve data from their respective underlying FilteredList. However, commands that mutates the data such as, create, update and delete will modify UTask list directly.
 
-FilteredListHelper, similar to ListViewHelper, also also uses **singleton pattern** and extends the abstract ListHelper to simplify the managment of multiple underlying FliterList. It is used in the above scenario to provide functions for translating given indexes to actual internal indexes of different lists.
+FilteredListHelper, similar to ListViewHelper, also uses **singleton pattern** and extends the abstract ListHelper to simplify the managment of multiple underlying FliterList. It is used in the above scenario to provide functions for translating given indexes to actual internal indexes of different lists.
 
 <!-- @@author -->
 
