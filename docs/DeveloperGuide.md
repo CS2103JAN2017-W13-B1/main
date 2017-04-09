@@ -187,15 +187,15 @@ The sections below give more details of each component.
 
 ### UI component
 
-Author: Team-uTask
+<!-- @@author A0139996A -->
+Author: TENG YONG HAO
 
 <img src="images/UiClassDiagram.png" width="800"><br>
 _Figure 2.2.1 : Structure of the UI Component_
 
 **API** : [`Ui.java`](../src/main/java/utask/ui/Ui.java)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`,
-`StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The User Interface (UI) consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TodoListPanel`, `TaskListPanel`, `FindTaskOverlay`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
  that are in the `src/main/resources/view` folder.<br>
@@ -207,6 +207,15 @@ The `UI` component:
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+
+As UTask utilises multiple lists, to simplify their management, ListHelper is designed with **facade pattern** to provide simple access to multiple disjointed list.
+
+Furthermore, to extend ListHelper compatibility, it uses **generic** of type Collection. In a case, where a type is not a Collection, it is required to implement Collection. This demonstrates the use of **adapter pattern**, where incompatible types are ‘***adapted***’ so they can work together. This is used in ListViewHelper, where ListView, which is not a type of Collection, is adapted to a Collection type.
+
+ListViewHelper, extends the abstract ListHelper, to coordinates multiple listviews to ensure their index numbers are in running sequence and also provide utility functions for retrieving and scrolling tasks. It uses **singleton pattern** to ensure only one instance of it runs in the UTask. This is critical as it prevents the accidental overwriting of values after UI initialization.
+
+Finally, UI classes are not using Singleton Pattern. In hope that, UTask Developers use EventsCenter as a correct means to propagate events to the UI. As they are only created once and can only be binded during the initialisation of MainWindow. Therefore, there are no strong reasons to use Singleton Pattern. As they can be used incorrectly, which increased class coupling and degrade the code quality of UI.
+<!-- @@author -->
 
 <!-- @@author A0138493W -->
 ### Logic component
