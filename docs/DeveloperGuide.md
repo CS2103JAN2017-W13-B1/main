@@ -255,7 +255,8 @@ ObservableList() | `getFilteredTaskList()`: Retrieves the filtered task list fro
 <br>
 <!-- @@author -->
 <!-- @@author A0138423J -->
-## How alias command functions in UTask
+
+#### How alias command functions in UTask
 Author: TAN JIAN HONG, DENVER
 
 1. The flow starts when the command "alias c /as create" is executed.
