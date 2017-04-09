@@ -1,7 +1,5 @@
 package guitests.working;
 
-import static utask.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import org.junit.Test;
 
 import utask.commons.core.Messages;
