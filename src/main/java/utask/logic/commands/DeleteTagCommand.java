@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
-import utask.commons.events.ui.UIShowTagColorDialogEvent;
+import utask.commons.events.ui.ShowTagColorDialogEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.tag.Tag;
@@ -49,7 +49,7 @@ public class DeleteTagCommand extends Command {
         assert model != null;
         try {
             model.deleteTag(toRemove);
-            EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(model.getTags()));
+            EventsCenter.getInstance().post(new ShowTagColorDialogEvent(model.getTags()));
         } catch (Exception e) {
             throw new CommandException(MESSAGE_MISSING_TAG);
         }

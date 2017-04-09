@@ -20,15 +20,15 @@ import utask.commons.core.EventsCenter;
 import utask.commons.core.GuiSettings;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.ExitAppRequestEvent;
-import utask.commons.events.ui.UIShowAliasDialogEvent;
-import utask.commons.events.ui.UIShowMessageDialogEvent;
-import utask.commons.events.ui.UIShowTagColorDialogEvent;
+import utask.commons.events.ui.ShowAliasDialogEvent;
+import utask.commons.events.ui.ShowMessageDialogEvent;
+import utask.commons.events.ui.ShowTagColorDialogEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
-import utask.ui.dialogs.UTAliasDialog;
-import utask.ui.dialogs.UTMessageDialog;
-import utask.ui.dialogs.UTTagColorDialog;
+import utask.ui.dialogs.AliasDialog;
+import utask.ui.dialogs.MessageDialog;
+import utask.ui.dialogs.TagColorDialog;
 
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
@@ -209,7 +209,7 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
+        HelpWindow helpWindow = new HelpWindow(primaryStage);
         helpWindow.show();
     }
 
@@ -226,20 +226,20 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleUIShowTagColorDialogEvent(UIShowTagColorDialogEvent event) {
+    private void handleShowTagColorDialogEvent(ShowTagColorDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        new UTTagColorDialog(rootPane).show(event.tags);
+        new TagColorDialog(rootPane).show(event.tags);
     }
 
     @Subscribe
-    private void handleUIShowAliasDialogEvent(UIShowAliasDialogEvent event) {
+    private void handleShowAliasDialogEvent(ShowAliasDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        new UTAliasDialog(rootPane).show(event.map);
+        new AliasDialog(rootPane).show(event.map);
     }
 
     @Subscribe
-    private void handleUIShowMessageDialogEvent(UIShowMessageDialogEvent event) {
+    private void handleShowMessageDialogEvent(ShowMessageDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        new UTMessageDialog(rootPane).show(event.headingText, event.contentText);
+        new MessageDialog(rootPane).show(event.headingText, event.contentText);
     }
 }

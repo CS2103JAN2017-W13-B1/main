@@ -1,4 +1,3 @@
-//@@author A0139996A
 package utask.ui;
 
 import java.util.logging.Logger;
@@ -22,9 +21,10 @@ import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
+import utask.ui.helper.ListViewHelper;
 import utask.ui.helper.UTListView;
-import utask.ui.helper.UTListViewHelper;
 
+//@@author A0139996A
 public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";
     private static final double CARD_HEIGHT = TaskListCard.CARD_HEIGHT;
@@ -56,7 +56,7 @@ public class TaskListPanel extends UiPart<Region> {
         parent.getChildren().add(rootPane);
 
         //TODO: This is not the right place to call!
-        UTListViewHelper.getInstance().updateListViews();
+        ListViewHelper.getInstance().updateListViews();
     }
 
     private void createLabelledListViewControl(Pane parent, ObservableList<ReadOnlyTask> tasks, String labelName) {
@@ -110,7 +110,7 @@ public class TaskListPanel extends UiPart<Region> {
 
     private void setConnections(UTListView<ReadOnlyTask> listView, ObservableList<ReadOnlyTask> tasks) {
         listView.setItems(tasks);
-        UTListViewHelper.getInstance().addList(listView);
+        ListViewHelper.getInstance().addList(listView);
     }
 
     /*

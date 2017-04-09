@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
-import utask.commons.events.ui.UIShowTagColorDialogEvent;
+import utask.commons.events.ui.ShowTagColorDialogEvent;
 
 //import utask.commons.core.EventsCenter;
 //import utask.commons.events.ui.ShowTaskOfInterestEvent;
@@ -56,7 +56,7 @@ public class CreateTagCommand extends Command  implements ReversibleCommand {
         try {
             model.addTag(toAdd);
             model.addUndoCommand(this);
-            EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(model.getTags()));
+            EventsCenter.getInstance().post(new ShowTagColorDialogEvent(model.getTags()));
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TAG);
         }

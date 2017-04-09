@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
+import utask.commons.events.ui.FileRelocateEvent;
 import utask.commons.util.FxViewUtil;
 
 public class StatusBarFooter extends UiPart<Region> {
@@ -44,9 +45,15 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleUTaskChangedEvent(UTaskChangedEvent abce) {
+    public void handleUTaskChangedEvent(UTaskChangedEvent event) {
         String lastUpdated = (new Date()).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
+    }
+
+    @Subscribe
+    public void handlePathChangedEvent(FileRelocateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setSaveLocation(event.toString());
     }
 }

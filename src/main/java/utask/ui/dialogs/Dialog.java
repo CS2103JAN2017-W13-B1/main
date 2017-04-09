@@ -14,13 +14,13 @@ import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.KeyboardEscapeKeyPressedEvent;
 import utask.ui.MainWindow;
 
-public abstract class UTDialog {
+public abstract class Dialog {
     private static final Logger logger = LogsCenter.getLogger(MainWindow.class);
     private final JFXDialog dialog;
     protected final JFXDialogLayout contentLayout;
     private boolean isShowing = false;
 
-    public UTDialog(StackPane parent) {
+    public Dialog(StackPane parent) {
         assert parent != null : "Parent cannot be null";
 
         dialog = new JFXDialog();

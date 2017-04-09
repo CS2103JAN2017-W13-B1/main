@@ -30,16 +30,17 @@ public class UndoCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_UNDO_RANGE);
         }
 
-        ReversibleCommand undoCommand = model.getUndoCommand();
-
         try {
-            undoCommand.undo();
-            final ReversibleCommand redoCommand = undoCommand;
-            model.addRedoCommand(redoCommand);
+            for (int i = 0; i < index; i++) {
+                ReversibleCommand undoCommand = model.getUndoCommand();
+                undoCommand.undo();
+                final ReversibleCommand redoCommand = undoCommand;
+                model.addRedoCommand(redoCommand);
+            }
         } catch (Exception e) {
             //TODO: Is it sensible to add it back to the stack?
             //Will it work in the later in time of execution?
-            model.addUndoCommand(undoCommand);
+            //model.addUndoCommand(undoCommand);
             throw new CommandException(Messages.MESSAGE_UNDO_ERROR);
         }
 

@@ -19,9 +19,12 @@ public class UndoCommandParser {
      */
     public Command parse(String args) {
         Optional<Integer> index = ParserUtil.parseIndex(args);
+
         if (index.isPresent() && index.get() > 0) {
+            //If given value is in valid range of positive integer
             return new UndoCommand(index.get());
-        } else if (!index.isPresent()) {
+        } else if (args.isEmpty()) {
+            //User input only undo, so autofill it with a 1
             return new UndoCommand(1);
         }
 

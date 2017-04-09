@@ -1,6 +1,8 @@
 //@@author A0138493W
 package utask.logic.commands;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import utask.commons.core.Messages;
@@ -27,20 +29,22 @@ public class DeleteCommand extends Command implements ReversibleCommand {
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Tasks have been deleted";
 
     ReadOnlyTask taskToDelete;
+    List<ReadOnlyTask> deleteTasks;
     public final List<Integer> targetList;
 
 
     public DeleteCommand(List<Integer> targetList) {
         this.targetList = targetList;
+        deleteTasks = new LinkedList<ReadOnlyTask>();
     }
 
     @Override
     public CommandResult execute() throws CommandException {
 
         for (int targetIndex : targetList) {
-            System.out.println("DETELTEINGING " + targetIndex);
             checkIfGivenIndexIsValid(targetIndex);
             taskToDelete = getTaskToDelete(targetIndex);
+            deleteTasks.add(taskToDelete);
 
             //Do selection effect for 1 task only. It will cause race condition when doing multiple effect in a loop
             if (targetList.size() == 1) {
@@ -52,6 +56,8 @@ public class DeleteCommand extends Command implements ReversibleCommand {
                 deleteTask(taskToDelete);
             }
         }
+
+        model.addUndoCommand(this);
 
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS));
     }
@@ -65,7 +71,6 @@ public class DeleteCommand extends Command implements ReversibleCommand {
     private void deleteTask(ReadOnlyTask taskToDelete) {
         try {
             model.deleteTask(taskToDelete);
-            model.addUndoCommand(this);
         } catch (TaskNotFoundException pnfe) {
             assert false : "The target task cannot be missing";
         }
@@ -81,18 +86,24 @@ public class DeleteCommand extends Command implements ReversibleCommand {
 
     @Override
     public void undo() throws Exception {
-        model.addTask((Task) taskToDelete);
+        Collections.reverse(deleteTasks); //Ensures that items are restored in previous state.
+        for (int i = 0; i < deleteTasks.size(); i++) {
+            model.addTask((Task) deleteTasks.get(i));
+        }
+
         notifyUI(taskToDelete);
     }
 
     @Override
     public void redo() throws Exception {
         notifyUI(taskToDelete);
-
+        Collections.reverse(deleteTasks); //Ensures that items are restored in previous state.
         //Access to deleteTask() must be delayed to prevent race condition with notifyUI
         new DelayedExecution((e)-> {
             try {
-                model.deleteTask(taskToDelete);
+                for (int i = 0; i < deleteTasks.size(); i++) {
+                    model.deleteTask((Task) deleteTasks.get(i));
+                }
             } catch (TaskNotFoundException pnfe) {
                 //This exception is handled as it is not possible to hit this exception with normal usage
                 assert false : "The target task cannot be missing";

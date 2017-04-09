@@ -2,8 +2,8 @@ package utask.logic.commands;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.Messages;
-import utask.commons.events.ui.UIShowTaskOfInterestInFindOverlayEvent;
-import utask.commons.events.ui.UIShowTaskOfInterestInMainWindowEvent;
+import utask.commons.events.ui.ShowTaskOfInterestInFindOverlayEvent;
+import utask.commons.events.ui.ShowTaskOfInterestInMainWindowEvent;
 import utask.logic.commands.exceptions.CommandException;
 import utask.model.Model;
 import utask.model.task.ReadOnlyTask;
@@ -49,9 +49,9 @@ public abstract class Command {
         assert task != null : "Incorrect usage: Task should not be null";
 
         if (model.isFindOverlayShowing()) {
-            EventsCenter.getInstance().post(new UIShowTaskOfInterestInFindOverlayEvent(task));
+            EventsCenter.getInstance().post(new ShowTaskOfInterestInFindOverlayEvent(task));
         } else {
-            EventsCenter.getInstance().post(new UIShowTaskOfInterestInMainWindowEvent(task));
+            EventsCenter.getInstance().post(new ShowTaskOfInterestInMainWindowEvent(task));
         }
     }
 }

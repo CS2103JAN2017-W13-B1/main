@@ -15,7 +15,7 @@
 			<columns>
 				<TableColumn fx:id="columnIndex" minWidth="50.0" maxWidth="50.0" text="#" />
 				<TableColumn fx:id="columnName" minWidth="200" text="a. Name" />
-				<TableColumn fx:id="columnComplete" minWidth="50" text="b. Done" />
+				<TableColumn fx:id="columnComplete" minWidth="50" text="b. Status" />
 				<TableColumn fx:id="columnDeadline" minWidth="100" text="c. By" />
 				<TableColumn fx:id="columnTimestamp" minWidth="100" text="d. Time" />
 				<TableColumn fx:id="columnFrequency" minWidth="100" text="e. Repeat" />

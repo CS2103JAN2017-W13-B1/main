@@ -3,17 +3,19 @@ package guitests;
 import static org.junit.Assert.assertTrue;
 import static utask.logic.commands.DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS;
 
+import org.junit.Test;
+
 import guitests.working.UTaskGuiTest;
 import utask.testutil.TestTask;
 import utask.testutil.TestUtil;
 
 public class DeleteCommandTest extends UTaskGuiTest {
 
-//    @Test
-//    public void delete() {
-//
+    @Test
+    public void delete() {
+
 //        //delete the first in the list
-//        TestTask[] currentList = td.getTypicalPersons();
+//        TestTask[] currentList = td.getTypicalTasks();
 //        int targetIndex = 1;
 //        assertDeleteSuccess(targetIndex, currentList);
 //
@@ -30,8 +32,8 @@ public class DeleteCommandTest extends UTaskGuiTest {
 //        //invalid index
 //        commandBox.runCommand("delete " + currentList.length + 1);
 //        assertResultMessage("The task index provided is invalid");
-//
-//    }
+
+    }
 
     /**
      * Runs the delete command to delete the person at specified index and confirms the result is correct.
@@ -45,7 +47,7 @@ public class DeleteCommandTest extends UTaskGuiTest {
         commandBox.runCommand("delete " + targetIndexOneIndexed);
 
         //confirm the list now contains all previous persons except the deleted person
-        assertTrue(todoListPanel.isListMatching(expectedRemainder));
+        assertTrue(listPanel.isTodoListMatching(expectedRemainder));
 
         //confirm the result message is correct
         assertResultMessage(String.format(MESSAGE_DELETE_TASK_SUCCESS, personToDelete));

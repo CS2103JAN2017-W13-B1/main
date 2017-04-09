@@ -11,9 +11,8 @@ import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToTaskListRequestEvent;
+import utask.commons.events.ui.ShowTaskOfInterestInMainWindowEvent;
 import utask.commons.events.ui.TaskListPanelSelectionChangedEvent;
-import utask.commons.events.ui.UIClearListSelectionEvent;
-import utask.commons.events.ui.UIShowTaskOfInterestInMainWindowEvent;
 import utask.model.task.ReadOnlyTask;
 
 /*
@@ -22,17 +21,17 @@ import utask.model.task.ReadOnlyTask;
  * and also provides utility functions for retrieving and scrolling.
  *
  * */
-public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, ReadOnlyTask> {
-    private static UTListViewHelper instance = null;
-    private final Logger logger = LogsCenter.getLogger(UTListViewHelper.class);
+public class ListViewHelper extends ListHelper<UTListView<ReadOnlyTask>, ReadOnlyTask> {
+    private static ListViewHelper instance = null;
+    private final Logger logger = LogsCenter.getLogger(ListViewHelper.class);
 
-    private UTListViewHelper() {
+    private ListViewHelper() {
         EventsCenter.getInstance().registerHandler(this);
     }
 
-    public static UTListViewHelper getInstance() {
+    public static ListViewHelper getInstance() {
         if (instance == null) {
-            instance = new UTListViewHelper();
+            instance = new ListViewHelper();
         }
 
         return instance;
@@ -158,15 +157,9 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
     }
 
     @Subscribe
-    public void handleUIShowTaskOfInterestInMainWindowEvent(UIShowTaskOfInterestInMainWindowEvent event) {
+    public void handleShowTaskOfInterestInMainWindowEvent(ShowTaskOfInterestInMainWindowEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         int displayIndex = getDisplayedIndexFromReadOnlyTask(event.task);
         scrollTo(displayIndex);
-    }
-
-    @Subscribe
-    public void handleUIClearListSelectionEvent(UIClearListSelectionEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        clearSelectionOfAllListViews();
     }
 }

@@ -7,11 +7,11 @@ import utask.commons.events.BaseEvent;
 /*
  * This event is used to notify UTMainWindow to show a alias dialog
  * */
-public class UIShowAliasDialogEvent extends BaseEvent {
+public class ShowAliasDialogEvent extends BaseEvent {
 
     public final Map<String, String> map;
 
-    public UIShowAliasDialogEvent(Map<String, String> map) {
+    public ShowAliasDialogEvent(Map<String, String> map) {
         this.map = map;
     }
 

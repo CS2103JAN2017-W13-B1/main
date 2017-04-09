@@ -1,4 +1,3 @@
-//@@author A0139996A
 package utask.ui.helper;
 
 import static org.junit.Assert.assertNotNull;
@@ -19,57 +18,57 @@ import utask.model.task.Name;
 import utask.model.task.ReadOnlyTask;
 import utask.model.task.Status;
 
-public class UTFilteredListHelperTest {
+//@@author A0139996A
+public class FilteredListHelperTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void clearState() {
-        UTFilteredListHelper.getInstance().clear();
+        FilteredListHelper.getInstance().clear();
     }
 
     @Test
     public void add_nullList_notAllowed() {
         FilteredList<ReadOnlyTask> lv = null;
         thrown.expect(AssertionError.class);
-        UTFilteredListHelper.getInstance().addList(lv);
+        FilteredListHelper.getInstance().addList(lv);
     }
-
 
     @Test
     public void add_validListView_success() {
         FilteredList<ReadOnlyTask> lv = new FilteredList<ReadOnlyTask>(FXCollections.emptyObservableList());
-        UTFilteredListHelper.getInstance().addList(lv);
+        FilteredListHelper.getInstance().addList(lv);
     }
 
     @Test
     public void execute_getInstance_notNull() {
-        assertNotNull(UTFilteredListHelper.getInstance());
+        assertNotNull(FilteredListHelper.getInstance());
     }
 
     @Test
     public void execute_refreshOnEmptyList_notAllowed() {
         thrown.expect(AssertionError.class);
-        UTFilteredListHelper.getInstance().refresh();
+        FilteredListHelper.getInstance().refresh();
     }
 
     @Test
     public void execute_refreshOnNonEmptyList_success() {
         FilteredList<ReadOnlyTask> lv = new FilteredList<ReadOnlyTask>(FXCollections.emptyObservableList());
-        UTFilteredListHelper.getInstance().addList(lv);
-        UTFilteredListHelper.getInstance().refresh();
+        FilteredListHelper.getInstance().addList(lv);
+        FilteredListHelper.getInstance().refresh();
     }
 
     @Test
     public void getList_withNegativeIndex_notAllowed() {
         thrown.expect(AssertionError.class);
-        UTFilteredListHelper.getInstance().getUnderlyingListByIndex(-1);
+        FilteredListHelper.getInstance().getUnderlyingListByIndex(-1);
     }
 
     @Test
     public void getList_withValidIndexButEmptyList_notAllowed() {
         thrown.expect(AssertionError.class);
-        UTFilteredListHelper.getInstance().getUnderlyingListByIndex(0);
+        FilteredListHelper.getInstance().getUnderlyingListByIndex(0);
     }
 
     @Test
@@ -84,22 +83,22 @@ public class UTFilteredListHelperTest {
         }
 
         FilteredList<ReadOnlyTask> lv = new FilteredList<ReadOnlyTask>(list);
-        UTFilteredListHelper.getInstance().addList(lv);
-        UTFilteredListHelper.getInstance().getUnderlyingListByIndex(0);
+        FilteredListHelper.getInstance().addList(lv);
+        FilteredListHelper.getInstance().getUnderlyingListByIndex(0);
     }
 
     @Test
     public void getActualIndex_withInvalidIndex_notAllowed() {
         thrown.expect(AssertionError.class);
-        UTFilteredListHelper.getInstance().getActualIndexFromDisplayIndex(-1);
+        FilteredListHelper.getInstance().getActualIndexFromDisplayIndex(-1);
     }
 
     @Test
     public void getActualIndex_withValidIndexButEmptyList_notAllowed() {
         FilteredList<ReadOnlyTask> lv = new FilteredList<ReadOnlyTask>(FXCollections.emptyObservableList());
-        UTFilteredListHelper.getInstance().addList(lv);
+        FilteredListHelper.getInstance().addList(lv);
 
         thrown.expect(AssertionError.class);
-        UTFilteredListHelper.getInstance().getActualIndexFromDisplayIndex(0);
+        FilteredListHelper.getInstance().getActualIndexFromDisplayIndex(0);
     }
 }

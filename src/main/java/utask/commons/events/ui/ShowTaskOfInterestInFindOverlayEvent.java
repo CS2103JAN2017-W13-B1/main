@@ -4,14 +4,14 @@ import utask.commons.events.BaseEvent;
 import utask.model.task.ReadOnlyTask;
 
 /*
- * This event is used to notify UTListViewHelper
+ * This event is used to notify UTFindOverlay
  *  to select last added or updated task
  * */
-public class UIShowTaskOfInterestInMainWindowEvent extends BaseEvent {
+public class ShowTaskOfInterestInFindOverlayEvent extends BaseEvent {
 
     public final ReadOnlyTask task;
 
-    public UIShowTaskOfInterestInMainWindowEvent(ReadOnlyTask task) {
+    public ShowTaskOfInterestInFindOverlayEvent(ReadOnlyTask task) {
         this.task = task;
     }
 

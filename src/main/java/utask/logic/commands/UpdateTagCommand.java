@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.LogsCenter;
-import utask.commons.events.ui.UIShowTagColorDialogEvent;
+import utask.commons.events.ui.ShowTagColorDialogEvent;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.CollectionUtil;
 import utask.logic.commands.exceptions.CommandException;
@@ -45,7 +45,7 @@ public class UpdateTagCommand  extends Command {
         assert model != null;
         try {
             model.updateTag(toBeEdited, editedTag);
-            EventsCenter.getInstance().post(new UIShowTagColorDialogEvent(model.getTags()));
+            EventsCenter.getInstance().post(new ShowTagColorDialogEvent(model.getTags()));
         } catch (IllegalArgumentException ive) {
             throw new CommandException(String
                     .format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));

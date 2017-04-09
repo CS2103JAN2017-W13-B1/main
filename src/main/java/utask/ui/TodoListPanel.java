@@ -1,4 +1,4 @@
-//@@author A0139996A
+
 package utask.ui;
 
 import javafx.beans.binding.Bindings;
@@ -11,9 +11,10 @@ import javafx.scene.layout.VBox;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.task.ReadOnlyTask;
+import utask.ui.helper.ListViewHelper;
 import utask.ui.helper.UTListView;
-import utask.ui.helper.UTListViewHelper;
 
+//@@author A0139996A
 public class TodoListPanel extends UiPart<Region> {
     private static final String FXML = "TodoListPanel.fxml";
 
@@ -44,7 +45,7 @@ public class TodoListPanel extends UiPart<Region> {
         listView.setItems(tasks);
 
         //Add listview to helper for chain counting
-        UTListViewHelper.getInstance().addList(listView);
+        ListViewHelper.getInstance().addList(listView);
     }
 
     private void addStylingPropertiesToListView() {

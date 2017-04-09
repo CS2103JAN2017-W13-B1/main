@@ -13,13 +13,12 @@ import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.FindOverlayList;
+import guitests.guihandles.FindTaskOverlayHandle;
+import guitests.guihandles.ListPanelHandle;
 import guitests.guihandles.MainGuiHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TaskCardHandle;
-import guitests.guihandles.TaskListPanelHandle;
-import guitests.guihandles.TodoListPanelHandle;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import utask.TestApp;
@@ -49,9 +48,8 @@ public abstract class UTaskGuiTest {
      */
     protected MainGuiHandle mainGui;
     protected MainMenuHandle mainMenu;
-    protected TodoListPanelHandle todoListPanel;
-    protected TaskListPanelHandle taskListPanel;
-    protected FindOverlayList findOverlayList;
+    protected ListPanelHandle listPanel;
+    protected FindTaskOverlayHandle findOverlayList;
     protected ResultDisplayHandle resultDisplay;
     protected CommandBoxHandle commandBox;
     private Stage stage;
@@ -71,8 +69,7 @@ public abstract class UTaskGuiTest {
         FxToolkit.setupStage((stage) -> {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             mainMenu = mainGui.getMainMenu();
-            todoListPanel = mainGui.getTodoListPanel();
-            taskListPanel = mainGui.getTaskListPanel();
+            listPanel = mainGui.getListPanelHandle();
             findOverlayList = mainGui.getfindOverlayList();
             resultDisplay = mainGui.getResultDisplay();
             commandBox = mainGui.getCommandBox();
@@ -118,7 +115,7 @@ public abstract class UTaskGuiTest {
      * Asserts the size of the person list is equal to the given number.
      */
     protected void assertListSize(int size) {
-        int numberOfTask = todoListPanel.getNumberOfPeople();
+        int numberOfTask = listPanel.getTotalNumberOfTask();
         assertEquals(size, numberOfTask);
     }
 
