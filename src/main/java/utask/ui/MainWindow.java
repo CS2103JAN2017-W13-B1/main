@@ -209,7 +209,7 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
+        HelpWindow helpWindow = new HelpWindow(primaryStage);
         helpWindow.show();
     }
 
