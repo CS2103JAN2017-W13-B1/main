@@ -331,6 +331,22 @@ public class LogicManagerTest {
                 Collections.emptyList());
     }
 
+    // @@ author A0138423J
+    @Test
+    public void execute_createtag_invalidcommandformat_unsuccessful() {
+        assertCommandFailure("createtag ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        CreateTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void execute_createtag_invalidname_unsuccessful() {
+        String tagName = "%^&*(";
+        String color = "$%^&*";
+        assertCommandFailure("createtag " + tagName + "/color " + color,
+                Messages.MESSAGE_TAG_CONSTRAINTS);
+    }
+
     // @@ author A0138493W
     @Test
     public void execute_clear_byAlias() throws Exception {
@@ -653,8 +669,8 @@ public class LogicManagerTest {
         UTask expectedUT = new UTask();
         expectedUT.addTask(expectedOutcome);
 
-        assertCommandSuccess("done 1",
-                String.format(DoneCommand.MESSAGE_DONE_TASK_SUCCESS, expectedOutcome),
+        assertCommandSuccess("done 1", String
+                .format(DoneCommand.MESSAGE_DONE_TASK_SUCCESS, expectedOutcome),
                 expectedUT, expectedUT.getTaskList());
     }
 
@@ -668,8 +684,7 @@ public class LogicManagerTest {
         List<Task> twoTasks = helper.generateTaskList(expectedOutcome);
         helper.addToModel(model, twoTasks);
 
-        assertCommandFailure("done 1",
-                DoneCommand.MESSAGE_DUPLICATE_STATUS);
+        assertCommandFailure("done 1", DoneCommand.MESSAGE_DUPLICATE_STATUS);
     }
 
     @Test
@@ -683,8 +698,7 @@ public class LogicManagerTest {
         List<Task> twoTasks = helper.generateTaskList(taskOne, taskTwo);
         helper.addToModel(model, twoTasks);
 
-        assertCommandFailure("done 1",
-                DoneCommand.MESSAGE_DUPLICATE_TASK);
+        assertCommandFailure("done 1", DoneCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     @Test
@@ -702,7 +716,8 @@ public class LogicManagerTest {
         expectedUT.addTask(expectedOutcome);
 
         assertCommandSuccess("undone 1",
-                String.format(UndoneCommand.MESSAGE_UNDONE_TASK_SUCCESS, expectedOutcome),
+                String.format(UndoneCommand.MESSAGE_UNDONE_TASK_SUCCESS,
+                        expectedOutcome),
                 expectedUT, expectedUT.getTaskList());
     }
 
@@ -730,8 +745,7 @@ public class LogicManagerTest {
         List<Task> twoTasks = helper.generateTaskList(taskOne, taskTwo);
         helper.addToModel(model, twoTasks);
 
-        assertCommandFailure("undone 1",
-                UndoneCommand.MESSAGE_DUPLICATE_TASK);
+        assertCommandFailure("undone 1", UndoneCommand.MESSAGE_DUPLICATE_TASK);
     }
 
     @Test
