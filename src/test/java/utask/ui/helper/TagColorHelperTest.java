@@ -14,6 +14,12 @@ public class TagColorHelperTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+    public void get_RandomColor() {
+        String color = TagColorHelper.getARandomColor();
+        assert(color != "");
+    }
+
+    @Test
     public void get_SupportedColors() {
         String colors = TagColorHelper.getListOfSupportedColor();
         assert (colors != "");

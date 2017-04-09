@@ -12,7 +12,7 @@ import utask.logic.commands.ListTagCommand;
 public class DialogTest extends UTaskGuiTest {
 
     private static final String CREATE_ALIAS_C_AS_CREATE =
-            AliasCommand.COMMAND_WORD + "c /as " + CreateCommand.COMMAND_WORD;
+            AliasCommand.COMMAND_WORD + " c /as " + CreateCommand.COMMAND_WORD;
 
     @Before
     public void clear() {

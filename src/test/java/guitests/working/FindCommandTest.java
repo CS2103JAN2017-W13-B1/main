@@ -15,7 +15,7 @@ public class FindCommandTest extends UTaskGuiTest {
     public void find_nonEmptyList() {
         assertFindResult("find", "Mark"); // no results
         assertFindResult("find", "Alice", td.d, td.g); // multiple results
-
+        commandBox.runCommand("select 1");
         //find after deleting one result
         commandBox.runCommand("delete 1");
         assertFindResult("find", "Alice", td.g);
