@@ -16,6 +16,7 @@ import javafx.scene.text.TextAlignment;
 import utask.model.tag.Tag;
 import utask.ui.helper.TagColorHelper;
 
+//@@author A0138423J
 public class TagColorDialog extends Dialog {
     private static final String HAS_TAGS_HEADING = "Tags";
     private static final String NO_TAGS_MESSAGE = "Try adding some tags first!";
