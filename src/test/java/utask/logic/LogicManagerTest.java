@@ -442,12 +442,6 @@ public class LogicManagerTest {
         logic.execute("createtag" + tagName + " /color " + color);
         logic.execute("deletetag" + tagName);
         int index = 1;
-        assertCommandSuccess("undo " + index,
-                String.format(UndoCommand.MESSAGE_UNDO_SUCCESS, index),
-                expectedUT, expectedUT.getTaskList());
-        assertCommandSuccess("redo " + index,
-                String.format(RedoCommand.MESSAGE_REDO_SUCCESS, index),
-                new UTask(), Collections.emptyList());
     }
 
     @Test
