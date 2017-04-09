@@ -66,8 +66,6 @@ public class ReversibleCommandTest extends UTaskGuiTest {
 //        commandBox.runCommand(RedoCommand.COMMAND_WORD);
 //        assertListIsNotEmpty();
 //    }
-
-
 //    private void assertTaskNotInList(ReadOnlyTask task) {
 //        assert(listPanel.getDueListView().getItems().contains(task));
 //    }

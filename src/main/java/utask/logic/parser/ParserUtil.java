@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import utask.commons.core.Messages;
 import utask.commons.exceptions.IllegalValueException;
 import utask.commons.util.StringUtil;
+import utask.logic.commands.SortInFindCommand;
 import utask.model.tag.Tag;
 import utask.model.tag.TagColorIndex;
 import utask.model.tag.TagName;
@@ -254,7 +255,7 @@ public class ParserUtil {
 
 
     //@@author A0139996A
-    public static String parseColumnAlphabetOfSortInFind(String command) {
+    public static String parseColumnAlphabetOfSortInFind(String command) throws IllegalValueException {
         assert command != null && !command.isEmpty();
 
         Matcher matcher = SORT_IN_FIND_FORMAT.matcher(command);
@@ -263,6 +264,8 @@ public class ParserUtil {
 
         if (matcher.matches()) {
             column = matcher.group("columnAlphabet");
+        } else {
+            throw new IllegalValueException(SortInFindCommand.MESSAGE_USAGE);
         }
 
         return column;
@@ -283,7 +286,7 @@ public class ParserUtil {
                 orderBy = "";
             }
         } else {
-            throw new IllegalValueException(Messages.MESSAGE_INVALID_SORT_ORDER);
+            throw new IllegalValueException(SortInFindCommand.MESSAGE_USAGE);
         }
 
         return orderBy;

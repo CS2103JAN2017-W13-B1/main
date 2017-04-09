@@ -12,7 +12,6 @@ import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.commons.events.ui.JumpToTaskListRequestEvent;
 import utask.commons.events.ui.TaskListPanelSelectionChangedEvent;
-import utask.commons.events.ui.UIClearListSelectionEvent;
 import utask.commons.events.ui.UIShowTaskOfInterestInMainWindowEvent;
 import utask.model.task.ReadOnlyTask;
 
@@ -164,9 +163,9 @@ public class UTListViewHelper extends UTListHelper<UTListView<ReadOnlyTask>, Rea
         scrollTo(displayIndex);
     }
 
-    @Subscribe
-    public void handleUIClearListSelectionEvent(UIClearListSelectionEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        clearSelectionOfAllListViews();
-    }
+//    @Subscribe
+//    public void handleClearListSelectionEvent(ClearListSelectionEvent event) {
+//        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+//        clearSelectionOfAllListViews();
+//    }
 }
