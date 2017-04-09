@@ -8,6 +8,7 @@ import utask.commons.exceptions.IllegalValueException;
 import utask.logic.commands.Command;
 import utask.logic.commands.IncorrectCommand;
 import utask.logic.commands.UpdateTagCommand;
+import utask.model.tag.EditTagDescriptor;
 import utask.model.tag.Tag;
 import utask.model.tag.TagColorIndex;
 import utask.model.tag.TagName;
@@ -22,7 +23,8 @@ public class UpdateTagCommandParser {
         assert args != null;
         ArgumentTokenizer argsTokenizer = prepareArgumentTokenizer(args);
         String oldTaskKey = argsTokenizer.getPreamble().get();
-        Tag toBeEdited, editedTag = null;
+        Tag toBeEdited = null;
+        EditTagDescriptor editTagDescriptor = new EditTagDescriptor();
 
         if ("".equals(oldTaskKey) || oldTaskKey == null) {
             return new IncorrectCommand(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
@@ -30,11 +32,9 @@ public class UpdateTagCommandParser {
         try {
             toBeEdited = new Tag(new TagName(oldTaskKey),
                     new TagColorIndex(""));
-            editedTag = new Tag(
-                    new TagName(argsTokenizer.tryGet(PREFIX_NAME)),
-                    new TagColorIndex(argsTokenizer.tryGet(PREFIX_TAGCOLOR)));
-            Tag latestFile = createdLatestFile(toBeEdited, editedTag);
-            return new UpdateTagCommand(toBeEdited, latestFile);
+            editTagDescriptor = setEditTagDescriptor(argsTokenizer);
+            Tag latestTag = createdLatestTag(toBeEdited, editTagDescriptor);
+            return new UpdateTagCommand(toBeEdited, latestTag);
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
@@ -42,7 +42,7 @@ public class UpdateTagCommandParser {
 
     /**
      * Parses the given {@code args} of arguments in the context of the
-     * EditCommand and returns an prepared ArgumentTokenizer
+     * UpdateCommand and returns an prepared ArgumentTokenizer
      */
     private ArgumentTokenizer prepareArgumentTokenizer(String args) {
         ArgumentTokenizer argsTokenizer = new ArgumentTokenizer(PREFIX_NAME,
@@ -51,13 +51,57 @@ public class UpdateTagCommandParser {
         return argsTokenizer;
     }
 
-    private Tag createdLatestFile(Tag toBeEdited, Tag editedTag) {
-        if ("".equals(editedTag.getTagname())) {
-            editedTag.setTagname(toBeEdited.getTagname());
+    /**
+     * Parses each attribute found in {@code argsTokenizer} into
+     * {@code EditTagDescriptor}.
+     */
+    private EditTagDescriptor setEditTagDescriptor(
+            ArgumentTokenizer argsTokenizer) throws IllegalValueException {
+        EditTagDescriptor editTagDescriptor = new EditTagDescriptor();
+        editTagDescriptor.setTagName(
+                ParserUtil.parseTagName(argsTokenizer.getValue(PREFIX_NAME)));
+        editTagDescriptor.setTagColor(ParserUtil
+                .parseColorIndex(argsTokenizer.getValue(PREFIX_TAGCOLOR)));
+        return editTagDescriptor;
+    }
+
+    /**
+     * Create latest tag by taking inputs from {@code Tag} and
+     * {@code EditTagDescriptor}.
+     */
+    private Tag createdLatestTag(Tag toBeEdited, EditTagDescriptor editedTag) {
+        assert toBeEdited != null;
+        assert editedTag != null;
+        Tag tempTag = new Tag();
+        tempTag.setTagName(updateOrRetainTagName(toBeEdited, editedTag));
+        tempTag.setTagColorIndex(
+                updateOrRetainTagColorIndex(toBeEdited, editedTag));
+        return tempTag;
+    }
+
+    /**
+     * If {@code editedTag} has new name, return it.
+     * Else return {@code toBeEdited} old name.
+     */
+    private TagName updateOrRetainTagName(Tag toBeEdited,
+            EditTagDescriptor editedTag) {
+        if (editedTag.getTagName().isPresent()) {
+            return editedTag.getTagName().get();
+        } else {
+            return toBeEdited.getTagName();
         }
-        if ("".equals(editedTag.getTagcolorindex())) {
-            editedTag.setTagcolorindex(toBeEdited.getTagcolorindex());
+    }
+
+    /**
+     * If {@code editedTag} has new color, return it.
+     * Else return {@code toBeEdited} old name.
+     */
+    private TagColorIndex updateOrRetainTagColorIndex(Tag toBeEdited,
+            EditTagDescriptor editedTag) {
+        if (editedTag.getTagColor().isPresent()) {
+            return editedTag.getTagColor().get();
+        } else {
+            return toBeEdited.getTagColorIndex();
         }
-        return editedTag;
     }
 }

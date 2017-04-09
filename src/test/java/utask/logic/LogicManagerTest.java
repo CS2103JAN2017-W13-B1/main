@@ -1163,7 +1163,7 @@ public class LogicManagerTest {
             }
             UniqueTagList tags = p.getTags();
             for (Tag t : tags) {
-                cmd.append(" /tag ").append(t.getTagname());
+                cmd.append(" /tag ").append(t.getTagName());
             }
 
             return cmd.toString();

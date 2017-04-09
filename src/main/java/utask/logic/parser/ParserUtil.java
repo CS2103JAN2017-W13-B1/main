@@ -250,6 +250,29 @@ public class ParserUtil {
                 ? Optional.of(new Status(status.get()))
                 : Optional.empty();
     }
+
+    /**
+     * Parses a {@code Optional<TagName> name} into an {@code Optional<TagName>} if
+     * {@code name} is present.
+     */
+    public static Optional<TagName> parseTagName(Optional<String> optional)
+            throws IllegalValueException {
+        assert optional != null;
+        return optional.isPresent() ? Optional.of(new TagName(optional.get()))
+                : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<TagColorIndex> colorIndex} into an
+     * {@code Optional<TagColorIndex>} if {@code colorIndex} is present.
+     */
+    public static Optional<TagColorIndex> parseColorIndex(Optional<String> optional)
+            throws IllegalValueException {
+        assert optional != null;
+
+        return optional.isPresent() ? Optional.of(new TagColorIndex(optional.get()))
+                : Optional.empty();
+    }
     //@@author
 
 

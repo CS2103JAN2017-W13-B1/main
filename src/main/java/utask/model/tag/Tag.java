@@ -30,24 +30,27 @@ public class Tag {
     public Tag(Tag tag) {
         assert tag != null;
 
-        this.tagname = tag.getTagname();
-        this.tagcolorindex = tag.getTagcolorindex();
+        this.tagname = tag.getTagName();
+        this.tagcolorindex = tag.getTagColorIndex();
         tagCount = 0;
     }
 
-    public TagName getTagname() {
+    public Tag() {
+    }
+
+    public TagName getTagName() {
         return tagname;
     }
 
-    public void setTagname(TagName tagname) {
+    public void setTagName(TagName tagname) {
         this.tagname = tagname;
     }
 
-    public TagColorIndex getTagcolorindex() {
+    public TagColorIndex getTagColorIndex() {
         return tagcolorindex;
     }
 
-    public void setTagcolorindex(TagColorIndex tagcolorindex) {
+    public void setTagColorIndex(TagColorIndex tagcolorindex) {
         this.tagcolorindex = tagcolorindex;
     }
 
@@ -73,7 +76,7 @@ public class Tag {
     }
 
     private boolean isSameStateAs(Tag other) {
-        return other.getTagname().equals(this.getTagname());
+        return other.getTagName().equals(this.getTagName());
         // && other.getTagcolorindex().equals(this.getTagcolorindex());
     }
 
