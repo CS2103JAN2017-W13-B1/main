@@ -31,6 +31,8 @@ import utask.model.task.ReadOnlyTask;
 
 public class FindTaskOverlay extends UiPart<Region> {
 
+    private static final String ASCENDING_ORDER = "asc";
+    private static final String DESCENDING_ORDER = "dsc";
     private static final Logger logger = LogsCenter.getLogger(FindTaskOverlay.class);
     private static final String FXML = "FindTaskOverlay.fxml";
 
@@ -147,8 +149,6 @@ public class FindTaskOverlay extends UiPart<Region> {
             return columnComplete;
         } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnDeadline))) {
             return columnDeadline;
-        } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnDeadline))) {
-            return columnDeadline;
         } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnTimestamp))) {
             return columnTimestamp;
         } else if (columnAlphabet.equals(getColumnAlphabetOfTableColumn(columnFrequency))) {
@@ -165,10 +165,10 @@ public class FindTaskOverlay extends UiPart<Region> {
         SortType sortType;
 
         switch (orderBy) {
-        case "dsc" :
+        case DESCENDING_ORDER :
             sortType = SortType.DESCENDING;
             break;
-        case "asc" :
+        case ASCENDING_ORDER :
         default:
             sortType = SortType.ASCENDING;
             break;
