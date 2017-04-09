@@ -3,15 +3,15 @@ package utask.commons.events.ui;
 import utask.commons.events.BaseEvent;
 import utask.model.task.ReadOnlyTask;
 
+//@@author A0139996A
 /*
- * This event is used to notify UTFindOverlay
- *  to select last added or updated task
+ * This event is used to notify FindTaskOverlay to select last added or updated task
  * */
-public class ShowTaskOfInterestInFindOverlayEvent extends BaseEvent {
+public class ShowTaskOfInterestInFindTaskOverlayEvent extends BaseEvent {
 
     public final ReadOnlyTask task;
 
-    public ShowTaskOfInterestInFindOverlayEvent(ReadOnlyTask task) {
+    public ShowTaskOfInterestInFindTaskOverlayEvent(ReadOnlyTask task) {
         this.task = task;
     }
 

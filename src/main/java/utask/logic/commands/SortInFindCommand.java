@@ -1,10 +1,10 @@
-//@@author A0139996A
 package utask.logic.commands;
 
 import utask.commons.core.EventsCenter;
-import utask.commons.events.ui.UpdateSortInFindOverlayEvent;
+import utask.commons.events.ui.UpdateSortInFindTaskOverlayEvent;
 import utask.logic.commands.exceptions.CommandException;
 
+//@@author A0139996A
 /**
  * Sorts in find overlay
  */
@@ -29,7 +29,7 @@ public class SortInFindCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        EventsCenter.getInstance().post(new UpdateSortInFindOverlayEvent(column, orderBy));
+        EventsCenter.getInstance().post(new UpdateSortInFindTaskOverlayEvent(column, orderBy));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

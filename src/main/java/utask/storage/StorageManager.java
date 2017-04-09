@@ -118,5 +118,4 @@ public class StorageManager extends ComponentManager implements Storage {
     public void setFilePath(String path) {
         uTaskStorage.setFilePath(path);
     }
-
 }

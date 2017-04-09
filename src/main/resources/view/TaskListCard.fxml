@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- @@author A0139996A -->
-
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -45,7 +44,7 @@
                </VBox.margin>
             </Label>
             <HBox fx:id="hbTagContainer" prefHeight="20.0">
-            <!--
+            <!-- This snippet is useful for finding a good display size before transferring the values to java code
             <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" minWidth="15.0" style="-fx-background-color: RED;" text="Important" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                      <HBox.margin>

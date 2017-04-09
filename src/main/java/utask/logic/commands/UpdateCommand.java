@@ -44,7 +44,6 @@ public class UpdateCommand extends Command implements ReversibleCommand {
     private ReadOnlyTask taskToEdit;
     private Task editedTask;
 
-    // @@author A0138423J
     /**
      * @param filteredTaskListIndex
      *            the index of the task in the filtered task list to edit

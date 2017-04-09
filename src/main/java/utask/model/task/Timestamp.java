@@ -104,7 +104,6 @@ public class Timestamp {
     }
 
     public boolean isEmpty() {
-//        return "".equals(value);
         return from == null || to == null;
     }
 

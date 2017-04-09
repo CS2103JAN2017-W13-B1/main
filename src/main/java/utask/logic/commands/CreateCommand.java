@@ -52,7 +52,6 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
             tagSet.add(new Tag(new TagName(tagName), new TagColorIndex("")));
         }
 
-        //TODO: Cleanup
         if ("".equals(frequency)) {
             this.frequency = Frequency.getEmptyFrequency();
         } else {
@@ -80,9 +79,9 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
         }
     }
 
+    //@@author A0139996A
     public void undo() throws Exception {
         notifyUI(toAdd);
-        //model.deleteTask(toAdd);
 
         //Access to deleteTask() must be delayed to prevent race condition with notifyUI
         new DelayedExecution((e)-> {
@@ -99,4 +98,5 @@ public abstract class CreateCommand extends Command implements ReversibleCommand
         model.addTask(toAdd);
         notifyUI(toAdd);
     }
+    //@@author
 }

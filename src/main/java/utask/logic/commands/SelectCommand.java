@@ -2,7 +2,7 @@ package utask.logic.commands;
 
 import utask.commons.core.EventsCenter;
 import utask.commons.core.Messages;
-import utask.commons.events.ui.JumpToListInFindOverlayEvent;
+import utask.commons.events.ui.JumpToListInFindTaskOverlayEvent;
 import utask.commons.events.ui.JumpToListRequestEvent;
 import utask.logic.commands.exceptions.CommandException;
 
@@ -35,7 +35,7 @@ public class SelectCommand extends Command {
         }
 
         if (model.isFindOverlayShowing()) {
-            EventsCenter.getInstance().post(new JumpToListInFindOverlayEvent(targetIndex - 1));
+            EventsCenter.getInstance().post(new JumpToListInFindTaskOverlayEvent(targetIndex - 1));
         } else {
             EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
         }

@@ -7,15 +7,14 @@ import utask.model.tag.UniqueTagList;
 import utask.model.task.FloatingTask;
 import utask.model.task.Name;
 
+//@@author A0139996A
 public class CreateFloatingTaskCommand extends CreateCommand {
 
     public CreateFloatingTaskCommand(String name, String frequency,
             Set<String> tags, String status) throws IllegalValueException {
         super(frequency, tags, status);
 
-        // TODO: Code smells
         this.toAdd = new FloatingTask(new Name(name), this.frequency,
                 new UniqueTagList(tagSet), this.status);
     }
-
 }

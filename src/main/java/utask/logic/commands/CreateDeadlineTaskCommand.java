@@ -8,6 +8,7 @@ import utask.model.task.Deadline;
 import utask.model.task.DeadlineTask;
 import utask.model.task.Name;
 
+//@@author A0139996A
 public class CreateDeadlineTaskCommand extends CreateCommand {
 
     public CreateDeadlineTaskCommand(String name, String deadline,
@@ -19,5 +20,4 @@ public class CreateDeadlineTaskCommand extends CreateCommand {
                 this.frequency, new UniqueTagList(tagSet),
                 this.status);
     }
-
 }

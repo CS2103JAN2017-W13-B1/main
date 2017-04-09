@@ -1,3 +1,4 @@
+/*@@author @A0139996A*/
 .root {
     -fx-font-family: "Roboto";
     -fx-utask-decoratorcolor: #0288D1;
@@ -8,6 +9,7 @@
     -fx-utask-listselectedcolor : #81d4fa;
     -fx-utask-error-color : #ff1744;
 }
+/*@@author */
 
 /* Main Window Frame Decorator  */
 .jfx-decorator {
@@ -225,12 +227,7 @@
 .jfx-list-cell-container .label {
     -fx-text-fill: BLACK;
 }
-
-/*******************************************************************************
-*                                                                              *
-* JFX List View                                                                *
-*                                                                              *
-*******************************************************************************/
+/*JFX List View*/
 .jfx-list-cell {
     -fx-background-insets: 0.0;
     -fx-text-fill: BLACK;
@@ -293,17 +290,36 @@
     -fx-background-color: BLACK;
 }
 
-/*.list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: RED;
-    -fx-text-fill: white;
+.jfx-dialog-layout {
+    -fx-padding: 24.0px 24.0px 16.0px 24.0px;
+    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
 }
-.list-cell:even {
-    -fx-background-color: blue;
+.jfx-layout-heading {
+    -fx-font-size: 20.0px;
+    -fx-font-weight: BOLD;
+    -fx-alignment: center-left;
+    -fx-padding: 5.0 0.0 5.0 0.0;
 }
-.list-cell:filled:hover {
-    -fx-background-color: #0093ff;
-    -fx-text-fill: white;
-}*/
+
+.jfx-layout-body .label {
+    -fx-font-size: 14.0px;
+    -fx-pref-width: 400.0px;
+    -fx-wrap-text: true;
+}
+
+.jfx-layout-actions {
+    -fx-padding: 10.0px 0.0 0.0 0.0 ;
+    -fx-alignment: center-right ;
+}
+
+/*@@author @A0139996A*/
+/* Make sure that vertical scrollbar does not appear in inner list*/
+.inner-list-view .scroll-bar:vertical .increment-arrow,
+.inner-list-view .scroll-bar:vertical .decrement-arrow,
+.inner-list-view .scroll-bar:vertical .increment-button,
+.inner-list-view .scroll-bar:vertical .decrement-button {
+    -fx-padding:0;
+}
 
 .label-text-done .text {
     -fx-strikethrough: true;
@@ -345,40 +361,9 @@
     -fx-box-border: transparent;
 }
 .list-label {
-    /*-fx-text-fill: #0E0E0E;*/
     -fx-text-fill: -fx-utask-primarytextcolor;
     -fx-padding: 10 10 10 10;
     -fx-font-size: 16.0;
     -fx-pref-height: 25;
 }
 
-.jfx-dialog-layout {
-    -fx-padding: 24.0px 24.0px 16.0px 24.0px;
-    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
-}
-.jfx-layout-heading {
-    -fx-font-size: 20.0px;
-    -fx-font-weight: BOLD;
-    -fx-alignment: center-left;
-    -fx-padding: 5.0 0.0 5.0 0.0;
-}
-
-.jfx-layout-body .label {
-    -fx-font-size: 14.0px;
-    -fx-pref-width: 400.0px;
-    -fx-wrap-text: true;
-}
-
-.jfx-layout-actions {
-    -fx-padding: 10.0px 0.0 0.0 0.0 ;
-    -fx-alignment: center-right ;
-}
-
-
-/* Make sure that vertical scrollbar does not appear*/
-.inner-list-view .scroll-bar:vertical .increment-arrow,
-.inner-list-view .scroll-bar:vertical .decrement-arrow,
-.inner-list-view .scroll-bar:vertical .increment-button,
-.inner-list-view .scroll-bar:vertical .decrement-button {
-    -fx-padding:0;
-}

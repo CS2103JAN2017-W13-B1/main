@@ -1,10 +1,10 @@
-//@@author A0139996A
 package utask.commons.events.ui;
 
 import javafx.scene.control.ListView;
 import utask.commons.events.BaseEvent;
 import utask.model.task.ReadOnlyTask;
 
+//@@author A0139996A
 /**
  * Represents a selection change in the Task List Panel
  */

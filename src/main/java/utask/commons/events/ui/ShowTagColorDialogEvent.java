@@ -5,8 +5,9 @@ import java.util.List;
 import utask.commons.events.BaseEvent;
 import utask.model.tag.Tag;
 
+//@@author A0139996A
 /*
- * This event is used to notify UTMainWindow to show a tag color dialog
+ * This event is used to notify MainWindow to show a tag color dialog
  * */
 public class ShowTagColorDialogEvent extends BaseEvent {
 

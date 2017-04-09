@@ -109,7 +109,6 @@ public interface Model {
     /** Gets size of reversible commands in reversible stack*/
     int getRedoCommandCount();
 
-    //TODO: Refractor
     /** Gets list of interest from display index */
     List<ReadOnlyTask> getUnderlyingListByIndex(int displayIndex);
 
@@ -119,8 +118,10 @@ public interface Model {
     /* Exposes isfindOverlay to Command through Model*/
     void setIfFindOverlayShowing(boolean isShowing);
 
+    /* Exposes isfindOverlay to Command through Model*/
     boolean isFindOverlayShowing();
 
+    /* Exposes UserPrefs through Model*/
     UserPrefs getUserPrefs();
 
 }
