@@ -2,6 +2,7 @@ package guitests.working;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.TaskCardHandle;
@@ -10,6 +11,11 @@ import utask.testutil.TestTask;
 import utask.testutil.TestUtil;
 
 public class AddCommandTest extends UTaskGuiTest {
+
+    @Before
+    public void clear() {
+        commandBox.runCommand("clear");
+    }
 
     @Test
     public void add() {
@@ -20,8 +26,8 @@ public class AddCommandTest extends UTaskGuiTest {
 //        assertAddToTodoListSuccess(taskToAdd, currentList);
 //        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
-        TestTask taskToAdd = td.todo;
-        assertAddToTodoListSuccess(taskToAdd);
+        TestTask todoTaskToAdd = td.todoTask;
+        assertAddToTodoListSuccess(todoTaskToAdd);
 
 
         //add another person
@@ -36,7 +42,7 @@ public class AddCommandTest extends UTaskGuiTest {
 
         //add to empty list
         commandBox.runCommand("clear");
-        assertAddToTodoListSuccess(td.todo);
+        assertAddToTodoListSuccess(td.todoTask);
 
         //invalid command
         commandBox.runCommand("adds Johnny");
@@ -46,13 +52,13 @@ public class AddCommandTest extends UTaskGuiTest {
     @Test
     public void addDueTasks() {
         TestTask[] currentList = new TestTask[0];
-        TestTask taskToAdd = td.due;
+        TestTask taskToAdd = td.dueTask;
         assertAddToDueListSuccess(taskToAdd);
     }
 
     public void addTodayTasks() {
         TestTask[] currentList = new TestTask[0];
-        TestTask taskToAdd = td.due;
+        TestTask taskToAdd = td.todayTask;
         assertAddToDueListSuccess(taskToAdd, currentList);
     }
 

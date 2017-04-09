@@ -10,13 +10,13 @@ import utask.model.task.UniqueTaskList;
  */
 public class TypicalTask {
 
-    public TestTask a, b, c, d, e, f, g, h, i, todo, due;
+    public TestTask a, b, c, d, e, f, g, h, i, dueTask, todayTask, tomorrowTask, futureTask, todoTask;
 
     public TypicalTask() {
         try {
             a = new TaskBuilder().withName("Ascertain work has been complete")
                     .withFrequency("Every Friday").withTimestamp("011217", "0800 to 2000")
-                    .withDeadline("011217")
+                    .withDeadline("010115")
                     .withStatus("incomplete")
                     .withTags("important").build();
             b = new TaskBuilder().withName("Busy with project").withFrequency("-")
@@ -43,8 +43,16 @@ public class TypicalTask {
                     .withTimestamp("081217", "0900 to 1300").withFrequency("-").withStatus("incomplete").build();
             i = new TaskBuilder().withName("Inspect Goods").withDeadline("091217")
                     .withTimestamp("091217", "0900 to 1300").withFrequency("-").withStatus("incomplete").build();
-            todo = new TaskBuilder().withName("Do tests").withStatus("incomplete").build();
-            due = new TaskBuilder().withName("Forgot my work").withStatus("incomplete").withDeadline("010217").build();
+
+            dueTask = new TaskBuilder().withName("Forgot my work")
+                    .withStatus("incomplete").withDeadline("010217").build();
+            todayTask = new TaskBuilder().withName("Do this today")
+                    .withStatus("incomplete").withDeadline("today").build();
+            tomorrowTask = new TaskBuilder().withName("Do this tomorrow")
+                    .withStatus("incomplete").withDeadline("today").build();
+            futureTask = new TaskBuilder().withName("Do this in year 2020")
+                    .withStatus("incomplete").withDeadline("010120").build();
+            todoTask = new TaskBuilder().withName("Do tests").withStatus("incomplete").build();
         } catch (IllegalValueException e) {
             e.printStackTrace();
             assert false : "not possible";
