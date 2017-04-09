@@ -596,7 +596,7 @@ public class LogicManagerTest {
     @Test
     public void execute_sortinfind_invalidOrder() throws CommandException {
         logic.execute("find incomplete");
-        assertCommandFailure("sort a abc", Messages.MESSAGE_INVALID_SORT_ORDER);
+        assertCommandFailure("sort a abc", SortInFindCommand.MESSAGE_USAGE);
     }
 
     @Test

@@ -2,11 +2,18 @@ package guitests.working;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import utask.logic.commands.ClearCommand;
 import utask.model.task.ReadOnlyTask;
 
 public class SelectCommandTest extends UTaskGuiTest {
+
+    @Before
+    public void clear() {
+        commandBox.runCommand(ClearCommand.COMMAND_WORD);
+    }
 
     @Test
     public void selectPerson_nonEmptyList() {

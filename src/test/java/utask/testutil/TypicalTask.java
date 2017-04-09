@@ -10,7 +10,7 @@ import utask.model.task.UniqueTaskList;
  */
 public class TypicalTask {
 
-    public TestTask a, b, c, d, e, f, g, h, i, dueTask, todayTask, tomorrowTask, futureTask, todoTask;
+    public TestTask a, b, c, d, e, f, g, h, i, dueTask, todayTask, tomorrowTask, futureTask, todoTask, taskWithTags;
 
     public TypicalTask() {
         try {
@@ -53,6 +53,8 @@ public class TypicalTask {
             futureTask = new TaskBuilder().withName("Do this in year 2020")
                     .withStatus("incomplete").withDeadline("010120").build();
             todoTask = new TaskBuilder().withName("Do tests").withStatus("incomplete").build();
+            taskWithTags = new TaskBuilder().withName("Task with tags")
+                    .withStatus("incomplete").withDeadline("tomorrow").withTags("important", "urgent").build();
         } catch (IllegalValueException e) {
             e.printStackTrace();
             assert false : "not possible";
