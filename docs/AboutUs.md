@@ -44,19 +44,26 @@ Responsibilities: Code quality, Testing, SourceTree expert <br>
 
 * Components in charge of: User Interface, Logic, Model
 * Features implemented:
-  - User Interface designs
-  - User Interface helpers (ListHelper, ListViewHelper, FilterListHelper)
+  - User Interface designs (FXML, CSS, Java [Dynamic Population and Binding])
+  - User Interface helpers (ListHelper, ListViewHelper, FilterListHelper, TagColorHelper)
   - User Interface behaviours (FindOverlay Sort, Dialogs, Events)
   - Undo/Redo commands
+  - SortInFindCommandParser (Dynamic) Command
+  - SuggestionHelper
+  - DelayedExecution (Ensure certain logic to wait for UI animation to end, to avoid race conditon)
+  
 * Code written:
   - [Functional Codes](../collated/main/A0139996A.md)
   - [Test Codes](../collated/test/A0139996A.md)
   - [Documentation](../collated/docs/A0139996A.md)
 * Other major contributions:
   - Architecture 
+  - Ensure UTask has good UXUI
+  - Overhaul User Interface
   - Ensure libraries, such as JFoenix, Natty are suitable in UTask
   - Communicates with team to ensure everyone uses good OOP in UTask
+  - Creates Building block for team
   - GUI tests
   - Open GitHub issues for foreseen problems
-  - Review PR for Code Quality feedbacks
+  - Review PR for Code Quality feedback
  -----
