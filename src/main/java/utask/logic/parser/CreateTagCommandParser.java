@@ -21,7 +21,6 @@ public class CreateTagCommandParser {
                 PREFIX_TAGCOLOR);
         argsTokenizer.tokenize(args);
         try {
-            //TODO: This does not fit your [/color] design
             return new CreateTagCommand(argsTokenizer.getPreamble().get(),
                     argsTokenizer.getValue(PREFIX_TAGCOLOR).get());
         } catch (NoSuchElementException nsee) {

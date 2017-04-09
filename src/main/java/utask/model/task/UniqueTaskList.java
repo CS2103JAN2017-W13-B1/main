@@ -9,6 +9,7 @@ import utask.commons.core.UnmodifiableObservableList;
 import utask.commons.exceptions.DuplicateDataException;
 import utask.commons.util.CollectionUtil;
 import utask.model.tag.Tag;
+import utask.model.tag.UniqueTagList;
 
 /**
  * A list of tasks that enforces uniqueness between its elements and does not
@@ -85,14 +86,6 @@ public class UniqueTaskList implements Iterable<Task> {
 
         // replace original task with modified task
         internalList.set(index, (Task) editedTask);
-
-        // TODO: The code below is just a workaround to notify observers of the
-        // updated task.
-        // The right way is to implement observable properties in the Task
-        // class.
-        // Then, TaskCard should then bind its text labels to those observable
-        // properties.
-        // internalList.set(index, taskToUpdate);
     }
 
     public void updateTaskWithUpdatedTag (Tag tagToReplace, Tag updatedTag) {
@@ -102,6 +95,18 @@ public class UniqueTaskList implements Iterable<Task> {
                     t.setTag(updatedTag);
                 }
             }
+        }
+    }
+
+    public void deleteTaskWithDeletedTag (Tag tagToDelete) {
+        for (Task x : internalList) {
+            UniqueTagList tempList = x.getTags();
+            for (Tag t : x.getTags()) {
+                if (t.equals(tagToDelete)) {
+                    tempList.delete(t);
+                }
+            }
+            x.setTags(tempList);
         }
     }
     // @@author

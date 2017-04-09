@@ -5,7 +5,7 @@ import utask.commons.exceptions.IllegalValueException;
 //@@author A0138423J
 public class TagName {
 
-    public static final String TAGNAME_VALIDATION_REGEX = "^\\w+$";
+    public static final String TAGNAME_VALIDATION_REGEX = "^[a-zA-Z0-9]+$";
 
     public final String tagName;
 
@@ -22,6 +22,14 @@ public class TagName {
             throw new IllegalValueException(Messages.MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
+    }
+
+    public TagName(TagName name) throws IllegalValueException {
+        assert name != null;
+        if (!isValidName(name.toString())) {
+            throw new IllegalValueException(Messages.MESSAGE_TAG_CONSTRAINTS);
+        }
+        this.tagName = name.toString();
     }
 
     /**
