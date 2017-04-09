@@ -155,9 +155,10 @@ interface and exposes its functionality using the `LogicManager.java` class.<br>
 <img src="images/LogicClassDiagram.png" width="800"><br>
 _Figure 2.1.2 : Class Diagram of the Logic Component_
 
+
 <!-- @@author A0138423J -->
 #### Events-Driven nature of the design
-Author: Tan Jian Hong, Denver
+Author: TAN JIAN HONG, DENVER
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
 command `update 1 /name Urgent Task`.
@@ -165,10 +166,10 @@ command `update 1 /name Urgent Task`.
 <img src="images/UpdateCommand.png" width="800"><br>
 _Figure 2.1.3a : Component interactions for `update 1 /name Urgent Task` command (part 1)_
 
->Components of UI: `UIManager`
->Components of Logic: `LogicManager`, `UpdateCommand`
->Components of Model: `ModelManager`, `UTask`, `UniqueTaskList`
->Components of Event: `EventsCenter`
+>Components of UI: `UIManager` <br>
+>Components of Logic: `LogicManager`, `UpdateCommand` <br>
+>Components of Model: `ModelManager`, `UTask`, `UniqueTaskList` <br>
+>Components of Event: `EventsCenter` <br>
 >Note how the `Logic` simply raises a `post(Event)` when the UTask data are changed,
  instead of asking the `Storage` to save the updates to the hard disk.
 
@@ -178,8 +179,8 @@ being saved to the hard disk and the status bar of the UI being updated to refle
 _Figure 2.1.3b : Component interactions for `update 1 /name Urgent Task` command (part 2)_
 
 
->Components of Storage: `StorageManager`
->Components of Events: `UTaskChangedEvent`
+>Components of Storage: `StorageManager` <br>
+>Components of Events: `UTaskChangedEvent` <br>
 > Notice how the event is propagated through the `EventsCenter` to the `StorageManager` and `UIManager` without the need for `Model` to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
@@ -253,8 +254,24 @@ CommandResult() | `execute(String commandText)`: Executes the command `commandTe
 ObservableList() | `getFilteredTaskList()`: Retrieves the filtered task list from the **`Model`** component.
 <br>
 <!-- @@author -->
-Author:
+<!-- @@author A0138423J -->
+## How alias command functions in UTask
+Author: TAN JIAN HONG, DENVER
 
+1. The flow starts when the command "alias c /as create" is executed.
+2. Firstly, the command format is checked for *valid format* in `AliasCommand`.
+3. If command format is wrong, it will return an error will be thrown.
+4. Secondly, it will check if the executed *command exists* in the `AliasMap`.
+5. If command already exists, an error message will be thrown.
+6. Thirdly, it will then check if the keyword for *alias conflicts* with any of the `default` commands.
+7. An error will be thrown if such conflict is found.
+8. Once all safety checks have been successfully completed, the command will be executed by `AliasCommand`.
+9. Subsequently, the alias command will be saved to the `preferences.json` file.
+10. Finally, it will return successful feedback to be displayed.
+
+>`AliasMap` is designed as a singleton class due to the reading and writing operations involved with the `preferences.json` file. The application of using it as a **singleton** class ensures that there is only one instance of `AliasMap` that helps to avoid I/O operations or duplicate entries.
+
+<!-- @@author -->
 <!-- @@author A0138493W -->
 ### Model component
 
