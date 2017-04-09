@@ -21,8 +21,8 @@ Responsibilities: Deliverables and deadlines, Integration, Git expert <br>
   - [Test Codes](../collated/test/A0138493W.md)
   - [Documentation](../collated/docs/A0138493W.md)
 * Other major contributions:
-  - Big refactor from Addressbook 4 to UTask
-  - Most of the integrated tests
+  - Contribute to the Big refactor from Addressbook 4 to UTask
+  - Integrated tests
   - GitHub repository maintainer (set up Travis, issue tracker maintainence, etc)
   - Chase deadline for weekly milestone (close milestone, generate jar file)
   - Review every PR before merge
@@ -33,7 +33,28 @@ Responsibilities: Deliverables and deadlines, Integration, Git expert <br>
 #### [Tan Jian Hong, Denver](http://github.com/deltango)
 <img src="images/deltango.png" width="150"><br>
 Role: Developer <br>
-Responsibilities: Scheduling and tracking, Eclipse expert <br>
+Responsibilities: Testing, Scheduling and tracking, Eclipse expert <br>
+
+* Components in charge of: Logic, Model, Storage
+* Features implemented:
+  - Update command
+  - Done and Undone command
+  - Createtag command
+  - Updatetag command
+  - Deletetag command
+* Code written:
+  - [Functional Codes](../collated/main/A0138423J.md)
+  - [Test Codes](../collated/test/A0138423J.md)
+  - [Documentation](../collated/docs/A0138423J.md)
+* Other major contributions:
+  - Contribute to the Big refactor from Addressbook 4 to UTask
+  - Set up GitHub repository (Link and connect to Appveyor, Coveralls and Codacy)
+  - Adapting xml storage file to UTask requirements
+  - Flexible upgrade and downgrade of Task Types
+  - Tag Color Customization
+  - Cascade update and delete to tasks triggered during tag-related commands
+  - Appraise peers' PR
+  - Unit tests
 
 -----
 
@@ -57,6 +78,7 @@ Responsibilities: Code quality, Testing, SourceTree expert <br>
   - [Test Codes](../collated/test/A0139996A.md)
   - [Documentation](../collated/docs/A0139996A.md)
 * Other major contributions:
+  - Contribute to the Big refactor from Addressbook 4 to UTask
   - Architecture 
   - Ensure UTask has good UXUI
   - Overhaul User Interface
