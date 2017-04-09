@@ -124,12 +124,12 @@ public class EditCommandTest extends UTaskGuiTest {
         commandBox.runCommand("update " + filteredPersonListIndex + " " + detailsToEdit);
 
         // confirm the new card contains the right data
-        TaskCardHandle editedCard = todoListPanel.navigateToTask(editedPerson.getName().fullName);
+        TaskCardHandle editedCard = listPanel.navigateToTaskInTodoList(editedPerson.getName().fullName);
         assertMatching(editedPerson, editedCard);
 
         // confirm the list now contains all previous persons plus the person with updated details
         expectedPersonsList[addressBookIndex - 1] = editedPerson;
-        assertTrue(todoListPanel.isListMatching(expectedPersonsList));
+        assertTrue(listPanel.isTodoListMatching(expectedPersonsList));
         assertResultMessage(String.format(UpdateCommand.MESSAGE_EDIT_TASK_SUCCESS, editedPerson));
     }
 }

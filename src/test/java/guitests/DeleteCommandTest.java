@@ -45,7 +45,7 @@ public class DeleteCommandTest extends UTaskGuiTest {
         commandBox.runCommand("delete " + targetIndexOneIndexed);
 
         //confirm the list now contains all previous persons except the deleted person
-        assertTrue(todoListPanel.isListMatching(expectedRemainder));
+        assertTrue(listPanel.isTodoListMatching(expectedRemainder));
 
         //confirm the result message is correct
         assertResultMessage(String.format(MESSAGE_DELETE_TASK_SUCCESS, personToDelete));

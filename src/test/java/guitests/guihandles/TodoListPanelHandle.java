@@ -113,14 +113,14 @@ public class TodoListPanelHandle extends GuiHandle {
             throw new IllegalStateException("Name not found: " + name);
         }
 
-        return navigateToPerson(task.get());
+        return navigateToTask(task.get());
     }
 
     /**
-     * Navigates the listview to display and select the person.
+     * Navigates the listview to display and select the task.
      */
-    public TaskCardHandle navigateToPerson(ReadOnlyTask person) {
-        int index = getPersonIndex(person);
+    public TaskCardHandle navigateToTask(ReadOnlyTask task) {
+        int index = getTaskIndex(task);
 
         guiRobot.interact(() -> {
             getListView().scrollTo(index);
@@ -128,17 +128,17 @@ public class TodoListPanelHandle extends GuiHandle {
             getListView().getSelectionModel().select(index);
         });
         guiRobot.sleep(100);
-        return getPersonCardHandle(person);
+        return getPersonCardHandle(task);
     }
 
 
     /**
-     * Returns the position of the person given, {@code NOT_FOUND} if not found in the list.
+     * Returns the position of the task given, {@code NOT_FOUND} if not found in the list.
      */
-    public int getPersonIndex(ReadOnlyTask targetPerson) {
+    public int getTaskIndex(ReadOnlyTask targetTask) {
         List<ReadOnlyTask> personsInList = getListView().getItems();
         for (int i = 0; i < personsInList.size(); i++) {
-            if (personsInList.get(i).getName().equals(targetPerson.getName())) {
+            if (personsInList.get(i).getName().equals(targetTask.getName())) {
                 return i;
             }
         }
@@ -148,7 +148,7 @@ public class TodoListPanelHandle extends GuiHandle {
     /**
      * Gets a person from the list by index
      */
-    public ReadOnlyTask getPerson(int index) {
+    public ReadOnlyTask getTask(int index) {
         return getListView().getItems().get(index);
     }
 
@@ -172,7 +172,7 @@ public class TodoListPanelHandle extends GuiHandle {
         return guiRobot.lookup(CARD_PANE_ID).queryAll();
     }
 
-    public int getNumberOfPeople() {
+    public int getNumberOfTask() {
         return getListView().getItems().size();
     }
 }

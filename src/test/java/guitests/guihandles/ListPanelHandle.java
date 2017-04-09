@@ -13,14 +13,13 @@ import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import utask.TestApp;
-import utask.model.task.EventTask;
 import utask.model.task.ReadOnlyTask;
 import utask.testutil.TestUtil;
 
 /**
- * Provides a handle for the panel containing the todo task.
+ * Provides a handle for to the panel containing listviews of tasks and todos
  */
-public class TaskListPanelHandle extends GuiHandle {
+public class ListPanelHandle extends GuiHandle {
 
     public static final int NOT_FOUND = -1;
     public static final String CARD_PANE_ID = "#cardPane";
@@ -31,7 +30,7 @@ public class TaskListPanelHandle extends GuiHandle {
     private static final String FUTURE_LIST_VIEW_ID = "#lstFuture";
     private static final String TODO_LIST_VIEW_ID = "#lstTodoTasks";
 
-    public TaskListPanelHandle(GuiRobot guiRobot, Stage primaryStage) {
+    public ListPanelHandle(GuiRobot guiRobot, Stage primaryStage) {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
 
@@ -339,7 +338,8 @@ public class TaskListPanelHandle extends GuiHandle {
     }
 
     public TaskCardHandle getTaskCardHandle(ListView<ReadOnlyTask> listView, int index) {
-        return getTaskCardHandle(new EventTask(getDueListView().getItems().get(index)));
+        //return getTaskCardHandle(new EventTask(listView.getItems().get(index)));
+        return getTaskCardHandle(listView.getItems().get(index));
     }
 
     public TaskCardHandle getTaskCardHandleInDueList(int index) {

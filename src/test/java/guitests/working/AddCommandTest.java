@@ -15,10 +15,14 @@ public class AddCommandTest extends UTaskGuiTest {
     public void add() {
         //add one person
         //TestTask[] currentList = td.getTypicalPersons();
-        TestTask[] currentList = new TestTask[0];
+//        TestTask[] currentList = new TestTask[0];
+//        TestTask taskToAdd = td.todo;
+//        assertAddToTodoListSuccess(taskToAdd, currentList);
+//        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
+
         TestTask taskToAdd = td.todo;
-        assertAddToTodoListSuccess(taskToAdd, currentList);
-        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
+        assertAddToTodoListSuccess(taskToAdd);
+
 
         //add another person
 //        taskToAdd = td.i;
@@ -56,22 +60,22 @@ public class AddCommandTest extends UTaskGuiTest {
         commandBox.runCommand(task.getAddCommand());
 
         //confirm the new card contains the right data
-        TaskCardHandle addedCard = todoListPanel.navigateToTask(task.getName().fullName);
+        TaskCardHandle addedCard = listPanel.navigateToTaskInTodoList(task.getName().fullName);
         assertMatching(task, addedCard);
 
         //confirm the list now contains all previous persons plus the new person
         TestTask[] expectedList = TestUtil.addTasksToList(currentList, task);
-        assertTrue(todoListPanel.isListMatching(expectedList));
+        assertTrue(listPanel.isTodoListMatching(expectedList));
     }
 
     private void assertAddToDueListSuccess(TestTask task, TestTask... currentList) {
         commandBox.runCommand(task.getAddCommand());
         //confirm the new card contains the right data
-        TaskCardHandle addedCard = taskListPanel.navigateToDueTask(task.getName().fullName);
+        TaskCardHandle addedCard = listPanel.navigateToTaskInDueList(task.getName().fullName);
         assertMatching(task, addedCard);
 
         //confirm the list now contains all previous persons plus the new person
         TestTask[] expectedList = TestUtil.addTasksToList(currentList, task);
-        assertTrue(taskListPanel.isListMatching(expectedList));
+        assertTrue(listPanel.isDueListMatching(expectedList));
     }
 }
