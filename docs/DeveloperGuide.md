@@ -216,6 +216,17 @@ Furthermore, to extend ListHelper compatibility, it uses **generic** of type Col
 ListViewHelper, extends the abstract ListHelper, to coordinates multiple listviews to ensure their index numbers are in running sequence and also provide utility functions for retrieving and scrolling tasks. It uses **singleton pattern** to ensure only one instance of it runs in the UTask. This is critical as it prevents the accidental overwriting of values after UI initialization.
 
 Finally, UI classes are not using Singleton Pattern. In hope that, UTask Developers use EventsCenter as a correct means to propagate events to the UI. As they are only created once and can only be binded during the initialisation of MainWindow. Therefore, there are no strong reasons to use Singleton Pattern. As they can be used incorrectly, which increased class coupling and degrade the code quality of UI.
+
+Given below is the State Diagram of UI, where state is depended on whether Find UI is shown`<br>
+<img src="images/UIStateDiagram.png" width="800"><br>
+_Figure 2.2.2 : State Diagram for UI_
+
+In the above figure, UTask displays different content depending on the state of the UI. 
+
+Depending on the states, commands that work with index will retrieve data from their respective underlying FilteredList. However, commands that mutates the data such as, create, update and delete will modify UTask list directly.
+
+FilteredListHelper, similar to ListViewHelper, also also uses **singleton pattern** and extends the abstract ListHelper to simplify the managment of multiple underlying FliterList. It is used in the above scenario to provide functions for translating given indexes to actual internal indexes of different lists.
+
 <!-- @@author -->
 
 <!-- @@author A0138493W -->
@@ -236,7 +247,7 @@ _Figure 2.3.1 : Structure of the Logic Component_
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")`
  API call.<br>
 <img src="images/DeleteTaskSdForLogic.png" width="800"><br>
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 2.3.2 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 Given below is the Activity Diagram when you `execute("alias c /as create")`<br>
 <img src="images/AliasCommandActivityDiagram.png" width="800"><br>
