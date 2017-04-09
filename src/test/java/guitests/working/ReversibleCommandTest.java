@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import utask.commons.core.Messages;
 import utask.logic.commands.ClearCommand;
 import utask.logic.commands.DeleteCommand;
 import utask.logic.commands.RedoCommand;
@@ -70,6 +71,18 @@ public class ReversibleCommandTest extends UTaskGuiTest {
 //    private void assertTaskNotInList(ReadOnlyTask task) {
 //        assert(listPanel.getDueListView().getItems().contains(task));
 //    }
+
+    @Test
+    public void undoRangeGreaterThanActual() {
+        commandBox.runCommand("undo 1000");
+        assertResultMessage(Messages.MESSAGE_INVALID_UNDO_RANGE);
+    }
+
+    @Test
+    public void redoRangeGreaterThanActual() {
+        commandBox.runCommand("redo 1000");
+        assertResultMessage(Messages.MESSAGE_INVALID_REDO_RANGE);
+    }
 
     private void assertListIsEmpty() {
         assert(listPanel.getDueListView().getItems().isEmpty());
