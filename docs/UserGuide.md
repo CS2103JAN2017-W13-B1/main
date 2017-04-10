@@ -352,8 +352,8 @@ Examples:
 * `alias c /as create`<br>
   `c Homework to Do`<br>
   Creates a to-do task named "Homework to Do".
-   <img src="images/UGScreen/ListAlias.PNG" width="600"><br>
-   
+   <img src="images/UGScreen/ListAlias.png" width="600"><br>
+
 ### 3.17. Viewing all command aliases: `listalias`
 
 Lists all the command alias created in μTask.<br>
