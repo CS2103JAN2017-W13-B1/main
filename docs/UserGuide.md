@@ -13,25 +13,25 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 	2.3.   [Using the Interface](#23-using-the-interface)
 3. [Features](#3-features) <br>
 	3.1.   [Viewing help : `help`](#31-viewing-help--help) <br>
-	3.2.   [Setting save location: `setpath`](#32-setting-save-location-setpath) <br>
-	3.3.   [Creating tag: `createtag`](#33-creating-tag-createtag) <br>
-	3.4.   [Listing tags: `listtag`](#34-listing-tags-listtag) <br>
-	3.5.   [Updating a tag: `updatetag`](#35-updating-a-tag-updatetag) <br>
-	3.6.   [Deleting a tag: `deletetag`](#36-deleting-a-tag-deletetag) <br>
-	3.7.   [Creating task: `create`](#37-creating-task-create) <br>
-	3.8.   [Listing tasks: `list`](#38-listing-tasks-list) <br>
-	3.9.   [Finding tasks by keywords: `find`](#39-finding-tasks-by-keywords-find) <br>
-	3.10.   [Viewing a task: `select`](#310-viewing-a-task-select) <br>
-	3.11.   [Updating a task: `update`](#311-updating-a-task-update) <br>
-	3.12.   [Updating completed task: `done`](#312-updating-completed-task-done) <br>
-	3.13.   [Updating uncompleted task: `undone`](#313-updating-uncompleted-task-undone) <br>
-	3.14.   [Deleting a task: `delete`](#313-deleting-a-task-delete) <br>
-	3.15.   [Clearing all entries : `clear`](#314-clearing-all-entries--clear) <br>
-	3.16.   [Undoing previous actions: `undo`](#315-undoing-previous-actions-undo) <br>
-	3.17.   [Redoing previous actions: `redo`](#316-redoing-previous-actions-redo) <br>
-	3.18.   [Exiting the program : `exit`](#317-exiting-the-program--exit) <br>
-	3.19.   [Saving the data](#318-saving-the-data)<br>
-	3.19.   [Saving the data](#318-saving-the-data)
+	3.2.   [Creating task: `create`](#32-creating-task-create) <br>
+	3.3.   [Finding tasks by keywords: `find`](#33-finding-tasks-by-keywords-find) <br>
+	3.4.   [Updating a task: `update`](#34-updating-a-task-update) <br>
+	3.5.   [Updating completed task: `done`](#35-updating-completed-task-done) <br>
+	3.6.   [Updating uncompleted task: `undone`](#36-updating-uncompleted-task-undone) <br>
+	3.7.   [Deleting a task: `delete`](#37-deleting-a-task-delete) <br>
+	3.8.   [Clearing all entries : `clear`](#38-clearing-all-entries--clear) <br>
+	3.9.   [Viewing a task: `select`](#39-viewing-a-task-select) <br>
+	3.10.   [Undoing previous actions: `undo`](#310-undoing-previous-actions-undo) <br>
+	3.11.   [Redoing previous actions: `redo`](#311-redoing-previous-actions-redo) <br>
+	3.12.   [Creating tag: `createtag`](#312-creating-tag-createtag) <br>
+	3.13.   [Listing tags: `listtag`](#313-listing-tags-listtag) <br>
+	3.14.   [Updating a tag: `updatetag`](#314-updating-a-tag-updatetag) <br>
+	3.15.   [Deleting a tag: `deletetag`](#315-deleting-a-tag-deletetag) <br>
+	3.16.   [Creating a command alias: `alias`](#316-creating-a-command-alias) <br>
+	3.17.   [Viewing all command aliases: `listalias`](#317-viewing-all-command-aliases) <br>
+	3.18.   [Deleting a command aliase: `unalias`](#318-deleting-a-command-aliase) <br>
+	3.19.   [Setting save location: `relocate`](#319-setting-save-location-relocate) <br>
+	3.20.   [Exiting the program : `exit`](#320-exiting-the-program--exit) <br>
 4. [FAQ](#4-faq)
 5. [Commands Summary](#5-commands-summary)
 
