@@ -160,15 +160,14 @@ Examples:
 
 Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
 
-Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
+Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/status COMPLETE|INCOMPLETE]`
 
 
 > * Updates the task at the specified `INDEX`.
-    The index refers to the index number shown after `find` command has been executed.<br>
+    The index refers to the index number shown beside the task you wish to update.<br>
 > * At least one of the optional fields must be provided.
-> * Existing values will be updated to the input values.
+> * Also, it is possible to remove attributes on the tasks by using <kbd>-</kbd> as an input.
 > * When updating tags, the existing tags of the task will be removed i.e adding of tags is not cumulative.
-> * You can remove all the task tags by typing `/tag` without specifying any tags after it.
 
 Examples:
 
@@ -185,8 +184,9 @@ Updates the `status` of an existing task to `yes`. <br>
 Format: `done INDEX`
 
 
-> * Updates the task at the specified `INDEX`.
-> * The index refers to the index number shown after `list` or `find` command has been executed.<br>
+> * Updates the status at the specified `INDEX` to *Complete*
+> * Once the `Status` of task has been set to *Complete*, it will be filtered out to facilitate easier viewing.
+> * If the task is already *Complete*, you will not be able to execute `Done` on the task.
 
 Examples:
 
@@ -200,8 +200,9 @@ Updates the `status` of an existing task to `no`. <br>
 Format: `undone INDEX`
 
 
-> * Updates the task at the specified `INDEX`.
-> * The index refers to the index number shown after `list` or `find` command has been executed.<br>
+> * Updates the status of the task at the specified `INDEX` to *Incomplete*.
+> * You may retrieve a list of *Complete* task using the `find` Command to perform `undone` operation on them.
+> * If the task is already *Incomplete*, you will not be able to execute `Undone` on the task.
 
 Examples:
 
@@ -212,20 +213,18 @@ Examples:
 
 Deletes the specified task from μTask. <br>
 
-Format: `delete INDEX`
+Format: `delete INDEX, [INDEX]` *and / or* `delete INDEX to INDEX`
 
-> * Deletes the task at the specified `INDEX`. <br>
-> * The index refers to the index number shown on the retrieved listing after `list` or `find` command is used. <br>
+> * Deletes the task(s) at the specified `INDEX` or a range of tasks between the `INDEX` provided. <br>
+> * The Task `INDEX` is shown next to the task.
 
 Examples:
 
-* `list`<br>
-  `delete 2`<br>
+* `delete 2`<br>
   Deletes the 2nd task in μTask.
 
-* `find terra`<br>
-  `delete 1`<br>
-  Deletes the 1st task in the results of the `find` command.
+* `delete 1, 3, 7 to 10`<br>
+  Deletes the 1st, 3rd and 7th to 10th tasks.
 
 ### 3.8. Clearing all entries : `clear`
 
@@ -235,44 +234,41 @@ Format: `clear`
 
 ### 3.9. Selecting a task: `select`
 
-Views specific task's details based on the given index provided. <br>
+Changes the focus on the window to the task with the index provided. <br>
 
-Format: `select INDEX or select last`
+Format: `select INDEX`
 
-> * Views the task at the specified `INDEX`.
-    The index refers to the index number shown after `list` or `find` command has been executed.<br>
-> * `last` refers to the very last entry displayed by μTask
+> * Zoom in to the task at the specified `INDEX`.
+    The index refers to the index number shown beside the task<br>
 
 Examples:
 
-* `select 1`<br>
-  Displays in depth details of the task at `index` 1.
+* `select 55`<br>
+  Automatically scrolls and highlights the task at `INDEX` 55.
 
-* `select last`<br>
-  Displays in depth details of the task with the maximal `index`.
 
 ### 3.10. Undoing previous actions: `undo`
 
 Reverts changes made within μTask based on the provided amount of `STEPS`. <br>
 
-Format: `undo [/last STEPS]`
+Format: `undo [STEPS]`
 
 > * Based on the value of `STEPS` provided, μTask will undo the specified amount of times. <br>
-> * If the provided `STEPS` is higher than the number of commands executed within the session, μTask will prompt for confirmation before losing all changes made. <br>
+> * If the provided `STEPS` is higher than the number of commands executed within the session, it will not be executed.
 
 Examples:
 
-* `undo /last 4`<br>
+* `undo 4`<br>
   Reverts last 4 commands executed within μTask.
 
 ### 3.11. Redoing previous actions: `redo`
 
 Re-applies the changes reverted by undo within μTask based on the provided amount of `STEPS`. <br>
 
-Format: `redo [/last STEPS]`
+Format: `redo [STEPS]`
 
 > * Based on the value of `STEPS` provided, μTask will redo the specified amount of times. <br>
-> * If the provided `STEPS` is higher than the number of undo executed within the session, μTask will prompt for confirmation before re-applying all changes made. <br>
+> * If the provided `STEPS` is higher than the number of undo executed within the session, it will not be executed.
 
 Examples:
 
@@ -283,21 +279,18 @@ Examples:
 
 Creates a new tag in μTask. <br>
 
-Format: `createtag NAME [/color COLOR]`
+Format: `createtag NAME /color COLOR`
 
 > * `NAME` provided must be unique and currently not existing in the μTask.
-> * `COLOR` provided can come in a form of 6 digit hexadecimal `RRGGBB` or plain English.
+> * The following table shows our supported colors for `COLOR`.
+<img src="images/UGScreen/TagColorSupported.PNG" width="400"><br>
 
-| Symbol | Meaning            | Example        |
-|--------|--------------------|----------------|
-| RR     | Value of Red hue   | 08             |
-| GG     | Value of Green hue | ff             |
-| BB     | Value of Blue hue  | 8e             |
+
 
 Examples:
 
-* `createtag urgent /color dark red`
-* `createtag low priority /color 00ffff`
+* `createtag urgent /color red`
+* `createtag low priority /color blue`
 
 ### 3.13. Listing tags: `listtag`
 
@@ -319,7 +312,7 @@ Format: `updatetag NAME [/name NAME] [/color COLOR]`
 > * Updates the tag based on `NAME`.
 > * `NAME` provided must be unique and currently not existing in the μTask.
 > * The following table shows our supported colors for `COLOR`.
-<img src="images/UGScreen/TagColorSupported.PNG" width="800"><br>
+<img src="images/UGScreen/TagColorSupported.PNG" width="400"><br>
 
 Examples:
 
@@ -341,6 +334,7 @@ Format: `deletetag NAME`
 Examples:
 
 * `deletetag School`<br>
+Delete `School` tag and cascades delete all tasks containing this tag.
 
 ### 3.16. Creating a command alias : `alias`
 
@@ -427,7 +421,7 @@ create | `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FRE
 find | `find KEYWORD...`
 update | `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/status COMPLETE|INCOMPLETE]`
 done | `done INDEX`
-delete | `delete INDEX,[INDEX],..` *or* `delete INDEX to INDEX`
+delete | `delete INDEX, [INDEX]` *and / or* `delete INDEX to INDEX`
 clear | `clear`
 select | `select INDEX`
 undo | `undo [/last STEPS]`
