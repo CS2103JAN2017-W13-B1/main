@@ -70,7 +70,7 @@ Simply type in your command, and hit <kbd>Enter</kbd> to let μTask to do the he
 ### 2.2. Launching
 
 Double-click the file to start the app. The Graphic User Interface should appear in a few seconds.
-   <img src="images/uTask_v0.3.jpg" width="600"><br>
+   <img src="images/UGScreen/UTask.PNG" width="600"><br>
 
 ### 2.3. Using the Interface
 
@@ -108,7 +108,7 @@ Format: `help`
 
 > Alternatively, you can hit the <kbd>F1</kbd> key to access the user guide. <br>
 > Help is also shown if you enter an incorrect command e.g. `abcd` or simply type in <kbd>?</kbd> for suggested commands. <br>
-
+   <img src="images/UGScreen/help.PNG" width="600"><br>
 
 ### 3.2. Creating task: `create`
 
@@ -155,6 +155,8 @@ Examples:
   Returns `Buy Grocery` but not `buy`
 * `find Impt Clear John`<br>
   Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
+
+   <img src="images/UGScreen/find.PNG" width="600"><br>
 
 ### 3.4. Updating a task: `update`
 
@@ -350,7 +352,8 @@ Examples:
 * `alias c /as create`<br>
   `c Homework to Do`<br>
   Creates a to-do task named "Homework to Do".
-
+   <img src="images/UGScreen/ListAlias.PNG" width="600"><br>
+   
 ### 3.17. Viewing all command aliases: `listalias`
 
 Lists all the command alias created in μTask.<br>
