@@ -319,7 +319,7 @@ Format: `updatetag NAME [/name NAME] [/color COLOR]`
 > * Updates the tag based on `NAME`.
 > * `NAME` provided must be unique and currently not existing in the μTask.
 > * The following table shows our supported colors for `COLOR`.
-<img src="images/UGScreen/TagColorSupported.png" width="800"><br>
+<img src="images/UGScreen/TagColorSupported.PNG" width="800"><br>
 
 Examples:
 
