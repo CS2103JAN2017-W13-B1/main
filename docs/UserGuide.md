@@ -30,6 +30,7 @@ By : `Team W13-B1`  &nbsp;&nbsp;&nbsp;&nbsp; Since: `Jan 2017`  &nbsp;&nbsp;&nbs
 	3.16.   [Undoing previous actions: `undo`](#315-undoing-previous-actions-undo) <br>
 	3.17.   [Redoing previous actions: `redo`](#316-redoing-previous-actions-redo) <br>
 	3.18.   [Exiting the program : `exit`](#317-exiting-the-program--exit) <br>
+	3.19.   [Saving the data](#318-saving-the-data)<br>
 	3.19.   [Saving the data](#318-saving-the-data)
 4. [FAQ](#4-faq)
 5. [Commands Summary](#5-commands-summary)
@@ -89,40 +90,198 @@ Refer to the [Features](#features) section below for details of each command.<br
 
 ----------
 
-<!-- @@author A0138423J-->
+
 ## 3. Features
 
 > **Command Format**
 >
 > * Words in `UPPER_CASE` are the parameters.
-> * Items in `SQUARE_BRACKETS` are optional.
+> * Items in `[SQUARE_BRACKETS]` are optional.
 > * Items with `...` after them can have multiple instances.
 > * Parameters can be in any order.
 
 ### 3.1 Viewing help : `help`
 
-Description: Displays a help menu to aid users in using μTask. <br>
+Displays a help menu to aid users in using μTask. <br>
 
 Format: `help`
 
-> Help is also shown if you enter an incorrect command e.g. `abcd`
+> Alternatively, you can hit the <kbd>F1</kbd> key to access the user guide. <br>
+> Help is also shown if you enter an incorrect command e.g. `abcd` or simply type in <kbd>?</kbd> for suggested commands. <br>
 
-### 3.2. Setting save location: `setpath`
 
-Description: Designates the save directory for μTask. <br>
+### 3.2. Creating task: `create`
 
-Format: `setpath PATH`
+Creates a new task in μTask. <br>
 
-> * `PATH` provided by the user has to be a valid folder for the command to execute successfully.
-> * `PATH` has to be enclosed within quotes `"`
+Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
+
+> *  `DEADLINE` uses`DDMMYY` format to represent date. Alternatively it also accepts simple words such as *today* or *tmr*.
+> *  `START_TIME` and `END_TIME` uses a combination of  `HHMM` format to represent date and time
+>    * `HHMM` is mandatory to indicate the start and the end time.
+
+
+| Symbol | Meaning            | 
+|--------|--------------------|
+| HH     | hour of day (0~23) | 
+| MM     | minute of hour     |
+| DD     | day of year        |
+| MM     | month of year      |
+| YY     | year               |
+
+> * Tasks can have any number of tags (including 0)
 
 Examples:
 
-* `setpath "C:\TEMP"`
+* `create watch movie from me to you /from 1830 010317 to 010317 2030 `
+* `create read essay by tutor /by 200217 /tag urgent /tag assignment`
 
-### 3.3. Creating tag: `createtag`
+### 3.3. Finding tasks by keywords: `find`
 
-Description: Creates a new tag in μTask. <br>
+Finds tasks which contains any of the given keywords.<br>
+
+Format: `find KEYWORD...`
+
+> * `Find` searches across all existing attributes in Task.
+> * The search is case sensitive. e.g `grocery` will not match `Grocery`
+> * The order of the keywords does not matter. e.g. `Grocery Store` will match `Store Grocery`
+> * Only full words will be matched e.g. `Gro` will not match `Grocery`
+> * Tasks matching at least one keyword will be returned (i.e. `OR` search).
+    e.g. `Grocery` will match `Store Grocery`
+
+Examples:
+
+* `find Buy`<br>
+  Returns `Buy Grocery` but not `buy`
+* `find Impt Clear John`<br>
+  Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
+
+### 3.4. Updating a task: `update`
+
+Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
+
+Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
+
+
+> * Updates the task at the specified `INDEX`.
+    The index refers to the index number shown after `find` command has been executed.<br>
+> * At least one of the optional fields must be provided.
+> * Existing values will be updated to the input values.
+> * When updating tags, the existing tags of the task will be removed i.e adding of tags is not cumulative.
+> * You can remove all the task tags by typing `/tag` without specifying any tags after it.
+
+Examples:
+
+* `update 1 /name do homework`<br>
+  Updates the name of task at `index` 1 to "do homework".
+
+* `update 2 /tag urgent`<br>
+  Updates the tag of the task at `index` 2 to "urgent and removes all existing tags, if applicable.
+
+### 3.5. Updating completed task: `done`
+
+Updates the `status` of an existing task to `yes`. <br>
+
+Format: `done INDEX`
+
+
+> * Updates the task at the specified `INDEX`.
+> * The index refers to the index number shown after `list` or `find` command has been executed.<br>
+
+Examples:
+
+* `done 1`<br>
+  Updates the status of task at `index` 1 to done.
+
+### 3.6. Updating uncompleted task: `undone`
+
+Updates the `status` of an existing task to `no`. <br>
+
+Format: `undone INDEX`
+
+
+> * Updates the task at the specified `INDEX`.
+> * The index refers to the index number shown after `list` or `find` command has been executed.<br>
+
+Examples:
+
+* `undone 1`<br>
+  Updates the status of task at `index` 1 to undone.
+
+### 3.7. Deleting a task: `delete`
+
+Deletes the specified task from μTask. <br>
+
+Format: `delete INDEX`
+
+> * Deletes the task at the specified `INDEX`. <br>
+> * The index refers to the index number shown on the retrieved listing after `list` or `find` command is used. <br>
+
+Examples:
+
+* `list`<br>
+  `delete 2`<br>
+  Deletes the 2nd task in μTask.
+
+* `find terra`<br>
+  `delete 1`<br>
+  Deletes the 1st task in the results of the `find` command.
+
+### 3.8. Clearing all entries : `clear`
+
+Clears all stored tasks from the μTask.<br>
+
+Format: `clear`
+
+### 3.9. Selecting a task: `select`
+
+Views specific task's details based on the given index provided. <br>
+
+Format: `select INDEX or select last`
+
+> * Views the task at the specified `INDEX`.
+    The index refers to the index number shown after `list` or `find` command has been executed.<br>
+> * `last` refers to the very last entry displayed by μTask
+
+Examples:
+
+* `select 1`<br>
+  Displays in depth details of the task at `index` 1.
+
+* `select last`<br>
+  Displays in depth details of the task with the maximal `index`.
+
+### 3.10. Undoing previous actions: `undo`
+
+Reverts changes made within μTask based on the provided amount of `STEPS`. <br>
+
+Format: `undo [/last STEPS]`
+
+> * Based on the value of `STEPS` provided, μTask will undo the specified amount of times. <br>
+> * If the provided `STEPS` is higher than the number of commands executed within the session, μTask will prompt for confirmation before losing all changes made. <br>
+
+Examples:
+
+* `undo /last 4`<br>
+  Reverts last 4 commands executed within μTask.
+
+### 3.11. Redoing previous actions: `redo`
+
+Re-applies the changes reverted by undo within μTask based on the provided amount of `STEPS`. <br>
+
+Format: `redo [/last STEPS]`
+
+> * Based on the value of `STEPS` provided, μTask will redo the specified amount of times. <br>
+> * If the provided `STEPS` is higher than the number of undo executed within the session, μTask will prompt for confirmation before re-applying all changes made. <br>
+
+Examples:
+
+* `redo /last 4`<br>
+  Re-applies last 4 changes reverted by undo within μTask.
+
+### 3.12. Creating tag: `createtag`
+
+Creates a new tag in μTask. <br>
 
 Format: `createtag NAME [/color COLOR]`
 
@@ -140,272 +299,110 @@ Examples:
 * `createtag urgent /color dark red`
 * `createtag low priority /color 00ffff`
 
-### 3.4. Listing tags: `listtag`
+### 3.13. Listing tags: `listtag`
 
-Description: Lists μTask's current database for all stored tags.<br>
+Lists μTask's current database for all stored tags.<br>
 
 Format: `listtag`
 > * If no tags exists within the database, μTask will prompt and inform you.
-> * μTask will list and number the tags according to the  chronological order of creation
+> * μTask will list the tags according to the  chronological order of creation
 
 Examples:
 * `listtag`
 
-### 3.5. Updating a tag: `updatetag`
+### 3.14. Updating a tag: `updatetag`
 
-Description: Updates an existing tag in μTask. You can perform update on a specific task after `listtag` command has been executed. <br>
+Updates an existing tag in μTask. <br>
 
-Format: `updatetag INDEX [/name NAME] [/color COLOR]`
+Format: `updatetag NAME [/name NAME] [/color COLOR]`
 
-> * Updates the tag at the specified `INDEX`.
-    The index refers to the index number shown after `listtag` has been executed.<br>
-    The index **must be a positive integer** 1, 2, 3, ...
-> * `NAME` provided must be unique and currently not existing in the μTask
-> * `COLOR` provided can come in a form of 6 digit hexadecimal `RRGGBB` or plain English
-
-| Symbol | Meaning            | Example        |
-|--------|--------------------|----------------|
-| RR     | Value of Red hue   | 08             |
-| GG     | Value of Green hue | ff             |
-| BB     | Value of Blue hue  | 8e             |
+> * Updates the tag based on `NAME`.
+> * `NAME` provided must be unique and currently not existing in the μTask.
+> * The following table shows our supported colors for `COLOR`.
+<img src="images/UGScreen/TagColorSupported.png" width="800"><br>
 
 Examples:
 
-* `updatetag 1 /name urgent /color ffffff`<br>
-  Updates the tag at `index` 1 to have `urgent` as name and `ffffff` as color.
+* `updatetag School /name NUS /color orange`<br>
+  Updates the `School` tag  to have `NUS` as name and `Orange` color.
 
-* `updatetag 2 /color 888888`<br>
-  Updates the tag at `index` 2 to have `888888` as color.
+* `updatetag Home /color blue`<br>
+  Updates the `Home` tag to have `blue` as color.
 
-### 3.6. Deleting a tag: `deletetag`
+### 3.15. Deleting a tag: `deletetag`
 
-Description: Deletes the specified tag from μTask.<br>
+Deletes the specified tag from μTask.<br>
 
-Format: `deletetag INDEX`
+Format: `deletetag NAME`
 
-> * Deletes the tag at the specified `INDEX`. <br>
-> * The index refers to the index number shown on the retrieved listing after `listtag` command is used. <br>
-> * The index **must be a positive integer** 1, 2, 3, ...
+> * Deletes the tag based on the specified `NAME`. <br>
 > * All existing tasks affected will have the specific tag removed.
 
 Examples:
 
-* `listtag`<br>
-  `deletetag 2`<br>
-  Deletes the 2nd tag in μTask.
+* `deletetag School`<br>
 
+### 3.16. Creating a command alias : `alias`
 
-### 3.7. Creating task: `create`
+Creates an alias command for an existing command in μTask.<br>
 
-Description: Creates a new task in μTask. <br>
+Format: `alias ALIAS /as COMMAND`
 
-Format: `create NAME [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...]`
-
-> * `DEADLINE`, `START_TIME` and `END_TIME` uses a combination of  `HHMM DDMMYY` format to represent date and time
->    * The order of `HHMM` and `DDMMYY` is flexible
->    * `DDMMYY` is mandatory
->    * `HHMM` is optional because if it is not provided, default value of `0000` will be used
-
-
-| Symbol | Meaning            | Example        |
-|--------|--------------------|----------------|
-| HH     | hour of day (0~23) | 08             |
-| MM     | minute of hour     | 50             |
-| DD     | day of year        | 28             |
-| MM     | month of year      | 04             |
-| YY     | year               | 2017           |
-
-> * Tasks can have any number of tags (including 0)
-> * Based on attributes provided during task creation, the type of resulting Task will be determined based on the following table:
-
-
-| Attribute provided during task creation                       | Type of task created |
-|---------------------------------------------------------------|----------------------|
-| `[/from START_TIME to END_TIME]`                              | Event                |
-| `[/by DEADLINE]`                                              | Deadline             |
-| Neither `[/from START_TIME to END_TIME]` nor `[/by DEADLINE]` | Floating             |
+> * `ALIAS`  must be a single word consisting of *alphabets* or *digits*.<br>
+> * `COMMAND` must be a command which exists in μTask.<br>
 
 Examples:
 
-* `create watch movie from me to you /from 1830 010317 to 010317 2030 `
-* `create read essay by tutor /by 200217 /tag urgent /tag assignment`
+* `alias c /as create`<br>
+  `c Homework to Do`<br>
+  Creates a to-do task named "Homework to Do".
 
-### 3.8. Listing tasks: `list`
+### 3.17. Viewing all command aliases: `listalias`
 
-Description: Searches μTask's current database for specific tasks based on inputs provided.<br>
+Lists all the command alias created in μTask.<br>
 
-Format: `list [TYPE] [/by DEADLINE] [/from START_TIME] [/to END_TIME] [/tag TAG...] [/done YES|NO]`
-> * If no parameters are provided, μTask will list all unexpired tasks from current date time in which the command is executed
-> * `TYPE` refers to the type of task determined during task creation
-> * μTask will list and number the tasks chronologically which fulfill the search requirements
+Format: `listalias`
 
-
-Examples:
-* `list`
-* `list float /tag urgent`
-* `list deadline /by 2359 310817 /tag math /done NO`
-* `list event /from 201017 to 221017 /done YES`
-
-### 3.9. Finding tasks by keywords: `find`
-
-Description: Finds tasks whose description contains any of the given keywords.<br>
-
-Format: `find KEYWORD...`
-
-> * The search is case sensitive. e.g `grocery` will not match `Grocery`
-> * The order of the keywords does not matter. e.g. `Grocery Store` will match `Store Grocery`
-> * Only the description of the task is searched.
-> * Only full words will be matched e.g. `Gro` will not match `Grocery`
-> * Tasks matching at least one keyword will be returned (i.e. `OR` search).
-    e.g. `Grocery` will match `Store Grocery`
+> * If no command aliase exists within the database, μTask will prompt and inform you.
+> * μTask will list the command alias according to the  chronological order of creation
 
 Examples:
 
-* `find Buy`<br>
-  Returns `Buy Grocery` but not `buy`
-* `find Impt Clear John`<br>
-  Returns Any tasks having descriptions `Impt`, `Clear`, or `John`
+* `listalias`<br>
 
-### 3.10. Viewing a task: `select`
+### 3.18. Deleting a command aliase: `unalias`
 
-Description: Views specific task's details based on the given index provided. <br>
+Delete an existing command alias in μTask.<br>
 
-Format: `select INDEX or select last`
+Format: `unalias ALIAS`
 
-> * Views the task at the specified `INDEX`.
-    The index refers to the index number shown after `list` or `find` command has been executed.<br>
-    The index **must be a positive integer** 1, 2, 3, ...
-> * `last` refers to the very last entry displayed by μTask
+> * If `ALIAS` does not exists within the database, μTask will prompt and inform you.
 
 Examples:
 
-* `select 1`<br>
-  Displays in depth details of the task at `index` 1.
+* `unalias c`<br>
+Assuming *c* is a command aliase for create command, it will delete this alias.
 
-* `select last`<br>
-  Displays in depth details of the task with the maximal `index`.
+### 3.19. Setting save location: `relocate`
 
-### 3.11. Updating a task: `update`
+Designates the save directory for μTask. Additionally, μTask data are saved in the hard disk automatically after any command that changes the data.<br>
 
-Description: Updates an existing task in μTask. You can perform update on a specific task after `list` command has been executed. <br>
+Format: `relocate PATH`
 
-Format: `update INDEX [/name NAME] [/by DEADLINE] [/from START_TIME to END_TIME] [/repeat FREQUENCY] [/tag TAG...][/done YES|NO]`
-
-
-> * Updates the task at the specified `INDEX`.
-    The index refers to the index number shown after `list` or `find` command has been executed.<br>
-    The index **must be a positive integer** 1, 2, 3, ...
-> * At least one of the optional fields must be provided.
-> * Existing values will be updated to the input values.
-> * When updating tags, the existing tags of the task will be removed i.e adding of tags is not cumulative.
-> * You can remove all the task tags by typing `/tag` without specifying any tags after it.
+> * `PATH` provided by the user has to be a valid folder for the command to execute successfully. <br>
+> * There is no need to save manually.
 
 Examples:
 
-* `update 1 /name do homework`<br>
-  Updates the name of task at `index` 1 to "do homework".
-
-* `update 2 /tag urgent`<br>
-  Updates the tag of the task at `index` 2 to "urgent and removes all existing tags, if applicable.
-
-### 3.12. Updating completed task: `done`
-
-Description: Updates the `status` of an existing task to `yes`. <br>
-
-Format: `done INDEX`
+* `setpath C:\TEMP`
 
 
-> * Updates the task at the specified `INDEX`.
-> * The index refers to the index number shown after `list` or `find` command has been executed.<br>
-> * The index **must be a positive integer** 1, 2, 3, ...
+### 3.20. Exiting the program : `exit`
 
-Examples:
-
-* `done 1`<br>
-  Updates the status of task at `index` 1 to done.
-
-### 3.13. Updating uncompleted task: `undone`
-
-Description: Updates the `status` of an existing task to `no`. <br>
-
-Format: `undone INDEX`
-
-
-> * Updates the task at the specified `INDEX`.
-> * The index refers to the index number shown after `list` or `find` command has been executed.<br>
-> * The index **must be a positive integer** 1, 2, 3, ...
-
-Examples:
-
-* `undone 1`<br>
-  Updates the status of task at `index` 1 to undone.
-
-### 3.14. Deleting a task: `delete`
-
-Description: Deletes the specified task from μTask. <br>
-
-Format: `delete INDEX`
-
-> * Deletes the task at the specified `INDEX`. <br>
-> * The index refers to the index number shown on the retrieved listing after `list` or `find` command is used. <br>
-> * The index **must be a positive integer** 1, 2, 3, ...
-
-Examples:
-
-* `list`<br>
-  `delete 2`<br>
-  Deletes the 2nd task in μTask.
-
-* `find terra`<br>
-  `delete 1`<br>
-  Deletes the 1st task in the results of the `find` command.
-
-### 3.15. Clearing all entries : `clear`
-
-Description: Clears all stored tasks from the μTask.<br>
-
-Format: `clear`
-
-### 3.16. Undoing previous actions: `undo`
-
-Description: Reverts changes made within μTask based on the provided amount of `STEPS`. <br>
-
-Format: `undo [/last STEPS]`
-
-> * Based on the value of `STEPS` provided, μTask will undo the specified amount of times. <br>
-> * If the provided `STEPS` is higher than the number of commands executed within the session, μTask will prompt for confirmation before losing all changes made. <br>
-> * The `STEPS` **must be a positive integer** 1, 2, 3, ...
-
-Examples:
-
-* `undo /last 4`<br>
-  Reverts last 4 commands executed within μTask.
-
-### 3.17. Redoing previous actions: `redo`
-
-Description: Re-applies the changes reverted by undo within μTask based on the provided amount of `STEPS`. <br>
-
-Format: `redo [/last STEPS]`
-
-> * Based on the value of `STEPS` provided, μTask will redo the specified amount of times. <br>
-> * If the provided `STEPS` is higher than the number of undo executed within the session, μTask will prompt for confirmation before re-applying all changes made. <br>
-> * The `STEPS` **must be a positive integer** 1, 2, 3, ...
-
-Examples:
-
-* `redo /last 4`<br>
-  Re-applies last 4 changes reverted by undo within μTask.
-
-### 3.18. Exiting the program : `exit`
-
-Description: Exits the program.<br>
+Exits the program.<br>
 
 Format: `exit`
 
-### 3.19. Saving the data
-
-Description:  μTask data are saved in the hard disk automatically after any command that changes the data.<br>
-There is no need to save manually.
 
 
 ----------
@@ -444,8 +441,4 @@ listalias | `liastalias`
 unalias | `unalias ALIAS`
 setpath| `setpath PATH`
 exit | `exit`
-
-
-
-
 
