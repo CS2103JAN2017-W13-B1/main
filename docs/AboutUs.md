@@ -69,8 +69,10 @@ Responsibilities: Code quality, Testing, SourceTree expert <br>
   - User Interface helpers (ListHelper, ListViewHelper, FilterListHelper, TagColorHelper)
   - User Interface behaviours (FindOverlay Sort, Dialogs, Events)
   - Undo/Redo commands
+  - Create commands
   - SortInFindCommandParser (Dynamic) Command
   - SuggestionHelper
+  - DateUtil
   - DelayedExecution (Ensure certain logic to wait for UI animation to end, to avoid race conditon)
   
 * Code written:
