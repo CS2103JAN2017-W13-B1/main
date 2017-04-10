@@ -217,7 +217,7 @@ ListViewHelper, extends the abstract ListHelper, to coordinates multiple listvie
 
 Dialog enables displaying of information on MainWindow in a popup dialog, which can be dismissed with `Escape` key. It uses **Decorator pattern** and leaves the actual UI implementation of its subclass. For example, `TagColorDialog` extends it and override its initilisation code block to add a FlowPane with tags as text labels and `AliasDialog` extends it and override its initilisation code block to add a VBox with alias as text labels.
 
-CommandBox uses SuggestionHelper, a Singleton, to lookup for suggestions relating to user's inputted command. It will show specific command format if inputted command is recognised. Otherwise, it will show all possible command words.
+CommandBox uses SuggestionHelper, a **Singleton**, to lookup for suggestions relating to user's inputted command. It will show specific command format if inputted command is recognised. Otherwise, it will show all possible command words.
 
 Finally, `UI parts` are not using Singleton Pattern. In hope that, UTask Developers use EventsCenter as a correct means to propagate events to the UI. As they are only created once and can only be binded during the initialisation of MainWindow. Therefore, there are no strong reasons to use Singleton Pattern. As they can be used incorrectly, which increased class coupling and degrade the code quality of UI.
 
