@@ -1,4 +1,3 @@
-// @@author A0139996A
 package utask.ui;
 
 import java.util.ArrayList;
@@ -24,6 +23,10 @@ import utask.logic.commands.CommandResult;
 import utask.logic.commands.exceptions.CommandException;
 import utask.ui.helper.SuggestionHelper;
 
+//@@author A0139996A
+/*
+ * CommandBox handles the UI Logic of commandTextField, which includes suggestions and last command entered.
+ * */
 public class CommandBox extends UiPart<Region> {
 
     private static final String FXML = "CommandBox.fxml";
@@ -66,6 +69,7 @@ public class CommandBox extends UiPart<Region> {
         parent.getChildren().add(rootPane);
     }
 
+    //Adds eventhandler to commandTextField
     private void addEventHandlerToControls() {
         commandTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
@@ -110,28 +114,36 @@ public class CommandBox extends UiPart<Region> {
             raise(new ShowHelpRequestEvent());
             break;
         case UP :
-            if (currentPositionInLastValidCommandList >= 0) {
-                displayLastValidCommand();
-
-                if (currentPositionInLastValidCommandList > 0) {
-                    currentPositionInLastValidCommandList--;
-                }
-            }
+            handleArrowUpKeyPressed();
             break;
         case DOWN :
-            if (currentPositionInLastValidCommandList >= 0
-                    && currentPositionInLastValidCommandList < lastValidCommandList.size() - 1) {
-
-                if (currentPositionInLastValidCommandList < lastValidCommandList.size() - 1) {
-                    currentPositionInLastValidCommandList++;
-                }
-
-                displayLastValidCommand();
-            }
+            handleArrowDownKeyPressed();
             break;
         default:
             setStyleToIndicateCommandSuccess();
             break;
+        }
+    }
+
+    private void handleArrowDownKeyPressed() {
+        if (currentPositionInLastValidCommandList >= 0
+                && currentPositionInLastValidCommandList < lastValidCommandList.size() - 1) {
+
+            if (currentPositionInLastValidCommandList < lastValidCommandList.size() - 1) {
+                currentPositionInLastValidCommandList++;
+            }
+
+            displayLastValidCommand();
+        }
+    }
+
+    private void handleArrowUpKeyPressed() {
+        if (currentPositionInLastValidCommandList >= 0) {
+            displayLastValidCommand();
+
+            if (currentPositionInLastValidCommandList > 0) {
+                currentPositionInLastValidCommandList--;
+            }
         }
     }
 
@@ -140,6 +152,22 @@ public class CommandBox extends UiPart<Region> {
         Platform.runLater(()-> {
             commandTextField.positionCaret(commandTextField.getLength());
         });
+    }
+
+    /**
+     * Sets the command box style to indicate a successful command.
+     */
+    private void setStyleToIndicateCommandSuccess() {
+        commandTextField.getStyleClass().remove(ERROR_TEXTFIELD_STYLE_CLASS);
+        lblSuggestion.getStyleClass().remove(ERROR_SUGGESTION_STYLE_CLASS);
+    }
+
+    /**
+     * Sets the command box style to indicate a failed command.
+     */
+    private void setStyleToIndicateCommandFailure() {
+        commandTextField.getStyleClass().add(ERROR_TEXTFIELD_STYLE_CLASS);
+        lblSuggestion.getStyleClass().add(ERROR_SUGGESTION_STYLE_CLASS);
     }
 
     //@@author
@@ -161,21 +189,5 @@ public class CommandBox extends UiPart<Region> {
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
-    }
-
-    /**
-     * Sets the command box style to indicate a successful command.
-     */
-    private void setStyleToIndicateCommandSuccess() {
-        commandTextField.getStyleClass().remove(ERROR_TEXTFIELD_STYLE_CLASS);
-        lblSuggestion.getStyleClass().remove(ERROR_SUGGESTION_STYLE_CLASS);
-    }
-
-    /**
-     * Sets the command box style to indicate a failed command.
-     */
-    private void setStyleToIndicateCommandFailure() {
-        commandTextField.getStyleClass().add(ERROR_TEXTFIELD_STYLE_CLASS);
-        lblSuggestion.getStyleClass().add(ERROR_SUGGESTION_STYLE_CLASS);
     }
 }

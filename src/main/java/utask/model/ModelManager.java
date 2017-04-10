@@ -201,8 +201,6 @@ public class ModelManager extends ComponentManager implements Model {
         return FilteredListHelper.getInstance().isFindOverlayShowing();
     }
 
-
-    //TODO: refractor
     @Override
     public List<ReadOnlyTask> getUnderlyingListByIndex(int displayIndex) {
         return FilteredListHelper.getInstance().getUnderlyingListByIndex(displayIndex);
@@ -212,7 +210,6 @@ public class ModelManager extends ComponentManager implements Model {
     public int getActualIndexFromDisplayIndex(int displayIndex) {
         return FilteredListHelper.getInstance().getActualIndexFromDisplayIndex(displayIndex);
     }
-    //@author
 
     private FilteredList<ReadOnlyTask> getTasksFliteredListByExactDate(Date date) {
         FilteredList<ReadOnlyTask> task = new FilteredList<>(this.uTask.getTaskList());

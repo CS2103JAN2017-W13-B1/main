@@ -1,4 +1,3 @@
-
 package utask.ui;
 
 import javafx.beans.binding.Bindings;
@@ -15,7 +14,14 @@ import utask.ui.helper.ListViewHelper;
 import utask.ui.helper.UTListView;
 
 //@@author A0139996A
+/*
+ * TodoListPanel handles the UI Logic of how TodoListPanel appears.
+ * It also work with ListViewHelper to ensure the list are properly synced.
+ * */
 public class TodoListPanel extends UiPart<Region> {
+    private static final String LISTVIEW_EXPAND_CSS = "-jfx-expanded : true;";
+    private static final String EXTENDED_JFXLISTVIEW_CSS = "custom-jfx-list-view1";
+    private static final String JFXLISTVIEW_CSS = "jfx-list-view";
     private static final String FXML = "TodoListPanel.fxml";
 
     @FXML
@@ -49,9 +55,9 @@ public class TodoListPanel extends UiPart<Region> {
     }
 
     private void addStylingPropertiesToListView() {
-        lstTodoTasks.getStyleClass().add("jfx-list-view");
-        lstTodoTasks.getStyleClass().add("custom-jfx-list-view1");
-        lstTodoTasks.setStyle("-jfx-expanded : true;");
+        lstTodoTasks.getStyleClass().add(JFXLISTVIEW_CSS);
+        lstTodoTasks.getStyleClass().add(EXTENDED_JFXLISTVIEW_CSS);
+        lstTodoTasks.setStyle(LISTVIEW_EXPAND_CSS);
     }
 
     private void addStylingPropertiesToLabel() {

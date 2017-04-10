@@ -1,6 +1,5 @@
 package utask.logic.commands;
 
-
 /**
  * Lists all tasks in the uTask to the user.
  */

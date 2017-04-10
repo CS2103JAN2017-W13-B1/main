@@ -1,4 +1,3 @@
-//@@author A0139996A
 package utask.ui.helper;
 
 import java.util.HashMap;
@@ -12,6 +11,7 @@ import utask.commons.core.LogsCenter;
 import utask.commons.events.model.UTaskChangedEvent;
 import utask.model.task.ReadOnlyTask;
 
+//@@author A0139996A
 /*
  * FilteredListHelper uses facade and singleton pattern
  * It provides an interface to simplify the manage of multiple underlying FliterList.

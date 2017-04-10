@@ -21,13 +21,11 @@ import utask.commons.core.GuiSettings;
 import utask.commons.core.LogsCenter;
 import utask.commons.events.ui.ExitAppRequestEvent;
 import utask.commons.events.ui.ShowAliasDialogEvent;
-import utask.commons.events.ui.ShowMessageDialogEvent;
 import utask.commons.events.ui.ShowTagColorDialogEvent;
 import utask.commons.util.FxViewUtil;
 import utask.logic.Logic;
 import utask.model.UserPrefs;
 import utask.ui.dialogs.AliasDialog;
-import utask.ui.dialogs.MessageDialog;
 import utask.ui.dialogs.TagColorDialog;
 
 /**
@@ -35,6 +33,7 @@ import utask.ui.dialogs.TagColorDialog;
  * and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart<Region> {
+    private static final String F1_KEY = "F1";
     private static final Logger logger = LogsCenter.getLogger(MainWindow.class);
     private static final String ICON = "/images/utask.png";
     private static final String FXML = "MainWindow.fxml";
@@ -136,7 +135,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     private void setAccelerators() {
-        setAccelerator(btnHelp, KeyCombination.valueOf("F1"));
+        setAccelerator(btnHelp, KeyCombination.valueOf(F1_KEY));
     }
 
     private void setEventHandlers() {
@@ -160,8 +159,8 @@ public class MainWindow extends UiPart<Region> {
     public TodoListPanel getTodoListPanel() {
         return todoListPanel;
     }
-
     //@@author
+
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -225,6 +224,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author A0139996A
     @Subscribe
     private void handleShowTagColorDialogEvent(ShowTagColorDialogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -236,10 +236,5 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         new AliasDialog(rootPane).show(event.map);
     }
-
-    @Subscribe
-    private void handleShowMessageDialogEvent(ShowMessageDialogEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        new MessageDialog(rootPane).show(event.headingText, event.contentText);
-    }
+    //@@author
 }

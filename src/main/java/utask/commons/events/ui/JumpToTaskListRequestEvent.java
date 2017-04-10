@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import utask.commons.events.BaseEvent;
 
 /**
- * Indicates a request to jump to the list of persons
+ * Indicates a request to jump to the list of task
  */
 public class JumpToTaskListRequestEvent extends BaseEvent {
 

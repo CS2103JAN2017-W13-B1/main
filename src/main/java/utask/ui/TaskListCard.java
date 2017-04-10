@@ -23,6 +23,9 @@ import utask.model.task.ReadOnlyTask;
 import utask.ui.helper.TagColorHelper;
 
 //@@author A0139996A
+/*
+ * TaskListCard contains information on how a Task card would appear in TodoListPanel and TaskListPanel
+ * */
 public class TaskListCard extends UiPart<Region> {
     public static final double CARD_HEIGHT = 102.0;
     private static final String FXML = "TaskListCard.fxml";
@@ -45,8 +48,6 @@ public class TaskListCard extends UiPart<Region> {
     @FXML
     private Label lblDate;
 
-    // TODO: Upgrade to property for observable binding instead of manually
-    // checking for UI events
     private final ReadOnlyTask task;
 
     public TaskListCard(ReadOnlyTask task, int displayedIndex) {

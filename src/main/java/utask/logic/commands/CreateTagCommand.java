@@ -20,8 +20,6 @@ import utask.model.tag.TagName;
 public class CreateTagCommand extends Command  implements ReversibleCommand {
     private final Logger logger = LogsCenter.getLogger(CreateTagCommand.class);
     public static final String COMMAND_WORD = "createtag";
-
-    //TODO: YH EDITED THIS TO CONFORM TO ACTUAL BEHAVIOUR
     public static final String COMMAND_FORMAT = "NAME /color COLOR";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a custom tag in uTask. "

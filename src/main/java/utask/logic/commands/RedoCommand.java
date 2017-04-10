@@ -1,10 +1,10 @@
-//@@author A0139996A
 package utask.logic.commands;
 
 import utask.commons.core.Messages;
 import utask.logic.commands.exceptions.CommandException;
 import utask.logic.commands.inteface.ReversibleCommand;
 
+//@@author A0139996A
 public class RedoCommand extends Command {
 
     public static final String COMMAND_WORD = "redo";
@@ -38,9 +38,6 @@ public class RedoCommand extends Command {
                 model.addUndoCommand(undoCommand);
             }
         } catch (Exception e) {
-            //TODO: Is it sensible to add it back to the stack?
-            //Will it work in the later in time of execution?
-            //model.addUndoCommand(redoCommand);
             throw new CommandException(Messages.MESSAGE_REDO_ERROR);
         }
 

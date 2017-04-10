@@ -4,7 +4,7 @@ package utask.model.task;
 import utask.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's address in the address book.
+ * Represents a Task's Frequency in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidFrequency(String)}
  */
 public class Frequency {

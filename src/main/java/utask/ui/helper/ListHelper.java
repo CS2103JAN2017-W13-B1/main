@@ -1,13 +1,13 @@
-//@@author A0139996A
 package utask.ui.helper;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+//@@author A0139996A
 /* ListHelper groups similar method used by FilterListHelper and ListViewHelper
  *
- * Due to how different the actual type T is in the concrete classes,
+ * Due to how different the actual generic type T is in the concrete classes,
  * it necessary have a common abstraction to get item size.
  *
  * As ListView and FliterList have no common ascendant or interface.
@@ -32,11 +32,8 @@ public abstract class ListHelper<T extends Collection<E>, E> {
         lists.add(list);
     }
 
-    //TODO: It is not type safe use vargs with generics
     public void addList(T... list) {
         assert list != null;
-        //assert list[0].get(0) instanceof ReadOnlyTask;
-
         for (int i = 0; i < list.length; i++) {
             addList(list[i]);
         }
@@ -97,8 +94,8 @@ public abstract class ListHelper<T extends Collection<E>, E> {
         return null;
     }
 
-    //Exposed for JUnit testing to remove state
-    //TODO: Use reflection to access this
+    //Exposed for JUnit testing to remove state.
+    //Reflection can be use access this while still keeping teh access private
     public void clear() {
         lists.clear();
         offsetMap.clear();

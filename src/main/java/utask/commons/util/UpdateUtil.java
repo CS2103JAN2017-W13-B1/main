@@ -22,10 +22,8 @@ import utask.ui.helper.FilteredListHelper;
 
 // @@author A0138423J
 public class UpdateUtil {
-
     public static final String TO_BE_REMOVED = "-";
 
-    // @@author A0138423J
     public static ReadOnlyTask fetchTaskToEdit(int index) {
         assert index >= 0;
         List<ReadOnlyTask> lastShownList = FilteredListHelper.getInstance()
@@ -36,7 +34,6 @@ public class UpdateUtil {
         return lastShownList.get(actualInt);
     }
 
-    // @@author A0138423J
     /**
      * Checks {@code updatedDeadline} and {@code updatedTimestamp} to see
      * whether both are empty or not. Subsequently, based on the statuses, this
@@ -66,7 +63,6 @@ public class UpdateUtil {
         return TaskType.UNKNOWN;
     }
 
-    // @@author A0138423J
     /**
      * Creates and returns a {@code Task} with the details of {@code taskToEdit}
      * edited with {@code editTaskDescriptor}.
@@ -101,7 +97,6 @@ public class UpdateUtil {
         return placeholder;
     }
 
-    // @@author A0138423J
     /**
      * Creates and returns a {@code Task} with the details of {@code taskToEdit}
      * edited with {@code editTaskDescriptor}.
@@ -147,7 +142,6 @@ public class UpdateUtil {
         return placeholder;
     }
 
-    // @@author A0138423J
     /**
      * Creates and returns a {@code Deadline} with the details of
      * {@code taskToEdit} edited with {@code editTaskDescriptor}. Subsequently,
@@ -169,7 +163,6 @@ public class UpdateUtil {
         return updatedDeadline;
     }
 
-    // @@author A0138423J
     /**
      * Creates and returns a {@code Timestamp} with the details of
      * {@code taskToEdit} edited with {@code editTaskDescriptor}. Subsequently,
@@ -200,7 +193,6 @@ public class UpdateUtil {
         return timestampToUpdate;
     }
 
-    // @@author A0138423J
     /**
      * Creates and returns a {@code UniqueTagList} with the details of
      * {@code taskToEdit} edited with {@code editTaskDescriptor}. Subsequently,
@@ -222,7 +214,6 @@ public class UpdateUtil {
         return updatedFrequency;
     }
 
-    // @@author A0138423J
     /**
      * Creates and returns a {@code UniqueTagList} with the details of
      * {@code taskToEdit} edited with {@code editTaskDescriptor}. Subsequently,

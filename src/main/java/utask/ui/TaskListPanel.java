@@ -25,7 +25,14 @@ import utask.ui.helper.ListViewHelper;
 import utask.ui.helper.UTListView;
 
 //@@author A0139996A
+/*
+ * TaskListPanel handles the UI Logic of how TaskListPanel appears.
+ * It dynamically creates ListView and work with ListViewHelper to ensure they are properly synced.
+ * */
 public class TaskListPanel extends UiPart<Region> {
+    private static final String INNER_LISTVIEW_CSS = "inner-list-view";
+    private static final String EXTENDED_JFXLISTVIEW_CSS = "custom-jfx-list-view1";
+    private static final String JFXLISTVIEW_CSS = "jfx-list-view";
     private static final String FXML = "TaskListPanel.fxml";
     private static final double CARD_HEIGHT = TaskListCard.CARD_HEIGHT;
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
@@ -46,7 +53,6 @@ public class TaskListPanel extends UiPart<Region> {
     }
 
     private void addControlsToParent(Pane parent, Logic logic) {
-        //TODO: Use proper logic methods to populate
         createLabelledListViewControl(container, logic.getDueFilteredTaskList(), "Due");
         createLabelledListViewControl(container, logic.getTodayFilteredTaskList(), "Today");
         createLabelledListViewControl(container, logic.getTomorrowFilteredTaskList(), "Tomorrow");
@@ -55,7 +61,6 @@ public class TaskListPanel extends UiPart<Region> {
         FxViewUtil.applyAnchorBoundaryParameters(rootPane, 0.0, 0.0, 0.0, 0.0);
         parent.getChildren().add(rootPane);
 
-        //TODO: This is not the right place to call!
         ListViewHelper.getInstance().updateListViews();
     }
 
@@ -82,8 +87,8 @@ public class TaskListPanel extends UiPart<Region> {
 
     private UTListView<ReadOnlyTask> createListView() {
         UTListView<ReadOnlyTask> list = new UTListView<ReadOnlyTask>();
-        list.getStyleClass().add("jfx-list-view");
-        list.getStyleClass().add("custom-jfx-list-view1");
+        list.getStyleClass().add(JFXLISTVIEW_CSS);
+        list.getStyleClass().add(EXTENDED_JFXLISTVIEW_CSS);
         return list;
     }
 
@@ -93,7 +98,7 @@ public class TaskListPanel extends UiPart<Region> {
     }
 
     private void addStylingPropertiesToListView(JFXListView<ReadOnlyTask> listView) {
-        listView.getStyleClass().add("inner-list-view");
+        listView.getStyleClass().add(INNER_LISTVIEW_CSS);
         listView.minHeightProperty().bind(Bindings.size(listView.getItems()).multiply(CARD_HEIGHT));
         listView.visibleProperty().bind(Bindings.size(listView.getItems()).greaterThan(0));
         listView.managedProperty().bind(listView.visibleProperty());

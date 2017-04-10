@@ -198,7 +198,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 The User Interface (UI) consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TodoListPanel`, `TaskListPanel`, `FindTaskOverlay`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
+The `UI` component uses JavaFx UI framework. The layout of these `UI parts` are defined in matching `.fxml` files
  that are in the `src/main/resources/view` folder.<br>
  For example, the layout of the [`MainWindow`](../src/main/java/utask/ui/MainWindow.java) is specified in
  [`MainWindow.fxml`](../src/main/resources/view/MainWindow.fxml)
@@ -215,7 +215,11 @@ Furthermore, to extend ListHelper compatibility, it uses **generic** of type Col
 
 ListViewHelper, extends the abstract ListHelper, to coordinates multiple listviews to ensure their index numbers are in running sequence and also provide utility functions for retrieving and scrolling tasks. It uses **singleton pattern** to ensure only one instance of it runs in the UTask. This is critical as it prevents the accidental overwriting of values after UI initialization.
 
-Finally, UI classes are not using Singleton Pattern. In hope that, UTask Developers use EventsCenter as a correct means to propagate events to the UI. As they are only created once and can only be binded during the initialisation of MainWindow. Therefore, there are no strong reasons to use Singleton Pattern. As they can be used incorrectly, which increased class coupling and degrade the code quality of UI.
+Dialog enables displaying of information on MainWindow in a popup dialog, which can be dismissed with `Escape` key. It uses **Decorator pattern** and leaves the actual UI implementation of its subclass. For example, `TagColorDialog` extends it and override its initilisation code block to add a FlowPane with tags as text labels and `AliasDialog` extends it and override its initilisation code block to add a VBox with alias as text labels.
+
+CommandBox uses SuggestionHelper, a **Singleton**, to lookup for suggestions relating to user's inputted command. It will show specific command format if inputted command is recognised. Otherwise, it will show all possible command words.
+
+Finally, `UI parts` are not using Singleton Pattern. In hope that, UTask Developers use EventsCenter as a correct means to propagate events to the UI. As they are only created once and can only be binded during the initialisation of MainWindow. Therefore, there are no strong reasons to use Singleton Pattern. As they can be used incorrectly, which increased class coupling and degrade the code quality of UI.
 
 Given below is the State Diagram of UI, where state is depended on whether Find UI is shown`<br>
 <img src="images/UIStateDiagram.png" width="800"><br>

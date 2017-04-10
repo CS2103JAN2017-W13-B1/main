@@ -10,7 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+//@@author A0139996A
+/*Helper functions for handling date parsing and creation of date object.*/
 public class DateUtil {
+    private static final int HOUR_START_INDEX = 0;
+    private static final int HOUR_END_INDEX = 2;
+    private static final int MINUTE_START_INDEX = 2;
+    private static final int MINUTE_END_INDEX = 4;
+    //The positon of the last character of the string + 1, is the same as the end of hhmm string
+    private static final int VALID_HHMM_LENGTH = MINUTE_END_INDEX;
+    private static final String DISPLAYED_FORMATTED_TIME = "HHmm";
     private static final String ALPHABET_PATTERN = "[a-zA-Z ]+";
     private static final List<SimpleDateFormat> knownPatterns;
     private static final Map<String, Integer> wordPatterns;
@@ -50,6 +59,7 @@ public class DateUtil {
         }
     }
 
+    //Verifies that we know how to parse the string
     public static boolean isWordAValidDate(String string) {
         if (!string.isEmpty() && parseStringToDate(string).isPresent()) {
             return true;
@@ -58,10 +68,11 @@ public class DateUtil {
         return false;
     }
 
+    //Parse the string and return as Optional<Date>
     public static Optional<Date> parseStringToDate(String string) {
         assert string != null && !string.isEmpty();
 
-        if (string.matches(ALPHABET_PATTERN)) {
+        if (string.matches(ALPHABET_PATTERN)) { //If it only contain alphabetical characters
             return parseStringByWord(string);
         } else {
             for (SimpleDateFormat pattern : knownPatterns) {
@@ -75,13 +86,11 @@ public class DateUtil {
         }
         return Optional.empty();
     }
-    public static Optional<Date> parseStringByWord(String string) {
+    private static Optional<Date> parseStringByWord(String string) {
         if (wordPatterns.containsKey(string)) {
             int offset = wordPatterns.get(string);
 
-            //TODO
             Date date = new Date();
-            //As date() gets the current time, this ensure the time starts from 00
             date = clearTimeInDate(date);
             date = addDayOfMonthToDate(date, offset);
             return Optional.of(date);
@@ -90,17 +99,12 @@ public class DateUtil {
         return Optional.empty();
     }
 
-//    public static String getDeadlineFormat(Date date) {
-//        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyy");
-//        String formattedDate = formatter.format(date);
-//        return formattedDate;
-//    }
-
     public static Date addHHMMStringToDate(Date date, String hhmm) {
-        assert hhmm != null && !hhmm.isEmpty() && hhmm.length() == 4;
+        assert hhmm != null && !hhmm.isEmpty() && hhmm.length() == VALID_HHMM_LENGTH;
+        assert date != null;
 
-        String hh = hhmm.substring(0, 2);
-        String mm = hhmm.substring(2, 4);
+        String hh = hhmm.substring(HOUR_START_INDEX, HOUR_END_INDEX);
+        String mm = hhmm.substring(MINUTE_START_INDEX, MINUTE_END_INDEX);
 
         int hours = Integer.parseInt(hh);
         int minutes = Integer.parseInt(mm);
@@ -111,36 +115,37 @@ public class DateUtil {
     }
 
     //hours in HH 24hrs
-    public static Date addHoursToDate(Date date, int hours) {
+    private static Date addHoursToDate(Date date, int hours) {
         calendar.setTime(date);
         calendar.add(Calendar.HOUR_OF_DAY, hours);
         return calendar.getTime();
     }
 
-    public static Date addMinutesToDate(Date date, int minutes) {
+    private static Date addMinutesToDate(Date date, int minutes) {
         calendar.setTime(date);
         calendar.add(Calendar.MINUTE, minutes);
         return calendar.getTime();
     }
 
-    public static Date addDayOfMonthToDate(Date date, int dayOfMonth) {
+    private static Date addDayOfMonthToDate(Date date, int dayOfMonth) {
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_MONTH, dayOfMonth);
         return calendar.getTime();
     }
 
-    public static Date clearTimeInDate(Date date) {
+    public static String getFormattedTime(Date date) {
+        assert date != null;
+        SimpleDateFormat formatter = new SimpleDateFormat(DISPLAYED_FORMATTED_TIME);
+        String formattedTime = formatter.format(date);
+        return formattedTime;
+    }
+
+    private static Date clearTimeInDate(Date date) {
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         return calendar.getTime();
-    }
-
-    public static String getFormattedTime(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("HHmm");
-        String formattedTime = formatter.format(date);
-        return formattedTime;
     }
 
     public static Date getEmptyDate() {
@@ -153,7 +158,9 @@ public class DateUtil {
         return calendar.getTime();
     }
 
+    //Composite two dates together, which is used in updating of timestamp
     public static Date getDateUsingTimeComponentAndDateComponent(Date time, Date date) {
+        assert time != null && date != null;
         calendar.setTime(date);
         calendar.set(Calendar.HOUR, time.getHours());
         calendar.set(Calendar.MINUTE, time.getMinutes());

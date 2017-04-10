@@ -6,6 +6,7 @@ import utask.commons.core.EventsCenter;
 import utask.commons.events.ui.ShowAliasDialogEvent;
 import utask.model.AliasCommandMap;
 
+//@@author A0139996A
 /**
  * Shows alias in a dialog in the uTask to the user.
  */
@@ -16,7 +17,6 @@ public class ListAliasCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        //TODO: BADCODE -- BADCODE -- BADCODE
         Map<String, String> map = AliasCommandMap.getInstance().getAliasMap();
         EventsCenter.getInstance().post(new ShowAliasDialogEvent(map));
         return new CommandResult(MESSAGE_SUCCESS);

@@ -38,7 +38,6 @@ public class DoneCommand extends Command implements ReversibleCommand {
     private ReadOnlyTask taskToEdit;
     private Task editedTask;
 
-    // @@author A0138423J
     /**
      * @param filteredTaskListIndex
      *            the index of the task in the filtered task list to edit
@@ -49,7 +48,6 @@ public class DoneCommand extends Command implements ReversibleCommand {
         this.filteredTaskListIndex = filteredTaskListIndex - 1;
     }
 
-    // @@author A0138423J
     @Override
     public CommandResult execute() throws CommandException {
         if (filteredTaskListIndex >= model.getTotalSizeOfLists()) {
@@ -79,14 +77,12 @@ public class DoneCommand extends Command implements ReversibleCommand {
                 String.format(MESSAGE_DONE_TASK_SUCCESS, editedTask));
     }
 
-    // @@author A0138423J
     @Override
     public void undo() throws Exception {
         model.updateTask(editedTask, taskToEdit);
         notifyUI(taskToEdit);
     }
 
-    // @@author A0138423J
     @Override
     public void redo() throws Exception {
         model.updateTask(taskToEdit, editedTask);

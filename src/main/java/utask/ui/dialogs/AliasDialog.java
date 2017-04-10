@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 
 //@@author A0138493W
 public class AliasDialog extends Dialog {
+    private static final String ALIAS_LABEL_FORMAT = "%s >> %s";
     private static final String HAS_ALIAS_HEADING = "Alias";
     private static final String NO_ALIAS_MESSAGE = "Try adding some alias first!";
     private static final String NO_ALIAS_HEADING = ":( NO ALIAS";
@@ -49,9 +50,8 @@ public class AliasDialog extends Dialog {
         super.show();
     }
 
-    //TODO: CAN REFRACTOR THIS
     private Label createLabel(String alias, String command) {
-        String text = String.format("%s >> %s", alias, command);
+        String text = String.format(ALIAS_LABEL_FORMAT, alias, command);
         Label label = new Label(text);
         return label;
     }
