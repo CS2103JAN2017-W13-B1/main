@@ -15,7 +15,7 @@ import com.jfoenix.controls.JFXListView;
  *  E.g.    ((FilteredList) T).size()
  *         ((ListView) T).getItems().size()
  *
- * This demonstrates the use of adapter pattern, where incompatible types are ‘adapted’ so they can work together.
+ * This demonstrates the use of adapter pattern, where incompatible types are adapted so they can work together.
  **/
 public class UTListView<T> extends JFXListView<T> implements Collection<T> {
 
