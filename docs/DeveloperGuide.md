@@ -221,7 +221,7 @@ CommandBox uses SuggestionHelper, a **Singleton**, to lookup for suggestions rel
 
 Finally, `UI parts` are not using Singleton Pattern. In hope that, UTask Developers use EventsCenter as a correct means to propagate events to the UI. As they are only created once and can only be binded during the initialisation of MainWindow. Therefore, there are no strong reasons to use Singleton Pattern. As they can be used incorrectly, which increased class coupling and degrade the code quality of UI.
 
-Given below is the State Diagram of UI, where state is depended on whether Find UI is shown`<br>
+Given below is the State Diagram of UI, where state is depended on whether Find UI is shown<br>
 <img src="images/UIStateDiagram.png" width="800"><br>
 _Figure 2.2.2 : State Diagram for UI_
 
