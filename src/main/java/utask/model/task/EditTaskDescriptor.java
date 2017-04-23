@@ -4,15 +4,10 @@ import java.util.Optional;
 
 import utask.commons.util.CollectionUtil;
 import utask.model.tag.UniqueTagList;
-//@@author A0138423J
-public class EditTaskDescriptor {
-    private Optional<Name> name = Optional.empty();
-    private Optional<Deadline> deadLine = Optional.empty();
-    private Optional<Timestamp> timeStamp = Optional.empty();
-    private Optional<Frequency> frequency = Optional.empty();
-    private Optional<UniqueTagList> tags = Optional.empty();
-    private Optional<Status> status = Optional.empty();
+import utask.model.task.abs.AbsEditTaskDescriptor;
 
+//@@author A0138423J
+public class EditTaskDescriptor extends AbsEditTaskDescriptor {
     public EditTaskDescriptor() {
     }
 

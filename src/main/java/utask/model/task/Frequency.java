@@ -1,13 +1,13 @@
 package utask.model.task;
 
-
 import utask.commons.exceptions.IllegalValueException;
+import utask.model.task.abs.AbsFrequency;
 
 /**
  * Represents a Task's Frequency in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidFrequency(String)}
  */
-public class Frequency {
+public class Frequency extends AbsFrequency {
 
     public static final String MESSAGE_FREQUENCY_CONSTRAINTS =
             "Task frequency should not be blank";

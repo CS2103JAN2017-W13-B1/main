@@ -6,7 +6,7 @@ import utask.commons.exceptions.IllegalValueException;
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class Name {
+public class Name extends AbsName {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Task names should only contain alphanumeric characters and spaces, and it should not be blank";
